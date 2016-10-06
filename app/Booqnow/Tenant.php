@@ -1,6 +1,6 @@
 <?php
 
-namespace Booqlee;
+namespace Booqnow;
 use Config;
 
 class Tenant {

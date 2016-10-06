@@ -6,7 +6,7 @@ use App\Events\MerchantCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use Booqlee\Tenant;
+use Booqnow\Tenant;
 use Artisan;
 use DB;
 

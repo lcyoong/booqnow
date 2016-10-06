@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Merchant;
-use Booqlee\Repositories\MerchantUserRepository;
+use Booqnow\Repositories\MerchantUserRepository;
 
 class MerchantUserController extends MainController
 {

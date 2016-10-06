@@ -3,7 +3,7 @@
 namespace App;
 use Config;
 use DB;
-use Booqlee\Tenant;
+use Booqnow\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
 

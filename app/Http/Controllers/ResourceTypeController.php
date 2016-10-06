@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\ResourceType;
 use App\Merchant;
-use Booqlee\Repositories\ResourceTypeRepository;
+use Booqnow\Repositories\ResourceTypeRepository;
 
 class ResourceTypeController extends MainController
 {

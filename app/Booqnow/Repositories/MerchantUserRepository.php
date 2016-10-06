@@ -1,6 +1,6 @@
 <?php
 
-namespace Booqlee\Repositories;
+namespace Booqnow\Repositories;
 
 use App\MerchantUser;
 use DB;

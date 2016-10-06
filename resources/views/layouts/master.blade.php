@@ -11,13 +11,13 @@
 </head>
 <body>
   @include('partials.topbar')
-  @yield('navbar')  
+  @yield('navbar')
   <div class="container-fluid">
     @yield('content')
   </div>
   <footer class="footer">
     <div class="container-fluid">
-      Booqlee &copy;
+      {{config('myapp.app_name')}} &copy;
     </div>
   </footer>
 

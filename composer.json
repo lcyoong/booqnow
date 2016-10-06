@@ -24,7 +24,7 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "Booqlee\\": "app/Booqlee/"
+            "Booqnow\\": "app/Booqnow/"
         },
         "files": ["app/Http/helpers.php"]
     },

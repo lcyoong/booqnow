@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use DB;
-use Booqlee\Tenant;
+use Booqnow\Tenant;
 use Artisan;
 
 class NewSubscription extends Command
