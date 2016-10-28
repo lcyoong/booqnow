@@ -16,6 +16,7 @@
 		display: inline-block;
 		min-width: 15%;
 		margin-top: 10px;
+		z-index: 1000;
 	}
 
 	.autocomplete ul:before{

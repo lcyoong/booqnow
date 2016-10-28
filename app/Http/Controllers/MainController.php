@@ -12,7 +12,10 @@ class MainController extends Controller
 {
   protected $vdata = [];
   private $page_title;
+  private $tenant;
   private $left_section_col;
+  private $layout;
+  private $new_path;
 
   public function __construct()
   {
@@ -21,7 +24,9 @@ class MainController extends Controller
     $this->middleware('connect.tenant');
 
     $this->vdata = [
-      'left_section_col' => 12
+      'left_section_col' => 12,
+      'tenant' => false,
+      'layout' => 'layouts.tenant',
     ];
   }
 
@@ -37,5 +42,11 @@ class MainController extends Controller
 		}
 	}
 
-
+  public function goodReponse($message = '')
+  {
+    return response([
+      'success' => true,
+      'message' => $message ? $message : trans('message.process_successful')
+    ]);
+  }
 }

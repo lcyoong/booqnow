@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'Booqnow',
 
     /*
     |--------------------------------------------------------------------------
@@ -166,7 +166,6 @@ return [
         /*
          * Package Service Providers...
          */
-         MaddHatter\LaravelFullcalendar\ServiceProvider::class,
 
         //
 
@@ -183,6 +182,7 @@ return [
 
         Collective\Html\HtmlServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
 
     ],
 
@@ -233,7 +233,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'Calendar' => MaddHatter\LaravelFullcalendar\Facades\Calendar::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
     ],

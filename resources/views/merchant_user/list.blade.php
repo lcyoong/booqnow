@@ -1,6 +1,6 @@
-@extends('layouts.common_list')
+@extends('layouts.list')
 
-@section('content_common_list')
+@section('content_list')
 <thead>
   <tr>
     <th>@lang('user.name')</th>
@@ -21,6 +21,6 @@
 </tbody>
 @endsection
 
-@section('content_common_above')
+@section('content_above_list')
 <a href="{{ Request::url() . '/new' }}" v-modal>{{ Form::button(Lang::get('form.new'), ['class' => 'btn btn-primary']) }}</a>
 @endsection

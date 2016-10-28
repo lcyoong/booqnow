@@ -1,6 +1,6 @@
-@extends('layouts.common_list')
+@extends('layouts.list')
 
-@section('content_common_list')
+@section('content_list')
 <thead>
   <tr>
     <th>@lang('merchant.mer_name')</th>

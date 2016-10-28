@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">{{ config('myapp.app_name') }}</a>
+      <a class="navbar-brand" href="#">{{ config('app.name') }}</a>
     </div>
     @if(auth()->check())
     <div id="navbar" class="navbar-collapse collapse">

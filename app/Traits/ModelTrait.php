@@ -23,4 +23,9 @@ trait ModelTrait
         return [''=> trans('form.select_any') ] + array_column($query->get()->toArray(), $value_col, $key_col);
     }
 
+    public function scopeFilter($query, $filters)
+    {
+      return $filters->apply($query);
+    }
+
 }

@@ -5775,6 +5775,25 @@ body {
   padding-top: 50px;
   min-height: 600px; }
 
+.value {
+  font-weight: bold;
+  padding-bottom: 5px; }
+
+.fc-time {
+  display: none; }
+
+.panel-default > .panel-heading {
+  background-color: #efefef; }
+
+.status-checkedin {
+  color: #8dc63f; }
+
+.status-checkedout {
+  color: #ff0000; }
+
+.status-active {
+  color: #00ceff; }
+
 /*# sourceMappingURL=app.css.map */
 
 /*!

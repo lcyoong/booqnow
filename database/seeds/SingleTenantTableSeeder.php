@@ -16,7 +16,7 @@ class SingleTenantTableSeeder extends Seeder
       ]);
 
       DB::table('users')->insert([
-        ['id'=>1, 'name' => 'Owner','email' => config('myapp.admin_email'), 'password' => bcrypt('111111')],
+        ['id'=>1, 'name' => 'Owner','email' => config('myapp.admin_email'), 'password' => bcrypt('111111'), 'api_token' => str_random(60)],
       ]);
 
       DB::table('merchants')->insert([

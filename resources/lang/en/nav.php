@@ -7,7 +7,7 @@ return [
   'settings' => 'Settings',
   'customers' => 'Customers',
   'resources' => 'Resources',
-  'appointments' => 'Appointments',
+  'appointments' => 'Bookings',
   'billing' => 'Billing',
   'resource_types' => 'Resource Types',
   'resource_inventory' => 'Inventory',

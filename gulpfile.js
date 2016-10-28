@@ -26,6 +26,14 @@ elixir(mix => {
         'node_modules/font-awesome/fonts',
         'public/build/fonts'
     );
+    mix.copy(
+        'node_modules/moment/min/moment.min.js',
+        'public/js'
+    );
+    // mix.copy(
+    //     'node_modules/moment/locale',
+    //     'resources/assets/js/moment/locale'
+    // );
 
     mix.sass('app.scss');
 
@@ -36,6 +44,9 @@ elixir(mix => {
       'node_modules/font-awesome/css/font-awesome.min.css'
     ], 'public/css/app.css', './');
 
+    // mix.scripts(['moment/locales.min.js', 'moment/moment.min.js', 'app.js'], 'public/js/app.js');
+
     mix.version('css/app.css')
+        // .webpack('moment.min.js')
        .webpack('app.js');
 });

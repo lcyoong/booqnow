@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Repositories\ResourceRepository;
+use App\ResourceFilter;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,35 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+// Route::get('/v1/resources/active', 'ResourceController@active');
+
+// Route::group(['prefix' => '/v1', 'middleware' => 'auth:api'], function () {
+//     Route::get('/resources/active', function(Request $request) {
+//       return $request->user();
+//     });
+// });
+
+Route::group(['prefix' => '/v1'], function () {
+    Route::get('/resources/active', 'Api\ResourceApiController@active');
+    Route::get('/customers/active', 'Api\CustomerApiController@active');
+    Route::get('/bookings/active', 'Api\BookingApiController@active');
+});
+
+
+// Route::get('/v1/resources/active', function (Request $request) {
+//   $repo_rs = new ResourceRepository;
+//
+//   $filters = new ResourceFilter(['status' => 'active']);
+//
+//   $list = $repo_rs->get($filters);
+//
+//   $return = [];
+//
+//   foreach ($list as $item)
+//   {
+//     $return[] = ['id' => $item->rs_id, 'title' => $item->rs_name];
+//   }
+//
+//   return $return;
+// })->middleware('auth:api');

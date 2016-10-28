@@ -8,14 +8,17 @@ use App\Http\Requests;
 
 class DashboardController extends MainController
 {
-    public function merchant()
-    {
-      return view('dashboard.merchant');
-    }
+  public function merchant()
+  {
+    $this->tenant = true;
 
-    public function user()
-    {
-      return view('dashboard.user', $this->vdata);
-    }
+    $this->layout = 'layouts.tenant';
 
+    return view('dashboard.merchant', $this->vdata);
+  }
+
+  public function user()
+  {
+    return view('dashboard.user', $this->vdata);
+  }
 }

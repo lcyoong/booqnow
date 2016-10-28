@@ -5,10 +5,4 @@
 <sample></sample>
 {{ Form::submit(trans('form.add'), ['class' => 'btn btn-primary']) }}
 {{ Form::close() }}
-<script>
-    window.Laravel = <?php echo json_encode([
-        'csrfToken' => csrf_token(),
-    ]); ?>
-</script>
-
 @endsection

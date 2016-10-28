@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\ResourceType;
 use App\Merchant;
-use Booqnow\Repositories\ResourceTypeRepository;
+use Repositories\ResourceTypeRepository;
+use App\ResourceFilter;
 
 class ResourceTypeController extends MainController
 {
@@ -17,14 +18,20 @@ class ResourceTypeController extends MainController
   {
     parent::__construct();
 
+    $this->tenant = true;
+
+    $this->layout = 'layouts.tenant';
+
     $this->repo_rty = $repo_rty;
   }
 
-  public function index()
+  public function index(Request $request)
   {
+    $filters = new ResourceFilter($request->input());
+
     $this->page_title = trans('resource_type.list');
 
-    $resource_types = $this->repo_rty->getList();
+    $resource_types = $this->repo_rty->getPages($filters);
 
     $this->vdata(compact('resource_types'));
 
@@ -54,6 +61,8 @@ class ResourceTypeController extends MainController
     $input = $request->input();
 
     $this->repo_rty->store($input);
+
+    return $this->goodReponse();
   }
 
   public function update(Request $request)
@@ -63,6 +72,8 @@ class ResourceTypeController extends MainController
     $input = $request->input();
 
     $this->repo_rty->update($input);
+
+    return $this->goodReponse();
   }
 
   protected function validation($request)

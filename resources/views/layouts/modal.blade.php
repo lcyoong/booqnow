@@ -3,5 +3,5 @@
     <h4 class="modal-title" id="myModalLabel">{{ $page_title or ''}}</h4>
 </div>
 <div class="modal-body">
-    @yield('content_modal')
+    @stack('content')
 </div>

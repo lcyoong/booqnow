@@ -1,30 +1,15 @@
 <?php
 
-namespace Booqnow\Repositories;
+namespace Repositories;
 
 use App\ResourceType;
 use DB;
 
-class ResourceTypeRepository {
+class ResourceTypeRepository extends BaseRepository{
 
-  public function getList()
+  public function __construct()
   {
-    return ResourceType::all();
+    parent::__construct('App\ResourceType');
   }
 
-  public function store($input)
-  {
-    DB::beginTransaction();
-
-    ResourceType::create($input);
-
-    DB::commit();
-  }
-
-  public function update($input)
-  {
-    $resource_type = ResourceType::findOrFail(array_get($input, 'rty_id'));
-
-    $resource_type->update($input);
-  }
 }

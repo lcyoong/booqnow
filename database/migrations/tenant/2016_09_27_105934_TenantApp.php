@@ -13,6 +13,17 @@ class TenantApp extends Migration
      */
     public function up()
     {
+      Schema::create('codes', function (Blueprint $table) {
+          $table->increments('cod_id');
+          $table->string('cod_group');
+          $table->string('cod_key');
+          $table->string('cod_description');
+          $table->integer('cod_order')->default(0);
+          $table->string('cod_status')->default('active');
+          $table->integer('created_by');
+          $table->timestamps();
+      });
+
       Schema::create('resource_types', function (Blueprint $table) {
           $table->increments('rty_id');
           $table->string('rty_name');
@@ -24,8 +35,11 @@ class TenantApp extends Migration
       Schema::create('resources', function (Blueprint $table) {
           $table->increments('rs_id');
           $table->string('rs_name');
+          $table->text('rs_description')->nullable();
           $table->integer('rs_type');
           $table->decimal('rs_price', 10, 2)->default(0);
+          $table->integer('rs_order')->default(0);
+          $table->string('rs_status')->default('active');
           $table->integer('created_by');
           $table->timestamps();
       });
@@ -41,10 +55,12 @@ class TenantApp extends Migration
 
       Schema::create('customers', function (Blueprint $table) {
           $table->increments('cus_id');
-          $table->string('cus_name');
+          $table->string('cus_first_name');
+          $table->string('cus_last_name');
           $table->string('cus_email');
-          $table->string('cus_contact1');
-          $table->string('cus_contact2');
+          $table->string('cus_country');
+          $table->string('cus_contact1')->nullable();
+          $table->string('cus_contact2')->nullable();
           $table->integer('cus_group')->unsigned()->nullable();
           $table->text('cus_address')->nullable();
           $table->boolean('cus_ignore')->default(0);

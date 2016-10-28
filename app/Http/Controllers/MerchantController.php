@@ -10,6 +10,7 @@ use App\Country;
 use App\Merchant;
 use App\Subscription;
 use Booqnow\Repositories\MerchantRepository;
+use Repositories\CountryRepository;
 
 class MerchantController extends MainController
 {
@@ -20,13 +21,17 @@ class MerchantController extends MainController
     parent::__construct();
 
     $this->repo_mer = $repo_mer;
+
+    $countries = (new CountryRepository)->getDropDown();
+
+    $this->vdata(compact('countries'));
   }
 
   public function index()
   {
     $this->page_title = trans('merchant.accounts');
 
-    $merchants = $this->repo_mer->getList();
+    $merchants = $this->repo_mer->getPages();
 
     $this->vdata(compact('merchants'));
 
@@ -37,10 +42,6 @@ class MerchantController extends MainController
   {
     $this->page_title = trans('merchant.create');
 
-    $countries = Country::toDropDown('coun_code', 'coun_name');
-
-    $this->vdata(compact('countries'));
-
     return view('merchant.new', $this->vdata);
   }
 
@@ -48,11 +49,9 @@ class MerchantController extends MainController
   {
     $this->page_title = trans('merchant.edit');
 
-    $countries = Country::toDropDown('coun_code', 'coun_name');
-
     $mer_setting = unserialize($merchant->mer_setting);
 
-    $this->vdata(compact('merchant', 'countries', 'mer_setting'));
+    $this->vdata(compact('merchant', 'mer_setting'));
 
     return view('merchant.edit', $this->vdata);
   }

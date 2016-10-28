@@ -23,7 +23,7 @@ class MerchantUserController extends MainController
   {
     $this->page_title = trans('merchant.users') . ' for ' . $merchant->mer_name;
 
-    $merchant_users = $this->repo_mus->getList();
+    $merchant_users = $this->repo_mus->getPages();
 
     $this->vdata(compact('merchant_users', 'merchant'));
 
