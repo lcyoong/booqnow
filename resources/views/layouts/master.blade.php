@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('meta')
     <title>{{ $page_title or config('myapp.title') }}</title>
-    <link href="{{ elixir('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset(elixir('css/app.css')) }}" rel="stylesheet">
     @yield('head_content')
     <script>
         window.Laravel = <?php echo json_encode([
@@ -30,7 +30,7 @@
 
   @include('partials.modal')
   <script src="{{ asset('js/moment.min.js') }}"></script>
-  <script src="{{ elixir('js/app.js') }}"></script>
+  <script src="{{ asset(elixir('js/app.js')) }}"></script>
   @stack('scripts')
 </body>
 </html>
