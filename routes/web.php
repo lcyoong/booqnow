@@ -81,11 +81,11 @@ function tenantRoutes()
   Route::get('customers/new_quick', 'CustomerController@pick');
 
   Route::get('bookings', 'BookingController@index');
-  Route::get('bookings/{booking}', 'BookingController@view');
   Route::get('bookings/new', 'BookingController@create');
   Route::post('bookings/new', 'BookingController@store');
   Route::post('bookings/checkin/{booking}', 'BookingController@checkin');
   Route::post('bookings/checkout/{booking}', 'BookingController@checkout');
+  Route::get('bookings/{booking}', 'BookingController@view');
 
   Route::get('bills', 'BillController@index');
   Route::get('bills/{bill}', 'BillController@view');
