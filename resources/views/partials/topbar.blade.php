@@ -15,7 +15,7 @@
         @if(config('myapp.multi_tenant'))
         <pick-merchant list="{{ json_encode($merchants) }}" default="@lang('nav.pick_merchant')"></pick-merchant>
         @else
-        <li><a href="/"><i class="fa fa-dot-circle-o text-success"></i> {{ session('merchant')->mer_name }}</a></li>
+        <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> {{ session('merchant')->mer_name }}</a></li>
         @endif
       </ul>
       <ul class="nav navbar-nav navbar-right">
