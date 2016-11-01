@@ -85,7 +85,8 @@ function tenantRoutes()
   Route::post('bookings/new', 'BookingController@store');
   Route::post('bookings/checkin/{booking}', 'BookingController@checkin');
   Route::post('bookings/checkout/{booking}', 'BookingController@checkout');
-  Route::get('bookings/{booking}', 'BookingController@view');
+  Route::get('bookings/{booking}/view', 'BookingController@view');
+  Route::get('bookings/{booking}', 'BookingController@action');
 
   Route::get('bills', 'BillController@index');
   Route::get('bills/{bill}', 'BillController@view');

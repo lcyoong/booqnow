@@ -8,4 +8,6 @@ return [
   'tax_percent' => 7,
   'multi_tenant' => false,
   'get_limit' => 10,
+  'js_date_format' => 'dd-mm-yyyy',
+  'php_date_format' => 'd-m-Y',
 ];

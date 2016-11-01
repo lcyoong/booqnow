@@ -131,6 +131,23 @@ class BookingController extends MainController
     return view('booking.view', $this->vdata);
   }
 
+  public function action(Booking $booking)
+  {
+    $this->layout = 'layouts.modal';
+
+    $this->page_title = trans('booking.action', ['id' => $booking->book_id]);
+
+    $booking = $this->repo_book->single($booking->book_id);
+
+    $bills = $booking->bills;
+
+    $customer = $booking->customer;
+
+    $this->vdata(compact('booking', 'bills', 'customer'));
+
+    return view('booking.action', $this->vdata);
+  }
+
   // protected function validation($request)
   // {
   //   $this->validate($request, [

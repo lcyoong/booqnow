@@ -16,6 +16,11 @@ function showDate($date)
   return Carbon::parse($date)->format('d, M Y');
 }
 
+function today()
+{
+  return date(config('myapp.php_date_format'));
+}
+
 function dayDiff($from, $to)
 {
   return Carbon::parse($from)->diffInDays(Carbon::parse($to), false);

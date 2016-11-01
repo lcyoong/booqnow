@@ -10,6 +10,7 @@ require('./bootstrap');
 require('./fullcalendar');
 require('./fullcalendar-scheduler');
 require('./notify');
+require('./bootstrap-datepicker');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -116,7 +117,7 @@ Vue.directive('modal', {
 })
 
 Vue.directive('post', {
-  params: ['postto'],
+  params: ['postto', 'successreload'],
 
   bind: function() {
     this.el.addEventListener('click', this.onClick.bind(this));
@@ -138,6 +139,16 @@ Vue.directive('post', {
 
   onComplete: function(response) {
     onCompleteNotify(response, this.el);
+
+    if (this.params.successreload) {
+      $.notify("Refreshing your page... Please wait", {
+        position: "bottom right",
+        className: "info"
+      });
+
+      setTimeout(function () { location.reload(); }, 2000);
+
+    }
   },
 
   onError: function(response) {

@@ -22,6 +22,7 @@ class Billing extends Migration
           $table->date('bil_due_date');
           $table->decimal('bil_gross', 15, 2)->default(0);
           $table->decimal('bil_tax', 15, 2)->default(0);
+          $table->decimal('bil_paid', 15, 2)->default(0);
           $table->string('bil_status')->default('active');
           $table->integer('created_by');
           $table->timestamps();

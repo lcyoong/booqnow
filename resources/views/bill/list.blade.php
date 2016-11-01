@@ -12,6 +12,7 @@
     <th>@lang('bill.bil_booking')</th>
     <th>@lang('bill.bil_date')</th>
     <th>{{ appendCurrency(trans('bill.total')) }}</th>
+    <th>{{ appendCurrency(trans('bill.bil_paid')) }}</th>
     <th>@lang('bill.bil_status')</th>
     <th>@lang('form.actions')</th>
   </tr>
@@ -24,6 +25,7 @@
     <td>{{ $item->bil_booking }}</td>
     <td>{{ showDate($item->bil_date) }}</td>
     <td>{{ showMoney($item->bil_gross + $item->bil_tax) }}</td>
+    <td>{{ showMoney($item->bil_paid) }}</td>
     <td>{{ $item->bil_status }}</td>
     <td>
       <a v-modal href="{{ url(sprintf('bills/%s', $item->bil_id)) }}" title="@lang('form.view')"><i class="fa fa-eye"></i></a>

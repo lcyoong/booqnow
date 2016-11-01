@@ -12,4 +12,5 @@ return [
   'rc_reference' => 'Reference',
   'rc_method' => 'Method',
   'rc_status' => 'Status',
+  'rc_remark_placeholder' => 'e.g. Deposit',
 ];

@@ -7,7 +7,7 @@
   {{ Form::showField($single->bil_booking, trans('bill.bil_booking')) }}
   {{ Form::showField(showDate($single->bil_date), trans('bill.bil_date')) }}
   {{ Form::showField(showMoney($single->bil_gross + $single->bil_tax), trans('bill.total')) }}
-  {{ Form::showField($single->bil_status, trans('bill.bil_status')) }}
+  {{ Form::showField(showMoney($single->bil_paid), trans('bill.bil_paid')) }}
 </div>
 <hr/>
 @include('bill.itemized', ['items' => $single->items])

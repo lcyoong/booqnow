@@ -10,6 +10,7 @@ return [
   'bil_date' => 'Bill date',
   'bil_status' => 'Bill status',
   'total' => 'Total',
+  'bil_paid' => 'Paid',
   'bili_unit_price' => sprintf('Unit price (%s)', config('myapp.base_currency')),
   'bili_unit' => 'Unit',
   'bili_gross' => 'Gross',

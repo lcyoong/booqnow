@@ -30,6 +30,10 @@ elixir(mix => {
         'node_modules/moment/min/moment.min.js',
         'public/js'
     );
+    mix.copy(
+        'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
+        'resources/assets/css'
+    );
     // mix.copy(
     //     'node_modules/moment/locale',
     //     'resources/assets/js/moment/locale'
@@ -41,6 +45,7 @@ elixir(mix => {
       'public/css/app.css',
       'resources/assets/css/fullcalendar.css',
       'resources/assets/css/scheduler.css',
+      'resources/assets/css/bootstrap-datepicker.css',
       'node_modules/font-awesome/css/font-awesome.min.css'
     ], 'public/css/app.css', './');
 

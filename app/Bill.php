@@ -33,4 +33,12 @@ class Bill extends TenantModel
 
     $this->save();
   }
+
+  public function refreshPaid()
+  {
+    $this->bil_paid = $this->receipts->sum('rc_amount');
+
+    $this->save();
+  }
+
 }

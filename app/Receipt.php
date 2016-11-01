@@ -3,12 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
-class Receipt extends Model
+class Receipt extends TenantModel
 {
   protected $primaryKey = 'rc_id';
 
   protected $fillable = ['rc_customer', 'rc_bill', 'rc_date', 'rc_amount', 'rc_remark', 'rc_intremark', 'rc_reference', 'rc_method', 'rc_status', 'created_by'];
+
+  public function setRcDateAttribute($value)
+  {
+      $this->attributes['rc_date'] = Carbon::parse($value)->format('Y-m-d');
+  }
 
   public static function boot()
   {
@@ -20,14 +26,19 @@ class Receipt extends Model
 
     });
 
-    static::deleted(function ($post) {
+    static::created(function ($post) {
 
+      Bill::find($post->rc_bill)->refreshPaid();
+
+    });
+
+    static::deleted(function ($post) {
       // Bill::find($post->bili_bill)->refreshGrossTax();
 
     });
 
     static::saved(function ($post) {
-
+      Bill::find($post->rc_bill)->refreshPaid();
       // Bill::find($post->bili_bill)->refreshGrossTax();
 
     });
