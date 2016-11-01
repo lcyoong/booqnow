@@ -8,7 +8,7 @@ class Resource extends TenantModel
 {
   protected $primaryKey = 'rs_id';
 
-  protected $fillable = ['rs_name', 'rs_description', 'rs_status', 'rs_price', 'created_by'];
+  protected $fillable = ['rs_name', 'rs_description', 'rs_status', 'rs_price', 'rs_type', 'created_by'];
 
   public function getIdAttribute($value)
   {

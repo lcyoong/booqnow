@@ -2,6 +2,7 @@
 
 @push('content')
   {{ Form::open(['url' => urlTenant('resources/new'), 'v-ajax', 'goto' => urlTenant('resources')]) }}
+  {{ Form::hidden('rs_type', 1) }}
   <div class="row">
     {{ Form::bsText('rs_name', trans('resource.rs_name')) }}
     {{ Form::bsText('rs_price', trans('resource.rs_price')) }}
