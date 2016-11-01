@@ -7,6 +7,7 @@
 @section('content_list')
 <thead>
   <tr>
+    <th>@lang('booking.book_id')</th>
     <th>@lang('booking.book_customer')</th>
     <th>@lang('booking.book_resource')</th>
     <th>@lang('booking.duration')</th>
@@ -20,6 +21,7 @@
 <tbody>
   @foreach ($list as $item)
   <tr>
+    <td>{{ $item->book_id }}</td>
     <td>{{ $item->customer->full_name }}</td>
     <td>{{ $item->resource->rs_name }}</td>
     <td><span class="label label-info">{{ dayDiff($item->book_from, $item->book_to) }} @lang('booking.nights')</span> {{ showDate($item->book_from) }} - {{ showDate($item->book_to) }}</td>

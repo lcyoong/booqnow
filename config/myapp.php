@@ -1,7 +1,7 @@
 <?php
 
 return [
-  'client_name' => 'OJH',
+  'client_name' => 'Our Jungle House',
   'admin_email' => 'admin@example.com',
   'base_country' => 'MY',
   'base_currency' => 'THB',

@@ -25,7 +25,7 @@ class BaseRepository {
     $this->repo = new $class();
   }
 
-  public function getPages($filters, $joins = [])
+  public function getPages($filters, $joins = [], $order = 'desc')
   {
     $resource = $this->repo->select('*');
 
@@ -35,6 +35,7 @@ class BaseRepository {
     }
 
     // $resource->filter($filters)->paginate($this->paginate);
+    $resource->orderBy($this->repo->getKeyName(), $order);
 
     return $resource->filter($filters)->paginate($this->paginate);
   }

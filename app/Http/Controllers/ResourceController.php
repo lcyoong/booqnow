@@ -35,7 +35,7 @@ class ResourceController extends MainController
 
     $this->new_path = urlTenant('resources/new');
 
-    $resources = $this->repo_rs->getPages($filters);
+    $resources = $this->repo_rs->getPages($filters, [], 'asc');
 
     $this->vdata(compact('resources', 'filter'));
 
