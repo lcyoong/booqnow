@@ -74,8 +74,9 @@ Vue.directive('ajax', {
       showModal(this.params.gotonext);
 
     } else if (this.params.goto) {
+      var goto = this.params.goto;
 
-      setTimeout(function () { window.location = this.params.goto; }, 3000);
+      setTimeout(function () { window.location = goto; }, 3000);
 
     } else if (this.params.successreload) {
 
