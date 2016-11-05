@@ -37,6 +37,7 @@ class Booking extends Migration
           $table->integer('add_customer');
           $table->datetime('add_date')->nullable();
           $table->integer('add_pax')->default(0);
+          $table->integer('add_unit')->default(0);
           $table->string('add_reference')->nullable();
           $table->string('add_tracking')->nullable();
           $table->string('add_status')->default('active');
