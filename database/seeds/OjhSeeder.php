@@ -12,7 +12,9 @@ class OjhSeeder extends Seeder
     public function run()
     {
       DB::table('resource_types')->insert([
-        ['rty_id'=> 1, 'rty_name' => 'Room','rty_price' => 0, 'created_by' => 1],
+        ['rty_id'=> 1, 'rty_name' => 'Room', 'rty_plural' => 'Rooms', 'rty_price' => 0, 'created_by' => 1],
+        ['rty_id'=> 2, 'rty_name' => 'Itinerary', 'rty_plural' => 'Itineraries', 'rty_price' => 0, 'created_by' => 1],
+        ['rty_id'=> 3, 'rty_name' => 'F&B', 'rty_plural' => 'F&B', 'rty_price' => 0, 'created_by' => 1],
       ]);
 
       DB::table('resources')->insert([

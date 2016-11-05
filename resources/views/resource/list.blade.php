@@ -8,6 +8,7 @@
 <thead>
   <tr>
     <th>@lang('resource.rs_name')</th>
+    <th>@lang('resource.rs_description')</th>
     <th>@lang('resource.rs_price')</th>
     <th>@lang('resource.rs_status')</th>
     <th>@lang('form.actions')</th>
@@ -17,6 +18,7 @@
   @foreach ($resources as $resource)
   <tr>
     <td>{{ $resource->rs_name }}</td>
+    <td>{{ $resource->rs_description }}</td>
     <td>{{ showMoney($resource->rs_price) }}</td>
     <td>{{ $resource->rs_status }}</td>
     <td>

@@ -22,7 +22,7 @@
   <div class="col-md-3"><button class="form-control btn-primary" v-post postto="{{ urlTenant('bookings/checkout/' . $booking->book_id) }}"><i class="fa fa-sign-out"></i> @lang('form.check_out')</button></div>
 </div>
 <hr/>
-<h4><i class="fa fa-dollar"></i> @lang('booking.bills')</h4>
+<h4><i class="fa fa-list"></i> @lang('booking.bills')</h4>
 <div class="panel-group" id="accordion">
   @foreach($bills as $bill)
   <div class="panel panel-default">
@@ -51,7 +51,7 @@
         @include('bill.itemized', ['items' => $bill->items])
         @include('receipt.itemized', ['rcitems' => $bill->receipts])
         <div class="row">
-          <div class="col-md-3"><button class="form-control btn-primary"><i class="fa fa-asterisk"></i> @lang('form.add_itinerary')</button></div>
+          <div class="col-md-3"><button class="form-control btn-primary"><i class="fa fa-cab"></i> @lang('form.add_itinerary')</button></div>
           <div class="col-md-3"><button class="form-control btn-primary"><i class="fa fa-glass"></i> @lang('form.add_fnb')</button></div>
           <div class="col-md-3"><a href="{{ urlTenant('receipts/new/' . $bill->bil_id) }}" v-modal><button class="form-control btn-primary"><i class="fa fa-money"></i> @lang('form.pay')</button></a></div>
         </div>

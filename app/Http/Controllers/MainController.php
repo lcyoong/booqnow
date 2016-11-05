@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Repositories\CountryRepository;
+use Repositories\CodeRepository;
+use Repositories\ResourceTypeRepository;
 use App\Http\Requests;
 use App\Merchant;
 use Cache;
@@ -23,10 +26,21 @@ class MainController extends Controller
 
     $this->middleware('connect.tenant');
 
+    $pay_methods = (new CodeRepository)->getDropDown('pay_method');
+
+    $book_status = (new CodeRepository)->getDropDown('book_status', true);
+
+    $countries = (new CountryRepository)->getDropDown();
+
+    // $countries = (new ResourceTypeRepository)->getDropDown();
+
     $this->vdata = [
       'left_section_col' => 12,
       'tenant' => false,
       'layout' => 'layouts.tenant',
+      'pay_methods' => $pay_methods,
+      'book_status' => $book_status,
+      'countries' => $countries,
     ];
   }
 

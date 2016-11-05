@@ -78,9 +78,9 @@ class BaseRepository {
   {
     // $input = $request->input();
 
-    $this->validate($input);
-
     $resource = $this->repo->findOrFail(array_get($input, $this->repo->getKeyName()));
+
+    $this->validate($resource->toArray() + $input);
 
     return $resource->update($input);
   }

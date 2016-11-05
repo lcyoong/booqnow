@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Repositories\ResourceRepository;
 use App\ResourceFilter;
 
+Route::model('resource_type', 'App\ResourceType');
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,7 +29,7 @@ Route::get('/user', function (Request $request) {
 // });
 
 Route::group(['prefix' => '/v1'], function () {
-    Route::get('/resources/active', 'Api\ResourceApiController@active');
+    Route::get('/resources/{resource_type}/active', 'Api\ResourceApiController@active');
     Route::get('/customers/active', 'Api\CustomerApiController@active');
     Route::get('/bookings/active', 'Api\BookingApiController@active');
 });

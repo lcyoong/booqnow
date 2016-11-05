@@ -10,6 +10,8 @@ body { padding-top: 50px; min-height: 600px; }
 
 .fc-time{ display : none; }
 
+// .fc-event { height: 2em; }
+
 .panel-default > .panel-heading { background-color: #efefef; }
 
 .status-checkedin { color: #8dc63f; }
@@ -17,3 +19,16 @@ body { padding-top: 50px; min-height: 600px; }
 .status-checkedout { color: #ff0000; }
 
 .status-active { color: #00ceff; }
+
+.status-holding { color: #f9bb0e; }
+
+.v_margin_10 { margin: 10px 0px;}
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.fc-resized-row { height: 24px !important; }

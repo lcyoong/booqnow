@@ -11,6 +11,7 @@ require('./fullcalendar');
 require('./fullcalendar-scheduler');
 require('./notify');
 require('./bootstrap-datepicker');
+require('./select2');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -100,6 +101,7 @@ Vue.directive('ajax', {
 Vue.directive('modal', {
 
   bind: function() {
+    console.log('modal');
     this.el.addEventListener('click', this.onClick.bind(this));
   },
 

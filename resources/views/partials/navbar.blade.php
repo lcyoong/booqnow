@@ -16,7 +16,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.resources') <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="{{ urlTenant('resources') }}">@lang('resource.list')</a></li>
+            <li><a href="{{ urlTenant('resources/1') }}">@lang('resource.rooms')</a></li>
+            <li><a href="{{ urlTenant('resources/2') }}">@lang('resource.itineraries')</a></li>
+            <li><a href="{{ urlTenant('resources/3') }}">@lang('resource.fnb')</a></li>
             <!-- <li><a href="{{ urlTenant('resource_types') }}">@lang('nav.resource_types')</a></li> -->
           </ul>
         </li>

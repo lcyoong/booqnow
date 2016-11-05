@@ -15,6 +15,10 @@ class CodesTableSeeder extends Seeder
         ['cod_group' => 'pay_method','cod_key' => 'cash', 'cod_description' => 'Cash', 'created_by' => 1],
         ['cod_group' => 'pay_method','cod_key' => 'tt', 'cod_description' => 'Transfer', 'created_by' => 1],
         ['cod_group' => 'pay_method','cod_key' => 'ccdc', 'cod_description' => 'Credit/Debit Card', 'created_by' => 1],
+        ['cod_group' => 'book_status','cod_key' => 'checkedin', 'cod_description' => 'Checked-In', 'created_by' => 1],
+        ['cod_group' => 'book_status','cod_key' => 'checkedout', 'cod_description' => 'Checked-Out', 'created_by' => 1],
+        ['cod_group' => 'book_status','cod_key' => 'active', 'cod_description' => 'Active', 'created_by' => 1],
+        ['cod_group' => 'book_status','cod_key' => 'hold', 'cod_description' => 'Hold', 'created_by' => 1],
       ]);
     }
 }

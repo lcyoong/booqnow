@@ -4,7 +4,7 @@
     <tr>
       <th>@lang('receipt.rc_date')</th>
       <th>@lang('receipt.rc_method')</th>
-      <th>@lang('receipt.rc_amount')</th>
+      <th>{{ appendCurrency(trans('receipt.rc_amount')) }}</th>
       <th>@lang('receipt.rc_remark')</th>
     </tr>
   </thead>
@@ -12,7 +12,7 @@
     @foreach($rcitems as $item)
       <tr>
         <td>{{ showDate($item->rc_date) }}</td>
-        <td>{{ $item->rc_method }}</td>
+        <td>{{ array_get($pay_methods, $item->rc_method) }}</td>
         <td>{{ showMoney($item->rc_amount) }}</td>
         <td>{{ $item->rc_remark }}</td>
       </tr>
@@ -20,5 +20,5 @@
   </tbody>
 </table>
 @else
-<div>@lang('form.na')</div>
+<div class="v_margin_10"><span class="label label-danger">@lang('form.no_receipt')</span></div>
 @endif

@@ -28,6 +28,22 @@ class Booking extends Migration
           $table->integer('created_by');
           $table->timestamps();
       });
+
+      Schema::create('addons', function (Blueprint $table) {
+          $table->increments('add_id');
+          $table->integer('add_booking');
+          $table->integer('add_resource');
+          $table->integer('add_bill');
+          $table->integer('add_customer');
+          $table->datetime('add_date')->nullable();
+          $table->integer('add_pax')->default(0);
+          $table->string('add_reference')->nullable();
+          $table->string('add_tracking')->nullable();
+          $table->string('add_status')->default('active');
+          $table->integer('created_by');
+          $table->timestamps();
+      });
+
     }
 
     /**
@@ -37,6 +53,7 @@ class Booking extends Migration
      */
     public function down()
     {
+      Schema::drop('addons');
       Schema::drop('bookings');
     }
 }

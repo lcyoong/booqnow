@@ -25,6 +25,11 @@ class Bill extends TenantModel
     return $this->belongsTo(Customer::class, 'bil_customer');
   }
 
+  public function booking()
+  {
+    return $this->belongsTo(Booking::class, 'bil_booking');
+  }
+
   public function refreshGrossTax()
   {
     $this->bil_gross = $this->items->sum('bili_gross');

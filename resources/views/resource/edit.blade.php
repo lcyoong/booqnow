@@ -11,6 +11,6 @@
   {{ Form::bsTextarea('rs_description', trans('resource.rs_description'), $resource->rs_description) }}
 </div>
 {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary']) }}
-<redirect-btn label="@lang('form.cancel')" redirect="{{ urlTenant('resources') }}"></redirect-btn>
+<redirect-btn label="@lang('form.cancel')" redirect="{{ urlTenant('resources/' . $resource_type->rty_id) }}"></redirect-btn>
 {{ Form::close() }}
 @endpush

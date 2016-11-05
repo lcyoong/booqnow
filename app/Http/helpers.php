@@ -28,12 +28,19 @@ function dayDiff($from, $to)
 
 function showMoney($value, $withCurrency = false)
 {
-  return ($withCurrency ? config('myapp.base_currency') . ' ' : '') . number_format($value, 2);
+  $decimal = config('myapp.hide_cent') ? 0 : 2;
+
+  return ($withCurrency ? config('myapp.base_currency') . ' ' : '') . number_format($value, $decimal);
 }
 
 function appendCurrency($value)
 {
   return sprintf("$value (%s)", config('myapp.base_currency'));
+}
+
+function calcTax($gross)
+{
+  return $gross * config('myapp.tax_percent')/100;
 }
 
 

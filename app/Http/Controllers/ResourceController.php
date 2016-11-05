@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Resource;
+use App\ResourceType;
 use App\Merchant;
 use Repositories\ResourceRepository;
+use Repositories\ResourceTypeRepository;
 use App\ResourceFilter;
 
 class ResourceController extends MainController
@@ -25,35 +27,40 @@ class ResourceController extends MainController
     $this->repo_rs = (new ResourceRepository);
   }
 
-  public function index(Request $request)
+  public function index(Request $request, ResourceType $resource_type)
   {
-    $filters = new ResourceFilter($request->input());
+    $filters = new ResourceFilter($request->input() + ['type' => $resource_type->rty_id]);
 
     $filter = $request->input();
 
-    $this->page_title = trans('resource.list');
+    $this->page_title = trans('resource.list', ['type' => $resource_type->rty_plural]);
+    // $this->page_title = $resource_type->rty_name;
 
-    $this->new_path = urlTenant('resources/new');
+    $this->new_path = urlTenant(sprintf('resources/%s/new', $resource_type->rty_id));
 
     $resources = $this->repo_rs->getPages($filters, [], 'asc');
 
-    $this->vdata(compact('resources', 'filter'));
+    $this->vdata(compact('resources', 'filter', 'resource_type'));
 
     return view('resource.list', $this->vdata);
   }
 
-  public function create()
+  public function create(ResourceType $resource_type)
   {
-    $this->page_title = trans('resource.new');
+    $this->page_title = trans('resource.new', ['type' => $resource_type->rty_name]);
+
+    $this->vdata(compact('resource_type'));
 
     return view('resource.new', $this->vdata);
   }
 
   public function edit(Merchant $merchant, Resource $resource)
   {
-    $this->page_title = trans('resource.edit');
+    $resource_type = (new ResourceTypeRepository)->findById($resource->rs_type);
 
-    $this->vdata(compact('resource'));
+    $this->page_title = trans('resource.edit', ['type' => $resource_type->rty_name]);
+
+    $this->vdata(compact('resource', 'resource_type'));
 
     return view('resource.edit', $this->vdata);
   }

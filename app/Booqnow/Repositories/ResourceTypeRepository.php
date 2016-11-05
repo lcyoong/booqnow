@@ -12,4 +12,13 @@ class ResourceTypeRepository extends BaseRepository{
     parent::__construct('App\ResourceType');
   }
 
+  public function getDropDown()
+  {
+    return Cache::remember('resource_type', 90, function()
+    {
+      return ResourceType::toDropDown('rty_id', 'rty_name');
+    });
+
+  }
+
 }

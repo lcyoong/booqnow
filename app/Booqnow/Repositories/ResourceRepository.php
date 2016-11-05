@@ -12,30 +12,21 @@ class ResourceRepository extends BaseRepository {
     parent::__construct('App\Resource');
 
     $this->rules = [
+      'rs_type' => 'required|exists:resource_types,rty_id',
       'rs_name' => 'required|max:255',
-      'rs_price' => 'required|numeric',      
+      'rs_price' => 'required|numeric',
     ];
+
+    $this->alt_rules[0] = [
+      'rs_type' => '',
+    ];
+
   }
 
-  // public function getList($filters)
-  // {
-  //   return Resource::filter($filters)->orderBy('rs_name', 'asc')->paginate(5);
-  // }
-  //
-  // public function store($input)
-  // {
-  //   DB::beginTransaction();
-  //
-  //   Resource::create($input);
-  //
-  //   DB::commit();
-  // }
-  //
-  // public function update($input)
-  // {
-  //   $resource = Resource::findOrFail(array_get($input, 'rs_id'));
-  //
-  //   $resource->update($input);
-  // }
+  public function getDropDown($filters)
+  {
+    return Resource::filter($filters)->toDropDown('rs_id', 'rs_name');
+
+  }
 
 }

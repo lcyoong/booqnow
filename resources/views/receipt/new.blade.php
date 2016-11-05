@@ -1,7 +1,11 @@
 @extends($layout)
 
 @push('content')
-{{ Form::open(['url' => urlTenant('receipts/new'), 'v-ajax', 'gotonext' => urlTenant(sprintf("bookings/%s", $bill->bil_id)), 'hidecompletemessage' => true]) }}
+@include('customer.profile', ['customer' => $bill->customer])
+<hr/>
+@include('bill.basic', ['bill' => $bill])
+<hr/>
+{{ Form::open(['url' => urlTenant('receipts/new'), 'v-ajax', 'gotonext' => urlTenant(sprintf("bookings/%s", $bill->bil_booking)), 'hidecompletemessage' => true]) }}
 {{ Form::hidden('rc_bill', $bill->bil_id) }}
 <div class="row">
   {{ Form::bsSelect('rc_method', trans('receipt.rc_method'), $pay_methods) }}

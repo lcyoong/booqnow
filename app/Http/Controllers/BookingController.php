@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Repositories\BookingRepository;
 use Repositories\ResourceRepository;
-use Repositories\CountryRepository;
+// use Repositories\CountryRepository;
 use Repositories\BillRepository;
+use Repositories\AddonRepository;
 use Repositories\BillItemRepository;
 use App\BookingFilter;
 use App\Booking;
@@ -28,9 +29,9 @@ class BookingController extends MainController
 
     $this->layout = 'layouts.tenant';
 
-    $countries = (new CountryRepository)->getDropDown();
-
-    $this->vdata(compact('countries'));
+    // $countries = (new CountryRepository)->getDropDown();
+    //
+    // $this->vdata(compact('countries'));
   }
 
   public function index(Request $request)
@@ -141,11 +142,26 @@ class BookingController extends MainController
 
     $bills = $booking->bills;
 
+    $itineraries = $booking->addons;
+
     $customer = $booking->customer;
 
-    $this->vdata(compact('booking', 'bills', 'customer'));
+    $this->vdata(compact('booking', 'bills', 'customer', 'itineraries'));
 
     return view('booking.action', $this->vdata);
+  }
+
+  public function bills(Booking $booking)
+  {
+    $this->layout = 'layouts.modal';
+
+    $this->page_title = trans('booking.action', ['id' => $booking->book_id]);
+
+    $bills = $booking->bills;
+
+    $this->vdata(compact('booking', 'bills'));
+
+    return view('booking.bills', $this->vdata);
   }
 
   // protected function validation($request)

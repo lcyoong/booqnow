@@ -12,7 +12,7 @@
   {{ Form::bsEmail('cus_email', trans('customer.cus_email')) }}
 </div>
 <div class="row">
-  {{ Form::bsSelect('cus_country', trans('customer.cus_country'), $countries) }}
+  {{ Form::bsSelect('cus_country', trans('customer.cus_country'), $countries, null, ['class' => 'select2']) }}
   {{ Form::bsTextarea('cus_address', trans('customer.cus_address')) }}
 </div>
 {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary']) }}

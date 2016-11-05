@@ -67,8 +67,14 @@ function tenantRoutes()
   Route::get('resource_types/{resource_type}/edit', 'ResourceTypeController@edit');
   Route::post('resource_types/update', 'ResourceTypeController@update');
 
-  Route::get('resources', 'ResourceController@index');
-  Route::get('resources/new', 'ResourceController@create');
+  // Route::get('resources', 'ResourceController@index');
+  // Route::get('resources/new', 'ResourceController@create');
+  // Route::post('resources/new', 'ResourceController@store');
+  // Route::get('resources/{resource}/edit', 'ResourceController@edit');
+  // Route::post('resources/update', 'ResourceController@update');
+
+  Route::get('resources/{resource_type}', 'ResourceController@index');
+  Route::get('resources/{resource_type}/new', 'ResourceController@create');
   Route::post('resources/new', 'ResourceController@store');
   Route::get('resources/{resource}/edit', 'ResourceController@edit');
   Route::post('resources/update', 'ResourceController@update');
@@ -87,6 +93,12 @@ function tenantRoutes()
   Route::post('bookings/checkout/{booking}', 'BookingController@checkout');
   Route::get('bookings/{booking}/view', 'BookingController@view');
   Route::get('bookings/{booking}', 'BookingController@action');
+  Route::get('bookings/{booking}/bills', 'BookingController@bills');
+
+  Route::get('bookings/bill/{bill}/addons/{resource_type}/new', 'AddonController@create');
+  Route::get('bookings/bill/{bill}/addons/{resource_type}/pos', 'AddonController@createPos');
+  Route::post('addons/new', 'AddonController@store');
+  Route::post('addons/push/{booking}/{resource}', 'AddonController@push');
 
   Route::get('bills', 'BillController@index');
   Route::get('bills/{bill}', 'BillController@view');

@@ -10,4 +10,9 @@ return [
   'get_limit' => 10,
   'js_date_format' => 'dd-mm-yyyy',
   'php_date_format' => 'd-m-Y',
+  'hide_cent' => true,
+  'hide_items_tax' => true,
+  'enable_checkin' => false,
+  'enable_checkout' => false,
+  'enable_ltv' => false,
 ];

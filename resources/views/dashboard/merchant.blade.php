@@ -1,6 +1,7 @@
 @extends($layout)
 
 @push('content')
+@include('booking.status_legend', ['book_status' => $book_status])
 <div id="calendar"></div>
 @endpush
 
@@ -33,7 +34,7 @@ $('#calendar').fullCalendar({
 		},
     resourceAreaWidth: '20%',
     resources: {
-				url: '{{ urlTenant('api/v1/resources/active') }}',
+				url: '{{ urlTenant('api/v1/resources/1/active') }}',
         type: 'GET',
         // headers: {
         //     "X-CSRF-TOKEN": Laravel.csrfToken,
@@ -51,9 +52,12 @@ $('#calendar').fullCalendar({
         },
       }
     ],
-    eventRender: function(event, element) {
+    eventRender: function(event, element, view) {
       element.find('.fc-title').append(' #' + event.id);
       element.find('.fc-title').prepend('<i class="fa fa-circle status-' + event.status + '"></i> ');
+      $(".fc-rows table tbody tr .fc-widget-content div").addClass('fc-resized-row');
+      $(".fc-content table tbody tr .fc-widget-content div").addClass('fc-resized-row');
+      $(".fc-body .fc-resource-area .fc-cell-content").css('padding', '0px');
       },
     slotWidth: "70",
     selectable: true,

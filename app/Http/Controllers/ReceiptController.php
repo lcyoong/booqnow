@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Bill;
-use Repositories\CodeRepository;
+// use Repositories\CodeRepository;
 use Repositories\ReceiptRepository;
 
 class ReceiptController extends MainController
@@ -21,9 +21,9 @@ class ReceiptController extends MainController
 
     $this->tenant = true;
 
-    $pay_methods = (new CodeRepository)->getDropDown('pay_method');
-
-    $this->vdata(compact('pay_methods'));
+    // $pay_methods = (new CodeRepository)->getDropDown('pay_method');
+    //
+    // $this->vdata(compact('pay_methods'));
   }
 
   public function create(Request $request, Bill $bill)

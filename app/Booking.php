@@ -25,4 +25,9 @@ class Booking extends TenantModel
     return $this->hasMany(Bill::class, 'bil_booking');
   }
 
+  public function addons()
+  {
+    return $this->hasMany(Addon::class, 'add_booking');
+  }
+
 }

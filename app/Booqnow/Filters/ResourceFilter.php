@@ -12,6 +12,14 @@ class ResourceFilter extends QueryFilter
     }
   }
 
+  public function type($value = '')
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where("rs_type", 'like', "%$value%");
+    }
+  }
+
   public function status($value = '')
   {
     if (!empty($value)) {

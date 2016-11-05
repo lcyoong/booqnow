@@ -21,4 +21,9 @@ return [
   'check_out' => 'Check-out',
   'pay' => 'Pay',
   'na' => 'N/A',
+  'no_receipt' => '** No payment received',
+  'no_item' => '** No item',
+  'no_itinerary' => '** No itinerary',
+  'bills' => 'Bills',
+  'item_added' => ':item added',
 ];

@@ -27,6 +27,7 @@ class TenantApp extends Migration
       Schema::create('resource_types', function (Blueprint $table) {
           $table->increments('rty_id');
           $table->string('rty_name');
+          $table->string('rty_plural');
           $table->decimal('rty_price', 10, 2)->default(0);
           $table->integer('created_by');
           $table->timestamps();
