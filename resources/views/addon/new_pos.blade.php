@@ -8,19 +8,25 @@
 {{ Form::hidden('add_bill', $bill->bil_id) }}
 {{ Form::hidden('add_customer', $booking->book_customer) }}
 <div class="container-fluid">
-@foreach ($resources->chunk(6) as $resource_chunk)
-  <div class="row row-eq-height">
-    @foreach ($resource_chunk as $resource)
-      <div class="col-md-2" style="padding: 2px; background: #fdfdfd;">
-        <div style="">
-          <a href="#" v-post postto="{{ urlTenant(sprintf("addons/push/%s/%s", $booking->book_id, $resource->rs_id)) }}">{{ $resource->rs_name }}</a>
+  <div class="row">
+    <div class="col-md-8">
+      @foreach ($resources->chunk(4) as $resource_chunk)
+        <div class="row row-eq-height">
+          @foreach ($resource_chunk as $resource)
+            <div class="col-md-3" style="padding: 2px; background: #fdfdfd;">
+              <div style="">
+                <a href="#" v-post postto="{{ urlTenant(sprintf("addons/push/%s/%s", $booking->book_id, $resource->rs_id)) }}">{{ $resource->rs_name }}</a>
+              </div>
+            </div>
+          @endforeach
         </div>
-      </div>
-    @endforeach
+      @endforeach
+    </div>
+    <div class="col-md-4">
+      <addon-list book_id="{{ $booking->book_id }}"></addon-list>
+    </div>
   </div>
-@endforeach
 </div>
-<addon-list book_id="{{ $booking->book_id }}"></addon-list>
 {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary']) }}
 {{ Form::close() }}
 

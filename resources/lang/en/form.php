@@ -15,7 +15,7 @@ return [
   'cancel' => 'Cancel',
   'to' => 'to',
   'subtotal' => sprintf('Subtotal (%s)', config('myapp.base_currency')),
-  'add_itinerary' => 'Add itinerary',
+  'add_itinerary' => 'Add tour',
   'add_fnb' => 'Add F&B',
   'check_in' => 'Check-in',
   'check_out' => 'Check-out',
@@ -23,7 +23,7 @@ return [
   'na' => 'N/A',
   'no_receipt' => '** No payment received',
   'no_item' => '** No item',
-  'no_itinerary' => '** No itinerary',
+  'no_itinerary' => '** No tour',
   'bills' => 'Bills',
   'item_added' => ':item added',
 ];

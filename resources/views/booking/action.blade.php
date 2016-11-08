@@ -5,7 +5,7 @@
 @include('booking._info_extended', ['booking' => $booking])
 <ul class="nav nav-tabs" role="tablist">
   <li role="presentation" class="active"><a href="#bill" aria-controls="bill" role="tab" data-toggle="tab"><i class="fa fa-list"></i> @lang('booking.bills')</a></li>
-  <li role="presentation"><a href="#itinerary" aria-controls="itinerary" role="tab" data-toggle="tab"><i class="fa fa-cab"></i> Itinerary ( {{ $itineraries->count() }} )</a></li>
+  <li role="presentation"><a href="#itinerary" aria-controls="itinerary" role="tab" data-toggle="tab"><i class="fa fa-cab"></i> Tour ( {{ $itineraries->count() }} )</a></li>
   <!-- <li role="presentation"><a href="#fnb" aria-controls="fnb" role="tab" data-toggle="tab"><i class="fa fa-glass"></i> F&B</a></li> -->
 </ul>
 
