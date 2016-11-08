@@ -7,10 +7,8 @@
   </div>
 </div>
 
-@push('scripts')
 <script type="text/javascript">
 $(function() {
   $('.select2').select2();
 });
 </script>
-@endpush

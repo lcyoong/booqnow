@@ -5,6 +5,7 @@ use Repositories\ResourceRepository;
 use App\ResourceFilter;
 
 Route::model('resource_type', 'App\ResourceType');
+// Route::model('booking', 'App\Booking');
 /*
 |--------------------------------------------------------------------------
 | API Routes

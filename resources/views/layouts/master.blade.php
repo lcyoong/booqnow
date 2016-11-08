@@ -28,9 +28,9 @@
     </div>
   </footer>
 
-  @include('partials.modal')
   <script src="{{ asset('js/moment.min.js') }}"></script>
   <script src="{{ asset(elixir('js/app.js')) }}"></script>
   @stack('scripts')
+  @include('partials.modal')
 </body>
 </html>

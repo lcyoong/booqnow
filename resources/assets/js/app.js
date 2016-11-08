@@ -12,6 +12,7 @@ require('./fullcalendar-scheduler');
 require('./notify');
 require('./bootstrap-datepicker');
 require('./select2');
+require('./booqnow');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -23,6 +24,7 @@ Vue.component('sample', require('./components/Example.vue'));
 Vue.component('pick-merchant', require('./components/Merchants.vue'));
 Vue.component('redirect-btn', require('./components/RedirectButton.vue'));
 Vue.component('autocomplete', require('./components/vue-autocomplete.vue'));
+Vue.component('addon-list', require('./components/AddonList.vue'));
 // Vue.component('autocomplete', require('./components/vue-autocomplete.vue'));
 
 // Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('input[name="_token"]').value;

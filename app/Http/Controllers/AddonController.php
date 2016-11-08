@@ -51,6 +51,8 @@ class AddonController extends MainController
 
   public function createPos(Request $request, Bill $bill, ResourceType $resource_type)
   {
+    // dd(session()->get('2.pos'));
+
     $input = $request->input();
 
     $this->layout = 'layouts.modal';
@@ -96,9 +98,14 @@ class AddonController extends MainController
 
   public function push(Request $request, Booking $booking, Resource $resource)
   {
-    session()->push($booking->book_id . '.pos', $resource->rs_id);
+    session()->push($booking->book_id . '.pos', $resource);
 
     return $this->goodReponse(trans('form.item_added', ['item' => $resource->rs_name]));
+  }
+
+  public function pop(Request $request, Booking $booking)
+  {
+    return session()->get($booking->book_id . '.pos');
   }
 
 }

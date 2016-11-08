@@ -20,13 +20,7 @@
   </div>
 @endforeach
 </div>
-<div>
-  <ul id="example-1">
-  <li v-for="item in items">
-    @{{ item.message }}
-  </li>
-</ul>
-</div>
+<addon-list book_id="{{ $booking->book_id }}"></addon-list>
 {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary']) }}
 {{ Form::close() }}
 
@@ -35,6 +29,12 @@ var app2 = new Vue({
     el: 'body',
     ready: function () {
       // alert('sss');
+    },
+    data: {
+      items: [
+            { message: 'Foo' },
+            { message: 'Bar' }
+          ]
     },
     methods: {
     }

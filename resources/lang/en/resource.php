@@ -10,6 +10,7 @@ return [
   'rs_description' => 'Description',
   'rs_price' => sprintf('Base Price (%s)', config('myapp.base_currency')),
   'rs_status' => 'Status',
-  // 'rooms' => 'Rooms',
-  // 'itineraries' => 'Itineraries',
+  'rooms' => 'Rooms',
+  'itineraries' => 'Tours',
+  'fnb' => 'F&B',
 ];
