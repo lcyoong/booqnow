@@ -13,8 +13,17 @@ class Billing extends Migration
      */
     public function up()
     {
+      Schema::create('accounting', function (Blueprint $table) {
+          $table->increments('acc_id')->unsigned();
+          $table->string('acc_name');
+          $table->string('acc_bill_description');
+          $table->integer('created_by');
+          $table->timestamps();
+      });
+
       Schema::create('bills', function (Blueprint $table) {
           $table->increments('bil_id');
+          $table->integer('bil_accounting')->default(1);
           $table->integer('bil_customer');
           $table->integer('bil_booking');
           $table->string('bil_description')->nullable();

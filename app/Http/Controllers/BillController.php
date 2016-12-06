@@ -10,6 +10,7 @@ use Repositories\CountryRepository;
 use App\BillFilter;
 use App\Bill;
 use DB;
+use PDF;
 
 class BillController extends MainController
 {
@@ -58,6 +59,35 @@ class BillController extends MainController
     $this->vdata(compact('single', 'customer'));
 
     return view('bill.view', $this->vdata);
+  }
+
+  public function download(Bill $bill)
+  {
+    $this->layout = 'layouts.print';
+
+    $title = trans('bill.print_title', ['no' => '#' . $bill->bil_id]);
+
+    $items = $bill->items()->join('resources', 'rs_id', 'bili_resource')->orderBy('rs_type')->get();
+
+    $resource_name = array_column(array_get($this->vdata, 'resource_types')->toArray(), 'rty_name', 'rty_id');
+
+    $this->vdata(compact('bill', 'title', 'items', 'resource_name'));
+
+    return PDF::loadView('bill.print', $this->vdata)->stream(sprintf("bill-%s.pdf", $bill->bil_id));
+
+    // return $pdf->download('invoice.pdf');
+    //
+    // $this->layout = 'layouts.modal';
+    //
+    // $this->page_title = trans('bill.view', ['id' => $bill->bil_id]);
+    //
+    // $single = $this->repo->single($bill->bil_id);
+    //
+    // $customer = $single->customer;
+    //
+    // $this->vdata(compact('single', 'customer'));
+    //
+    // return view('bill.view', $this->vdata);
   }
 
 }

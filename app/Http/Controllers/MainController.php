@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Repositories\CountryRepository;
 use Repositories\CodeRepository;
 use Repositories\ResourceTypeRepository;
+use Repositories\BookingSourceRepository;
 use App\Http\Requests;
 use App\Merchant;
 use Cache;
@@ -32,6 +33,10 @@ class MainController extends Controller
 
     $countries = (new CountryRepository)->getDropDown();
 
+    $resource_types = (new ResourceTypeRepository)->get();
+
+    $booking_sources = (new BookingSourceRepository)->getDropDown();
+
     // $countries = (new ResourceTypeRepository)->getDropDown();
 
     $this->vdata = [
@@ -41,6 +46,8 @@ class MainController extends Controller
       'pay_methods' => $pay_methods,
       'book_status' => $book_status,
       'countries' => $countries,
+      'resource_types' => $resource_types,
+      'booking_sources' => $booking_sources,
     ];
   }
 
@@ -56,10 +63,11 @@ class MainController extends Controller
 		}
 	}
 
-  public function goodReponse($message = '')
+  public function goodReponse($message = '', $data = null)
   {
     return response([
       'success' => true,
+      'data' => $data,
       'message' => $message ? $message : trans('message.process_successful')
     ]);
   }

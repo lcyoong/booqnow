@@ -36,10 +36,9 @@ $.ajaxSetup({
 
 Vue.directive('ajax', {
 
-  params: ['goto', 'gotonext', 'hidecompletemessage', 'successreload'],
+  params: ['goto', 'gotonext', 'hidecompletemessage', 'successreload', 'gotoappenddata'],
 
   bind: function() {
-    console.log(this.params);
 
     this.el.addEventListener('submit', this.onSubmit.bind(this));
 
@@ -47,12 +46,12 @@ Vue.directive('ajax', {
   },
 
   onUnload: function(e) {
-    // e.preventDefault();
-    console.log('unload ' + this.params.gotonext);
 
-    if (this.params.gotonext) {
-      showModal(this.params.gotonext);
-    }
+    e.preventDefault();
+
+    // if (this.params.gotonext) {
+    //   showModal(this.params.gotonext);
+    // }
 
   },
 
@@ -74,12 +73,16 @@ Vue.directive('ajax', {
 
     if (this.params.gotonext) {
 
+      if (this.params.gotoappenddata) {
+        this.params.gotonext = this.params.gotonext + '/' + response.data.data;
+      }
+
       showModal(this.params.gotonext);
 
     } else if (this.params.goto) {
       var goto = this.params.goto;
 
-      setTimeout(function () { window.location = goto; }, 3000);
+      setTimeout(function () { window.location = goto; }, 2000);
 
     } else if (this.params.successreload) {
 
@@ -103,7 +106,6 @@ Vue.directive('ajax', {
 Vue.directive('modal', {
 
   bind: function() {
-    console.log('modal');
     this.el.addEventListener('click', this.onClick.bind(this));
   },
 

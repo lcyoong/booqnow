@@ -13,6 +13,7 @@ class BillRepository extends BaseRepository {
     parent::__construct('App\Bill');
 
     $this->rules = [
+      // 'bil_accounting' => 'required|exists:accounting,acc_id',
       'bil_customer' => 'required|exists:customers,cus_id',
       'bil_booking' => 'required|exists:bookings,book_id',
       'bil_date' => 'required|date',

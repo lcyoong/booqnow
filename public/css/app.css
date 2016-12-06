@@ -5795,7 +5795,7 @@ body {
 .status-active {
   color: #00ceff; }
 
-.status-holding {
+.status-hold {
   color: #f9bb0e; }
 
 .v_margin_10 {
@@ -5807,6 +5807,11 @@ body {
 
 .fc-resized-row {
   height: 24px !important; }
+
+.redGray {
+  border-color: DarkGray !important;
+  background-color: LightGray !important;
+  color: red !important; }
 
 /*# sourceMappingURL=app.css.map */
 

@@ -11,24 +11,31 @@
   <!--Section 1 - pick customer-->
   <div v-if="section1">
     <hr/>
-    @lang('booking.pick_customer_desc') <a href="{{ urlTenant('customers/new_quick') }}" v-modal><i class="fa fa-user-plus"></i> @lang('form.new')</a>
     <div class="row">
-      <div class="col-md-3">
-        <autocomplete name="people" url="{{ url('api/v1/customers/active') }}" anchor="title" class="form-control" label="extra" model="vModelLike"></autocomplete>
+      <div class="col-md-5">
+        Register a new customer <a href="{{ urlTenant('customers/new_quick') }}" v-modal><i class="fa fa-user-plus"></i> @lang('form.new')</a>
       </div>
-      <div class="col-md-3">
-
+      <div class="col-md-2">
+        OR
+      </div>
+      <div class="col-md-5">
+        Search by name
+        <autocomplete name="people" url="{{ url('api/v1/customers/active') }}" anchor="title" class="form-control" label="extra" model="vModelLike"></autocomplete>
       </div>
     </div>
   </div>
 
   <!--Section 2 - fill booking-->
   <div v-if="section2">
+    {{ Form::hidden('resource[0]', session('booking.resource')->rs_id) }}
+    @if(!empty($customer->cus_id))
+    @include('customer.profile', ['customer' => $customer])
+    @endif
     <div class="row">
+      {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources) }}
       {{ Form::bsNumber('book_pax', trans('booking.book_pax'), 1, ['min' => 1, 'max'=>20]) }}
       {{ Form::bsText('book_reference', trans('booking.book_reference')) }}
       {{ Form::bsText('book_tracking', trans('booking.book_tracking')) }}
-      {{ Form::hidden('resource[0]', session('booking.resource')->rs_id) }}
     </div>
     <table class="table">
       <thead>
@@ -54,18 +61,29 @@
 var app3 = new Vue({
     el: 'body',
     ready: function () {
+      @if(!empty($customer->cus_id))
+      this.section2 = true;
+      this.section1 = false;
+      this.book_customer = {{ $customer->cus_id }};
+      @endif
       // alert('sss');
+
     },
     data: {
       section1: true,
       section2: false,
-      book_customer: null
+      book_customer: null,
     },
     events: {
       'autocomplete-people:selected': function(data){
         console.log('selected-people',data);
-        this.section2 = true;
-        this.book_customer = data.id;
+        $('#basicModal').find('.modal-content').html('');
+        $('#basicModal').modal('show');
+        $('#basicModal').find('.modal-content').load("{{ urlTenant('bookings/new') }}" + '/' + data.id);
+        // this.section2 = true;
+        // this.section1 = false;
+        // this.book_customer = data.id;
+        // this.customer_label = data.title;
       },
     },
 });

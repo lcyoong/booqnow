@@ -24,4 +24,10 @@ class AddonRepository extends BaseRepository {
       'add_tracking' => 'max:255',
     ];
   }
+
+  public function byDate($date, $type, $limit = 5)
+  {
+    return $this->repo->where('add_date', '=', $date)->join('resources', 'rs_id', '=', 'add_resource')->where('rs_type', '=', $type)->limit($limit);
+  }
+
 }

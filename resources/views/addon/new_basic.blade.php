@@ -2,16 +2,16 @@
 
 @push('content')
 @include('customer.profile', ['customer' => $booking->customer])
-<hr/>
-@include('booking.basic', ['booking' => $booking])
-<hr/>
+@include('booking._info_extended', ['booking' => $booking])
 {{ Form::open(['url' => urlTenant('addons/new'), 'v-ajax', 'gotonext' => urlTenant(sprintf("bookings/%s", $booking->book_id)), 'hidecompletemessage' => true]) }}
 {{ Form::hidden('add_booking', $booking->book_id) }}
-{{ Form::hidden('add_bill', $bill->bil_id) }}
+@if('myapp.single_bill_booking')
+{{ Form::hidden('add_bill', array_get($account_bill, $resource_type->rty_accounting)) }}
+@endif
+{{ Form::hidden('add_unit', 1) }}
 {{ Form::hidden('add_customer', $booking->book_customer) }}
 <div class="row">
   {{ Form::bsSelect('add_resource', trans('addon.add_resource'), $resources, null, ['class' => 'select2', 'style' => 'width: 100%']) }}
-  {{ Form::bsNumber('add_unit', trans('addon.add_unit'), 1, ['min' => 1, 'max'=>20]) }}
   {{ Form::bsNumber('add_pax', trans('addon.add_pax'), 1, ['min' => 1, 'max'=>20]) }}
   {{ Form::bsDate('add_date', trans('addon.add_date'), today()) }}
 </div>

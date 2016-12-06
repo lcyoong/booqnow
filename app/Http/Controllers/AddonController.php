@@ -14,6 +14,8 @@ use App\ResourceFilter;
 use Repositories\AddonRepository;
 use Repositories\ResourceRepository;
 use Repositories\BillItemRepository;
+use Repositories\BookingRepository;
+use Repositories\BillRepository;
 
 class AddonController extends MainController
 {
@@ -30,7 +32,7 @@ class AddonController extends MainController
     $this->layout = 'layouts.tenant';
   }
 
-  public function create(Request $request, Bill $bill, ResourceType $resource_type)
+  public function create(Request $request, Booking $booking, ResourceType $resource_type)
   {
     $input = $request->input();
 
@@ -40,19 +42,17 @@ class AddonController extends MainController
 
     $filters = new ResourceFilter(['status' => 'active', 'type' => $resource_type->rty_id]);
 
-    $booking = $bill->booking;
+    $account_bill = array_column($booking->bills->toArray(), 'bil_id', 'bil_accounting');
 
     $resources = (new ResourceRepository)->getDropDown($filters);
 
-    $this->vdata(compact('bill', 'booking', 'resource_type', 'resources'));
+    $this->vdata(compact('bill', 'booking', 'resource_type', 'resources', 'account_bill'));
 
     return view('addon.new_basic', $this->vdata);
   }
 
-  public function createPos(Request $request, Bill $bill, ResourceType $resource_type)
+  public function createPos(Request $request, Booking $booking, ResourceType $resource_type)
   {
-    // dd(session()->get('2.pos'));
-
     $input = $request->input();
 
     $this->layout = 'layouts.modal';
@@ -61,11 +61,11 @@ class AddonController extends MainController
 
     $filters = new ResourceFilter(['status' => 'active', 'type' => $resource_type->rty_id]);
 
-    $booking = $bill->booking;
+    $account_bill = array_column($booking->bills->toArray(), 'bil_id', 'bil_accounting');
 
     $resources = (new ResourceRepository)->get($filters);
 
-    $this->vdata(compact('bill', 'booking', 'resource_type', 'resources'));
+    $this->vdata(compact('bill', 'booking', 'resource_type', 'resources', 'account_bill'));
 
     return view('addon.new_pos', $this->vdata);
   }
@@ -76,9 +76,27 @@ class AddonController extends MainController
 
     DB::transaction(function() use($input) {
 
-      $this->repo->store($input);
-
       $resource = (new ResourceRepository)->findById(array_get($input, 'add_resource'));
+
+      $accounting = $resource->resourceType->accounting;
+
+      if (empty($input['add_bill'])) {
+
+        $booking = (new BookingRepository)->findById(array_get($input, 'add_booking'));
+
+        $new_bill = (new BillRepository)->store([
+          'bil_customer' => array_get($input, 'add_customer'),
+          'bil_accounting' => $accounting->acc_id,
+          'bil_booking' => array_get($input, 'add_booking'),
+          'bil_description' => $accounting->acc_bill_description,
+          'bil_date' => date('Y-m-d'),
+          'bil_due_date' => date('Y-m-d'),
+        ]);
+
+        $input['add_bill'] = $new_bill->bil_id;
+      }
+
+      $this->repo->store($input);
 
       $gross = $resource->rs_price * array_get($input, 'add_unit');
 
@@ -91,6 +109,51 @@ class AddonController extends MainController
         'bili_gross' => $gross,
         'bili_tax' => calcTax($gross),
       ]);
+    });
+
+    return $this->goodReponse();
+  }
+
+  public function storeList(Request $request)
+  {
+    $input = $request->input();
+
+    DB::transaction(function() use($input) {
+
+      // if (empty($input['add_bill'])) {
+      //
+      //   $booking = (new BookingRepository)->findById(array_get($input, 'add_booking'));
+      //
+      //   $new_bill = (new BillRepository)->store([
+      //     'bil_customer' => array_get($input, 'add_customer'),
+      //     'bil_accounting' => $accounting->acc_id,
+      //     'bil_booking' => array_get($input, 'add_booking'),
+      //     'bil_description' => $accounting->acc_bill_description,
+      //     'bil_date' => date('Y-m-d'),
+      //     'bil_due_date' => date('Y-m-d'),
+      //   ]);
+      //
+      //   $input['add_bill'] = $new_bill->bil_id;
+      // }
+
+      foreach( $input['addon_id'] as $id => $content) {
+
+        $item = json_decode($content);
+
+        $unit = 1;
+
+        $gross = $item->rs_price * $unit;
+
+        (new BillItemRepository)->store([
+          'bili_resource' => $id,
+          'bili_description' => $item->rs_name,
+          'bili_bill' => array_get($input, 'add_bill'),
+          'bili_unit_price' => $item->rs_price,
+          'bili_unit' => $unit,
+          'bili_gross' => $gross,
+          'bili_tax' => calcTax($gross),
+        ]);
+      }
     });
 
     return $this->goodReponse();

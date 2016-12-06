@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Bill;
 // use Repositories\CodeRepository;
 use Repositories\ReceiptRepository;
+use App\ReceiptFilter;
 
 class ReceiptController extends MainController
 {
@@ -24,6 +25,21 @@ class ReceiptController extends MainController
     // $pay_methods = (new CodeRepository)->getDropDown('pay_method');
     //
     // $this->vdata(compact('pay_methods'));
+  }
+
+  public function index(Request $request)
+  {
+    $filters = new ReceiptFilter($request->input());
+
+    $filter = $request->input();
+
+    $this->page_title = trans('receipt.list');
+
+    $list = $this->repo->getPages($filters, [['table' => 'customers', 'left_col' => 'cus_id', 'right_col' => 'rc_customer']]);
+
+    $this->vdata(compact('list', 'filter'));
+
+    return view('receipt.list', $this->vdata);
   }
 
   public function create(Request $request, Bill $bill)

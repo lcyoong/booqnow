@@ -38,6 +38,5 @@
 @endsection
 
 @push('content')
-@include('layouts.list')
-<div id="hello">Hello</div>
+@include('layouts.list', ['count' => $list->count()])
 @endpush

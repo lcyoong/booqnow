@@ -1,5 +1,5 @@
 @yield('content_above_list')
-
+{{ $count or 0 }} @lang('form.records')
 <div class="row">
   <div class="col-md-{{ $left_section_col }}">
   <div class="table-responsive">

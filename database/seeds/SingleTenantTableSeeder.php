@@ -31,5 +31,16 @@ class SingleTenantTableSeeder extends Seeder
         ['mus_id'=>1, 'mus_merchant' => 1,'mus_user' => 1, 'created_by' => 1],
       ]);
 
+      DB::table('accounting')->insert([
+        ['acc_id'=>1, 'acc_name' => 'Default', 'acc_bill_description' => 'Accommodation bill', 'created_by' => 1],
+        ['acc_id'=>2, 'acc_name' => 'Alternative', 'acc_bill_description' => 'Tour bill', 'created_by' => 1],
+      ]);
+
+      DB::table('booking_sources')->insert([
+        ['bs_id'=>1, 'bs_description' => 'Online', 'created_by' => 1],
+        ['bs_id'=>2, 'bs_description' => 'Walk-in', 'created_by' => 1],
+        ['bs_id'=>3, 'bs_description' => 'Agent', 'created_by' => 1],
+      ]);
+
     }
 }

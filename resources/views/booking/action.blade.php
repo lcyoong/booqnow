@@ -1,11 +1,15 @@
 @extends($layout)
 
 @push('content')
-@include('customer.profile')
+@include('customer.profile', ['customer' => $booking->customer])
 @include('booking._info_extended', ['booking' => $booking])
 <ul class="nav nav-tabs" role="tablist">
   <li role="presentation" class="active"><a href="#bill" aria-controls="bill" role="tab" data-toggle="tab"><i class="fa fa-list"></i> @lang('booking.bills')</a></li>
-  <li role="presentation"><a href="#itinerary" aria-controls="itinerary" role="tab" data-toggle="tab"><i class="fa fa-cab"></i> Tour ( {{ $itineraries->count() }} )</a></li>
+  @foreach($resource_types as $type)
+  @if(!$type->rty_master)
+  <li role="presentation"><a href="#{{ $type->rty_code }}" aria-controls="{{ $type->rty_code }}" role="tab" data-toggle="tab"><i class="fa {{ config('myapp.icon-' . $type->rty_code) }}"></i> {{ $type->rty_plural }}</a></li>
+  @endif
+  @endforeach
   <!-- <li role="presentation"><a href="#fnb" aria-controls="fnb" role="tab" data-toggle="tab"><i class="fa fa-glass"></i> F&B</a></li> -->
 </ul>
 
@@ -18,9 +22,7 @@
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $bill->bil_id }}">
           <div class="row">
             <div class="col-md-3">
-              <h4 class="panel-title">
-                  # {{ $bill->bil_id }}
-              </h4>
+              # {{ $bill->bil_id }} - {{ $bill->bil_description }}
             </div>
             <div class="col-md-3">
               {{ showDate($bill->bil_date) }}
@@ -37,24 +39,27 @@
           </div>
           </a>
         </div>
-        <div id="collapse{{ $bill->bil_id }}" class="panel-collapse collapse in">
+        <div id="collapse{{ $bill->bil_id }}" class="panel-collapse collapse">
           <div class="panel-body">
             @include('bill.itemized', ['items' => $bill->items])
             @include('receipt.itemized', ['rcitems' => $bill->receipts])
-            <div class="row">
-              <div class="col-md-3"><a href="{{ urlTenant(sprintf("bookings/bill/%s/addons/%s/new", $bill->bil_id, 2)) }}" v-modal><button class="form-control btn-primary"><i class="fa fa-cab"></i> @lang('form.add_itinerary')</button></a></div>
-              <div class="col-md-3"><a href="{{ urlTenant(sprintf("bookings/bill/%s/addons/%s/pos", $bill->bil_id, 3)) }}" v-modal><button class="form-control btn-primary"><i class="fa fa-glass"></i> @lang('form.add_fnb')</button></a></div>
-              <div class="col-md-3"><a href="{{ urlTenant('receipts/new/' . $bill->bil_id) }}" v-modal><button class="form-control btn-primary"><i class="fa fa-money"></i> @lang('form.pay')</button></a></div>
-            </div>
+            <a href="{{ urlTenant('receipts/new/' . $bill->bil_id) }}" v-modal><button class="btn btn-primary"><i class="fa fa-money"></i> @lang('form.pay')</button></a>
+            <a href="{{ urlTenant(sprintf("bills/%s/print", $bill->bil_id)) }}" target=_blank><button class="btn btn-primary"><i class="fa fa-print"></i> @lang('form.print')</button></a>
+            <!-- <div class="col-md-3"><a href="{{ urlTenant(sprintf("bookings/bill/%s/addons/%s/pos", $bill->bil_id, 3)) }}" v-modal><button class="form-control btn-primary"><i class="fa fa-glass"></i> @lang('form.add_fnb')</button></a></div> -->
           </div>
         </div>
       </div>
       @endforeach
     </div>
   </div>
-  <div role="tabpanel" class="tab-pane" id="itinerary">
-    @include('addon.itemized', ['items' => $itineraries])
+  @foreach($resource_types as $type)
+  @if(!$type->rty_master)
+  <div role="tabpanel" class="tab-pane" id="{{ $type->rty_code }}">
+    @include('addon.itemized.' . $type->rty_code, ['items' => $addons, 'type' => $type])
   </div>
+  @endif
+  @endforeach
+
   <!-- <div role="tabpanel" class="tab-pane" id="fnb">...</div> -->
 </div>
 

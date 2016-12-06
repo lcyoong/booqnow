@@ -4,6 +4,7 @@ namespace Repositories;
 
 use App\ResourceType;
 use DB;
+use Cache;
 
 class ResourceTypeRepository extends BaseRepository{
 

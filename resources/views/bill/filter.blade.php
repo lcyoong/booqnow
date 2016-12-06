@@ -5,5 +5,5 @@
   {{ Form::filterText('booking', trans('bill.bil_booking'), array_get($filter, 'booking'), ['placeholder' => trans('bill.bil_booking')]) }}
 </div>
 {{ Form::submit(trans('form.filter'), ['class' => 'btn btn-primary']) }}
-<redirect-btn label="@lang('form.clear')" redirect="bills"></redirect-btn>
+<redirect-btn label="@lang('form.clear')" redirect="{{ urlTenant('bills') }}"></redirect-btn>
 {{ Form::close() }}

@@ -26,14 +26,17 @@ class BookingApiController extends ApiController
     foreach ($list as $item)
     {
       $return[] = [
+        'type' => 'booking',
         'id' => $item->book_id,
         'title' => $item->customer->full_name,
         'start' => $item->book_from,
         'end' => $item->book_to,
         'resourceId' => $item->book_resource,
         'status' => $item->book_status,
-        'backgroundColor' => '#e8bc6a',
-        'borderColor' => '#d3ab61',
+        'backgroundColor' => config('myapp.bg-source-' . $item->book_source),
+        'textColor' => '#999999',
+        'borderColor' => '#999999',
+        // 'borderColor' => config('myapp.bd-source-' . $item->book_source),
       ];
     }
 

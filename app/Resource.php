@@ -20,4 +20,9 @@ class Resource extends TenantModel
     return $this->rs_name;
   }
 
+  public function resourceType()
+  {
+    return $this->belongsTo(ResourceType::class, 'rs_type');
+  }
+
 }

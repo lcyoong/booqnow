@@ -2,7 +2,7 @@
 
 @push('content')
 <div id="temp">
-{{ Form::open(['url' => urlTenant('customers/new'), 'v-ajax', 'gotonext' => urlTenant('bookings/new'), 'hidecompletemessage' => true]) }}
+{{ Form::open(['url' => urlTenant('customers/new'), 'v-ajax', 'gotonext' => urlTenant('bookings/new'), 'hidecompletemessage' => true, 'gotoappenddata' => true]) }}
 <div class="row">
   {{ Form::bsEmail('cus_email', trans('customer.cus_email')) }}
   {{ Form::bsSelect('cus_country', trans('customer.cus_country'), $countries) }}

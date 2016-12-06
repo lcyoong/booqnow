@@ -40,9 +40,13 @@ class BaseRepository {
     return $resource->filter($filters)->paginate($this->paginate);
   }
 
-  public function get($filters, $limit = 0, $with = [], $joins = [])
+  public function get($filters = null, $limit = 0, $with = [], $joins = [])
   {
-    $resource = $this->repo->filter($filters);
+    $resource = $this->repo->select('*');
+
+    if (!is_null($filters)) {
+      $resource->filter($filters);
+    }
 
     foreach ($joins as $join){
 
@@ -83,6 +87,11 @@ class BaseRepository {
     $this->validate($resource->toArray() + $input);
 
     return $resource->update($input);
+  }
+
+  public function deleteById($id)
+  {
+    return $this->repo->find($id)->delete();
   }
 
   public function validate($input)

@@ -24,4 +24,9 @@ class TenantModel extends BaseModel
   		$this->connection = $database;
     }
 	}
+
+  public function creator()
+  {
+    return $this->belongsTo(User::class, 'created_by');
+  }
 }

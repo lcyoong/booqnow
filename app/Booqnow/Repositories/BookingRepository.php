@@ -13,6 +13,11 @@ class BookingRepository extends BaseRepository {
     parent::__construct('App\Booking');
 
     $this->rules = [
+      'book_resource' => 'required|exists:resources,rs_id',
+      'book_customer' => 'required|exists:customers,cus_id',
+      'book_source' => 'required|exists:booking_sources,bs_id',
+      'book_from' => 'required|date',
+      'book_to' => 'required|date',
       'book_pax' => 'required|min:1|numeric',
       'book_reference' => 'max:255',
       'book_tracking' => 'max:255',
@@ -49,4 +54,13 @@ class BookingRepository extends BaseRepository {
     return $this->repo->where('book_resource', '=', $resource)->where('book_to', '>', $from)->where('book_from', '<', $to);
   }
 
+  public function latestArrivals($date, $limit = 5)
+  {
+    return $this->repo->where('book_from', '=', $date)->limit($limit);
+  }
+
+  public function latestDepartures($date, $limit = 5)
+  {
+    return $this->repo->where('book_to', '=', $date)->limit($limit);
+  }
 }

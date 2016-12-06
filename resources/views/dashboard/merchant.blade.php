@@ -1,83 +1,67 @@
 @extends($layout)
 
 @push('content')
-@include('booking.status_legend', ['book_status' => $book_status])
-<div id="calendar"></div>
-@endpush
+<div class="row">
+  <div class="col-md-6">
+    <h4>@lang('booking.arrival_today', ['no' => $arrivals['today']->count()])</h4>
+    @if ($arrivals['today']->count() > 0)
+    <ul class="list-group">
+    @foreach($arrivals['today'] as $arrival)
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-4">{{ $arrival->customer->full_name }}
+            <div><span class="label label-info">{{ $arrival->resource->rs_name }}</span></div>
+          </div>
+          <div class="col-md-3"><i class="fa fa-circle status-{{ $arrival->book_status }}"></i> {{ $book_status[$arrival->book_status] }}</div>
+          <div class="col-md-2">{{ $arrival->book_pax }} @lang('booking.book_pax')</div>
+          <div class="col-md-3"><a href="{{ urlTenant(sprintf("bookings/%s", $arrival->book_id)) }}" v-modal><i class="fa fa-eye"></i></a></div>
+        </div>
+      </li>
+    @endforeach
+    </ul>
+    @else
+    <h4>@lang('booking.no_arrival')</h4>
+    @endif
+  </div>
+  <div class="col-md-6">
+    <h4>@lang('booking.departure_today', ['no' => $departures['today']->count()])</h4>
+    <ul class="list-group">
+    @foreach($departures['today'] as $departure)
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-4">{{ $departure->customer->full_name }}
+            <div><span class="label label-info">{{ $departure->resource->rs_name }}</span></div>
+          </div>
+          <div class="col-md-3"><i class="fa fa-circle status-{{ $departure->book_status }}"></i> {{ $book_status[$departure->book_status] }}</div>
+          <div class="col-md-4">O/S: <span class="label label-success">{{ showMoney($departure->totalBillOS(), true) }}</span></div>
+          <div class="col-md-1"><a href="{{ urlTenant(sprintf("bookings/%s", $departure->book_id)) }}" v-modal><i class="fa fa-eye"></i></a></div>
+        </div>
+      </li>
+    @endforeach
+    </ul>
+  </div>
+</div>
 
-@push('scripts')
-<script>
-$('#calendar').fullCalendar({
-    defaultView: 'timelineFortnight',
-    views: {
-        timelineFortnight: {
-            type: 'timelineMonth',
-            duration: { days: 14 },
-            slotDuration: {days: 1},
-        }
-    },
-    // defaultDate: '2014-09-15',
-    // slotDuration: {days: 1},
-    // snapDuration : '24:00:00',
-    // defaultDate: '{{ date('Y-m-d') }}',
-    nowIndicator: true,
-    // aspectRatio: 2,
-    navLinks: true,
-    // editable: true,
-    resourceLabelText: 'Rooms',
-    resourceRender: function(resource, cellEls) {
-			cellEls.on('click', function() {
-				if (confirm('Are you sure you want to delete ' + resource.title + '?')) {
-					$('#calendar').fullCalendar('removeResource', resource);
-				}
-			});
-		},
-    resourceAreaWidth: '20%',
-    resources: {
-				url: '{{ urlTenant('api/v1/resources/1/active') }}',
-        type: 'GET',
-        // headers: {
-        //     "X-CSRF-TOKEN": Laravel.csrfToken,
-        // },
-				error: function() {
-					$('#script-warning').show();
-				}
-			},
-    eventSources: [
-      {
-        url: '{{ urlTenant('api/v1/bookings/active') }}',
-        type: 'GET',
-        error: function() {
-            console.log('there was an error while fetching events!');
-        },
-      }
-    ],
-    eventRender: function(event, element, view) {
-      element.find('.fc-title').append(' #' + event.id);
-      element.find('.fc-title').prepend('<i class="fa fa-circle status-' + event.status + '"></i> ');
-      $(".fc-rows table tbody tr .fc-widget-content div").addClass('fc-resized-row');
-      $(".fc-content table tbody tr .fc-widget-content div").addClass('fc-resized-row');
-      $(".fc-body .fc-resource-area .fc-cell-content").css('padding', '0px');
-      },
-    slotWidth: "70",
-    selectable: true,
-    selectOverlap: false,
-    select: function(start, end, jsEvent, view, resource) {
-      console.log(end);
-      $('#basicModal').find('.modal-content').html('');
-      $('#basicModal').modal('show');
-      $('#basicModal').find('.modal-content').load('{{ urlTenant('bookings/new') }}?start=' + moment(start).format('Y-MM-D') + '&end=' + moment(end).format('Y-MM-D') + '&resource=' + resource.id);
+<div class="row">
+  <div class="col-md-6">
+    <h4>{{ $tours->count() }} tour(s)</h4>
+    <ul class="list-group">
+    @foreach($tours as $tour)
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-4">{{ $tour->customer->full_name }}
+            <div><span class="label label-info">{{ $tour->booking->resource->rs_name }}</span></div>
+          </div>
+          <div class="col-md-4">{{ $tour->resource->rs_name }}</div>
+          <div class="col-md-2">{{ $tour->add_pax }} @lang('addon.add_pax')</div>
+          <div class="col-md-2">{{ $tour->add_status }}</div>
+        </div>
+      </li>
+    @endforeach
+    </ul>
+  </div>
+  <div class="col-md-6">
+  </div>
+</div>
 
-    },
-    eventClick: function(event) {
-      $('#basicModal').find('.modal-content').html('');
-      $('#basicModal').modal('show');
-      $('#basicModal').find('.modal-content').load('{{ urlTenant('bookings') }}/' + event.id);
-    },
-});
-
-// $('#calendar').fullCalendar('today');
-// $('#calendar').fullCalendar( "gotoDate", 2016, 10, 12 );
-// $('#calendar').fullCalendar('gotoDate', '2016-11-30');
-</script>
 @endpush

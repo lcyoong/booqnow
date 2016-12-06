@@ -8,7 +8,12 @@ class Bill extends TenantModel
 {
   protected $primaryKey = 'bil_id';
 
-  protected $fillable = ['bil_customer', 'bil_booking', 'bil_description', 'bil_date', 'bil_due_date', 'bil_gross', 'bil_tax', 'bil_status', 'created_by'];
+  protected $fillable = ['bil_accounting', 'bil_customer', 'bil_booking', 'bil_description', 'bil_date', 'bil_due_date', 'bil_gross', 'bil_tax', 'bil_status', 'created_by'];
+
+  public function getOutstandingAttribute($value)
+  {
+    return $this->bil_gross + $this->bil_tax - $this->bil_paid;
+  }
 
   public function items()
   {
@@ -44,6 +49,11 @@ class Bill extends TenantModel
     $this->bil_paid = $this->receipts->sum('rc_amount');
 
     $this->save();
+  }
+
+  public function scopeActive($query)
+  {
+    return $query->where('bil_status', '=', 'active');
   }
 
 }

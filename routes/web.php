@@ -11,12 +11,13 @@
 |
 */
 
-Route::model('merchant', 'App\Merchant');
-Route::model('resource_type', 'App\ResourceType');
-Route::model('resource', 'App\Resource');
-Route::model('customer', 'App\Customer');
-Route::model('booking', 'App\Booking');
-Route::model('bill', 'App\Bill');
+// Route::model('merchant', 'App\Merchant');
+// Route::model('resource_type', 'App\ResourceType');
+// Route::model('resource', 'App\Resource');
+// Route::model('customer', 'App\Customer');
+// Route::model('booking', 'App\Booking');
+// Route::model('bill', 'App\Bill');
+// Route::model('resource_maintenance', 'App\ResourceMaintenance');
 
 Route::get('/', function () {
     return view('welcome');
@@ -59,7 +60,8 @@ if (config('myapp.multi_tenant')) {
 
 function tenantRoutes()
 {
-  Route::get('', 'DashboardController@merchant');
+  Route::get('', 'DashboardController@frontDesk');
+  Route::get('dashboard', 'DashboardController@merchant');
 
   Route::get('resource_types', 'ResourceTypeController@index');
   Route::get('resource_types/new', 'ResourceTypeController@create');
@@ -78,6 +80,9 @@ function tenantRoutes()
   Route::post('resources/new', 'ResourceController@store');
   Route::get('resources/{resource}/edit', 'ResourceController@edit');
   Route::post('resources/update', 'ResourceController@update');
+  Route::get('resources/{resource}/maintenance', 'ResourceMaintenanceController@create');
+  Route::post('resources/maintenance', 'ResourceMaintenanceController@store');
+  Route::post('resources/{resource}/maintenance/{resource_maintenance}/delete', 'ResourceMaintenanceController@delete');
 
   Route::get('customers', 'CustomerController@index');
   Route::get('customers/new', 'CustomerController@create');
@@ -87,7 +92,7 @@ function tenantRoutes()
   Route::get('customers/new_quick', 'CustomerController@pick');
 
   Route::get('bookings', 'BookingController@index');
-  Route::get('bookings/new', 'BookingController@create');
+  Route::get('bookings/new/{customer?}', 'BookingController@create');
   Route::post('bookings/new', 'BookingController@store');
   Route::post('bookings/checkin/{booking}', 'BookingController@checkin');
   Route::post('bookings/checkout/{booking}', 'BookingController@checkout');
@@ -95,17 +100,22 @@ function tenantRoutes()
   Route::get('bookings/{booking}', 'BookingController@action');
   Route::get('bookings/{booking}/bills', 'BookingController@bills');
 
-  Route::get('bookings/bill/{bill}/addons/{resource_type}/new', 'AddonController@create');
-  Route::get('bookings/bill/{bill}/addons/{resource_type}/pos', 'AddonController@createPos');
+  Route::get('bookings/{booking}/addons/{resource_type}/new', 'AddonController@create');
+  Route::get('bookings/{booking}/addons/{resource_type}/pos', 'AddonController@createPos');
   Route::post('addons/new', 'AddonController@store');
+  Route::post('addons/new/list', 'AddonController@storeList');
   Route::post('addons/push/{booking}/{resource}', 'AddonController@push');
   Route::get('addons/pop/{booking}', 'AddonController@pop');
 
   Route::get('bills', 'BillController@index');
   Route::get('bills/{bill}', 'BillController@view');
+  Route::get('bills/{bill}/print', 'BillController@download');
 
+  Route::get('receipts', 'ReceiptController@index');
   Route::get('receipts/new/{bill}', 'ReceiptController@create');
   Route::post('receipts/new', 'ReceiptController@store');
+
+  Route::get('reports/profitloss', 'ReportController@profitLoss');
 }
 
 Auth::routes();

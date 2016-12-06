@@ -70,9 +70,9 @@ class CustomerController extends MainController
   {
     // $this->validation($request);
 
-    $this->repo_cus->store($request->input());
+    $new = $this->repo_cus->store($request->input());
 
-    return $this->goodReponse();
+    return $this->goodReponse('', $new->cus_id);
   }
 
   public function update(Request $request)

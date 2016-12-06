@@ -1,3 +1,4 @@
+
 <?php
 
 return [
@@ -13,9 +14,10 @@ return [
   'select_any' => '-',
   'rate' => 'Rate',
   'cancel' => 'Cancel',
+  'maintenance' => 'Maintenance',
   'to' => 'to',
   'subtotal' => sprintf('Subtotal (%s)', config('myapp.base_currency')),
-  'add_itinerary' => 'Add tour',
+  'add_itinerary' => 'Add :name',
   'add_fnb' => 'Add F&B',
   'check_in' => 'Check-in',
   'check_out' => 'Check-out',
@@ -26,4 +28,9 @@ return [
   'no_itinerary' => '** No tour',
   'bills' => 'Bills',
   'item_added' => ':item added',
+  'print' => 'Print',
+  'download' => 'Download',
+  'records' => 'records',
+  'created_at' => 'Created at',
+  'created_by' => 'Created by',
 ];

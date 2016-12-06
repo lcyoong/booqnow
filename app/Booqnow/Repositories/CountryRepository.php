@@ -12,7 +12,7 @@ class CountryRepository {
   {
     return Cache::remember('countries', 90, function()
     {
-      return Country::toDropDown('coun_code', 'coun_name');
+      return Country::orderBy('coun_name', 'asc')->toDropDown('coun_code', 'coun_name');
     });
 
   }

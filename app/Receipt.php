@@ -16,6 +16,11 @@ class Receipt extends TenantModel
       $this->attributes['rc_date'] = Carbon::parse($value)->format('Y-m-d');
   }
 
+  public function customer()
+  {
+    return $this->belongsTo(Customer::class, 'rc_customer');
+  }
+
   public static function boot()
   {
     parent::boot();

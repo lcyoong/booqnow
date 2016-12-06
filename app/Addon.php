@@ -31,4 +31,9 @@ class Addon extends TenantModel
     return $this->belongsTo(Customer::class, 'add_customer');
   }
 
+  public function scopeByType($query, $rtype)
+  {
+    return $this->where('rs_type', '=', $rtype);
+  }
+
 }

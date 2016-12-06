@@ -26,6 +26,19 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        Route::model('merchant', 'App\Merchant');
+        Route::model('resource_type', 'App\ResourceType');
+        Route::model('resource', 'App\Resource');
+        Route::model('customer', 'App\Customer');
+        Route::model('booking', 'App\Booking');
+        Route::model('bill', 'App\Bill');
+        Route::model('resource_maintenance', 'App\ResourceMaintenance');
+
+        // Route::bind('merchant', function($id) {
+        //   return \App\Merchant::active()->findOrFail($id);
+        // });
+
     }
 
     /**

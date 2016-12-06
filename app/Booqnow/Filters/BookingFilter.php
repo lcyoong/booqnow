@@ -16,7 +16,7 @@ class BookingFilter extends QueryFilter
   {
     if (!empty($value)) {
 
-      return $this->builder->where('cust_email', '=', $value);
+      return $this->builder->where('cus_email', '=', $value);
     }
   }
 

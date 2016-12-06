@@ -13,12 +13,21 @@ class Booking extends Migration
      */
     public function up()
     {
+      Schema::create('booking_sources', function (Blueprint $table) {
+          $table->increments('bs_id');
+          $table->string('bs_description');
+          $table->string('bs_status')->default('active');
+          $table->integer('created_by');
+          $table->timestamps();
+      });
+
       Schema::create('bookings', function (Blueprint $table) {
           $table->increments('book_id');
           $table->integer('book_resource');
           $table->integer('book_customer');
           $table->datetime('book_from');
           $table->datetime('book_to');
+          $table->integer('book_source');
           $table->datetime('book_checkin')->nullable();
           $table->datetime('book_checkout')->nullable();
           $table->integer('book_pax')->default(0);
@@ -56,5 +65,6 @@ class Booking extends Migration
     {
       Schema::drop('addons');
       Schema::drop('bookings');
+      Schema::drop('booking_sources');
     }
 }

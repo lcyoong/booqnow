@@ -13,6 +13,7 @@ use Repositories\AddonRepository;
 use Repositories\BillItemRepository;
 use App\BookingFilter;
 use App\Booking;
+use App\Customer;
 use DB;
 
 class BookingController extends MainController
@@ -49,7 +50,7 @@ class BookingController extends MainController
     return view('booking.list', $this->vdata);
   }
 
-  public function create(Request $request)
+  public function create(Request $request, Customer $customer)
   {
     $input = $request->input();
 
@@ -64,6 +65,8 @@ class BookingController extends MainController
 
     $this->page_title = trans('booking.new');
 
+    $this->vdata(compact('customer'));
+
     return view('booking.new_basic', $this->vdata);
   }
 
@@ -76,12 +79,24 @@ class BookingController extends MainController
 
       $new_booking = $this->repo_book->store($input);
 
-      $new_bill = (new BillRepository)->store([
-        'bil_customer' => array_get($input, 'book_customer'),
-        'bil_booking' => $new_booking->book_id,
-        'bil_date' => date('Y-m-d'),
-        'bil_due_date' => date('Y-m-d'),
-      ]);
+      if (empty($input['bil_id'])) {
+
+        $accounting = $new_booking->resource->resourceType->accounting;
+
+        $new_bill = (new BillRepository)->store([
+          'bil_customer' => array_get($input, 'book_customer'),
+          'bil_booking' => $new_booking->book_id,
+          'bil_accounting' => $accounting->acc_id,
+          'bil_description' => $accounting->acc_bill_description,
+          'bil_date' => date('Y-m-d'),
+          'bil_due_date' => date('Y-m-d'),
+        ]);
+
+        $bili_bill = $new_bill->bil_id;
+      } else {
+
+        $bili_bill = $input['bil_id'];
+      }
 
       foreach ($input['rate'] as $key => $value) {
 
@@ -92,7 +107,7 @@ class BookingController extends MainController
         (new BillItemRepository)->store([
           'bili_resource' => $resource->rs_id,
           'bili_description' => $input['name'][$key],
-          'bili_bill' => $new_bill->bil_id,
+          'bili_bill' => $bili_bill,
           'bili_unit_price' => $value,
           'bili_unit' => $input['unit'][$key],
           'bili_gross' => $gross,
@@ -134,6 +149,7 @@ class BookingController extends MainController
 
   public function action(Booking $booking)
   {
+
     $this->layout = 'layouts.modal';
 
     $this->page_title = trans('booking.action', ['id' => $booking->book_id]);
@@ -142,11 +158,9 @@ class BookingController extends MainController
 
     $bills = $booking->bills;
 
-    $itineraries = $booking->addons;
+    $addons = $booking->addons;
 
-    $customer = $booking->customer;
-
-    $this->vdata(compact('booking', 'bills', 'customer', 'itineraries'));
+    $this->vdata(compact('booking', 'bills', 'addons'));
 
     return view('booking.action', $this->vdata);
   }

@@ -12,3 +12,13 @@ $(function() {
     });
 });
 </script>
+
+@push('scripts')
+<script>
+$(function() {
+    $('.datepicker').datepicker({
+      format: '{{ config('myapp.js_date_format') }}',
+    });
+});
+</script>
+@endpush

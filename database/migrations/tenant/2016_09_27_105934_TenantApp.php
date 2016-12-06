@@ -26,6 +26,10 @@ class TenantApp extends Migration
 
       Schema::create('resource_types', function (Blueprint $table) {
           $table->increments('rty_id');
+          $table->integer('rty_accounting')->unsigned()->default(1);
+          $table->boolean('rty_master')->default(false);
+          $table->boolean('rty_pos')->default(false);
+          $table->string('rty_code')->nullable();
           $table->string('rty_name');
           $table->string('rty_plural');
           $table->decimal('rty_price', 10, 2)->default(0);
@@ -41,6 +45,17 @@ class TenantApp extends Migration
           $table->decimal('rs_price', 10, 2)->default(0);
           $table->integer('rs_order')->default(0);
           $table->string('rs_status')->default('active');
+          $table->integer('created_by');
+          $table->timestamps();
+      });
+
+      Schema::create('resource_maintenances', function (Blueprint $table) {
+          $table->increments('rm_id');
+          $table->integer('rm_resource')->unsigned();
+          $table->datetime('rm_from');
+          $table->datetime('rm_to');
+          $table->string('rm_description');
+          $table->string('rm_status')->default('active');
           $table->integer('created_by');
           $table->timestamps();
       });
@@ -79,9 +94,11 @@ class TenantApp extends Migration
      */
     public function down()
     {
-      Schema::drop('resource_types');
+      Schema::drop('resource_maintenance');
       Schema::drop('resources');
+      Schema::drop('resource_types');
       Schema::drop('customers');
-      Schema::drop('customer_categories');
+      Schema::drop('codes');
+      Schema::drop('customer_groups');
     }
 }

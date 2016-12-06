@@ -3,6 +3,7 @@
 return [
   'new' => 'Receive payment',
   'list' => 'Receipts',
+  'rc_id' => 'Receipt no',
   'rc_customer' => 'Customer',
   'rc_bill' => 'Bill no',
   'rc_date' => 'Receipt date',

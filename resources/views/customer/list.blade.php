@@ -32,6 +32,6 @@
 @endsection
 
 @push('content')
-@include('layouts.list')
+@include('layouts.list', ['count' => $customers->total()])
 {{ $customers->appends(Request::input())->links() }}
 @endpush
