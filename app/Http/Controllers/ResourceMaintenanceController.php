@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Resource;
-use App\ResourceMaintenance;
+// use App\Resource;
+// use App\ResourceMaintenance;
 use Repositories\ResourceTypeRepository;
+use Repositories\ResourceRepository;
 use Repositories\ResourceMaintenanceRepository;
-use App\ResourceMaintenanceFilter;
+use Filters\ResourceMaintenanceFilter;
 
 class ResourceMaintenanceController extends MainController
 {
   protected $repo;
 
-  public function __construct()
+  public function __construct(ResourceMaintenanceRepository $repo)
   {
     parent::__construct();
 
@@ -23,11 +24,13 @@ class ResourceMaintenanceController extends MainController
 
     $this->layout = 'layouts.tenant';
 
-    $this->repo = (new ResourceMaintenanceRepository);
+    $this->repo = $repo;
   }
 
-  public function create(Resource $resource)
+  public function create($rs_id)
   {
+    $resource = (new ResourceRepository)->findById($rs_id);
+
     $resource_type = (new ResourceTypeRepository)->findById($resource->rs_type);
 
     $filters = new ResourceMaintenanceFilter(['resource' => $resource->rs_id]);
@@ -50,9 +53,11 @@ class ResourceMaintenanceController extends MainController
     return $this->goodReponse();
   }
 
-  public function delete(Resource $resource, ResourceMaintenance $rm)
+  public function delete($rs_id, $rm_id)
   {
-    $this->repo->deleteById($rm->rm_id);
+    $resource = (new ResourceRepository)->findById($rs_id);
+
+    $this->repo->deleteById($rm_id);
 
     return $this->goodReponse();
   }

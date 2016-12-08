@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use DB;
 use Validator;
+use Contracts\BaseRepositoryInterface;
 // use Illuminate\Foundation\Validation\ValidatesRequests;
 
-class BaseRepository {
+class BaseRepository implements BaseRepositoryInterface
+{
 
   // use ValidatesRequests;
 
@@ -19,6 +21,8 @@ class BaseRepository {
   protected $rules = [];
 
   protected $expectsJson = false;
+
+  protected $filter;
 
   public function __construct($class)
   {
@@ -37,6 +41,10 @@ class BaseRepository {
     // $resource->filter($filters)->paginate($this->paginate);
     $resource->orderBy($this->repo->getKeyName(), $order);
 
+    if (!is_null($this->filter)) {
+      $resource->filter($this->filter);
+    }
+
     return $resource->filter($filters)->paginate($this->paginate);
   }
 
@@ -46,6 +54,10 @@ class BaseRepository {
 
     if (!is_null($filters)) {
       $resource->filter($filters);
+    }
+
+    if (!is_null($this->filter)) {
+      $resource->filter($this->filter);
     }
 
     foreach ($joins as $join){
@@ -102,6 +114,40 @@ class BaseRepository {
 
       throw new ValidationException($validator, $validator->messages());
     }
+  }
+
+  public function all($columns = ['*'])
+  {
+    return $this->repo->get($columns);
+  }
+
+  public function paginate($perPage = 15, $columns = ['*'])
+  {
+    return $this->repo->paginate($perPage, $columns);
+  }
+
+  public function filter($filters)
+  {
+    return $this->repo->filter($filters);
+  }
+
+  public function getDropDown($key, $label, $cache_name = null)
+  {
+    $resource = $this->repo->select('*');
+
+    if (!is_null($this->filter)) {
+      $resource->filter($this->filter);
+    }
+
+    if (!is_null($cache_name)) {
+      return Cache::remember($cache_name, 90, function()
+      {
+        return $resource->toDropDown($key, $label);
+      });
+    } else {
+      return $resource->toDropDown($key, $label);
+    }
+
   }
 
 }

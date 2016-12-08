@@ -10,10 +10,11 @@ use Repositories\ResourceRepository;
 // use Repositories\CountryRepository;
 use Repositories\BillRepository;
 use Repositories\AddonRepository;
+use Repositories\CustomerRepository;
 use Repositories\BillItemRepository;
-use App\BookingFilter;
-use App\Booking;
-use App\Customer;
+use Filters\BookingFilter;
+// use App\Booking;
+// use App\Customer;
 use DB;
 
 class BookingController extends MainController
@@ -27,39 +28,33 @@ class BookingController extends MainController
     $this->repo_book = $repo_book;
 
     $this->tenant = true;
-
-    $this->layout = 'layouts.tenant';
-
-    // $countries = (new CountryRepository)->getDropDown();
-    //
-    // $this->vdata(compact('countries'));
   }
 
+  // Display bookings list
   public function index(Request $request)
   {
     $filters = new BookingFilter($request->input());
 
-    $filter = $request->input();
+    $this->passFilter($request->input());
 
     $this->page_title = trans('booking.list');
 
-    $list = $this->repo_book->getPages($filters, [['table' => 'customers', 'left_col' => 'cus_id', 'right_col' => 'book_customer']]);
+    $list = $this->repo_book->getPages($filters);
 
-    $this->vdata(compact('list', 'filter'));
+    $this->vdata(compact('list'));
 
     return view('booking.list', $this->vdata);
   }
 
-  public function create(Request $request, Customer $customer)
+  // Display new booking form
+  public function create(Request $request, $cus_id = null)
   {
+
+    $customer = !is_null($cus_id) ? (new CustomerRepository)->findById($cus_id) : null;
+
     $input = $request->input();
 
     $this->selectedSlot($input);
-    // $resource = (new ResourceRepository)->find(array_get($input, 'resource'));
-    //
-    // $start = array_get($input, 'start');
-    //
-    // $end = array_get($input, 'start');
 
     $this->layout = 'layouts.modal';
 
@@ -70,53 +65,20 @@ class BookingController extends MainController
     return view('booking.new_basic', $this->vdata);
   }
 
+  // Process storing of new booking
   public function store(Request $request)
   {
     $input = $request->input();
 
-    // $this->validation($request);
     DB::transaction(function() use($input) {
 
       $new_booking = $this->repo_book->store($input);
 
-      if (empty($input['bil_id'])) {
+      $bili_bill = $this->createBill($input, $new_booking);
 
-        $accounting = $new_booking->resource->resourceType->accounting;
+      $this->createBillItems($input, $bili_bill);
 
-        $new_bill = (new BillRepository)->store([
-          'bil_customer' => array_get($input, 'book_customer'),
-          'bil_booking' => $new_booking->book_id,
-          'bil_accounting' => $accounting->acc_id,
-          'bil_description' => $accounting->acc_bill_description,
-          'bil_date' => date('Y-m-d'),
-          'bil_due_date' => date('Y-m-d'),
-        ]);
-
-        $bili_bill = $new_bill->bil_id;
-      } else {
-
-        $bili_bill = $input['bil_id'];
-      }
-
-      foreach ($input['rate'] as $key => $value) {
-
-        $gross = $value * $input['unit'][$key];
-
-        $resource = (new ResourceRepository)->findById($input['resource'][$key]);
-
-        (new BillItemRepository)->store([
-          'bili_resource' => $resource->rs_id,
-          'bili_description' => $input['name'][$key],
-          'bili_bill' => $bili_bill,
-          'bili_unit_price' => $value,
-          'bili_unit' => $input['unit'][$key],
-          'bili_gross' => $gross,
-          'bili_tax' => $this->calcTax($gross),
-        ]);
-      }
     });
-
-    // $this->repo_book->store($request);
 
     return $this->goodReponse();
   }
@@ -130,31 +92,31 @@ class BookingController extends MainController
     return view('customer.new_basic', $this->vdata);
   }
 
-  public function view(Booking $booking)
+  // public function view(Booking $booking)
+  // {
+  //   $this->layout = 'layouts.modal';
+  //
+  //   $this->page_title = trans('booking.view', ['id' => $booking->book_id]);
+  //
+  //   $booking = $this->repo_book->findById($booking->book_id);
+  //
+  //   $bills = $booking->bills;
+  //
+  //   $customer = $booking->customer;
+  //
+  //   $this->vdata(compact('booking', 'bills', 'customer'));
+  //
+  //   return view('booking.view', $this->vdata);
+  // }
+
+  // Display booking action pop-up form
+  public function action($book_id)
   {
-    $this->layout = 'layouts.modal';
-
-    $this->page_title = trans('booking.view', ['id' => $booking->book_id]);
-
-    $booking = $this->repo_book->single($booking->book_id);
-
-    $bills = $booking->bills;
-
-    $customer = $booking->customer;
-
-    $this->vdata(compact('booking', 'bills', 'customer'));
-
-    return view('booking.view', $this->vdata);
-  }
-
-  public function action(Booking $booking)
-  {
+    $booking = $this->repo_book->findById($book_id);
 
     $this->layout = 'layouts.modal';
 
     $this->page_title = trans('booking.action', ['id' => $booking->book_id]);
-
-    $booking = $this->repo_book->single($booking->book_id);
 
     $bills = $booking->bills;
 
@@ -165,28 +127,17 @@ class BookingController extends MainController
     return view('booking.action', $this->vdata);
   }
 
-  public function bills(Booking $booking)
-  {
-    $this->layout = 'layouts.modal';
-
-    $this->page_title = trans('booking.action', ['id' => $booking->book_id]);
-
-    $bills = $booking->bills;
-
-    $this->vdata(compact('booking', 'bills'));
-
-    return view('booking.bills', $this->vdata);
-  }
-
-  // protected function validation($request)
+  // public function bills(Booking $booking)
   // {
-  //   $this->validate($request, [
-  //       'book_resource' => 'required|exists:resources,rs_id',
-  //       'book_customer' => 'required|exists:customers,cus_id',
-  //       'book_from' => 'required|date',
-  //       'book_to' => 'required|date',
-  //       'book_pax' => 'required|numeric|min:1|max:20',
-  //   ]);
+  //   $this->layout = 'layouts.modal';
+  //
+  //   $this->page_title = trans('booking.action', ['id' => $booking->book_id]);
+  //
+  //   $bills = $booking->bills;
+  //
+  //   $this->vdata(compact('booking', 'bills'));
+  //
+  //   return view('booking.bills', $this->vdata);
   // }
 
   protected function selectedSlot($input)
@@ -204,23 +155,71 @@ class BookingController extends MainController
     }
   }
 
-  protected function calcTax($gross)
+  // Process check in of booking
+  public function checkin(Request $request, $book_id)
   {
-    return $gross * config('myapp.tax_percent')/100;
-  }
+    $booking = $this->repo_book->findById($book_id);
 
-  public function checkin(Request $request, Booking $booking)
-  {
-    $booking->update(['book_status' => 'checkedin']);
+    $booking->checkIn();
 
     return $this->goodReponse();
   }
 
-  public function checkout(Request $request, Booking $booking)
+  // Process check out of booking
+  public function checkout(Request $request, $book_id)
   {
-    $booking->update(['book_status' => 'checkedout']);
+    $booking = $this->repo_book->findById($book_id);
+
+    $booking->checkOut();
 
     return $this->goodReponse();
+  }
+
+  // Create bill for new booking
+  private function createBill($input, $new_booking)
+  {
+    if (empty($input['bil_id'])) {
+
+      $accounting = $new_booking->resource->resourceType->accounting;
+
+      $new_bill = (new BillRepository)->store([
+        'bil_customer' => array_get($input, 'book_customer'),
+        'bil_booking' => $new_booking->book_id,
+        'bil_accounting' => $accounting->acc_id,
+        'bil_description' => $accounting->acc_bill_description,
+        'bil_date' => date('Y-m-d'),
+        'bil_due_date' => date('Y-m-d'),
+      ]);
+
+      $bili_bill = $new_bill->bil_id;
+    } else {
+
+      $bili_bill = $input['bil_id'];
+    }
+
+    return $bili_bill;
+  }
+
+  // Create bill items
+  private function createBillItems($input, $bili_bill)
+  {
+    foreach ($input['rate'] as $key => $value) {
+
+      $gross = $value * $input['unit'][$key];
+
+      $resource = (new ResourceRepository)->findById($input['resource'][$key]);
+
+      (new BillItemRepository)->store([
+        'bili_resource' => $resource->rs_id,
+        'bili_description' => $input['name'][$key],
+        'bili_bill' => $bili_bill,
+        'bili_unit_price' => $value,
+        'bili_unit' => $input['unit'][$key],
+        'bili_gross' => $gross,
+        'bili_tax' => calcTax($gross),
+      ]);
+    }
+
   }
 
 }

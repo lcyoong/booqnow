@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Filters;
 
 class ResourceFilter extends QueryFilter
 {
@@ -16,7 +16,7 @@ class ResourceFilter extends QueryFilter
   {
     if (!empty($value)) {
 
-      return $this->builder->where("rs_type", 'like', "%$value%");
+      return $this->builder->where("rs_type", '=', $value);
     }
   }
 

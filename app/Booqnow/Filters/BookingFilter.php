@@ -1,12 +1,14 @@
 <?php
 
-namespace App;
+namespace Filters;
 
 class BookingFilter extends QueryFilter
 {
   public function customer_name($value = '')
   {
     if (!empty($value)) {
+
+      $this->joins[] = 'joinCustomers';
 
       return $this->builder->whereRaw("concat(cus_first_name, ' ', cus_last_name) like '%$value%'");
     }
@@ -16,7 +18,9 @@ class BookingFilter extends QueryFilter
   {
     if (!empty($value)) {
 
-      return $this->builder->where('cus_email', '=', $value);
+      $this->joins[] = 'joinCustomers';
+
+      return $this->builder->where('cus_email', 'like', "%$value%");
     }
   }
 
@@ -58,6 +62,27 @@ class BookingFilter extends QueryFilter
 
       return $this->builder->where("book_reference", '=', $value);
     }
+  }
+
+  public function onStart($value = '')
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where("book_from", '=', $value);
+    }
+  }
+
+  public function onEnd($value = '')
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where("book_to", '=', $value);
+    }
+  }
+
+  public function joinCustomers()
+  {
+    $this->builder->join('customers', 'cus_id', 'book_customer');
   }
 
 }

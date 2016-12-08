@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use Repositories\CustomerRepository;
-use App\CustomerFilter;
+use Filters\CustomerFilter;
 
 class CustomerApiController extends ApiController
 {

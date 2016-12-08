@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Resource;
-use App\ResourceType;
-use App\Merchant;
+// use App\Resource;
+// use App\ResourceType;
+// use App\Merchant;
 use Repositories\ResourceRepository;
 use Repositories\ResourceTypeRepository;
-use App\ResourceFilter;
+use Filters\ResourceFilter;
 
 class ResourceController extends MainController
 {
   protected $repo_rs;
 
-  public function __construct()
+  public function __construct(ResourceRepository $repo_rs)
   {
     parent::__construct();
 
@@ -24,11 +24,13 @@ class ResourceController extends MainController
 
     $this->layout = 'layouts.tenant';
 
-    $this->repo_rs = (new ResourceRepository);
+    $this->repo_rs = $repo_rs;
   }
 
-  public function index(Request $request, ResourceType $resource_type)
+  public function index(Request $request, $rty_id)
   {
+    $resource_type = (new ResourceTypeRepository)->findById($rty_id);
+
     $filters = new ResourceFilter($request->input() + ['type' => $resource_type->rty_id]);
 
     $filter = $request->input();
@@ -45,8 +47,10 @@ class ResourceController extends MainController
     return view('resource.list', $this->vdata);
   }
 
-  public function create(ResourceType $resource_type)
+  public function create($rty_id)
   {
+    $resource_type = (new ResourceTypeRepository)->findById($rty_id);
+
     $this->page_title = trans('resource.new', ['type' => $resource_type->rty_name]);
 
     $this->vdata(compact('resource_type'));
@@ -54,8 +58,10 @@ class ResourceController extends MainController
     return view('resource.new', $this->vdata);
   }
 
-  public function edit(Merchant $merchant, Resource $resource)
+  public function edit(Merchant $merchant, $rs_id)
   {
+    $resource = $this->repo_rs->findById($rs_id);
+
     $resource_type = (new ResourceTypeRepository)->findById($resource->rs_type);
 
     $this->page_title = trans('resource.edit', ['type' => $resource_type->rty_name]);

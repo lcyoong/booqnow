@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -11,14 +11,28 @@ abstract class QueryFilter {
 
   protected $builder;
 
-  public function __construct($request)
+  protected $joins;
+
+  public function __construct($request = [])
   {
     $this->request = $request;
+
+    $this->joins = [];
+  }
+
+  public function add($add)
+  {
+    $this->request += $add;
   }
 
   public function filters()
   {
     return $this->request;
+  }
+
+  public function joins()
+  {
+    return $this->joins;
   }
 
   public function apply(Builder $builder)
@@ -31,6 +45,11 @@ abstract class QueryFilter {
       }
     }
 
+    foreach (array_unique($this->joins()) as $join) {
+      if (method_exists($this, $join)) {
+        call_user_func_array([$this, $join], []);
+      }
+    }
     return $this->builder;
   }
 }

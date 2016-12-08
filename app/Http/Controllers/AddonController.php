@@ -6,16 +6,17 @@ use Illuminate\Http\Request;
 
 use DB;
 use App\Http\Requests;
-use App\Booking;
-use App\Bill;
-use App\Resource;
-use App\ResourceType;
-use App\ResourceFilter;
+// use App\Booking;
+// use App\Bill;
+// use App\Resource;
+// use App\ResourceType;
+use Filters\ResourceFilter;
 use Repositories\AddonRepository;
 use Repositories\ResourceRepository;
 use Repositories\BillItemRepository;
 use Repositories\BookingRepository;
 use Repositories\BillRepository;
+use Repositories\ResourceTypeRepository;
 
 class AddonController extends MainController
 {
@@ -32,38 +33,44 @@ class AddonController extends MainController
     $this->layout = 'layouts.tenant';
   }
 
-  public function create(Request $request, Booking $booking, ResourceType $resource_type)
+  public function create(Request $request, $book_id, $rty_id)
   {
+    $booking = (new BookingRepository)->findById($book_id);
+
+    $resource_type = (new ResourceTypeRepository)->findById($rty_id);
+
     $input = $request->input();
 
     $this->layout = 'layouts.modal';
 
     $this->page_title = trans('addon.new', ['type' => $resource_type->rty_name]);
 
-    $filters = new ResourceFilter(['status' => 'active', 'type' => $resource_type->rty_id]);
-
     $account_bill = array_column($booking->bills->toArray(), 'bil_id', 'bil_accounting');
 
-    $resources = (new ResourceRepository)->getDropDown($filters);
+    $resources = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->getDropDown('rs_id', 'rs_name');
 
     $this->vdata(compact('bill', 'booking', 'resource_type', 'resources', 'account_bill'));
 
     return view('addon.new_basic', $this->vdata);
   }
 
-  public function createPos(Request $request, Booking $booking, ResourceType $resource_type)
+  public function createPos(Request $request, $book_id, $rty_id)
   {
+    $booking = (new BookingRepository)->findById($book_id);
+
+    $resource_type = (new ResourceTypeRepository)->findById($rty_id);
+
     $input = $request->input();
 
     $this->layout = 'layouts.modal';
 
     $this->page_title = trans('addon.new', ['type' => $resource_type->rty_name]);
 
-    $filters = new ResourceFilter(['status' => 'active', 'type' => $resource_type->rty_id]);
+    // $filters = new ResourceFilter(['status' => 'active', 'type' => $resource_type->rty_id]);
 
     $account_bill = array_column($booking->bills->toArray(), 'bil_id', 'bil_accounting');
 
-    $resources = (new ResourceRepository)->get($filters);
+    $resources = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->get();
 
     $this->vdata(compact('bill', 'booking', 'resource_type', 'resources', 'account_bill'));
 
@@ -120,22 +127,6 @@ class AddonController extends MainController
 
     DB::transaction(function() use($input) {
 
-      // if (empty($input['add_bill'])) {
-      //
-      //   $booking = (new BookingRepository)->findById(array_get($input, 'add_booking'));
-      //
-      //   $new_bill = (new BillRepository)->store([
-      //     'bil_customer' => array_get($input, 'add_customer'),
-      //     'bil_accounting' => $accounting->acc_id,
-      //     'bil_booking' => array_get($input, 'add_booking'),
-      //     'bil_description' => $accounting->acc_bill_description,
-      //     'bil_date' => date('Y-m-d'),
-      //     'bil_due_date' => date('Y-m-d'),
-      //   ]);
-      //
-      //   $input['add_bill'] = $new_bill->bil_id;
-      // }
-
       foreach( $input['addon_id'] as $id => $content) {
 
         $item = json_decode($content);
@@ -159,16 +150,18 @@ class AddonController extends MainController
     return $this->goodReponse();
   }
 
-  public function push(Request $request, Booking $booking, Resource $resource)
+  public function push(Request $request, $book_id, $rs_id)
   {
-    session()->push($booking->book_id . '.pos', $resource);
+    $resource = (new ResourceRepository)->findById($rs_id);
+
+    session()->push($book_id . '.pos', $resource);
 
     return $this->goodReponse(trans('form.item_added', ['item' => $resource->rs_name]));
   }
 
-  public function pop(Request $request, Booking $booking)
+  public function pop(Request $request, $book_id)
   {
-    return session()->get($booking->book_id . '.pos');
+    return session()->get($book_id . '.pos');
   }
 
 }

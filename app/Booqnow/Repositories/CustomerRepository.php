@@ -2,9 +2,9 @@
 
 namespace Repositories;
 
-use App\Customer;
+// use App\Customer;
 // use Illuminate\Http\Request;
-
+use Filters\CustomerFilter;
 use DB;
 
 class CustomerRepository extends BaseRepository {
@@ -12,6 +12,8 @@ class CustomerRepository extends BaseRepository {
   public function __construct()
   {
     parent::__construct('App\Customer');
+
+    $this->filter = new CustomerFilter();
 
     $this->rules = [
       'cus_first_name' => 'required|max:255',

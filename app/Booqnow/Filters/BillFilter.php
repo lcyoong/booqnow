@@ -1,12 +1,14 @@
 <?php
 
-namespace App;
+namespace Filters;
 
 class BillFilter extends QueryFilter
 {
   public function customer_name($value = '')
   {
     if (!empty($value)) {
+
+      $this->joins[] = 'joinCustomers';
 
       return $this->builder->whereRaw("concat(cus_first_name, ' ', cus_last_name) like '%$value%'");
     }
@@ -15,6 +17,8 @@ class BillFilter extends QueryFilter
   public function customer_email($value = '')
   {
     if (!empty($value)) {
+
+      $this->joins[] = 'joinCustomers';
 
       return $this->builder->where('cus_email', 'like', "%$value%");
     }
@@ -51,4 +55,10 @@ class BillFilter extends QueryFilter
       return $this->builder->where("bil_date", '<=', $value);
     }
   }
+
+  public function joinCustomers()
+  {
+    $this->builder->join('customers', 'cus_id', 'bil_customer');
+  }
+
 }

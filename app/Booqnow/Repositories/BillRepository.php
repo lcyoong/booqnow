@@ -3,7 +3,7 @@
 namespace Repositories;
 
 use Illuminate\Http\Request;
-
+use Filters\BillFilter;
 use DB;
 
 class BillRepository extends BaseRepository {
@@ -11,6 +11,8 @@ class BillRepository extends BaseRepository {
   public function __construct()
   {
     parent::__construct('App\Bill');
+
+    $this->filter = new BillFilter();
 
     $this->rules = [
       // 'bil_accounting' => 'required|exists:accounting,acc_id',
@@ -23,9 +25,9 @@ class BillRepository extends BaseRepository {
     ];
   }
 
-  public function single($id)
-  {
-    return $this->repo->with('customer')->find($id);
-  }
+  // public function single($id)
+  // {
+  //   return $this->repo->with('customer')->find($id);
+  // }
 
 }

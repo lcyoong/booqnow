@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use Repositories\BookingRepository;
-use App\BookingFilter;
+use Filters\BookingFilter;
 
 class BookingApiController extends ApiController
 {

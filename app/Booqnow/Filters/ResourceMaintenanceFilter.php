@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Filters;
 
 class ResourceMaintenanceFilter extends QueryFilter
 {
@@ -24,6 +24,8 @@ class ResourceMaintenanceFilter extends QueryFilter
   {
     if (!empty($value)) {
 
+      $this->joins[] = 'joinResources';
+
       return $this->builder->where("rs_type", 'like', "%$value%");
     }
   }
@@ -42,6 +44,11 @@ class ResourceMaintenanceFilter extends QueryFilter
 
       return $this->builder->where("rm_from", '<', $value);
     }
+  }
+
+  public function joinResources()
+  {
+    $this->builder->join('resources', 'rs_id', 'rm_resource');
   }
 
 }

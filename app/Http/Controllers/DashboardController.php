@@ -28,17 +28,13 @@ class DashboardController extends MainController
   {
     $input = $request->input();
 
-    $date = date('Ymd');
+    $date = array_get($input, 'date', date('Ymd'));
 
-    if (array_get($input, 'date')) {
-      $date = array_get($input, 'date');
-    }
+    $arrivals['today'] = (new BookingRepository)->ofArrivalDate($date, 5)->get();
 
-    $arrivals['today'] = (new BookingRepository)->latestArrivals($date, 5)->get();
+    $departures['today'] = (new BookingRepository)->ofDepartureDate($date, 5)->get();
 
-    $departures['today'] = (new BookingRepository)->latestDepartures($date, 5)->get();
-
-    $tours = (new AddonRepository)->byDate($date, 2, 5)->get();
+    $tours = (new AddonRepository)->ofDate($date)->ofType(2)->get();
 
     $this->vdata(compact('arrivals', 'departures', 'tours'));
 

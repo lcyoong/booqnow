@@ -34,4 +34,25 @@ class Booking extends TenantModel
   {
     return $this->bills->sum('outstanding');
   }
+
+  public function scopeOfArrivalDate($query, $date)
+  {
+    return $query->where('book_from', '=', $date);
+  }
+
+  public function scopeOfDepartureDate($query, $date)
+  {
+    return $query->where('book_to', '=', $date);
+  }
+
+  public function checkIn()
+  {
+    $this->update(['book_status' => 'checkedin']);
+  }
+
+  public function checkOut()
+  {
+    $this->update(['book_status' => 'checkedout']);
+  }
+
 }

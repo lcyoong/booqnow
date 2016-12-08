@@ -31,9 +31,14 @@ class Addon extends TenantModel
     return $this->belongsTo(Customer::class, 'add_customer');
   }
 
-  public function scopeByType($query, $rtype)
+  public function scopeOfType($query, $rtype)
   {
-    return $this->where('rs_type', '=', $rtype);
+    return $query->join('resources', 'rs_id', '=', 'add_resource')->where('rs_type', '=', $rtype);
+  }
+
+  public function scopeOfDate($query, $date)
+  {
+    return $query->where('add_date', '=', $date);
   }
 
 }

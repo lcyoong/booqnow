@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\ResourceType;
-use App\Merchant;
+// use App\ResourceType;
+// use App\Merchant;
 use Repositories\ResourceTypeRepository;
-use App\ResourceFilter;
+use Filters\ResourceFilter;
 
 class ResourceTypeController extends MainController
 {
@@ -45,8 +45,10 @@ class ResourceTypeController extends MainController
     return view('resource_type.new', $this->vdata);
   }
 
-  public function edit(Merchant $merchant, ResourceType $resource_type)
+  public function edit($rty_id)
   {
+    $resource_type = $this->repo_rty->findById($rty_id);
+
     $this->page_title = trans('resource_type.edit');
 
     $this->vdata(compact('resource_type'));

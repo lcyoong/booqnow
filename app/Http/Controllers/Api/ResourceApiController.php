@@ -7,20 +7,23 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use Repositories\ResourceRepository;
+use Repositories\ResourceTypeRepository;
 use Repositories\ResourceMaintenanceRepository;
-use App\ResourceType;
-use App\ResourceFilter;
-use App\ResourceMaintenanceFilter;
+// use App\ResourceType;
+use Filters\ResourceFilter;
+use Filters\ResourceMaintenanceFilter;
 
 class ResourceApiController extends ApiController
 {
-  public function active(ResourceType $resource_type)
+  public function active($rty_id)
   {
-    $rs = new ResourceRepository;
+    $resource_type = (new ResourceTypeRepository)->findById($rty_id);
 
-    $filters = new ResourceFilter(['status' => 'active', 'type' => $resource_type->rty_id]);
+    // $rs = new ResourceRepository;
 
-    $list = $rs->get($filters);
+    // $filters = new ResourceFilter(['status' => 'active', 'type' => $resource_type->rty_id]);
+
+    $list = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->get();
 
     $return = [];
 
@@ -35,13 +38,15 @@ class ResourceApiController extends ApiController
 
   public function maintenance(Request $request)
   {
+    // $resource_type = (new ResourceTypeRepository)->findById($rty_id);
+
     $input = $request->input();
 
-    $rs = new ResourceMaintenanceRepository;
+    // $rs = new ResourceMaintenanceRepository;
 
-    $filters = new ResourceMaintenanceFilter(['start' => array($input, 'start'), 'end' => array($input, 'end')]);
+    // $filters = new ResourceMaintenanceFilter(['start' => array($input, 'start'), 'end' => array($input, 'end')]);
 
-    $list = $rs->get($filters);
+    $list = (new ResourceMaintenanceRepository)->start(array($input, 'start'))->end(array($input, 'end'))->get();
 
     $return = [];
 

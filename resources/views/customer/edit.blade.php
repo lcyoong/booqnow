@@ -1,7 +1,6 @@
 @extends($layout)
 
 @push('content')
-
 {{ Form::open(['url' => 'customers/update', 'v-ajax', 'class' => '']) }}
 {{ Form::hidden('cus_id', $customer->cus_id) }}
 <div class="row">
@@ -14,7 +13,7 @@
   {{ Form::bsText('cus_contact2', trans('customer.cus_contact2'), $customer->cus_contact2) }}
 </div>
 <div class="row">
-  {{ Form::bsSelect('cus_country', trans('customer.cus_country'), $countries, $customer->cus_country) }}
+  {{ Form::bsSelect('cus_country', trans('customer.cus_country'), $countries, $customer->cus_country, ['class' => 'select2']) }}
   {{ Form::bsTextarea('cus_address', trans('customer.cus_address'), $customer->cus_address) }}
 </div>
 {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary']) }}

@@ -3,14 +3,18 @@
 namespace Repositories;
 
 use Illuminate\Http\Request;
-use App\Customer;
+// use App\Customer;
+use Filters\BookingFilter;
 use DB;
 
-class BookingRepository extends BaseRepository {
+class BookingRepository extends BaseRepository
+{
 
   public function __construct()
   {
     parent::__construct('App\Booking');
+
+    $this->filter = new BookingFilter();
 
     $this->rules = [
       'book_resource' => 'required|exists:resources,rs_id',
@@ -24,43 +28,23 @@ class BookingRepository extends BaseRepository {
     ];
   }
 
-  public function getWith($filters, $limit = 0)
-  {
-    return $this->get($filters, $limit, ['customer', 'resource']);
-  }
-
-  // public function store($input)
-  // {
-  //   DB::transaction(function () {
-  //
-  //     $this->store($input);
-  //
-  //     (new BillRepository)->store([
-  //       'bil_customer' => array_get($input, 'book_customer'),
-  //       'bil_booking' => $new_booking->book_id,
-  //       'bil_date' => date('Y-m-d'),
-  //       'bil_due_date' => date('Y-m-d'),
-  //     ]);
-  //   });
-  // }
-
-  public function single($id)
-  {
-    return $this->repo->with('customer', 'resource')->find($id);
-  }
-
   public function overlap($resource, $from, $to)
   {
     return $this->repo->where('book_resource', '=', $resource)->where('book_to', '>', $from)->where('book_from', '<', $to);
   }
 
-  public function latestArrivals($date, $limit = 5)
+  public function ofArrivalDate($date, $limit = 5)
   {
-    return $this->repo->where('book_from', '=', $date)->limit($limit);
+    $this->filter->add(['onStart' => $date]);
+
+    return $this;
   }
 
-  public function latestDepartures($date, $limit = 5)
+  public function ofDepartureDate($date, $limit = 5)
   {
-    return $this->repo->where('book_to', '=', $date)->limit($limit);
+    $this->filter->add(['onEnd' => $date]);
+
+    return $this;
   }
+
 }

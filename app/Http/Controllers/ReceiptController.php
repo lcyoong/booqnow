@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Bill;
+// use App\Bill;
 // use Repositories\CodeRepository;
 use Repositories\ReceiptRepository;
-use App\ReceiptFilter;
+use Repositories\BillRepository;
+use Filters\ReceiptFilter;
 
 class ReceiptController extends MainController
 {
@@ -42,8 +43,10 @@ class ReceiptController extends MainController
     return view('receipt.list', $this->vdata);
   }
 
-  public function create(Request $request, Bill $bill)
+  public function create(Request $request, $bil_id)
   {
+    $bill = (new BillRepository)->findById($bil_id);
+
     $this->layout = 'layouts.modal';
 
     $this->page_title = trans('receipt.new');

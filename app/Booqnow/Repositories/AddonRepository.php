@@ -3,7 +3,8 @@
 namespace Repositories;
 
 use Illuminate\Http\Request;
-use App\Customer;
+// use App\Customer;
+use Filters\AddonFilter;
 use DB;
 
 class AddonRepository extends BaseRepository {
@@ -11,6 +12,8 @@ class AddonRepository extends BaseRepository {
   public function __construct()
   {
     parent::__construct('App\Addon');
+
+    $this->filter = new AddonFilter();
 
     $this->rules = [
       'add_booking' => 'required|exists:bookings,book_id',
@@ -25,9 +28,33 @@ class AddonRepository extends BaseRepository {
     ];
   }
 
-  public function byDate($date, $type, $limit = 5)
+  // public function byDate($date, $type, $limit = 5)
+  // {
+  //   return $this->repo->where('add_date', '=', $date)->join('resources', 'rs_id', '=', 'add_resource')->where('rs_type', '=', $type)->limit($limit);
+  // }
+
+  public function ofType($type)
   {
-    return $this->repo->where('add_date', '=', $date)->join('resources', 'rs_id', '=', 'add_resource')->where('rs_type', '=', $type)->limit($limit);
+    $this->filter->add(['resourceType' => $type]);
+
+    return $this;
+    // $filters = new AddonFilter(['resourceType' => $type]);
+    //
+    // return $this->repo->filter($filters);
+    // return $this->repo->join('resources', 'rs_id', '=', 'add_resource')->where('rs_type', '=', $type);
+    // return $this->repo->ofType($type);
+  }
+
+  public function ofDate($date)
+  {
+    $this->filter->add(['onDate' => $date]);
+
+    return $this;
+    // $filters = new AddonFilter(['onDate' => $date]);
+    //
+    // return $this->repo->filter($filters);
+    // return $this->repo->ofDate($date);
+    // return $this->repo->where('add_date', '=', $date);
   }
 
 }

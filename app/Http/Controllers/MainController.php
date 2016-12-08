@@ -9,7 +9,7 @@ use Repositories\CodeRepository;
 use Repositories\ResourceTypeRepository;
 use Repositories\BookingSourceRepository;
 use App\Http\Requests;
-use App\Merchant;
+// use App\Merchant;
 use Cache;
 
 class MainController extends Controller
@@ -35,7 +35,7 @@ class MainController extends Controller
 
     $resource_types = (new ResourceTypeRepository)->get();
 
-    $booking_sources = (new BookingSourceRepository)->getDropDown();
+    $booking_sources = (new BookingSourceRepository)->getDropDown('bs_id', 'bs_description');
 
     // $countries = (new ResourceTypeRepository)->getDropDown();
 
@@ -70,5 +70,10 @@ class MainController extends Controller
       'data' => $data,
       'message' => $message ? $message : trans('message.process_successful')
     ]);
+  }
+
+  public function passFilter($filter)
+  {
+    $this->vdata(compact('filter'));
   }
 }

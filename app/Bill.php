@@ -51,9 +51,13 @@ class Bill extends TenantModel
     $this->save();
   }
 
-  public function scopeActive($query)
+  // public function scopeActive($query)
+  // {
+  //   return $query->where('bil_status', '=', 'active');
+  // }
+  public function getItems()
   {
-    return $query->where('bil_status', '=', 'active');
+    return $this->items()->join('resources', 'rs_id', 'bili_resource')->orderBy('rs_type')->get();
   }
 
 }

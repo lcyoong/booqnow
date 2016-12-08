@@ -96,9 +96,9 @@ function tenantRoutes()
   Route::post('bookings/new', 'BookingController@store');
   Route::post('bookings/checkin/{booking}', 'BookingController@checkin');
   Route::post('bookings/checkout/{booking}', 'BookingController@checkout');
-  Route::get('bookings/{booking}/view', 'BookingController@view');
+  // Route::get('bookings/{booking}/view', 'BookingController@view');
   Route::get('bookings/{booking}', 'BookingController@action');
-  Route::get('bookings/{booking}/bills', 'BookingController@bills');
+  // Route::get('bookings/{booking}/bills', 'BookingController@bills');
 
   Route::get('bookings/{booking}/addons/{resource_type}/new', 'AddonController@create');
   Route::get('bookings/{booking}/addons/{resource_type}/pos', 'AddonController@createPos');
@@ -120,4 +120,4 @@ function tenantRoutes()
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+// Route::get('/home', 'HomeController@index');
