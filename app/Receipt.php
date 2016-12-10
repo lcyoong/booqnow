@@ -44,7 +44,6 @@ class Receipt extends TenantModel
 
     static::saved(function ($post) {
       Bill::find($post->rc_bill)->refreshPaid();
-      // Bill::find($post->bili_bill)->refreshGrossTax();
 
     });
   }
