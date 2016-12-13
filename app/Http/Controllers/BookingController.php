@@ -7,20 +7,21 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Repositories\BookingRepository;
 use Repositories\ResourceRepository;
-// use Repositories\CountryRepository;
 use Repositories\BillRepository;
 use Repositories\AddonRepository;
 use Repositories\CustomerRepository;
 use Repositories\BillItemRepository;
 use Filters\BookingFilter;
-// use App\Booking;
-// use App\Customer;
 use DB;
 
 class BookingController extends MainController
 {
   protected $repo_book;
 
+  /**
+   * Create a new controller instance.
+   * @param BookingRepository $repo_book
+   */
   public function __construct(BookingRepository $repo_book)
   {
     parent::__construct();
@@ -30,12 +31,16 @@ class BookingController extends MainController
     $this->tenant = true;
   }
 
-  // Display bookings list
+  /**
+   * Display bookings list
+   * @param  Request $request
+   * @return Response
+   */
   public function index(Request $request)
   {
     $filters = new BookingFilter($request->input());
 
-    $this->passFilter($request->input());
+    $this->filter = $request->input();
 
     $this->page_title = trans('booking.list');
 
@@ -46,7 +51,12 @@ class BookingController extends MainController
     return view('booking.list', $this->vdata);
   }
 
-  // Display new booking form
+  /**
+   * Display new booking form
+   * @param  Request $request
+   * @param  int  $cus_id  Customer id
+   * @return Response
+   */
   public function create(Request $request, $cus_id = null)
   {
 
@@ -65,7 +75,11 @@ class BookingController extends MainController
     return view('booking.new_basic', $this->vdata);
   }
 
-  // Process storing of new booking
+  /**
+   * Process storing of new booking
+   * @param  Request $request
+   * @return Response
+   */
   public function store(Request $request)
   {
     $input = $request->input();
@@ -83,33 +97,25 @@ class BookingController extends MainController
     return $this->goodReponse();
   }
 
-  public function pick(Request $request)
-  {
-    $this->layout = 'layouts.modal';
-
-    $this->page_title = trans('customer.new');
-
-    return view('customer.new_basic', $this->vdata);
-  }
-
-  // public function view(Booking $booking)
+  /**
+   * Display the customer-selection form
+   * @param  Request $request
+   * @return Response
+   */
+  // public function pick(Request $request)
   // {
   //   $this->layout = 'layouts.modal';
   //
-  //   $this->page_title = trans('booking.view', ['id' => $booking->book_id]);
+  //   $this->page_title = trans('customer.new');
   //
-  //   $booking = $this->repo_book->findById($booking->book_id);
-  //
-  //   $bills = $booking->bills;
-  //
-  //   $customer = $booking->customer;
-  //
-  //   $this->vdata(compact('booking', 'bills', 'customer'));
-  //
-  //   return view('booking.view', $this->vdata);
+  //   return view('customer.new_basic', $this->vdata);
   // }
 
-  // Display booking action pop-up form
+  /**
+   * Display the booking 'action' pop-up form
+   * @param  int $book_id Booking id
+   * @return Response
+   */
   public function action($book_id)
   {
     $booking = $this->repo_book->findById($book_id);
@@ -127,19 +133,11 @@ class BookingController extends MainController
     return view('booking.action', $this->vdata);
   }
 
-  // public function bills(Booking $booking)
-  // {
-  //   $this->layout = 'layouts.modal';
-  //
-  //   $this->page_title = trans('booking.action', ['id' => $booking->book_id]);
-  //
-  //   $bills = $booking->bills;
-  //
-  //   $this->vdata(compact('booking', 'bills'));
-  //
-  //   return view('booking.bills', $this->vdata);
-  // }
-
+  /**
+   * Capture selected RC slot data
+   * @param  array $input User input data
+   * @return void
+   */
   protected function selectedSlot($input)
   {
     if (array_get($input, 'resource')) {
@@ -155,7 +153,12 @@ class BookingController extends MainController
     }
   }
 
-  // Process check in of booking
+  /**
+   * Process check in of booking
+   * @param  Request $request
+   * @param  int  $book_id Booking id
+   * @return Response
+   */
   public function checkin(Request $request, $book_id)
   {
     $booking = $this->repo_book->findById($book_id);
@@ -165,7 +168,12 @@ class BookingController extends MainController
     return $this->goodReponse();
   }
 
-  // Process check out of booking
+  /**
+   * Process check out of booking
+   * @param  Request $request
+   * @param  int  $book_id Booking id
+   * @return Response
+   */
   public function checkout(Request $request, $book_id)
   {
     $booking = $this->repo_book->findById($book_id);
@@ -176,6 +184,12 @@ class BookingController extends MainController
   }
 
   // Create bill for new booking
+  /**
+   * Create bill for new booking
+   * @param  array $input - User input data
+   * @param  App\Booking $new_booking
+   * @return int - New bill id
+   */
   private function createBill($input, $new_booking)
   {
     if (empty($input['bil_id'])) {
@@ -200,7 +214,12 @@ class BookingController extends MainController
     return $bili_bill;
   }
 
-  // Create bill items
+  /**
+   * Create bill items
+   * @param  array $input - User input data
+   * @param  int $bili_bill - Bill id
+   * @return void
+   */
   private function createBillItems($input, $bili_bill)
   {
     foreach ($input['rate'] as $key => $value) {

@@ -11,15 +11,18 @@ use Filters\BookingFilter;
 
 class BookingApiController extends ApiController
 {
+  /**
+   * Get active bookings for given parameters
+   * @param  Request $request
+   * @return array
+   */
   public function active(Request $request)
   {
     $input = $request->input();
 
-    $rs = new BookingRepository;
-
     $filters = new BookingFilter(['start' => array($input, 'start'), 'end' => array($input, 'end')]);
 
-    $list = $rs->get($filters);
+    $list = (new BookingRepository)->get($filters);
 
     $return = [];
 
@@ -36,11 +39,8 @@ class BookingApiController extends ApiController
         'backgroundColor' => config('myapp.bg-source-' . $item->book_source),
         'textColor' => '#999999',
         'borderColor' => '#999999',
-        // 'borderColor' => config('myapp.bd-source-' . $item->book_source),
       ];
     }
-
-    // dd($list);
 
     return $return;
 

@@ -8,6 +8,10 @@ use Cache;
 
 class CountryRepository {
 
+  /**
+   * Get the key-value array of the query
+   * @return array
+   */
   public function getDropDown()
   {
     return Cache::remember('countries', 90, function()

@@ -9,7 +9,9 @@ use DB;
 
 class BookingRepository extends BaseRepository
 {
-
+  /**
+   * Create new repository instance
+   */
   public function __construct()
   {
     parent::__construct('App\Booking');
@@ -28,19 +30,29 @@ class BookingRepository extends BaseRepository
     ];
   }
 
-  public function overlap($resource, $from, $to)
-  {
-    return $this->repo->where('book_resource', '=', $resource)->where('book_to', '>', $from)->where('book_from', '<', $to);
-  }
+  // public function overlap($resource, $from, $to)
+  // {
+  //   return $this->repo->where('book_resource', '=', $resource)->where('book_to', '>', $from)->where('book_from', '<', $to);
+  // }
 
-  public function ofArrivalDate($date, $limit = 5)
+  /**
+   * Add booking arrival date filter
+   * @param  string $date - Date string
+   * @return Repository
+   */
+  public function ofArrivalDate($date)
   {
     $this->filter->add(['onStart' => $date]);
 
     return $this;
   }
 
-  public function ofDepartureDate($date, $limit = 5)
+  /**
+   * Add booking departure date filter
+   * @param  string $date - Date string
+   * @return Repository
+   */
+  public function ofDepartureDate($date)
   {
     $this->filter->add(['onEnd' => $date]);
 

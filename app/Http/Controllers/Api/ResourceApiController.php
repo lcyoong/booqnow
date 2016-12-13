@@ -15,13 +15,14 @@ use Filters\ResourceMaintenanceFilter;
 
 class ResourceApiController extends ApiController
 {
+  /**
+   * Get the active resources given the parameters
+   * @param  int $rty_id - Resource type id
+   * @return array
+   */
   public function active($rty_id)
   {
     $resource_type = (new ResourceTypeRepository)->findById($rty_id);
-
-    // $rs = new ResourceRepository;
-
-    // $filters = new ResourceFilter(['status' => 'active', 'type' => $resource_type->rty_id]);
 
     $list = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->get();
 
@@ -33,18 +34,16 @@ class ResourceApiController extends ApiController
     }
 
     return $return;
-
   }
 
+  /**
+   * Get the list of resource maintenance given the parameters
+   * @param  Request $request
+   * @return array
+   */
   public function maintenance(Request $request)
   {
-    // $resource_type = (new ResourceTypeRepository)->findById($rty_id);
-
     $input = $request->input();
-
-    // $rs = new ResourceMaintenanceRepository;
-
-    // $filters = new ResourceMaintenanceFilter(['start' => array($input, 'start'), 'end' => array($input, 'end')]);
 
     $list = (new ResourceMaintenanceRepository)->start(array($input, 'start'))->end(array($input, 'end'))->get();
 
@@ -65,10 +64,7 @@ class ResourceApiController extends ApiController
       ];
     }
 
-    // dd($list);
-
     return $return;
-
   }
 
 }

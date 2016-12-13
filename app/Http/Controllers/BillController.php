@@ -8,7 +8,6 @@ use App\Http\Requests;
 use Repositories\BillRepository;
 use Repositories\CountryRepository;
 use Filters\BillFilter;
-// use App\Bill;
 use DB;
 use PDF;
 
@@ -16,6 +15,10 @@ class BillController extends MainController
 {
   protected $repo;
 
+  /**
+   * Create a new controller instance.
+   * @param BillRepository $repo
+   */
   public function __construct(BillRepository $repo)
   {
     parent::__construct();
@@ -31,11 +34,16 @@ class BillController extends MainController
     $this->vdata(compact('countries'));
   }
 
+  /**
+   * Display bill list
+   * @param  Request $request
+   * @return Response
+   */
   public function index(Request $request)
   {
     $filters = new BillFilter($request->input());
 
-    $this->passFilter($request->input());
+    $this->filter = $request->input();
 
     $this->page_title = trans('bill.list');
 
@@ -46,6 +54,11 @@ class BillController extends MainController
     return view('bill.list', $this->vdata);
   }
 
+  /**
+   * Display single bill
+   * @param  int $bil_id Bill id
+   * @return Response
+   */
   public function view($bil_id)
   {
     $bill = $this->repo->findById($bil_id);
@@ -59,6 +72,11 @@ class BillController extends MainController
     return view('bill.view', $this->vdata);
   }
 
+  /**
+   * Display printed bill
+   * @param  int $bil_id Bill id
+   * @return Response
+   */
   public function download($bil_id)
   {
     $bill = $this->repo->findById($bil_id);

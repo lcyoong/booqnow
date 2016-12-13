@@ -13,27 +13,27 @@ use App\Merchant;
 
 class MerchantCreated
 {
-    use InteractsWithSockets, SerializesModels;
+  use InteractsWithSockets, SerializesModels;
 
-    public $merchant;
+  public $merchant;
 
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-    public function __construct(Merchant $merchant)
-    {
-        $this->merchant = $merchant;
-    }
+  /**
+  * Create a new event instance.
+  *
+  * @return void
+  */
+  public function __construct(Merchant $merchant)
+  {
+    $this->merchant = $merchant;
+  }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
-    }
+  /**
+  * Get the channels the event should broadcast on.
+  *
+  * @return Channel|array
+  */
+  public function broadcastOn()
+  {
+    return new PrivateChannel('channel-name');
+  }
 }

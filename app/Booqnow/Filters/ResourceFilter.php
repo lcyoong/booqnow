@@ -4,6 +4,11 @@ namespace Filters;
 
 class ResourceFilter extends QueryFilter
 {
+  /**
+   * Resource name filter
+   * @param  string $value
+   * @return Builder
+   */
   public function name($value = '')
   {
     if (!empty($value)) {
@@ -12,6 +17,11 @@ class ResourceFilter extends QueryFilter
     }
   }
 
+  /**
+   * Resource type filter
+   * @param  string $value
+   * @return Builder
+   */
   public function type($value = '')
   {
     if (!empty($value)) {
@@ -20,6 +30,11 @@ class ResourceFilter extends QueryFilter
     }
   }
 
+  /**
+   * Resource status filter
+   * @param  string $value
+   * @return Builder
+   */
   public function status($value = '')
   {
     if (!empty($value)) {

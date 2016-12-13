@@ -20,7 +20,11 @@ class MainController extends Controller
   private $left_section_col;
   private $layout;
   private $new_path;
+  private $filter;
 
+  /**
+   * Create a new controller instance.
+   */
   public function __construct()
   {
     $this->middleware('auth');
@@ -37,8 +41,6 @@ class MainController extends Controller
 
     $booking_sources = (new BookingSourceRepository)->getDropDown('bs_id', 'bs_description');
 
-    // $countries = (new ResourceTypeRepository)->getDropDown();
-
     $this->vdata = [
       'left_section_col' => 12,
       'tenant' => false,
@@ -51,11 +53,21 @@ class MainController extends Controller
     ];
   }
 
+  /**
+   * Merge view data of child class with those from base class
+   * @param  array $data
+   * @return void
+   */
   public function vdata($data)
   {
     $this->vdata = $data + $this->vdata;
   }
 
+  /**
+   * Set a property as view data
+   * @param string $property
+   * @param string $value
+   */
   public function __set($property, $value)
 	{
 		if (property_exists($this, $property)) {
@@ -63,6 +75,12 @@ class MainController extends Controller
 		}
 	}
 
+  /**
+   * Format a default good response
+   * @param  string $message
+   * @param  array $data
+   * @return Response
+   */
   public function goodReponse($message = '', $data = null)
   {
     return response([
@@ -70,10 +88,5 @@ class MainController extends Controller
       'data' => $data,
       'message' => $message ? $message : trans('message.process_successful')
     ]);
-  }
-
-  public function passFilter($filter)
-  {
-    $this->vdata(compact('filter'));
   }
 }

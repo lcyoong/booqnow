@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-// use App\Resource;
-// use App\ResourceType;
-// use App\Merchant;
 use Repositories\ResourceRepository;
 use Repositories\ResourceTypeRepository;
 use Filters\ResourceFilter;
@@ -16,6 +13,10 @@ class ResourceController extends MainController
 {
   protected $repo_rs;
 
+  /**
+   * Create a new controller instance.
+   * @param ResourceRepository $repo_rs
+   */
   public function __construct(ResourceRepository $repo_rs)
   {
     parent::__construct();
@@ -27,6 +28,12 @@ class ResourceController extends MainController
     $this->repo_rs = $repo_rs;
   }
 
+  /**
+   * Display resources list
+   * @param  Request $request
+   * @param  int  $rty_id - Resource type id
+   * @return Response
+   */
   public function index(Request $request, $rty_id)
   {
     $resource_type = (new ResourceTypeRepository)->findById($rty_id);
@@ -36,17 +43,21 @@ class ResourceController extends MainController
     $filter = $request->input();
 
     $this->page_title = trans('resource.list', ['type' => $resource_type->rty_plural]);
-    // $this->page_title = $resource_type->rty_name;
 
     $this->new_path = urlTenant(sprintf('resources/%s/new', $resource_type->rty_id));
 
-    $resources = $this->repo_rs->getPages($filters, [], 'asc');
+    $resources = $this->repo_rs->getPages($filters, 'asc');
 
     $this->vdata(compact('resources', 'filter', 'resource_type'));
 
     return view('resource.list', $this->vdata);
   }
 
+  /**
+   * Display the new resource form
+   * @param  int $rty_id - Resource type id
+   * @return Response
+   */
   public function create($rty_id)
   {
     $resource_type = (new ResourceTypeRepository)->findById($rty_id);
@@ -58,7 +69,12 @@ class ResourceController extends MainController
     return view('resource.new', $this->vdata);
   }
 
-  public function edit(Merchant $merchant, $rs_id)
+  /**
+   * Display the edit resource form
+   * @param  int  $rs_id - Resource id
+   * @return Response
+   */
+  public function edit($rs_id)
   {
     $resource = $this->repo_rs->findById($rs_id);
 
@@ -71,10 +87,13 @@ class ResourceController extends MainController
     return view('resource.edit', $this->vdata);
   }
 
+  /**
+   * Process storing of new resource
+   * @param  Request $request
+   * @return Response
+   */
   public function store(Request $request)
   {
-    // $this->validation($request);
-    //
     $input = $request->input();
 
     $this->repo_rs->store($input);
@@ -82,33 +101,18 @@ class ResourceController extends MainController
     return $this->goodReponse();
   }
 
+  /**
+   * Process updating of a resource
+   * @param  Request $request
+   * @return Response
+   */
   public function update(Request $request)
   {
-    // $this->validation($request);
-
     $input = $request->input();
 
     $this->repo_rs->update($input);
 
     return $this->goodReponse();
   }
-
-  // public function active()
-  // {
-  //   dd('sss');
-  //   $filters = new ResourceFilter(['status' => 'active']);
-  //
-  //   dd($this->repo_rs->get($filters));
-  //
-  //   return $this->repo_rs->getPages($filters);
-  // }
-
-  // protected function validation($request)
-  // {
-  //   $this->validate($request, [
-  //     'rs_name' => 'required|max:255',
-  //     'rs_price' => 'required|numeric',
-  //   ]);
-  // }
 
 }

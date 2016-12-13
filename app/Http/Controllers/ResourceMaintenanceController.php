@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-// use App\Resource;
-// use App\ResourceMaintenance;
 use Repositories\ResourceTypeRepository;
 use Repositories\ResourceRepository;
 use Repositories\ResourceMaintenanceRepository;
@@ -16,6 +14,10 @@ class ResourceMaintenanceController extends MainController
 {
   protected $repo;
 
+  /**
+   * Create a new controller instance.
+   * @param ResourceMaintenanceRepository $repo
+   */
   public function __construct(ResourceMaintenanceRepository $repo)
   {
     parent::__construct();
@@ -27,6 +29,11 @@ class ResourceMaintenanceController extends MainController
     $this->repo = $repo;
   }
 
+  /**
+   * Display the new resource maintenance form
+   * @param  int $rs_id - Resource id
+   * @return Response
+   */
   public function create($rs_id)
   {
     $resource = (new ResourceRepository)->findById($rs_id);
@@ -44,6 +51,11 @@ class ResourceMaintenanceController extends MainController
     return view('resource.maintenance', $this->vdata);
   }
 
+  /**
+   * Process storing of new resource maintenance
+   * @param  Request $request
+   * @return Response
+   */
   public function store(Request $request)
   {
     $input = $request->input();
@@ -53,10 +65,15 @@ class ResourceMaintenanceController extends MainController
     return $this->goodReponse();
   }
 
+  /**
+   * Process deleting of a resource maintenance
+   * @param  int $rs_id - Resource id
+   * @param  int $rm_id - Resource maintenance id
+   * @return Response
+   */
   public function delete($rs_id, $rm_id)
   {
-    $resource = (new ResourceRepository)->findById($rs_id);
-
+    // $resource = (new ResourceRepository)->findById($rs_id);
     $this->repo->deleteById($rm_id);
 
     return $this->goodReponse();

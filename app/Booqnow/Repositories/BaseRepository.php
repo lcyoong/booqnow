@@ -7,12 +7,9 @@ use Illuminate\Validation\ValidationException;
 use DB;
 use Validator;
 use Contracts\BaseRepositoryInterface;
-// use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class BaseRepository implements BaseRepositoryInterface
 {
-
-  // use ValidatesRequests;
 
   protected $paginate = 10;
 
@@ -24,31 +21,23 @@ class BaseRepository implements BaseRepositoryInterface
 
   protected $filter;
 
+  /**
+   * Create new repository instance
+   * @param string $class - Model class name of child class
+   */
   public function __construct($class)
   {
     $this->repo = new $class();
   }
 
-  public function getPages($filters, $joins = [], $order = 'desc')
-  {
-    $resource = $this->repo->select('*');
-
-    foreach ($joins as $join){
-
-      $resource->join($join['table'], $join['left_col'], '=', $join['right_col']);
-    }
-
-    // $resource->filter($filters)->paginate($this->paginate);
-    $resource->orderBy($this->repo->getKeyName(), $order);
-
-    if (!is_null($this->filter)) {
-      $resource->filter($this->filter);
-    }
-
-    return $resource->filter($filters)->paginate($this->paginate);
-  }
-
-  public function get($filters = null, $limit = 0, $with = [], $joins = [])
+  /**
+   * Get the paginated result of query
+   * @param  Filter $filters - Repository filter
+   * @param  [type] $joins   [description]
+   * @param  string $order   [description]
+   * @return [type]          [description]
+   */
+  public function getPages($filters = null, $order = 'desc')
   {
     $resource = $this->repo->select('*');
 
@@ -60,40 +49,65 @@ class BaseRepository implements BaseRepositoryInterface
       $resource->filter($this->filter);
     }
 
-    foreach ($joins as $join){
+    $resource->orderBy($this->repo->getKeyName(), $order);
 
-      $resource->join($join['table'], $join['left_col'], '=', $join['right_col']);
+    return $resource->paginate($this->paginate);
+  }
+
+  /**
+   * Get the collection result of query
+   * @param  [type]  $filters [description]
+   * @param  integer $limit   [description]
+   * @return [type]           [description]
+   */
+  public function get($limit = 0)
+  {
+    $resource = $this->repo->select('*');
+
+    // if (!is_null($filters)) {
+    //   $resource->filter($filters);
+    // }
+    //
+    if (!is_null($this->filter)) {
+      $resource->filter($this->filter);
     }
 
     if ($limit > 0) {
       $resource->limit($limit);
     }
 
-    if (count($with) > 0) {
-      $resource->with($with);
-    }
-
     return $resource->get();
   }
 
+  /**
+   * Get a single repository item by primary key
+   * @param  int $id - Item id
+   * @return Model
+   */
   public function findById($id)
   {
     return $this->repo->findOrFail($id);
   }
 
+  /**
+   * Process storing of new repository item
+   * @param  array $input - input data
+   * @return Model
+   */
   public function store($input)
   {
-    // $input = $request->input();
-
     $this->validate($input);
 
     return $this->repo->create($input);
   }
 
+  /**
+   * Process updating of repository item
+   * @param  array $input - input data
+   * @return Model
+   */
   public function update($input)
   {
-    // $input = $request->input();
-
     $resource = $this->repo->findOrFail(array_get($input, $this->repo->getKeyName()));
 
     $this->validate($resource->toArray() + $input);
@@ -101,11 +115,21 @@ class BaseRepository implements BaseRepositoryInterface
     return $resource->update($input);
   }
 
+  /**
+   * Process deleting of repository item by primary key
+   * @param  int $id - Item id
+   * @return boolean
+   */
   public function deleteById($id)
   {
     return $this->repo->find($id)->delete();
   }
 
+  /**
+   * Validate input data
+   * @param  array $input - input data
+   * @return void
+   */
   public function validate($input)
   {
     $validator = Validator::make($input, $this->rules);
@@ -116,21 +140,28 @@ class BaseRepository implements BaseRepositoryInterface
     }
   }
 
-  public function all($columns = ['*'])
-  {
-    return $this->repo->get($columns);
-  }
+  // public function all($columns = ['*'])
+  // {
+  //   return $this->repo->get($columns);
+  // }
 
-  public function paginate($perPage = 15, $columns = ['*'])
-  {
-    return $this->repo->paginate($perPage, $columns);
-  }
+  // public function paginate($perPage = 15, $columns = ['*'])
+  // {
+  //   return $this->repo->paginate($perPage, $columns);
+  // }
 
   public function filter($filters)
   {
     return $this->repo->filter($filters);
   }
 
+  /**
+   * Get the key-value array result of a query
+   * @param  string $key - Column name of the array key
+   * @param  string $label - Column name of the array value
+   * @param  string $cache_name - Cache name (optional)
+   * @return array
+   */
   public function getDropDown($key, $label, $cache_name = null)
   {
     $resource = $this->repo->select('*');

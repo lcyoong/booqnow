@@ -4,6 +4,11 @@ namespace Filters;
 
 class CustomerFilter extends QueryFilter
 {
+  /**
+   * Customer name filter
+   * @param  string $value
+   * @return Builder
+   */
   public function name($value = '')
   {
     if (!empty($value)) {
@@ -12,6 +17,11 @@ class CustomerFilter extends QueryFilter
     }
   }
 
+  /**
+   * Customer country filter
+   * @param  string $value
+   * @return Builder
+   */
   public function country($value = '')
   {
     if (!empty($value)) {
@@ -20,6 +30,11 @@ class CustomerFilter extends QueryFilter
     }
   }
 
+  /**
+   * Customer contact no filter
+   * @param  string $value
+   * @return Builder
+   */
   public function contact1($value = '')
   {
     if (!empty($value)) {
@@ -28,6 +43,11 @@ class CustomerFilter extends QueryFilter
     }
   }
 
+  /**
+   * Customer email filter
+   * @param  string $value
+   * @return Builder
+   */
   public function email($value = '')
   {
     if (!empty($value)) {
@@ -36,6 +56,11 @@ class CustomerFilter extends QueryFilter
     }
   }
 
+  /**
+   * Customer status filter
+   * @param  string $value
+   * @return Builder
+   */
   public function status($value = '')
   {
     if (!empty($value)) {

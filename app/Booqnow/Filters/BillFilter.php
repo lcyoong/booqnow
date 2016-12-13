@@ -4,6 +4,11 @@ namespace Filters;
 
 class BillFilter extends QueryFilter
 {
+  /**
+   * Customer name filter
+   * @param  string $value
+   * @return Builder
+   */
   public function customer_name($value = '')
   {
     if (!empty($value)) {
@@ -14,6 +19,11 @@ class BillFilter extends QueryFilter
     }
   }
 
+  /**
+   * Customer email filter
+   * @param  string $value
+   * @return Builder
+   */
   public function customer_email($value = '')
   {
     if (!empty($value)) {
@@ -24,6 +34,11 @@ class BillFilter extends QueryFilter
     }
   }
 
+  /**
+   * Booking filter
+   * @param  string $value
+   * @return Builder
+   */
   public function booking($value = '')
   {
     if (!empty($value)) {
@@ -32,6 +47,11 @@ class BillFilter extends QueryFilter
     }
   }
 
+  /**
+   * Bill status filter
+   * @param  string $value
+   * @return Builder
+   */
   public function status($value = 'active')
   {
     if (!empty($value)) {
@@ -40,6 +60,11 @@ class BillFilter extends QueryFilter
     }
   }
 
+  /**
+   * Bill date start filter
+   * @param  string $value
+   * @return Builder
+   */
   public function start($value = '')
   {
     if (!empty($value)) {
@@ -48,6 +73,11 @@ class BillFilter extends QueryFilter
     }
   }
 
+  /**
+   * Bill date end filter
+   * @param  string $value
+   * @return Builder
+   */
   public function end($value = '')
   {
     if (!empty($value)) {
@@ -56,6 +86,10 @@ class BillFilter extends QueryFilter
     }
   }
 
+  /**
+   * Join customers to query
+   * @return Builder
+   */
   public function joinCustomers()
   {
     $this->builder->join('customers', 'cus_id', 'bil_customer');

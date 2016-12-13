@@ -10,8 +10,4 @@ use App\User;
 
 class UserController extends MainController
 {
-  public function all()
-  {
-    return User::all();
-  }
 }

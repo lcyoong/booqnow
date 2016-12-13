@@ -11,15 +11,18 @@ use Filters\CustomerFilter;
 
 class CustomerApiController extends ApiController
 {
+  /**
+   * Get active customers given the parameters
+   * @param  Request $request
+   * @return array
+   */
   public function active(Request $request)
   {
     $input = $request->input();
 
-    $rs = new CustomerRepository;
-
     $filters = new CustomerFilter(['status' => 'active', 'name' => array_get($input, 'q')]);
 
-    $list = $rs->get($filters, 5);
+    $list = (new CustomerRepository)->get($filters, 5);
 
     $return = [];
 

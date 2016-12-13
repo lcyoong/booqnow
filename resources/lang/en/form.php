@@ -28,6 +28,7 @@ return [
   'no_itinerary' => '** No tour',
   'bills' => 'Bills',
   'item_added' => ':item added',
+  'item_removed' => ':item removed',
   'print' => 'Print',
   'download' => 'Download',
   'records' => 'records',

@@ -4,6 +4,11 @@ namespace Filters;
 
 class AddonFilter extends QueryFilter
 {
+  /**
+   * Resource type filter
+   * @param  string $value
+   * @return Builder
+   */
   public function resourceType($value)
   {
     if (!empty($value)) {
@@ -14,6 +19,11 @@ class AddonFilter extends QueryFilter
     }
   }
 
+  /**
+   * Date filter
+   * @param  string $value
+   * @return Builder
+   */
   public function onDate($value)
   {
     if (!empty($value)) {
@@ -22,6 +32,11 @@ class AddonFilter extends QueryFilter
     }
   }
 
+  /**
+   * Trancking no filter
+   * @param  string $value
+   * @return Builder
+   */
   public function tracking($value = '')
   {
     if (!empty($value)) {
@@ -30,6 +45,11 @@ class AddonFilter extends QueryFilter
     }
   }
 
+  /**
+   * Reference no filter
+   * @param  string $value
+   * @return Builder
+   */
   public function reference($value = '')
   {
     if (!empty($value)) {
@@ -38,6 +58,10 @@ class AddonFilter extends QueryFilter
     }
   }
 
+  /**
+   * Join resources to query
+   * @return Builder
+   */
   public function joinResources()
   {
     $this->builder->join('resources', 'rs_id', 'add_resource');

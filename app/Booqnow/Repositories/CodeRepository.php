@@ -8,6 +8,12 @@ use Cache;
 
 class CodeRepository {
 
+  /**
+   * Get the key-value array of the query
+   * @param  string  $group - Code group
+   * @param  boolean $skip_null - Skip the blank entry or not
+   * @return array
+   */
   public function getDropDown($group, $skip_null = false)
   {
     Cache::flush();

@@ -2,13 +2,14 @@
 
 namespace Repositories;
 
-// use App\Customer;
-// use Illuminate\Http\Request;
 use Filters\CustomerFilter;
 use DB;
 
 class CustomerRepository extends BaseRepository {
 
+  /**
+   * Create new repository instance
+   */
   public function __construct()
   {
     parent::__construct('App\Customer');
@@ -22,30 +23,4 @@ class CustomerRepository extends BaseRepository {
       'cus_email' => 'required|email',
     ];
   }
-
-  // public function getList($filters)
-  // {
-  //   return Customer::filter($filters)->get();
-  // }
-  //
-  // public function store($input)
-  // {
-  //   DB::beginTransaction();
-  //
-  //   Customer::create($input);
-  //
-  //   DB::commit();
-  // }
-  //
-  // public function update($input)
-  // {
-  //   $resource_type = Customer::findOrFail(array_get($input, 'cus_id'));
-  //
-  //   $resource_type->update($input);
-  // }
-  //
-  // public function filter($filters)
-  // {
-  //   return Customer::filter($filters);
-  // }
 }

@@ -4,6 +4,11 @@ namespace Filters;
 
 class ReceiptFilter extends QueryFilter
 {
+  /**
+   * Customer name filter
+   * @param  string $value
+   * @return Builder
+   */
   public function customer_name($value = '')
   {
     if (!empty($value)) {
@@ -14,6 +19,11 @@ class ReceiptFilter extends QueryFilter
     }
   }
 
+  /**
+   * Bill no filter
+   * @param  string $value
+   * @return Builder
+   */
   public function bill($value = '')
   {
     if (!empty($value)) {
@@ -22,6 +32,11 @@ class ReceiptFilter extends QueryFilter
     }
   }
 
+  /**
+   * Receipt status filter
+   * @param  string $value
+   * @return Builder
+   */
   public function status($value = 'active')
   {
     if (!empty($value)) {
@@ -30,6 +45,10 @@ class ReceiptFilter extends QueryFilter
     }
   }
 
+  /**
+   * Join customers to query
+   * @return Builder
+   */
   public function joinCustomers()
   {
     $this->builder->join('customers', 'cus_id', 'rc_customer');

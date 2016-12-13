@@ -11,11 +11,18 @@ class Receipt extends TenantModel
 
   protected $fillable = ['rc_customer', 'rc_bill', 'rc_date', 'rc_amount', 'rc_remark', 'rc_intremark', 'rc_reference', 'rc_method', 'rc_status', 'created_by'];
 
+  /**
+   * Mutator to get the formatted receipt date
+   * @param string $value
+   */
   public function setRcDateAttribute($value)
   {
       $this->attributes['rc_date'] = Carbon::parse($value)->format('Y-m-d');
   }
 
+  /**
+   * Get the customer of the receipt
+   */
   public function customer()
   {
     return $this->belongsTo(Customer::class, 'rc_customer');
@@ -38,8 +45,6 @@ class Receipt extends TenantModel
     });
 
     static::deleted(function ($post) {
-      // Bill::find($post->bili_bill)->refreshGrossTax();
-
     });
 
     static::saved(function ($post) {

@@ -2,12 +2,14 @@
 
 namespace Repositories;
 
-// use App\Resource;
 use Filters\ReceiptFilter;
 use DB;
 
 class ReceiptRepository extends BaseRepository {
 
+  /**
+   * Create new repository instance
+   */
   public function __construct()
   {
     parent::__construct('App\Receipt');
@@ -15,7 +17,7 @@ class ReceiptRepository extends BaseRepository {
     $this->filter = new ReceiptFilter();
 
     $this->rules = [
-      // 'rc_customer' => 'required|exits:customers,cus_id',
+      // 'rc_customer' => 'required|exists:customers,cus_id',
       'rc_bill' => 'required|exists:bills,bil_id',
       'rc_date' => 'required|date',
       'rc_amount' => 'required|numeric|min:0',

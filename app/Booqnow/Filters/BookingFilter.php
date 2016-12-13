@@ -4,6 +4,11 @@ namespace Filters;
 
 class BookingFilter extends QueryFilter
 {
+  /**
+   * Customer name filter
+   * @param  string $value
+   * @return Builder
+   */
   public function customer_name($value = '')
   {
     if (!empty($value)) {
@@ -14,6 +19,11 @@ class BookingFilter extends QueryFilter
     }
   }
 
+  /**
+   * Customer email filter
+   * @param  string $value
+   * @return Builder
+   */
   public function customer_email($value = '')
   {
     if (!empty($value)) {
@@ -24,6 +34,11 @@ class BookingFilter extends QueryFilter
     }
   }
 
+  /**
+   * Booking status filter
+   * @param  string $value
+   * @return Builder
+   */
   public function status($value = 'active')
   {
     if (!empty($value)) {
@@ -32,6 +47,11 @@ class BookingFilter extends QueryFilter
     }
   }
 
+  /**
+   * Booking check out date filter
+   * @param  string $value
+   * @return Builder
+   */
   public function start($value = '')
   {
     if (!empty($value)) {
@@ -40,6 +60,11 @@ class BookingFilter extends QueryFilter
     }
   }
 
+  /**
+   * Booking check in date filter
+   * @param  string $value
+   * @return Builder
+   */
   public function end($value = '')
   {
     if (!empty($value)) {
@@ -48,6 +73,11 @@ class BookingFilter extends QueryFilter
     }
   }
 
+  /**
+   * Booking tracking no filter
+   * @param  string $value
+   * @return Builder
+   */
   public function tracking($value = '')
   {
     if (!empty($value)) {
@@ -56,6 +86,11 @@ class BookingFilter extends QueryFilter
     }
   }
 
+  /**
+   * Booking reference filter
+   * @param  string $value
+   * @return Builder
+   */
   public function reference($value = '')
   {
     if (!empty($value)) {
@@ -64,6 +99,11 @@ class BookingFilter extends QueryFilter
     }
   }
 
+  /**
+   * Booking check in date filter
+   * @param  string $value
+   * @return Builder
+   */
   public function onStart($value = '')
   {
     if (!empty($value)) {
@@ -72,6 +112,11 @@ class BookingFilter extends QueryFilter
     }
   }
 
+  /**
+   * Booking check out date filter
+   * @param  string $value
+   * @return Builder
+   */
   public function onEnd($value = '')
   {
     if (!empty($value)) {
@@ -80,6 +125,10 @@ class BookingFilter extends QueryFilter
     }
   }
 
+  /**
+   * Join customers to query
+   * @return Builder
+   */
   public function joinCustomers()
   {
     $this->builder->join('customers', 'cus_id', 'book_customer');

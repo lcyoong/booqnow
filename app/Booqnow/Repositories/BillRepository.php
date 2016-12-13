@@ -8,6 +8,9 @@ use DB;
 
 class BillRepository extends BaseRepository {
 
+  /**
+   * Create new repository instance
+   */
   public function __construct()
   {
     parent::__construct('App\Bill');
@@ -24,10 +27,4 @@ class BillRepository extends BaseRepository {
       'bil_tax' => 'sometimes|numeric|min:0',
     ];
   }
-
-  // public function single($id)
-  // {
-  //   return $this->repo->with('customer')->find($id);
-  // }
-
 }

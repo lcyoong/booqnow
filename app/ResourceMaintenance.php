@@ -10,6 +10,9 @@ class ResourceMaintenance extends TenantModel
 
   protected $fillable = ['rm_resource', 'rm_from', 'rm_to', 'rm_description', 'rm_status', 'created_by'];
 
+  /**
+   * Get the resource of the maintenance
+   */
   public function resource()
   {
     return $this->belongsTo(Resource::class, 'book_resource');

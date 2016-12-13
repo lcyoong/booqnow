@@ -8,6 +8,9 @@ use DB;
 
 class BillItemRepository extends BaseRepository {
 
+  /**
+   * Create new repository instance
+   */
   public function __construct()
   {
     parent::__construct('App\BillItem');

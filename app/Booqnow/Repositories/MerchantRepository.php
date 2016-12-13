@@ -2,29 +2,22 @@
 
 namespace Repositories;
 
-use App\Merchant;
 use DB;
 
-class MerchantRepository {
+class MerchantRepository extends BaseRepository{
 
-  public function getList()
+  /**
+   * Create new repository instance
+   */
+  public function __construct()
   {
-    return Merchant::mine()->with('subscription.plan')->get();
-  }
+    parent::__construct('App\Merchant');
 
-  public function store($input)
-  {
-    DB::beginTransaction();
+    $this->filter = new CustomerFilter();
 
-    Merchant::create($input);
-
-    DB::commit();
-  }
-
-  public function update($input)
-  {
-    $merchant = Merchant::findOrFail(array_get($input, 'mer_id'));
-
-    $merchant->update($input);
+    $this->rules = [
+      'mer_name' => 'required|max:255',
+      'mer_country' => 'required',
+    ];
   }
 }

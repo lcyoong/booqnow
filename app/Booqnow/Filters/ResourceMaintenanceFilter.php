@@ -4,6 +4,11 @@ namespace Filters;
 
 class ResourceMaintenanceFilter extends QueryFilter
 {
+  /**
+   * Resource maintenance status filter
+   * @param  string $value
+   * @return Builder
+   */
   public function status($value = '')
   {
     if (!empty($value)) {
@@ -12,6 +17,11 @@ class ResourceMaintenanceFilter extends QueryFilter
     }
   }
 
+  /**
+   * Resource filter
+   * @param  string $value
+   * @return Builder
+   */
   public function resource($value = '')
   {
     if (!empty($value)) {
@@ -20,6 +30,11 @@ class ResourceMaintenanceFilter extends QueryFilter
     }
   }
 
+  /**
+   * Resource type filter
+   * @param  string $value
+   * @return Builder
+   */
   public function type($value = '')
   {
     if (!empty($value)) {
@@ -30,6 +45,11 @@ class ResourceMaintenanceFilter extends QueryFilter
     }
   }
 
+  /**
+   * Maintenance end date filter
+   * @param  string $value
+   * @return Builder
+   */
   public function start($value = '')
   {
     if (!empty($value)) {
@@ -38,6 +58,11 @@ class ResourceMaintenanceFilter extends QueryFilter
     }
   }
 
+  /**
+   * Maintenance start date filter
+   * @param  string $value
+   * @return Builder
+   */
   public function end($value = '')
   {
     if (!empty($value)) {
@@ -46,6 +71,10 @@ class ResourceMaintenanceFilter extends QueryFilter
     }
   }
 
+  /**
+   * Join resources to query
+   * @return Builder
+   */
   public function joinResources()
   {
     $this->builder->join('resources', 'rs_id', 'rm_resource');

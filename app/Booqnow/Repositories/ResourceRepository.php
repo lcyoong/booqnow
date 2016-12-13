@@ -2,12 +2,14 @@
 
 namespace Repositories;
 
-// use App\Resource;
 use Filters\ResourceFilter;
 use DB;
 
 class ResourceRepository extends BaseRepository {
 
+  /**
+   * Create new repository instance
+   */
   public function __construct()
   {
     parent::__construct('App\Resource');
@@ -26,6 +28,11 @@ class ResourceRepository extends BaseRepository {
 
   }
 
+  /**
+   * Add resource status filter to query
+   * @param  string $value
+   * @return Repository
+   */
   public function ofStatus($value)
   {
     $this->filter->add(['status' => $value]);
@@ -33,17 +40,15 @@ class ResourceRepository extends BaseRepository {
     return $this;
   }
 
+  /**
+   * Add resource type filter to query
+   * @param  string $value
+   * @return Repository
+   */
   public function ofType($value)
   {
     $this->filter->add(['type' => $value]);
 
     return $this;
   }
-
-  // public function getDropDown()
-  // {
-  //   return $this->repo->toDropDown('rs_id', 'rs_name');
-  //
-  // }
-
 }

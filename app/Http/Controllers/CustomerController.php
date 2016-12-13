@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-// use App\Customer;
-// use App\Merchant;
 use Repositories\CustomerRepository;
 use Repositories\CountryRepository;
 use Repositories\ResourceRepository;
@@ -17,6 +15,10 @@ class CustomerController extends MainController
 {
   protected $repo_cus;
 
+  /**
+   * Create a new controller instance.
+   * @param CustomerRepository $repo_cus
+   */
   public function __construct(CustomerRepository $repo_cus)
   {
     parent::__construct();
@@ -26,12 +28,16 @@ class CustomerController extends MainController
     $this->tenant = true;
   }
 
-  // Display customers list
+  /**
+   * Display customers list
+   * @param  Request $request
+   * @return Response
+   */
   public function index(Request $request)
   {
     $filters = new CustomerFilter($request->input());
 
-    $this->passFilter($request->input());
+    $this->filter = $request->input();
 
     $this->page_title = trans('customer.list');
 
@@ -44,7 +50,10 @@ class CustomerController extends MainController
     return view('customer.list', $this->vdata);
   }
 
-  // Display new customer form
+  /**
+   * Display the new customer form
+   * @return Response
+   */
   public function create()
   {
     $this->page_title = trans('customer.new');
@@ -52,7 +61,11 @@ class CustomerController extends MainController
     return view('customer.new', $this->vdata);
   }
 
-  // Display edit customer form
+  /**
+   * Display edit customer form
+   * @param  int $cus_id - Customer id
+   * @return Response
+   */
   public function edit($cus_id)
   {
     $customer = (new CustomerRepository)->findById($cus_id);
@@ -64,7 +77,11 @@ class CustomerController extends MainController
     return view('customer.edit', $this->vdata);
   }
 
-  // Process storing of new customer
+  /**
+   * Process storing of new customer
+   * @param  Request $request
+   * @return Response
+   */
   public function store(Request $request)
   {
     $new = $this->repo_cus->store($request->input());
@@ -72,7 +89,11 @@ class CustomerController extends MainController
     return $this->goodReponse(null, $new->cus_id);
   }
 
-  // Process updating of a customer
+  /**
+   * Process updating of a customer
+   * @param  Request $request
+   * @return Response
+   */
   public function update(Request $request)
   {
     $this->repo_cus->update($request->input());
@@ -80,6 +101,11 @@ class CustomerController extends MainController
     return $this->goodReponse();
   }
 
+  /**
+   * Display select-customer form
+   * @param  Request $request
+   * @return Response
+   */
   public function pick(Request $request)
   {
     $this->layout = 'layouts.modal';

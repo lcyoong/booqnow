@@ -9,6 +9,9 @@ use DB;
 
 class AddonRepository extends BaseRepository {
 
+  /**
+   * Create a new repository instance.
+   */
   public function __construct()
   {
     parent::__construct('App\Addon');
@@ -28,33 +31,28 @@ class AddonRepository extends BaseRepository {
     ];
   }
 
-  // public function byDate($date, $type, $limit = 5)
-  // {
-  //   return $this->repo->where('add_date', '=', $date)->join('resources', 'rs_id', '=', 'add_resource')->where('rs_type', '=', $type)->limit($limit);
-  // }
-
+  /**
+   * Add addon resource type filter
+   * @param  int $type - Resource type id
+   * @return Repository
+   */
   public function ofType($type)
   {
     $this->filter->add(['resourceType' => $type]);
 
     return $this;
-    // $filters = new AddonFilter(['resourceType' => $type]);
-    //
-    // return $this->repo->filter($filters);
-    // return $this->repo->join('resources', 'rs_id', '=', 'add_resource')->where('rs_type', '=', $type);
-    // return $this->repo->ofType($type);
   }
 
+  /**
+   * Add addon date filter
+   * @param  string $date - Addon date
+   * @return Repository
+   */
   public function ofDate($date)
   {
     $this->filter->add(['onDate' => $date]);
 
     return $this;
-    // $filters = new AddonFilter(['onDate' => $date]);
-    //
-    // return $this->repo->filter($filters);
-    // return $this->repo->ofDate($date);
-    // return $this->repo->where('add_date', '=', $date);
   }
 
 }

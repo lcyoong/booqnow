@@ -16,6 +16,10 @@ class MerchantController extends MainController
 {
   protected $repo_mer;
 
+  /**
+   * Create a new controller instance.
+   * @param MerchantRepository $repo_mer
+   */
   public function __construct(MerchantRepository $repo_mer)
   {
     parent::__construct();
@@ -27,6 +31,10 @@ class MerchantController extends MainController
     $this->vdata(compact('countries'));
   }
 
+  /**
+   * Display merchant accounts list
+   * @return Response
+   */
   public function index()
   {
     $this->page_title = trans('merchant.accounts');
@@ -38,6 +46,10 @@ class MerchantController extends MainController
     return view('merchant.list', $this->vdata);
   }
 
+  /**
+   * Display new merchant account form
+   * @return Response
+   */
   public function create()
   {
     $this->page_title = trans('merchant.create');
@@ -45,8 +57,15 @@ class MerchantController extends MainController
     return view('merchant.new', $this->vdata);
   }
 
-  public function edit(Merchant $merchant)
+  /**
+   * Display edit merchant account form
+   * @param  int $mer_id - Merchant id
+   * @return Response
+   */
+  public function edit($mer_id)
   {
+    $merchant = (new MerchantRepository)->findById($mer_id);
+
     $this->page_title = trans('merchant.edit');
 
     $mer_setting = unserialize($merchant->mer_setting);
@@ -56,30 +75,36 @@ class MerchantController extends MainController
     return view('merchant.edit', $this->vdata);
   }
 
+  /**
+   * * Process storing of new merchant account
+   * @param  Request $request
+   * @return Response
+   */
   public function store(Request $request)
   {
-    $input = $request->input();
+    $new = $this->repo_mer->store($request->input());
 
-    $this->validation($request);
-
-    $this->repo_mer->store($input);
+    return $this->goodReponse(null, $new->mer_id);
   }
 
+  /**
+   * Process updating of a customer
+   * @param  Request $request
+   * @return Response
+   */
   public function update(Request $request)
   {
-    $input = $request->input();
+    $this->repo_mer->update($request->input());
 
-    $this->validation($request);
-
-    $this->repo_mer->update($input);
+    return $this->goodReponse();
   }
 
-  protected function validation($request)
-  {
-    $this->validate($request, [
-        'mer_name' => 'required|max:255',
-        'mer_country' => 'required',
-    ]);
-  }
+  // protected function validation($request)
+  // {
+  //   $this->validate($request, [
+  //       'mer_name' => 'required|max:255',
+  //       'mer_country' => 'required',
+  //   ]);
+  // }
 
 }

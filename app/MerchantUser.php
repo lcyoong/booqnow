@@ -13,6 +13,9 @@ class MerchantUser extends BaseModel
 
   protected $fillable = ['mus_user', 'mus_merchant', 'mus_status', 'created_by'];
 
+  /**
+   * Get the user of the merchant user
+   */
   public function user()
   {
     return $this->belongsTo('App\User', 'mus_user');

@@ -13,6 +13,9 @@ abstract class QueryFilter {
 
   protected $joins;
 
+  /**
+   * Create new class instance
+   */
   public function __construct($request = [])
   {
     $this->request = $request;
@@ -20,21 +23,38 @@ abstract class QueryFilter {
     $this->joins = [];
   }
 
+  /**
+   * Add new filter criteria
+   * @param array $add - key-value array filter e.g. 'filter_field' => 'filter_value'
+   */
   public function add($add)
   {
     $this->request += $add;
   }
 
+  /**
+   * Get the filters
+   * @return array
+   */
   public function filters()
   {
     return $this->request;
   }
 
+  /**
+   * Get the related Eloquent model joins for the filter
+   * @return array
+   */
   public function joins()
   {
     return $this->joins;
   }
 
+  /**
+   * Apply the filters into query
+   * @param  Builder $builder
+   * @return Builder
+   */
   public function apply(Builder $builder)
   {
     $this->builder = $builder;

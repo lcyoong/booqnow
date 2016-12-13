@@ -2,13 +2,14 @@
 
 namespace Repositories;
 
-// use App\ResourceMaintenance;
 use DB;
 use Filters\ResourceMaintenanceFilter;
-// use Cache;
 
 class ResourceMaintenanceRepository extends BaseRepository{
 
+  /**
+   * Create new repository instance
+   */
   public function __construct()
   {
     parent::__construct('App\ResourceMaintenance');
@@ -23,6 +24,11 @@ class ResourceMaintenanceRepository extends BaseRepository{
     ];
   }
 
+  /**
+   * Add maintenance start date filter
+   * @param  string $date - Date string
+   * @return Repository
+   */
   public function start($date)
   {
     $this->filter->add(['start' => $date]);
@@ -30,15 +36,15 @@ class ResourceMaintenanceRepository extends BaseRepository{
     return $this;
   }
 
+  /**
+   * Add maintenance end date filter
+   * @param  string $date - Date string
+   * @return Repository
+   */
   public function end($date)
   {
     $this->filter->add(['end' => $date]);
 
     return $this;
   }
-
-  // public function withResource()
-  // {
-  //   return $this->repo->join('resources', 'rs_id', '=', 'rm_resource');
-  // }
 }
