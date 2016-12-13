@@ -35,9 +35,9 @@ class DashboardController extends MainController
 
     $date = array_get($input, 'date', date('Ymd'));
 
-    $arrivals['today'] = (new BookingRepository)->ofArrivalDate($date)->get(5);
+    $arrivals['today'] = (new BookingRepository)->ofArrivalDate($date)->get(null, 5);
 
-    $departures['today'] = (new BookingRepository)->ofDepartureDate($date)->get(5);
+    $departures['today'] = (new BookingRepository)->ofDepartureDate($date)->get(null, 5);
 
     $tours = (new AddonRepository)->ofDate($date)->ofType(2)->get();
 

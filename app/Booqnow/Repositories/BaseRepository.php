@@ -60,14 +60,14 @@ class BaseRepository implements BaseRepositoryInterface
    * @param  integer $limit   [description]
    * @return [type]           [description]
    */
-  public function get($limit = 0)
+  public function get($filters = null, $limit = 0)
   {
     $resource = $this->repo->select('*');
 
-    // if (!is_null($filters)) {
-    //   $resource->filter($filters);
-    // }
-    //
+    if (!is_null($filters)) {
+      $resource->filter($filters);
+    }
+
     if (!is_null($this->filter)) {
       $resource->filter($this->filter);
     }
