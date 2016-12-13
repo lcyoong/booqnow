@@ -8,8 +8,8 @@ use DB;
 
 interface BaseRepositoryInterface
 {
-  public function all($columns = ['*']);
-
-  public function paginate($perPage = 15, $columns = ['*']);
+  // public function all($columns = ['*']);
+  //
+  // public function paginate($perPage = 15, $columns = ['*']);
 
 }
