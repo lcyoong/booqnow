@@ -25,6 +25,7 @@ class FormServiceProvider extends ServiceProvider
         Form::component('bsSelect', 'components.form.select', ['name', 'label', 'list', 'value' => null, 'attributes' => [], 'col' => 3]);
         Form::component('bsTextarea', 'components.form.textarea', ['name', 'label', 'value' => null, 'attributes' => [], 'col' => 3]);
         Form::component('bsNumber', 'components.form.number', ['name', 'label', 'value' => null, 'attributes' => [], 'col' => 3]);
+        Form::component('bsYear', 'components.form.year', ['name', 'label', 'value' => null, 'attributes' => [], 'col' => 3]);
 
         Form::component('filterText', 'components.form.filtertext', ['name', 'label', 'value' => null, 'attributes' => [], 'col' => 3]);
         Form::component('filterSelect', 'components.form.filterselect', ['name', 'label', 'list', 'value' => null, 'attributes' => [], 'col' => 3]);

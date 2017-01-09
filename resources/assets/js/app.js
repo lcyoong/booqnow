@@ -213,6 +213,11 @@ function onErrorNotify(response, el) {
   }
 }
 
+/**
+ * Display modal
+ * @param  {[type]} path [description]
+ * @return {[type]}      [description]
+ */
 function showModal(path)
 {
   $('#basicModal').find('.modal-content').html('');

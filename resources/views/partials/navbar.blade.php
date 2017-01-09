@@ -14,12 +14,12 @@
         <li><a href="{{ urlTenant('') }}">@lang('nav.frontdesk')</a></li>
         <li><a href="{{ urlTenant('bookings') }}">@lang('nav.appointments')</a></li>
         <li><a href="{{ urlTenant('bills') }}">@lang('nav.billing')</a></li>
-        <!-- <li class="dropdown">
+        <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.reports') <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="{{ urlTenant('reports/profitloss') }}">@lang('report.pnl')</a></li>
           </ul>
-        </li> -->
+        </li>
         <!-- <li><a href="{{ urlTenant('receipts') }}">@lang('nav.receipts')</a></li> -->
         <li><a href="{{ urlTenant('customers') }}">@lang('nav.customers')</a></li>
         <li class="dropdown">

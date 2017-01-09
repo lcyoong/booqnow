@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+// use Contracts\ReportLogInterface;
 use App\Http\Requests;
-use Reports\ProfitLoss;
+use Reports\ProfitLossExcel;
 
 class ReportController extends MainController
 {
@@ -18,13 +18,27 @@ class ReportController extends MainController
     $this->layout = 'layouts.tenant';
   }
 
+  public function profitLossFilter(Request $request)
+  {
+    $this->filter = $request->input();
+
+    return view('report.pnl', $this->vdata);
+  }
+
+  /**
+   * Generate Profit Loss report
+   * @param  Request $request
+   * @return Response
+   */
   public function profitLoss(Request $request)
   {
-    $report = new ProfitLoss;
+    $report = new ProfitLossExcel('pnl');
 
-    $report->handle($request);
+    $report->setYear($request->input('year'));
 
-    $report->output();
+    $report->handle();
+
+    return $this->goodReponse();
   }
 
   public function occupancy(Occupancy $report, Request $request)

@@ -23,5 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('Contracts\BaseRepositoryInterface', 'Repositories\EloquentRepository');
+        $this->app->bind('Contracts\ReportLogInterface', 'Reports\FileReportLog');
+        $this->app->bind('Contracts\ReportInterface', 'Reports\ExcelReport');
     }
 }

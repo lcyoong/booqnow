@@ -1,5 +1,9 @@
 @extends($layout)
 
+@section('content_above_list')
+@include('report.pnl_filter')
+@endsection
+
 @section('content_list')
 <thead>
   <tr>

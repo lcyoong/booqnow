@@ -58,6 +58,9 @@ if (config('myapp.multi_tenant')) {
   tenantRoutes();
 }
 
+Auth::routes();
+
+// Route::get('/home', 'HomeController@index');
 function tenantRoutes()
 {
   Route::get('', 'DashboardController@frontDesk');
@@ -110,14 +113,12 @@ function tenantRoutes()
   Route::get('bills', 'BillController@index');
   Route::get('bills/{bill}', 'BillController@view');
   Route::get('bills/{bill}/print', 'BillController@download');
+  Route::post('bills/export', 'BillController@export');
 
   Route::get('receipts', 'ReceiptController@index');
   Route::get('receipts/new/{bill}', 'ReceiptController@create');
   Route::post('receipts/new', 'ReceiptController@store');
 
-  Route::get('reports/profitloss', 'ReportController@profitLoss');
+  Route::get('reports/profitloss', 'ReportController@profitLossFilter');
+  Route::post('reports/profitloss', 'ReportController@profitLoss');
 }
-
-Auth::routes();
-
-// Route::get('/home', 'HomeController@index');

@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
           'App\Listeners\AddDefaultOwner',
           'App\Listeners\CreateAndMigrateDatabase',
         ],
+        'App\Events\ReportCreated' => [
+          'App\Listeners\LogReport',
+        ],
     ];
 
     /**

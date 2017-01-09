@@ -10,6 +10,7 @@ use Repositories\CountryRepository;
 use Filters\BillFilter;
 use DB;
 use PDF;
+use Reports\BillExportExcel;
 
 class BillController extends MainController
 {
@@ -92,6 +93,26 @@ class BillController extends MainController
     $this->vdata(compact('bill', 'title', 'items', 'resource_name'));
 
     return PDF::loadView('bill.print', $this->vdata)->stream(sprintf("bill-%s.pdf", $bill->bil_id));
+  }
+
+  /**
+   * Export data
+   * @param  Request $request
+   * @return Response
+   */
+  public function export(Request $request)
+  {
+    $filters = new BillFilter($request->input());
+
+    dd($filters);
+
+    $report = new BillExportExcel('bill');
+
+    $report->filter($filters);
+
+    $report->handle();
+
+    return $this->goodReponse();
   }
 
 }

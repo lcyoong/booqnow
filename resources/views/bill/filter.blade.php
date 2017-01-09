@@ -6,4 +6,5 @@
 </div>
 {{ Form::submit(trans('form.filter'), ['class' => 'btn btn-primary']) }}
 <redirect-btn label="@lang('form.clear')" redirect="{{ urlTenant('bills') }}"></redirect-btn>
+<button class="btn btn-primary" v-post postto="{{ urlTenant('bills/export') }}"><i class="fa fa-download"></i> @lang('form.export')</button>
 {{ Form::close() }}
