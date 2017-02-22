@@ -5,6 +5,7 @@
 @endsection
 
 @section('content_list')
+<table class="table table-condensed">
 <thead>
   <tr>
     <th>@lang('booking.book_id')</th>
@@ -13,7 +14,7 @@
     <th>@lang('booking.duration')</th>
     <th>@lang('booking.book_pax')</th>
     <th>@lang('booking.book_reference')</th>
-    <th>@lang('booking.book_tracking')</th>
+    <!-- <th>@lang('booking.book_tracking')</th> -->
     <th>@lang('booking.book_status')</th>
     <th>@lang('form.actions')</th>
   </tr>
@@ -27,16 +28,33 @@
     <td><span class="label label-info">{{ dayDiff($item->book_from, $item->book_to) }} @lang('booking.nights')</span> {{ showDate($item->book_from) }} - {{ showDate($item->book_to) }}</td>
     <td>{{ $item->book_pax }}</td>
     <td>{{ $item->book_reference }}</td>
-    <td>{{ $item->book_tracking }}</td>
+    <!-- <td>{{ $item->book_tracking }}</td> -->
     <td>{{ $item->book_status }}</td>
     <td>
       <a v-modal href="{{ url(sprintf('bookings/%s', $item->book_id)) }}" title="@lang('form.view')"><i class="fa fa-eye"></i></a>
+      <a v-modal href="{{ url ('trail/bookings/' . $item->book_id) }}"><i class="fa fa-history"></i></a>
     </td>
   </tr>
   @endforeach
 </tbody>
+</table>
 @endsection
 
+
 @push('content')
+<div id="booking-list">
 @include('layouts.list', ['count' => $list->count()])
+</div>
+@endpush
+
+@push('scripts')
+<script>
+
+new Vue({
+  el: '#booking-list',
+  components: {
+  },
+});
+
+</script>
 @endpush

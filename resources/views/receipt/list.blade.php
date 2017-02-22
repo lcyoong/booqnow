@@ -5,33 +5,53 @@
 @endsection
 
 @section('content_list')
-<thead>
-  <tr>
-    <th>@lang('receipt.rc_id')</th>
-    <th>@lang('receipt.rc_customer')</th>
-    <th>@lang('receipt.rc_date')</th>
-    <th>@lang('receipt.rc_bill')</th>
-    <th>{{ appendCurrency(trans('receipt.rc_amount')) }}</th>
-    <!-- <th>@lang('form.actions')</th> -->
-  </tr>
-</thead>
-<tbody>
-  @foreach ($list as $item)
-  <tr>
-    <td>{{ $item->rc_id }}</td>
-    <td>{{ $item->customer->full_name }}</td>
-    <td>{{ showDate($item->rc_date) }}</td>
-    <td>{{ $item->rc_bill }} <a href="{{ urlTenant(sprintf("bills/%s/print", $item->rc_bill)) }}" target=_blank><i class="fa fa-print"></i></a></td>
-    <td>{{ showMoney($item->rc_amount) }}</td>
-    <!-- <td>
-      <a v-modal href="{{ url(sprintf('receipts/%s', $item->rc_id)) }}" title="@lang('form.view')"><i class="fa fa-eye"></i></a>
-    </td> -->
-  </tr>
-  @endforeach
-</tbody>
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>@lang('receipt.rc_id')</th>
+      <th>@lang('receipt.rc_customer')</th>
+      <th>@lang('receipt.rc_date')</th>
+      <th>@lang('receipt.rc_bill')</th>
+      <th>@lang('receipt.rc_remark')</th>
+      <th>@lang('receipt.rc_method')</th>
+      <th>{{ appendCurrency(trans('receipt.rc_amount')) }}</th>
+      <!-- <th>@lang('form.actions')</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    @foreach ($list as $item)
+    <tr>
+      <td>{{ $item->rc_id }}</td>
+      <td>{{ $item->customer->full_name }}</td>
+      <td>{{ showDate($item->rc_date) }}</td>
+      <td>{{ $item->rc_bill }} <a v-modal href="{{ url ('bills/' . $item->rc_bill) }}"><i class="fa fa-eye"></i></a></td>
+      <td>{{ $item->rc_remark }}</td>
+      <td>{{ array_get($pay_methods, $item->rc_method) }}</td>
+      <td>{{ showMoney($item->rc_amount) }}</td>
+      <!-- <td>
+        <a v-modal href="{{ url(sprintf('receipts/%s', $item->rc_id)) }}" title="@lang('form.view')"><i class="fa fa-eye"></i></a>
+      </td> -->
+    </tr>
+    @endforeach
+  </tbody>
+</table>
 @endsection
 
-@push('content')
+@prepend('content')
+<div id="receipt-list">
 @include('layouts.list', ['count' => $list->total()])
 {{ $list->appends(Request::input())->links() }}
+</div>
+@endprepend
+
+@push('scripts')
+<script>
+
+new Vue({
+  el: '#receipt-list',
+  components: {
+  },
+});
+
+</script>
 @endpush

@@ -25,9 +25,9 @@
     <tr>
       <td>@lang('booking.book_reference')</td><td> : </td><td>{{ $bill->booking->book_reference }}</td>
     </tr>
-    <tr>
+    <!-- <tr>
       <td>@lang('booking.book_tracking')</td><td> : </td><td>{{ $bill->booking->book_tracking }}</td>
-    </tr>
+    </tr> -->
     <tr>
       <td>@lang('booking.created_by')</td><td> : </td><td>{{ $bill->booking->creator->name }}</td>
     </tr>

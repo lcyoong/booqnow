@@ -20,7 +20,7 @@
             <li><a href="{{ urlTenant('reports/profitloss') }}">@lang('report.pnl')</a></li>
           </ul>
         </li>
-        <!-- <li><a href="{{ urlTenant('receipts') }}">@lang('nav.receipts')</a></li> -->
+        <li><a href="{{ urlTenant('receipts') }}">@lang('nav.receipts')</a></li>
         <li><a href="{{ urlTenant('customers') }}">@lang('nav.customers')</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.resources') <span class="caret"></span></a>

@@ -17,6 +17,8 @@ class BillRepository extends BaseRepository {
 
     $this->filter = new BillFilter();
 
+    $this->withs = ['customer'];
+
     $this->rules = [
       // 'bil_accounting' => 'required|exists:accounting,acc_id',
       'bil_customer' => 'required|exists:customers,cus_id',

@@ -35,22 +35,34 @@ class MainController extends Controller
 
     $book_status = (new CodeRepository)->getDropDown('book_status', true);
 
+    $cus_status = (new CodeRepository)->getDropDown('cus_status', true);
+
+    $rs_status = (new CodeRepository)->getDropDown('rs_status', true);
+
     $countries = (new CountryRepository)->getDropDown();
 
     $resource_types = (new ResourceTypeRepository)->get();
 
     $booking_sources = (new BookingSourceRepository)->getDropDown('bs_id', 'bs_description');
 
-    $this->vdata = [
-      'left_section_col' => 12,
-      'tenant' => false,
-      'layout' => 'layouts.tenant',
-      'pay_methods' => $pay_methods,
-      'book_status' => $book_status,
-      'countries' => $countries,
-      'resource_types' => $resource_types,
-      'booking_sources' => $booking_sources,
-    ];
+    $left_section_col = 12;
+
+    $tenant = false;
+
+    $layout = 'layouts.tenant';
+
+    $this->vdata = compact('left_section_col', 'tenant', 'layout', 'pay_methods', 'book_status', 'countries', 'resource_types', 'booking_sources', 'cus_status', 'rs_status');
+
+    // $this->vdata = [
+    //   'left_section_col' => 12,
+    //   'tenant' => false,
+    //   'layout' => 'layouts.tenant',
+    //   'pay_methods' => $pay_methods,
+    //   'book_status' => $book_status,
+    //   'countries' => $countries,
+    //   'resource_types' => $resource_types,
+    //   'booking_sources' => $booking_sources,
+    // ];
   }
 
   /**

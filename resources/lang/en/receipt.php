@@ -14,4 +14,6 @@ return [
   'rc_method' => 'Method',
   'rc_status' => 'Status',
   'rc_remark_placeholder' => 'e.g. Deposit',
+  'from_rc_date' => 'From receipt date',
+  'to_rc_date' => 'To receipt date',
 ];

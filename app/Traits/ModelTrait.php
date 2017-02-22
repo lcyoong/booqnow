@@ -39,7 +39,7 @@ trait ModelTrait
    */
   public function scopeToDropDown($query, $key_col, $value_col)
   {
-      return [''=> trans('form.select_any') ] + array_column($query->get()->toArray(), $value_col, $key_col);
+    return ['' => '--'] + array_column($query->get()->toArray(), $value_col, $key_col);
   }
 
   /**

@@ -11,6 +11,13 @@ use Filters\BookingFilter;
 
 class BookingApiController extends ApiController
 {
+  protected $repo_book;
+
+  public function __construct(BookingRepository $repo_book)
+  {
+    $this->repo_book = $repo_book;
+  }
+
   /**
    * Get active bookings for given parameters
    * @param  Request $request
@@ -20,7 +27,9 @@ class BookingApiController extends ApiController
   {
     $input = $request->input();
 
-    $filters = new BookingFilter(['start' => array($input, 'start'), 'end' => array($input, 'end')]);
+    $filters = new BookingFilter($request->input());
+
+    // $filters = new BookingFilter(['start' => array($input, 'start'), 'end' => array($input, 'end')]);
 
     $list = (new BookingRepository)->get($filters);
 
@@ -43,6 +52,20 @@ class BookingApiController extends ApiController
     }
 
     return $return;
-
   }
+
+  /**
+   * Get active bookings for given parameters
+   * @param  Request $request
+   * @return array
+   */
+  public function get(Request $request)
+  {
+    $input = $request->input();
+
+    $filters = new BookingFilter($request->input());
+
+    return $this->repo_book->with(['customer', 'bills'])->getPages($filters);
+  }
+
 }

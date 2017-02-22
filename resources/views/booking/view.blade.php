@@ -15,7 +15,7 @@
 </div>
 <div class="row">
   {{ Form::showField($booking->book_reference, trans('booking.book_reference')) }}
-  {{ Form::showField($booking->book_tracking, trans('booking.book_tracking')) }}
+  <!-- {{ Form::showField($booking->book_tracking, trans('booking.book_tracking')) }} -->
 </div>
 <div class="row">
   <div class="col-md-3"><button class="form-control btn-primary" v-post postto="{{ urlTenant('bookings/checkin/' . $booking->book_id) }}"><i class="fa fa-sign-in"></i> @lang('form.check_in')</button></div>

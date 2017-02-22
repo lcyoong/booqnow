@@ -7,6 +7,8 @@ use Carbon\Carbon;
 
 class Addon extends TenantModel
 {
+  protected $audit = true;
+  
   protected $primaryKey = 'add_id';
 
   protected $fillable = ['add_booking', 'add_bill', 'add_resource', 'add_customer', 'add_date', 'add_status', 'add_reference', 'add_tracking', 'add_pax', 'add_unit', 'created_by'];
@@ -43,5 +45,5 @@ class Addon extends TenantModel
   {
     return $this->belongsTo(Customer::class, 'add_customer');
   }
-  
+
 }

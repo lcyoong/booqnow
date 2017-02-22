@@ -10,10 +10,10 @@
 <script>
     export default {
         created() {
-          $.getJSON('addons/pop/' + this.book_id, function(data) {
-            this.items = data;
+          this.$http.get('addons/pop/' + this.book_id, function(data){
             console.log(data);
-          }.bind(this))
+            this.items = data;
+          })
         },
 
         data() {

@@ -4,6 +4,7 @@ namespace Repositories;
 
 use Filters\CustomerFilter;
 use DB;
+use App\Comment;
 
 class CustomerRepository extends BaseRepository {
 

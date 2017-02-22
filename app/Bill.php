@@ -3,20 +3,35 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AuditTrailRelationship;
 
 class Bill extends TenantModel
 {
+  use AuditTrailRelationship;
+  protected $audit = true;
+
   protected $primaryKey = 'bil_id';
 
   protected $fillable = ['bil_accounting', 'bil_customer', 'bil_booking', 'bil_description', 'bil_date', 'bil_due_date', 'bil_gross', 'bil_tax', 'bil_status', 'created_by'];
 
+  protected $appends = ['total_amount', 'outstanding'];
+
   /**
-   * Mutator to get the outstanding amount for the bill
+   * Accessor to get the outstanding amount for the bill
    * @return numeric
    */
   public function getOutstandingAttribute($value)
   {
     return $this->bil_gross + $this->bil_tax - $this->bil_paid;
+  }
+
+  /**
+   * Accessor to get the total bill amount
+   * @return numeric
+   */
+  public function getTotalAmountAttribute($value)
+  {
+    return $this->bil_gross + $this->bil_tax;
   }
 
   /**
@@ -49,6 +64,14 @@ class Bill extends TenantModel
   public function booking()
   {
     return $this->belongsTo(Booking::class, 'bil_booking');
+  }
+
+  /**
+   * The comments belonging to the bill
+   */
+  public function comments()
+  {
+    return $this->hasMany(Comment::class, 'com_model_id')->where('com_model', '=', get_class($this));
   }
 
   /**

@@ -1,9 +1,10 @@
 @extends($layout)
 
-@push('content')
+@prepend('content')
+<div id="add-pos">
 @include('customer.profile', ['customer' => $booking->customer])
 <hr/>
-{{ Form::open(['url' => urlTenant('addons/new/list'), 'v-ajax', 'hidecompletemessage' => false, 'gotonext' => urlTenant(sprintf("bookings/%s", $booking->book_id))]) }}
+<form-ajax action = "{{ urlTenant('addons/new/list') }}" method="POST" go-to-next ="{{ urlTenant(sprintf("bookings/%s", $booking->book_id)) }}" @startwait="startWait" @endwait="endWait">
 {{ Form::hidden('add_booking', $booking->book_id) }}
 @if('myapp.single_bill_booking')
 {{ Form::hidden('add_bill', array_get($account_bill, $resource_type->rty_accounting)) }}
@@ -12,80 +13,103 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-8">
-      @foreach ($resources->chunk(6) as $resource_chunk)
-        <div class="row row-eq-height">
-          @foreach ($resource_chunk as $resource)
-            <div class="col-md-2" style="padding: 10px 3px; margin-right: 2px; margin-bottom: 2px; background: #fdfdfd; text-align: center; font-size: 0.8em;">
-              <div style="">
-                <!-- <a href="#" v-post postto="{{ urlTenant(sprintf("addons/push/%s/%s", $booking->book_id, $resource->rs_id)) }}">{{ $resource->rs_name }}</a> -->
-                <a href="#" v-on:click="addItem({{ $resource }})">{{ $resource->rs_name }}</a>
-              </div>
-            </div>
-          @endforeach
+      <div class="row row-eq-height" v-for = "chunk in chunkedResources">
+        <div v-for = "resource in chunk" class="col-md-2" style="padding: 10px 3px; margin-right: 2px; margin-bottom: 2px; background: #fdfdfd; text-align: center; font-size: 0.8em;">
+          <div style="">
+            <a href="#" @click="addItem(resource)">@{{ resource.text }}</a>
+          </div>
         </div>
-      @endforeach
+      </div>
     </div>
     <div class="col-md-4">
       <ul class="list-group">
       <li class="list-group-item" v-for="item in items">
         <div class="row">
-          <div class="col-md-6">@{{ item.rs_name }}</div>
-          <div class="col-md-4">@{{ item.rs_price }}</div>
+          <div class="col-md-6">@{{ item.text }}</div>
+          <div class="col-md-4">@{{ item.price }}</div>
           <div class="col-md-2"><span @click="removeItem(item)"><i class="fa fa-trash"></i></span></div>
         </div>
-        <input type="hidden" name="addon_id[@{{ item.rs_id }}]" value="@{{ item.json }}">
+        <input type="hidden" name="addon_id[]" :value="item.json">
       </li>
       </ul>
-      Total: @{{ sum_amount }}
+      <h4><span class="label label-success">Total: @{{ sum_amount }}</span></h4>
     </div>
   </div>
 </div>
-{{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary']) }}
-{{ Form::close() }}
+{{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
+</form-ajax>
+</div>
+@endprepend
 
+@prepend('scripts')
 <script>
 var app2 = new Vue({
-    el: 'body',
-    ready: function () {
-    },
+    el: '#add-pos',
+
+    mixins: [mixForm],
 
     data: {
       items: [],
-      sum_amount: 0,
+      resources: [],
+    },
+
+    computed: {
+      sum_amount: function () {
+
+        var sum = 0
+
+        for( var i = 0; i < this.items.length; i++ ){
+          sum += parseFloat(this.items[i].price)
+        }
+
+        return sum
+      },
+
+      chunkedResources () {
+         return _.chunk(this.resources, 6)
+       }
+    },
+
+    created: function () {
+
+      this.getResources()
+
     },
 
     methods: {
-      // getItems: function() {
-      //   $.getJSON('addons/pop/' + this.book_id, function(data) {
-      //     this.items = data;
-      //     console.log(data);
-      //   }.bind(this))
-      // },
+      /**
+       * Get all the resources
+       */
+      getResources: function () {
+
+        this.$http.get("{{ urlTenant("api/v1/resources/" . $resource_type->rty_id) }}/active/select")
+            .then(function (response) {
+
+              this.resources = response.data
+            });
+      },
+
+      /**
+       * Add item
+       */
       addItem: function(item) {
-        item.json = JSON.stringify(item);
-        console.log(item);
-        this.items.push(item);
-        this.updateSum();
+
+        item.json = JSON.stringify({rs_name: item.text, rs_price: item.price, rs_id: item.id})
+
+        this.items.push(item)
       },
 
+      /**
+       * Remove item
+       */
       removeItem: function(item) {
-        console.log(item);
-        var index = this.items.indexOf(item);
-        this.items.splice(index, 1);
-        this.updateSum();
+
+        var index = this.items.indexOf(item)
+
+        this.items.splice(index, 1)
       },
 
-      updateSum: function() {
-
-        var sum = 0;
-
-        for( var i = 0; i < this.items.length; i++ ){
-          sum += parseFloat(this.items[i].rs_price);
-        }
-
-        this.sum_amount = sum;
-      }
     }
 });
 </script>
-@endpush
+@endprepend

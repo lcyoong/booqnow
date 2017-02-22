@@ -12,6 +12,7 @@ use Repositories\AddonRepository;
 use Repositories\CustomerRepository;
 use Repositories\BillItemRepository;
 use Filters\BookingFilter;
+use GuzzleHttp\Client;
 use DB;
 
 class BookingController extends MainController
@@ -44,7 +45,17 @@ class BookingController extends MainController
 
     $this->page_title = trans('booking.list');
 
-    $list = $this->repo_book->getPages($filters);
+    $list = $this->repo_book->filter($filters)->getPages();
+
+    // $client = new Client();
+    //
+    // $resp = $client->get(url('api/v1/bookings'));
+    //
+    // $list = $resp->getBody()->getContents();
+    //
+    // $list = collect(json_decode($list));
+
+    // dd(json_decode($list->getBody()->getContents()));
 
     $this->vdata(compact('list'));
 
@@ -59,18 +70,24 @@ class BookingController extends MainController
    */
   public function create(Request $request, $cus_id = null)
   {
-
-    $customer = !is_null($cus_id) ? (new CustomerRepository)->findById($cus_id) : null;
+    // $customer = !is_null($cus_id) ? (new CustomerRepository)->findById($cus_id) : null;
+    $customer = null;
 
     $input = $request->input();
 
-    $this->selectedSlot($input);
+    $slot = $this->selectedSlot($input);
+
+    $resource = array_get($slot, 'resource');
+
+    $start = array_get($slot, 'start');
+
+    $end = array_get($slot, 'end');
 
     $this->layout = 'layouts.modal';
 
     $this->page_title = trans('booking.new');
 
-    $this->vdata(compact('customer'));
+    $this->vdata(compact('customer', 'resource', 'start', 'end', 'cus_id'));
 
     return view('booking.new_basic', $this->vdata);
   }
@@ -151,6 +168,12 @@ class BookingController extends MainController
     if (array_get($input, 'end')) {
       session(['booking.end' => array_get($input, 'end')]);
     }
+
+    $slot['resource'] =  session('booking.resource');
+    $slot['start'] =  session('booking.start');
+    $slot['end'] =  session('booking.end');
+
+    return $slot;
   }
 
   /**
@@ -183,7 +206,6 @@ class BookingController extends MainController
     return $this->goodReponse();
   }
 
-  // Create bill for new booking
   /**
    * Create bill for new booking
    * @param  array $input - User input data
@@ -238,7 +260,6 @@ class BookingController extends MainController
         'bili_tax' => calcTax($gross),
       ]);
     }
-
   }
 
 }

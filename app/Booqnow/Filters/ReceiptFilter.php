@@ -46,6 +46,45 @@ class ReceiptFilter extends QueryFilter
   }
 
   /**
+   * Receipt date start filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function start($value = '')
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where("rc_date", '>=', date('Y-m-d', strtotime($value)));
+    }
+  }
+
+  /**
+   * Receipt date end filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function end($value = '')
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where("rc_date", '<=', date('Y-m-d', strtotime($value)));
+    }
+  }
+
+  /**
+   * Method filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function method($value = '')
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where('rc_method', '=', $value);
+    }
+  }
+
+  /**
    * Join customers to query
    * @return Builder
    */

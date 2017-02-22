@@ -64,7 +64,7 @@ class AddonFilter extends QueryFilter
    */
   public function joinResources()
   {
-    $this->builder->join('resources', 'rs_id', 'add_resource');
+    $this->builder->join('resources', 'rs_id', '=', 'add_resource');
   }
 
 }

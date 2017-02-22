@@ -27,10 +27,13 @@ class RouteServiceProvider extends ServiceProvider
 
         parent::boot();
 
+        Route::model('customer_repo', 'App\Customer');
+        Route::model('booking_repo', 'App\Booking');
+        Route::model('bill_repo', 'App\Bill');
+        Route::model('resource_repo', 'App\Resource');
         // Route::model('merchant', 'App\Merchant');
         // Route::model('resource_type', 'App\ResourceType');
         // Route::model('resource', 'App\Resource');
-        // Route::model('customer', 'App\Customer');
         // Route::model('booking', 'App\Booking');
         // Route::model('bill', 'App\Bill');
         // Route::model('resource_maintenance', 'App\ResourceMaintenance');

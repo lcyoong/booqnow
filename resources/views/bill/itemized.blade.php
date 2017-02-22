@@ -1,5 +1,5 @@
 @if(count($items) > 0)
-<table class="table">
+<table class="table table-striped table-hover">
   <thead>
     <tr>
       <th>@lang('bill.bili_description')</th>

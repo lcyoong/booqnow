@@ -1,5 +1,5 @@
 @if(count($rcitems) > 0)
-<table class="table">
+<table class="table table-striped table-hover">
   <thead>
     <tr>
       <th>@lang('receipt.rc_date')</th>

@@ -5772,6 +5772,9 @@ header {
   color: #ffffff;
   padding: 10px 0px; }
 
+h3 {
+  margin-top: 0px; }
+
 body {
   padding-top: 50px;
   min-height: 600px; }
@@ -5812,6 +5815,9 @@ body {
   border-color: DarkGray !important;
   background-color: LightGray !important;
   color: red !important; }
+
+[v-cloak] {
+  display: none; }
 
 /*# sourceMappingURL=app.css.map */
 
@@ -8679,6 +8685,78 @@ tr.fc-collapsed > td > div {
 
 .select2-container--classic.select2-container--open .select2-dropdown {
   border-color: #5897fb; }
+
+
+.transition, .autocomplete, .showAll-transition, .autocomplete ul, .autocomplete ul li a{
+  transition:all 0.3s ease-out;
+  -moz-transition:all 0.3s ease-out;
+  -webkit-transition:all 0.3s ease-out;
+  -o-transition:all 0.3s ease-out;
+}
+
+.autocomplete ul{
+  font-family: sans-serif;
+  position: absolute;
+  list-style: none;
+  background: #f8f8f8;
+  padding: 10px 0;
+  margin: 0;
+  display: inline-block;
+  min-width: 15%;
+  margin-top: 10px;
+}
+
+.autocomplete ul:before{
+  content: "";
+  display: block;
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: 10px solid transparent;
+  border-bottom: 10px solid #f8f8f8;
+  left: 46%;
+  top: -20px
+}
+
+.autocomplete ul li a{
+  text-decoration: none;
+  display: block;
+  background: #f8f8f8;
+  color: #2b2b2b;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.autocomplete ul li a:hover, .autocomplete ul li.focus-list a{
+  color: white;
+  background: #2F9AF7;
+}
+
+.autocomplete ul li a span{
+  display: block;
+  margin-top: 3px;
+  color: grey;
+  font-size: 13px;
+}
+
+.autocomplete ul li a:hover span, .autocomplete ul li.focus-list a span{
+  color: white;
+}
+
+.showAll-transition{
+  opacity: 1;
+  height: 50px;
+  overflow: hidden;
+}
+
+.showAll-enter{
+  opacity: 0.3;
+  height: 0;
+}
+
+.showAll-leave{
+  display: none;
+}
 
 /*!
  *  Font Awesome 4.6.3 by @davegandy - http://fontawesome.io - @fontawesome

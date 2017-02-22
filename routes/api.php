@@ -30,10 +30,23 @@ Route::get('/user', function (Request $request) {
 // });
 
 Route::group(['prefix' => '/v1'], function () {
+
   Route::get('/resources/{resource_type}/maintenance', 'Api\ResourceApiController@maintenance');
-  Route::get('/resources/{resource_type}/active', 'Api\ResourceApiController@active');
-  Route::get('/customers/active', 'Api\CustomerApiController@active');
+  Route::get('/resources/{resource_type}/active/{mode?}', 'Api\ResourceApiController@active');
+  // Route::get('/customers/active', 'Api\CustomerApiController@active');
+  Route::get('/bookings', 'Api\BookingApiController@get');
   Route::get('/bookings/active', 'Api\BookingApiController@active');
+
+  Route::group(['prefix' => '/bills'], function () {
+    Route::get('/', 'Api\BillApiController@get');
+  });
+
+  Route::group(['prefix' => '/customers'], function () {
+    Route::get('/active', 'Api\CustomerApiController@active');
+    Route::get('/{id}/comments', 'Api\CustomerApiController@comments');
+    Route::get('/{id}', 'Api\CustomerApiController@show');
+  });
+
 });
 
 

@@ -21,6 +21,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ReportCreated' => [
           'App\Listeners\LogReport',
         ],
+        'App\Events\ModelCreated' => [
+          'App\Listeners\AuditLogCreated',
+        ],
+        'App\Events\ModelUpdated' => [
+          'App\Listeners\AuditLogUpdated',
+        ],
     ];
 
     /**

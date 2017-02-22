@@ -3,9 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AuditTrailRelationship;
 
 class Resource extends TenantModel
 {
+  use AuditTrailRelationship;
+
+  protected $audit = true;
+
   protected $primaryKey = 'rs_id';
 
   protected $fillable = ['rs_name', 'rs_description', 'rs_status', 'rs_price', 'rs_type', 'created_by'];

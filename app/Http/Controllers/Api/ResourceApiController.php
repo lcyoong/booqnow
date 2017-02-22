@@ -20,7 +20,7 @@ class ResourceApiController extends ApiController
    * @param  int $rty_id - Resource type id
    * @return array
    */
-  public function active($rty_id)
+  public function active($rty_id, $mode = '')
   {
     $resource_type = (new ResourceTypeRepository)->findById($rty_id);
 
@@ -28,9 +28,16 @@ class ResourceApiController extends ApiController
 
     $return = [];
 
-    foreach ($list as $item)
-    {
-      $return[] = ['id' => $item->rs_id, 'title' => $item->rs_name, 'price' => showMoney($item->rs_price, true)];
+    if ($mode == 'select') {
+      foreach ($list as $item)
+      {
+        $return[] = ['id' => $item->rs_id, 'text' => $item->rs_name, 'price' => $item->rs_price];
+      }
+    } else {
+      foreach ($list as $item)
+      {
+        $return[] = ['id' => $item->rs_id, 'title' => $item->rs_name, 'price' => showMoney($item->rs_price, true)];
+      }
     }
 
     return $return;
@@ -59,7 +66,7 @@ class ResourceApiController extends ApiController
         'end' => $item->rm_to,
         'resourceId' => $item->rm_resource,
         'status' => $item->rm_status,
-        'backgroundColor' => '#999999',
+        'backgroundColor' => '#FF0000',
         'borderColor' => 'transparent',
       ];
     }

@@ -1,8 +1,7 @@
 @extends($layout)
 
 @push('content')
-
-{{ Form::open(['url' => 'customers/update', 'v-ajax', 'class' => '']) }}
+<form-ajax action = "{{ urlTenant('bills/update') }}" method="POST">
 {{ Form::hidden('cus_id', $customer->cus_id) }}
 <div class="row">
   {{ Form::bsText('cus_first_name', trans('customer.cus_first_name'), $customer->cus_first_name) }}
@@ -19,5 +18,5 @@
 </div>
 {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary']) }}
 <redirect-btn label="@lang('form.cancel')" redirect="{{ urlTenant('customers') }}"></redirect-btn>
-{{ Form::close() }}
+</form-ajax>
 @endpush

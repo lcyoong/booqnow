@@ -21,4 +21,6 @@ return [
   'bili_description' => 'Item description',
   'print_title' => 'Invoice :no',
   'outstanding' => 'O/S',
+  'from_bill_date' => 'From bill date',
+  'to_bill_date' => 'To bill date',
 ];

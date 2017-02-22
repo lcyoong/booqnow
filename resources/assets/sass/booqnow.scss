@@ -4,6 +4,8 @@ header{
   padding: 10px 0px;
 }
 
+h3 { margin-top: 0px; }
+
 body { padding-top: 50px; min-height: 600px; }
 
 .value { font-weight: bold; padding-bottom: 5px; }
@@ -38,3 +40,5 @@ body { padding-top: 50px; min-height: 600px; }
   background-color: LightGray !important;
   color: red !important;
 }
+
+[v-cloak] { display: none }

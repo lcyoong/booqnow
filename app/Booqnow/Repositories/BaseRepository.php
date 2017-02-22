@@ -21,6 +21,8 @@ class BaseRepository implements BaseRepositoryInterface
 
   protected $filter;
 
+  protected $withs = [];
+
   /**
    * Create new repository instance
    * @param string $class - Model class name of child class
@@ -42,11 +44,21 @@ class BaseRepository implements BaseRepositoryInterface
     $resource = $this->repo->select('*');
 
     if (!is_null($filters)) {
+
       $resource->filter($filters);
+
     }
 
     if (!is_null($this->filter)) {
+
       $resource->filter($this->filter);
+
+    }
+
+    foreach ($this->withs as $with) {
+
+      $resource->with($with);
+
     }
 
     $resource->orderBy($this->repo->getKeyName(), $order);
@@ -152,7 +164,10 @@ class BaseRepository implements BaseRepositoryInterface
 
   public function filter($filters)
   {
-    return $this->repo->filter($filters);
+    // return $this->repo->filter($filters);
+    $this->filter = $filters;
+
+    return $this;
   }
 
   /**
@@ -179,6 +194,13 @@ class BaseRepository implements BaseRepositoryInterface
       return $resource->toDropDown($key, $label);
     }
 
+  }
+
+  public function with($values)
+  {
+    $this->withs = $values;
+
+    return $this;
   }
 
 }

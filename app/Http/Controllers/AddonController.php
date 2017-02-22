@@ -108,7 +108,7 @@ class AddonController extends MainController
         $input['add_bill'] = $new_bill->bil_id;
       }
 
-      $this->createBillItem($resource->rs_id, $resource, $input);
+      $this->createBillItem($resource, $input);
 
       $this->repo->store($input);
     });
@@ -127,11 +127,11 @@ class AddonController extends MainController
 
     DB::transaction(function() use($input) {
 
-      foreach( $input['addon_id'] as $id => $content) {
+      foreach( $input['addon_id'] as $content) {
 
         $item = json_decode($content);
 
-        $this->createBillItem($id, $item, $input);
+        $this->createBillItem($item, $input);
       }
     });
 
@@ -145,17 +145,19 @@ class AddonController extends MainController
    * @param  array $input Input from user form
    * @return Response
    */
-  private function createBillItem($id, $item, $input)
+  private function createBillItem($item, $input)
   {
     $unit = array_get($input, 'add_unit', 1);
 
-    $gross = $item->rs_price * $unit;
+    $unit_price = array_get($input, 'add_price', $item->rs_price);
+
+    $gross = $unit_price * $unit;
 
     return (new BillItemRepository)->store([
-      'bili_resource' => $id,
+      'bili_resource' => $item->rs_id,
       'bili_description' => $item->rs_name,
       'bili_bill' => array_get($input, 'add_bill'),
-      'bili_unit_price' => $item->rs_price,
+      'bili_unit_price' => $unit_price,
       'bili_unit' => $unit,
       'bili_gross' => $gross,
       'bili_tax' => calcTax($gross),

@@ -48,6 +48,19 @@ class BillFilter extends QueryFilter
   }
 
   /**
+   * Bill id filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function id($value = '')
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where("bil_id", '=', $value);
+    }
+  }
+
+  /**
    * Bill status filter
    * @param  string $value
    * @return Builder
@@ -69,7 +82,7 @@ class BillFilter extends QueryFilter
   {
     if (!empty($value)) {
 
-      return $this->builder->where("bil_date", '>=', $value);
+      return $this->builder->where("bil_date", '>=', date('Y-m-d', strtotime($value)));
     }
   }
 
@@ -82,7 +95,7 @@ class BillFilter extends QueryFilter
   {
     if (!empty($value)) {
 
-      return $this->builder->where("bil_date", '<=', $value);
+      return $this->builder->where("bil_date", '<=', date('Y-m-d', strtotime($value)));
     }
   }
 

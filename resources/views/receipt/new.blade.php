@@ -1,33 +1,49 @@
 @extends($layout)
 
-@push('content')
+@prepend('content')
+<div id="receipt-new">
 @include('customer.profile', ['customer' => $bill->customer])
 <hr/>
+<h4>{{ $bill->bil_description }}</h4>
 @include('bill.basic', ['bill' => $bill])
 <hr/>
-{{ Form::open(['url' => urlTenant('receipts/new'), 'v-ajax', 'gotonext' => urlTenant(sprintf("bookings/%s", $bill->bil_booking)), 'hidecompletemessage' => true]) }}
+<!-- {{ Form::open(['url' => urlTenant('receipts/new'), 'v-ajax', 'gotonext' => urlTenant(sprintf("bookings/%s", $bill->bil_booking)), 'hidecompletemessage' => true]) }} -->
+<form-ajax action = "{{ urlTenant('receipts/new') }}" method="POST" go-to-next ="{{ urlTenant(sprintf("bookings/%s", $bill->bil_booking)) }}" @startwait="startWait" @endwait="endWait">
 {{ Form::hidden('rc_bill', $bill->bil_id) }}
 <div class="row">
-  {{ Form::bsSelect('rc_method', trans('receipt.rc_method'), $pay_methods) }}
+  {{ Form::bsSelect('rc_method', trans('receipt.rc_method'), $pay_methods, null, ['class' => 'select2', 'style' => 'width:100%']) }}
   {{ Form::bsText('rc_amount', trans('receipt.rc_amount')) }}
   {{ Form::bsDate('rc_date', trans('receipt.rc_date'), today()) }}
 </div>
 <div class="row">
-  {{ Form::bsText('rc_reference', trans('receipt.rc_reference')) }}
   {{ Form::bsText('rc_remark', trans('receipt.rc_remark'), null, ['placeholder' => trans('receipt.rc_remark_placeholder')]) }}
-  {{ Form::bsText('rc_intremark', trans('receipt.rc_intremark')) }}
+  {{ Form::bsText('rc_reference', trans('receipt.rc_reference')) }}
+  <!-- {{ Form::bsText('rc_intremark', trans('receipt.rc_intremark')) }} -->
 </div>
-{{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary']) }}
-{{ Form::close() }}
+{{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
+<!-- {{ Form::close() }} -->
+</form-ajax>
+</div>
+@endprepend
 
+@prepend('scripts')
 <script>
-var app2 = new Vue({
-    el: 'body',
-    ready: function () {
-      // alert('sss');
-    },
-    methods: {
-    }
+$(function() {
+  $('.select2').select2();
+
+  $('.datepicker').datepicker({
+    format: 'dd-mm-yyyy',
+  });
 });
+
+new Vue({
+  el: '#receipt-new',
+
+  mixins: [mixForm],
+
+  created: function () {
+  },
+});
+
 </script>
-@endpush
+@endprepend

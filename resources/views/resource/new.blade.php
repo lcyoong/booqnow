@@ -1,7 +1,8 @@
 @extends($layout)
 
-@push('content')
-  {{ Form::open(['url' => urlTenant('resources/new'), 'v-ajax', 'goto' => urlTenant('resources/' . $resource_type->rty_id)]) }}
+@prepend('content')
+<div id="resource-new">
+<form-ajax action = "{{ urlTenant('resources/new') }}" method="POST" redirect-on-complete = "{{ urlTenant('resources/' . $resource_type->rty_id) }}" @startwait="startWait" @endwait="endWait">
   {{ Form::hidden('rs_type', $resource_type->rty_id) }}
   <div class="row">
     {{ Form::bsText('rs_name', trans('resource.rs_name')) }}
@@ -12,5 +13,17 @@
   </div>
   {{ Form::submit(trans('form.add'), ['class' => 'btn btn-primary']) }}
   <redirect-btn label="@lang('form.cancel')" redirect="{{ urlTenant('resources/' . $resource_type->rty_id) }}"></redirect-btn>
-  {{ Form::close() }}
+</form-ajax>
+</div>
+@endprepend
+
+@push('scripts')
+<script>
+new Vue ({
+
+  el: "#resource-new",
+
+  mixins: [mixForm],
+})
+</script>
 @endpush

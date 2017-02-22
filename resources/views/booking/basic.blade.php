@@ -10,5 +10,5 @@
 </div>
 <div class="row">
   {{ Form::showField($booking->book_reference, trans('booking.book_reference')) }}
-  {{ Form::showField($booking->book_tracking, trans('booking.book_tracking')) }}
+  <!-- {{ Form::showField($booking->book_tracking, trans('booking.book_tracking')) }} -->
 </div>

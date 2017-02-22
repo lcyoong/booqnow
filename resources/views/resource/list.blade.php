@@ -5,6 +5,7 @@
 @endsection
 
 @section('content_list')
+<table class="table table-condensed">
 <thead>
   <tr>
     <th>@lang('resource.rs_name')</th>
@@ -29,6 +30,7 @@
   </tr>
   @endforeach
 </tbody>
+</table>
 @endsection
 
 

@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-default" id = "booking-extended">
   <div class="panel-heading">
     <a data-toggle="collapse" data-parent="#accordionx" href="#collapse-book{{ $booking->book_id }}">
     <div class="row">
@@ -20,14 +20,16 @@
   <div id="collapse-book{{ $booking->book_id }}" class="panel-collapse collapse">
     <div class="panel-body">
       <div class="row">
+        {{ Form::showField($booking->creator->name, trans('form.created_by')) }}
+        {{ Form::showField($booking->created_at, trans('form.created_at')) }}
+      </div>
+
+      <div class="row">
         {{ Form::showField(array_get($booking_sources, $booking->book_source), trans('booking.book_source')) }}
         {{ Form::showField($booking->book_pax, trans('booking.book_pax')) }}
         {{ Form::showField($booking->book_reference, trans('booking.book_reference')) }}
-        {{ Form::showField($booking->book_tracking, trans('booking.book_tracking')) }}
-      </div>
-      <div class="row">
-        {{ Form::showField($booking->creator->name, trans('form.created_by')) }}
-        {{ Form::showField($booking->created_at, trans('form.created_at')) }}
+        {{ Form::showField($booking->book_remarks, trans('booking.book_remarks')) }}
+        <!-- {{ Form::showField($booking->book_tracking, trans('booking.book_tracking')) }} -->
       </div>
 
       <div class="row">
@@ -41,3 +43,11 @@
     </div>
   </div>
 </div>
+
+@push('scripts')
+<script>
+new Vue({
+  el: '#booking-extended',
+});
+</script>
+@endpush

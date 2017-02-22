@@ -3,5 +3,8 @@
     <h4 class="modal-title" id="myModalLabel">{{ $page_title or ''}}</h4>
 </div>
 <div class="modal-body">
+  <!-- <div id = "app-modal"> -->
     @stack('content')
+  <!-- </div> -->
 </div>
+@stack('scripts')

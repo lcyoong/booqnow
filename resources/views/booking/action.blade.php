@@ -3,6 +3,7 @@
 @push('content')
 @include('customer.profile', ['customer' => $booking->customer])
 @include('booking._info_extended', ['booking' => $booking])
+<div id="booking-action">
 <ul class="nav nav-tabs" role="tablist">
   <li role="presentation" class="active"><a href="#bill" aria-controls="bill" role="tab" data-toggle="tab"><i class="fa fa-list"></i> @lang('booking.bills')</a></li>
   @foreach($resource_types as $type)
@@ -33,9 +34,6 @@
             <div class="col-md-3">
               <span class="label label-info">@lang('bill.bil_paid') {{ showMoney($bill->bil_paid, true) }}</span>
             </div>
-            <!-- <div class="col-md-3">
-              {{ $bill->bil_status }}
-            </div> -->
           </div>
           </a>
         </div>
@@ -43,8 +41,8 @@
           <div class="panel-body">
             @include('bill.itemized', ['items' => $bill->items])
             @include('receipt.itemized', ['rcitems' => $bill->receipts])
-            <a href="{{ urlTenant('receipts/new/' . $bill->bil_id) }}" v-modal><button class="btn btn-primary"><i class="fa fa-money"></i> @lang('form.pay')</button></a>
-            <a href="{{ urlTenant(sprintf("bills/%s/print", $bill->bil_id)) }}" target=_blank><button class="btn btn-primary"><i class="fa fa-print"></i> @lang('form.print')</button></a>
+            <a href="{{ urlTenant('receipts/new/' . $bill->bil_id) }}" v-modal><button class="btn btn-primary btn-sm"><i class="fa fa-money"></i> @lang('form.pay')</button></a>
+            <a href="{{ urlTenant(sprintf("bills/%s/print", $bill->bil_id)) }}" target=_blank><button class="btn btn-primary btn-sm"><i class="fa fa-print"></i> @lang('form.print')</button></a>
             <!-- <div class="col-md-3"><a href="{{ urlTenant(sprintf("bookings/bill/%s/addons/%s/pos", $bill->bil_id, 3)) }}" v-modal><button class="form-control btn-primary"><i class="fa fa-glass"></i> @lang('form.add_fnb')</button></a></div> -->
           </div>
         </div>
@@ -60,15 +58,15 @@
   @endif
   @endforeach
 
-  <!-- <div role="tabpanel" class="tab-pane" id="fnb">...</div> -->
+</div>
+
 </div>
 
 <script>
 var app3 = new Vue({
-    el: 'body',
-    ready: function () {
-      // alert('sss');
-    },
+  el: '#booking-action',
+  created: function () {
+  },
 });
 </script>
 

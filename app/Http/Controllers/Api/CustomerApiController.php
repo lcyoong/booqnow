@@ -22,7 +22,7 @@ class CustomerApiController extends ApiController
 
     $filters = new CustomerFilter(['status' => 'active', 'name' => array_get($input, 'q')]);
 
-    $list = (new CustomerRepository)->get($filters, 5);
+    $list = (new CustomerRepository)->get($filters);
 
     $return = [];
 
@@ -33,5 +33,17 @@ class CustomerApiController extends ApiController
 
     return $return;
 
+  }
+
+  public function show ($id)
+  {
+    return (new CustomerRepository)->findById($id);
+  }
+
+  public function comments($id)
+  {
+    $customer = $this->show($id);
+
+    return $customer->comments()->with('creator')->get();
   }
 }

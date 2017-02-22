@@ -91,10 +91,14 @@ function tenantRoutes()
   Route::get('customers/new', 'CustomerController@create');
   Route::post('customers/new', 'CustomerController@store');
   Route::get('customers/{customer}/edit', 'CustomerController@edit');
+  Route::get('customers/{customer}/comments', 'CustomerController@comments');
   Route::post('customers/update', 'CustomerController@update');
   Route::get('customers/new_quick', 'CustomerController@pick');
 
+  Route::post('comments/customer/{id}', 'CustomerController@storeComment');
+
   Route::get('bookings', 'BookingController@index');
+  // Route::get('bookings/{booking}/trail', 'BookingController@auditTrail');
   Route::get('bookings/new/{customer?}', 'BookingController@create');
   Route::post('bookings/new', 'BookingController@store');
   Route::post('bookings/checkin/{booking}', 'BookingController@checkin');
@@ -102,6 +106,11 @@ function tenantRoutes()
   // Route::get('bookings/{booking}/view', 'BookingController@view');
   Route::get('bookings/{booking}', 'BookingController@action');
   // Route::get('bookings/{booking}/bills', 'BookingController@bills');
+
+  Route::get('trail/customers/{customer_repo}', 'AuditTrailController@trail');
+  Route::get('trail/bookings/{booking_repo}', 'AuditTrailController@trail');
+  Route::get('trail/bills/{bill_repo}', 'AuditTrailController@trail');
+  Route::get('trail/resources/{resource_repo}', 'AuditTrailController@trail');
 
   Route::get('bookings/{booking}/addons/{resource_type}/new', 'AddonController@create');
   Route::get('bookings/{booking}/addons/{resource_type}/pos', 'AddonController@createPos');

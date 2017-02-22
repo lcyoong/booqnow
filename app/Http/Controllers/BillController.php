@@ -115,4 +115,13 @@ class BillController extends MainController
     return $this->goodReponse();
   }
 
+  public function fetch(Request $request)
+  {
+    $filters = new BillFilter($request->input());
+
+    $this->filter = $request->input();
+
+    return $this->repo->getPages($filters);
+  }
+
 }

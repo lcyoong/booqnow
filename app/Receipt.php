@@ -4,9 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Traits\AuditTrailRelationship;
 
 class Receipt extends TenantModel
 {
+  use AuditTrailRelationship;
+
+  protected $audit = true;
+  
   protected $primaryKey = 'rc_id';
 
   protected $fillable = ['rc_customer', 'rc_bill', 'rc_date', 'rc_amount', 'rc_remark', 'rc_intremark', 'rc_reference', 'rc_method', 'rc_status', 'created_by'];

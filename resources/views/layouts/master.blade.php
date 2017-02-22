@@ -16,19 +16,20 @@
     </script>
 </head>
 <body>
-  @include('partials.topbar')
-  @yield('navbar')
-  <div class="container-fluid">
-    @yield('content')
-    @stack('content')
-  </div>
-  <footer class="footer">
+  <div id="app">
+    @include('partials.topbar')
+    @yield('navbar')
     <div class="container-fluid">
-      {{config('app.name')}} &copy;
+      @stack('content')
     </div>
-  </footer>
-
+    <footer class="footer">
+      <div class="container-fluid">
+        {{config('app.name')}} &copy;
+      </div>
+    </footer>
+  </div>
   <script src="{{ asset('js/moment.min.js') }}"></script>
+  <!-- <script src="{{ asset('js/test.js') }}"></script> -->
   <script src="{{ asset(elixir('js/app.js')) }}"></script>
   @stack('scripts')
   @include('partials.modal')

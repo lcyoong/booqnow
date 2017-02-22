@@ -16,7 +16,8 @@ class CodeRepository {
    */
   public function getDropDown($group, $skip_null = false)
   {
-    Cache::flush();
+    // Cache::flush();
+
     return Cache::remember("code.$group", 90, function() use($group, $skip_null)
     {
       $return = [];
