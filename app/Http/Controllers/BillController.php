@@ -29,10 +29,6 @@ class BillController extends MainController
     $this->tenant = true;
 
     $this->layout = 'layouts.tenant';
-
-    $countries = (new CountryRepository)->getDropDown();
-
-    $this->vdata(compact('countries'));
   }
 
   /**

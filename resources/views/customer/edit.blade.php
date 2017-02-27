@@ -17,7 +17,7 @@
   </div>
   <div class="row">
     {{ Form::bsTextarea('cus_address', trans('customer.cus_address'), $customer->cus_address) }}
-    {{ Form::bsSelect('cus_status', trans('customer.cus_status'), $cus_status, $customer->cus_country, ['class' => 'select2', 'style' => 'width:100%']) }}
+    {{ Form::bsSelect('cus_status', trans('customer.cus_status'), $cus_status, $customer->cus_status, ['class' => 'select2', 'style' => 'width:100%']) }}
   </div>
   {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
   <a href="{{ url('customers') }}">{{ Form::button(trans('form.cancel'), ['class' => 'btn btn-primary btn-sm']) }}</a>

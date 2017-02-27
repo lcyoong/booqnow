@@ -29,6 +29,7 @@ class TenantApp extends Migration
           $table->integer('rty_accounting')->unsigned()->default(1);
           $table->boolean('rty_master')->default(false);
           $table->boolean('rty_pos')->default(false);
+          $table->boolean('rty_seasonal')->default(false);
           $table->string('rty_code')->nullable();
           $table->string('rty_name');
           $table->string('rty_plural');

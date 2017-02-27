@@ -7,6 +7,7 @@ use Illuminate\Validation\ValidationException;
 use DB;
 use Validator;
 use Contracts\BaseRepositoryInterface;
+use Cache;
 
 class BaseRepository implements BaseRepositoryInterface
 {
@@ -185,8 +186,10 @@ class BaseRepository implements BaseRepositoryInterface
       $resource->filter($this->filter);
     }
 
+    // Cache::flush();
+
     if (!is_null($cache_name)) {
-      return Cache::remember($cache_name, 90, function()
+      return Cache::remember($cache_name, 90, function() use($resource, $key, $label)
       {
         return $resource->toDropDown($key, $label);
       });

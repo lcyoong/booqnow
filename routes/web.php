@@ -86,6 +86,9 @@ function tenantRoutes()
   Route::get('resources/{resource}/maintenance', 'ResourceMaintenanceController@create');
   Route::post('resources/maintenance', 'ResourceMaintenanceController@store');
   Route::post('resources/{resource}/maintenance/{resource_maintenance}/delete', 'ResourceMaintenanceController@delete');
+  Route::get('resources/{resource}/pricing', 'ResourcePricingController@index');
+  Route::post('resources/pricing', 'ResourcePricingController@store');
+  Route::post('resources/pricing/{resource_pricing}/delete', 'ResourcePricingController@delete');
 
   Route::get('customers', 'CustomerController@index');
   Route::get('customers/new', 'CustomerController@create');

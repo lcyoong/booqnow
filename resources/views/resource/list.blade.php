@@ -25,7 +25,7 @@
     <td>
       <a href="{{ urlTenant(sprintf('resources/%s/edit', $resource->rs_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>
       <a href="{{ urlTenant(sprintf('resources/%s/maintenance', $resource->rs_id)) }}" title="@lang('form.maintenance')"><i class="fa fa-wrench"></i></a>
-      <!-- <a href="{{ urlTenant(sprintf('resources/%s/rate', $resource->rs_id)) }}" title="@lang('form.rate')"><i class="fa fa-dollar"></i></a> -->
+      <a href="{{ urlTenant(sprintf('resources/%s/pricing', $resource->rs_id)) }}" title="@lang('form.rate')"><i class="fa fa-dollar"></i></a>
     </td>
   </tr>
   @endforeach
@@ -34,7 +34,7 @@
 @endsection
 
 
-@push('content')
+@prepend('content')
 @include('layouts.list', ['count' => $resources->count()])
 {{ $resources->links() }}
-@endpush
+@endprepend

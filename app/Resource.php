@@ -42,4 +42,9 @@ class Resource extends TenantModel
     return $this->belongsTo(ResourceType::class, 'rs_type');
   }
 
+  public function pricing()
+  {
+    return $this->hasMany(ResourcePricing::class, 'rpr_resource');
+  }
+
 }

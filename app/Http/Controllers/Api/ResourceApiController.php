@@ -74,4 +74,11 @@ class ResourceApiController extends ApiController
     return $return;
   }
 
+  public function pricing($resource, Request $request)
+  {
+    $rs = new ResourceRepository;
+
+    return $rs->findById($resource)->pricing()->with(['season'])->get();
+  }
+
 }

@@ -33,6 +33,10 @@
 
         util.onCompleteNotify(response);
 
+        this.$emit('endwait');
+
+        this.$emit('completesuccess');
+
         if (this.reloadOnComplete) {
           location.reload();
         } else if (this.redirectOnComplete !== undefined) {
@@ -44,6 +48,10 @@
       onError: function(response) {
         console.log(response);
         util.onErrorNotify(response);
+
+        this.$emit('endwait');
+
+        this.$emit('completeerror');        
       },
     },
 

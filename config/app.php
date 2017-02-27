@@ -186,6 +186,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Laravel\Tinker\TinkerServiceProvider::class
 
     ],
 

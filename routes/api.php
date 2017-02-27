@@ -32,6 +32,7 @@ Route::get('/user', function (Request $request) {
 Route::group(['prefix' => '/v1'], function () {
 
   Route::get('/resources/{resource_type}/maintenance', 'Api\ResourceApiController@maintenance');
+  Route::get('/resources/{resource}/pricing', 'Api\ResourceApiController@pricing');
   Route::get('/resources/{resource_type}/active/{mode?}', 'Api\ResourceApiController@active');
   // Route::get('/customers/active', 'Api\CustomerApiController@active');
   Route::get('/bookings', 'Api\BookingApiController@get');

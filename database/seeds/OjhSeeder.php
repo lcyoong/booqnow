@@ -12,11 +12,11 @@ class OjhSeeder extends Seeder
     public function run()
     {
       DB::table('resource_types')->insert([
-        ['rty_id'=> 1, 'rty_accounting' => 1, 'rty_pos' => false, 'rty_master' => true, 'rty_code' => 'room', 'rty_name' => 'Room', 'rty_plural' => 'Rooms', 'rty_price' => 0, 'created_by' => 1],
-        ['rty_id'=> 2, 'rty_accounting' => 2, 'rty_pos' => false, 'rty_master' => false, 'rty_code' => 'tour','rty_name' => 'Tour', 'rty_plural' => 'Tours', 'rty_price' => 0, 'created_by' => 1],
-        ['rty_id'=> 3, 'rty_accounting' => 1, 'rty_pos' => true, 'rty_master' => false, 'rty_code' => 'fnb', 'rty_name' => 'F&B', 'rty_plural' => 'F&B', 'rty_price' => 0, 'created_by' => 1],
-        ['rty_id'=> 4, 'rty_accounting' => 1, 'rty_pos' => false, 'rty_master' => false, 'rty_code' => 'transfer', 'rty_name' => 'Transfer', 'rty_plural' => 'Transfers', 'rty_price' => 0, 'created_by' => 1],
-        ['rty_id'=> 5, 'rty_accounting' => 1, 'rty_pos' => false, 'rty_master' => false, 'rty_code' => 'other', 'rty_name' => 'Other', 'rty_plural' => 'Others', 'rty_price' => 0, 'created_by' => 1],
+        ['rty_id'=> 1, 'rty_accounting' => 1, 'rty_pos' => false, 'rty_seasonal' => true, 'rty_master' => true, 'rty_code' => 'room', 'rty_name' => 'Room', 'rty_plural' => 'Rooms', 'rty_price' => 0, 'created_by' => 1],
+        ['rty_id'=> 2, 'rty_accounting' => 2, 'rty_pos' => false, 'rty_seasonal' => false, 'rty_master' => false, 'rty_code' => 'tour','rty_name' => 'Tour', 'rty_plural' => 'Tours', 'rty_price' => 0, 'created_by' => 1],
+        ['rty_id'=> 3, 'rty_accounting' => 1, 'rty_pos' => true, 'rty_seasonal' => false, 'rty_master' => false, 'rty_code' => 'fnb', 'rty_name' => 'F&B', 'rty_plural' => 'F&B', 'rty_price' => 0, 'created_by' => 1],
+        ['rty_id'=> 4, 'rty_accounting' => 1, 'rty_pos' => false, 'rty_seasonal' => false, 'rty_master' => false, 'rty_code' => 'transfer', 'rty_name' => 'Transfer', 'rty_plural' => 'Transfers', 'rty_price' => 0, 'created_by' => 1],
+        ['rty_id'=> 5, 'rty_accounting' => 1, 'rty_pos' => false, 'rty_seasonal' => false, 'rty_master' => false, 'rty_code' => 'other', 'rty_name' => 'Other', 'rty_plural' => 'Others', 'rty_price' => 0, 'created_by' => 1],
       ]);
 
       DB::table('resources')->insert([
@@ -45,5 +45,7 @@ class OjhSeeder extends Seeder
         ['rs_name'=> 'Tent 2', 'rs_type' => 1,'rs_price' => 500, 'rs_order' => 23, 'created_by' => 1],
         ['rs_name'=> 'Tent 3', 'rs_type' => 1,'rs_price' => 500, 'rs_order' => 24, 'created_by' => 1],
       ]);
+
+      $this->call(OjhSeasonSeeder::class);
     }
 }
