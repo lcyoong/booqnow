@@ -15,7 +15,8 @@
       <th>@lang('receipt.rc_remark')</th>
       <th>@lang('receipt.rc_method')</th>
       <th>{{ appendCurrency(trans('receipt.rc_amount')) }}</th>
-      <!-- <th>@lang('form.actions')</th> -->
+      <th>@lang('receipt.rc_status')</th>
+      <th>@lang('form.actions')</th>
     </tr>
   </thead>
   <tbody>
@@ -28,9 +29,12 @@
       <td>{{ $item->rc_remark }}</td>
       <td>{{ array_get($pay_methods, $item->rc_method) }}</td>
       <td>{{ showMoney($item->rc_amount) }}</td>
-      <!-- <td>
-        <a v-modal href="{{ url(sprintf('receipts/%s', $item->rc_id)) }}" title="@lang('form.view')"><i class="fa fa-eye"></i></a>
-      </td> -->
+      <td>{{ $item->rc_status }}</td>
+      <td>
+        <a v-modal href="{{ url(sprintf('receipts/%s/edit', $item->rc_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>
+        <a v-modal href="{{ url(sprintf('trail/receipts/%s', $item->rc_id)) }}" title="@lang('form.trail')"><i class="fa fa-history"></i></a>
+        <a v-modal href="{{ url(sprintf('comments/receipts/%s', $item->rc_id)) }}" title="@lang('form.comments')"><i class="fa fa-comment-o"></i></a>
+      </td>
     </tr>
     @endforeach
   </tbody>

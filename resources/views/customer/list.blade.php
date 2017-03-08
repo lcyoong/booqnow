@@ -28,7 +28,7 @@
         <td>
           <a href="{{ url(sprintf('customers/%s/edit', $customer->cus_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>
           <a v-modal href="{{ url(sprintf('trail/customers/%s', $customer->cus_id)) }}" title="@lang('form.trail')"><i class="fa fa-history"></i></a>
-          <a v-modal href="{{ url(sprintf('customers/%s/comments', $customer->cus_id)) }}" title="@lang('form.comments')"><i class="fa fa-comment-o"></i></a>
+          <a v-modal href="{{ url(sprintf('comments/customers/%s', $customer->cus_id)) }}" title="@lang('form.comments')"><i class="fa fa-comment-o"></i></a>
         </td>
       </tr>
       @endforeach

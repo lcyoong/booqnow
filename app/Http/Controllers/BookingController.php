@@ -246,7 +246,7 @@ class BookingController extends MainController
   {
     foreach ($input['rate'] as $key => $value) {
 
-      $gross = $value * $input['unit'][$key];
+      // $gross = $value * $input['unit'][$key];
 
       $resource = (new ResourceRepository)->findById($input['resource'][$key]);
 
@@ -256,8 +256,8 @@ class BookingController extends MainController
         'bili_bill' => $bili_bill,
         'bili_unit_price' => $value,
         'bili_unit' => $input['unit'][$key],
-        'bili_gross' => $gross,
-        'bili_tax' => calcTax($gross),
+        // 'bili_gross' => $gross,
+        // 'bili_tax' => calcTax($gross),
       ]);
     }
   }

@@ -75,7 +75,7 @@
     },
 
     ready() {
-        console.log('Addon list component ready.')
+        console.log('Form component ready.')
     },
 
     props: ['reloadOnComplete', 'redirectOnComplete', 'goToNext', 'goToAppendData', 'processing']

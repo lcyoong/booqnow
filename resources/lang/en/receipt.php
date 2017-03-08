@@ -2,6 +2,7 @@
 
 return [
   'new' => 'Receive payment',
+  'edit' => 'Edit payment',
   'list' => 'Receipts',
   'rc_id' => 'Receipt no',
   'rc_customer' => 'Customer',

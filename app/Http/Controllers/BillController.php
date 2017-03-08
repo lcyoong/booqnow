@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Repositories\BillRepository;
 use Repositories\CountryRepository;
+use Repositories\BillItemRepository;
 use Filters\BillFilter;
 use DB;
 use PDF;
@@ -62,11 +63,29 @@ class BillController extends MainController
 
     $this->layout = 'layouts.modal';
 
-    $this->page_title = trans('bill.view', ['id' => $bill->bil_id]);
+    $this->page_title = trans('bill.view', ['id' => $bil_id]);
 
     $this->vdata(compact('bill'));
 
     return view('bill.view', $this->vdata);
+  }
+
+  /**
+   * Display edit bill form
+   * @param  int $id - Bill id
+   * @return Response
+   */
+  public function edit($id)
+  {
+    // $bill = $this->repo->findById($id);
+
+    $this->page_title = trans('bill.edit', ['id' => $id]);
+
+    // $this->layout = 'layouts.modal';
+
+    $this->vdata(compact('id'));
+
+    return view('bill.edit', $this->vdata);
   }
 
   /**
@@ -118,6 +137,30 @@ class BillController extends MainController
     $this->filter = $request->input();
 
     return $this->repo->getPages($filters);
+  }
+
+  /**
+   * Process updating of bill
+   * @param  Request $request
+   * @return Response
+   */
+  public function update(Request $request)
+  {
+    $this->repo->update($request->input());
+
+    return $this->goodReponse();
+  }
+
+  /**
+   * Process updating of bill item
+   * @param  Request $request
+   * @return Response
+   */
+  public function updateItem(Request $request)
+  {
+    (new BillItemRepository)->update($request->input());
+
+    return $this->goodReponse();
   }
 
 }

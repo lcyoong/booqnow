@@ -39,6 +39,7 @@ Route::group(['prefix' => '/v1'], function () {
   Route::get('/bookings/active', 'Api\BookingApiController@active');
 
   Route::group(['prefix' => '/bills'], function () {
+    Route::get('/{id}', 'Api\BillApiController@show');
     Route::get('/', 'Api\BillApiController@get');
   });
 
@@ -46,6 +47,10 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('/active', 'Api\CustomerApiController@active');
     Route::get('/{id}/comments', 'Api\CustomerApiController@comments');
     Route::get('/{id}', 'Api\CustomerApiController@show');
+  });
+
+  Route::group(['prefix' => '/comments'], function () {
+    Route::get('/{type}/{id}', 'Api\CommentApiController@get');
   });
 
 });

@@ -4,11 +4,11 @@ namespace Filters;
 
 class AuditTrailFilter extends QueryFilter
 {
-  public function model($value)
+  public function modelType($value)
   {
     if (!empty($value)) {
 
-      return $this->builder->where("au_model", '=', $value);
+      return $this->builder->where("au_model_type", '=', $value);
     }
   }
 

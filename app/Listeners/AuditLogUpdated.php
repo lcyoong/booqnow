@@ -10,7 +10,7 @@ use Repositories\AuditTrailRepository;
 class AuditLogUpdated
 {
   protected $repo;
-  
+
   /**
   * Create the event listener.
   *
@@ -31,12 +31,21 @@ class AuditLogUpdated
   {
     if ($event->post['audit']) {
 
-      $this->repo->store([
-        'au_model' => get_class($event->post),
-        'au_model_id' => $event->post->{$event->post->getKeyName()},
+      $auditTrail = new \App\AuditTrail([
+        // 'au_model_type' => get_class($event->post),
+        // 'au_model_id' => $event->post->{$event->post->getKeyName()},
         'au_mode' => 'updated',
         'au_data' => serialize(array_diff($event->post['attributes'], $event->post['original']))
       ]);
+
+      $event->post->auditTrails()->save($auditTrail);
+
+      // $this->repo->store([
+      //   'au_model_type' => get_class($event->post),
+      //   'au_model_id' => $event->post->{$event->post->getKeyName()},
+      //   'au_mode' => 'updated',
+      //   'au_data' => serialize(array_diff($event->post['attributes'], $event->post['original']))
+      // ]);
 
     }
   }

@@ -2,11 +2,12 @@
 
 @prepend('content')
 <div id="comment-new">
-  <form-ajax action = "{{ urlTenant('comments/customer/' . $object->cus_id) }}" call-on-complete = "submitNew" method="POST" @startwait="startWait" @endwait="endWait" @completesuccess="refresh">
+  <form-ajax action = "{{ urlTenant('comments') }}" call-on-complete = "submitNew" method="POST" @startwait="startWait" @endwait="endWait" @completesuccess="refresh">
     <div class="form-group">
       {{ Form::textarea('com_content', '', ['class' => 'form-control', '@keyup.enter' => 'submitNew', 'v-model' => 'newItem', 'rows'=>5]) }}
     </div>
-    {{ Form::hidden('com_model_id', $object->cus_id) }}
+    {{ Form::hidden('com_model_id', $id) }}
+    {{ Form::hidden('com_model_type', $type) }}
     {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
   </form-ajax>
   <br/>
@@ -27,7 +28,7 @@ new Vue ({
 
   data: {
     items: [],
-    url: 'api/v1/customers/{{ $object->cus_id }}/comments',
+    url: 'api/v1/comments/{{ $type }}/{{ $id }}',
     newItem: ''
   },
 

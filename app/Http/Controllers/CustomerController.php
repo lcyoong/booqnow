@@ -116,28 +116,28 @@ class CustomerController extends MainController
     return view('customer.new_basic', $this->vdata);
   }
 
-  public function comments($id)
-  {
-    $object = $this->repo_cus->findById($id);
-
-    $comments = $object->comments;
-
-    $this->layout = 'layouts.modal';
-
-    $this->page_title = trans('comment.list');
-
-    $this->vdata(compact('comments', 'object'));
-
-    return view('comment.view', $this->vdata);
-  }
-
-  public function storeComment($id, Request $request)
-  {
-    $input = $request->input();
-
-    $customer = $this->repo_cus->findById($id)->saveComment($input);
-
-    return $this->goodReponse();
-  }
+  // public function comments($id)
+  // {
+  //   $object = $this->repo_cus->findById($id);
+  //
+  //   $comments = $object->comments;
+  //
+  //   $this->layout = 'layouts.modal';
+  //
+  //   $this->page_title = trans('comment.list');
+  //
+  //   $this->vdata(compact('comments', 'object'));
+  //
+  //   return view('comment.view0', $this->vdata);
+  // }
+  //
+  // public function storeComment($id, Request $request)
+  // {
+  //   $input = $request->input();
+  //
+  //   $customer = $this->repo_cus->findById($id)->saveComment($input);
+  //
+  //   return $this->goodReponse();
+  // }
 
 }

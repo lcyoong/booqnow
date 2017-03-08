@@ -10,20 +10,25 @@ class AuditTrail extends TenantModel
 
   protected $primaryKey = 'au_id';
 
-  protected $fillable = ['au_model', 'au_mode', 'au_model_id', 'au_data', 'created_by'];
+  protected $fillable = ['au_model_type', 'au_mode', 'au_model_id', 'au_data', 'created_by'];
 
-  public function bill()
+  public function com_model()
   {
-    return $this->belongsTo(Bill::class, 'au_model_id')->where('au_model', '=', get_class(new Bill()));
+    return $this->morphTo();
   }
 
-  public function customer()
-  {
-    return $this->belongsTo(Customer::class, 'au_model_id')->where('au_model', '=', get_class(new Customer()));
-  }
-
-  public function creator()
-  {
-      return $this->belongsTo(User::class, 'created_by');
-  }
+  // public function bill()
+  // {
+  //   return $this->belongsTo(Bill::class, 'au_model_id')->where('au_model', '=', get_class(new Bill()));
+  // }
+  // 
+  // public function customer()
+  // {
+  //   return $this->belongsTo(Customer::class, 'au_model_id')->where('au_model', '=', get_class(new Customer()));
+  // }
+  //
+  // public function creator()
+  // {
+  //     return $this->belongsTo(User::class, 'created_by');
+  // }
 }

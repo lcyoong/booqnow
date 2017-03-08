@@ -29,10 +29,11 @@
     <td>{{ $item->book_pax }}</td>
     <td>{{ $item->book_reference }}</td>
     <!-- <td>{{ $item->book_tracking }}</td> -->
-    <td>{{ $item->book_status }}</td>
+    <td><i class="fa fa-circle status-{{ $item->book_status }}"></i> {{ $item->book_status }}</td>
     <td>
       <a v-modal href="{{ url(sprintf('bookings/%s', $item->book_id)) }}" title="@lang('form.view')"><i class="fa fa-eye"></i></a>
-      <a v-modal href="{{ url ('trail/bookings/' . $item->book_id) }}"><i class="fa fa-history"></i></a>
+      <a v-modal href="{{ url(sprintf('trail/bookings/%s', $item->book_id)) }}"><i class="fa fa-history"></i></a>
+      <a v-modal href="{{ url(sprintf('comments/bookings/%s', $item->book_id)) }}" title="@lang('form.comments')"><i class="fa fa-comment-o"></i></a>
     </td>
   </tr>
   @endforeach
@@ -43,7 +44,8 @@
 
 @push('content')
 <div id="booking-list">
-@include('layouts.list', ['count' => $list->count()])
+@include('layouts.list', ['count' => $list->total()])
+{{ $list->appends(Request::input())->links() }}
 </div>
 @endpush
 

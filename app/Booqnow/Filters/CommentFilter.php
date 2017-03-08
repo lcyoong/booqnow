@@ -4,11 +4,11 @@ namespace Filters;
 
 class CommentFilter extends QueryFilter
 {
-  public function model($value)
+  public function modelType($value)
   {
     if (!empty($value)) {
 
-      return $this->builder->where("com_model", '=', $value);
+      return $this->builder->where("com_model_type", '=', $value);
     }
   }
 

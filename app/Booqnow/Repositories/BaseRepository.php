@@ -73,20 +73,38 @@ class BaseRepository implements BaseRepositoryInterface
    * @param  integer $limit   [description]
    * @return [type]           [description]
    */
-  public function get($filters = null, $limit = 0)
+  public function get($filters = null, $limit = 0, $orders = [])
   {
     $resource = $this->repo->select('*');
 
     if (!is_null($filters)) {
+
       $resource->filter($filters);
+
     }
 
     if (!is_null($this->filter)) {
+
       $resource->filter($this->filter);
+
     }
 
     if ($limit > 0) {
+
       $resource->limit($limit);
+
+    }
+
+    foreach ($this->withs as $with) {
+
+      $resource->with($with);
+
+    }
+
+    foreach ($orders as $field => $order) {
+
+      $resource->orderby($field, $order);
+
     }
 
     return $resource->get();
@@ -99,7 +117,7 @@ class BaseRepository implements BaseRepositoryInterface
    */
   public function findById($id)
   {
-    return $this->repo->findOrFail($id);
+    return $this->repo->with($this->withs)->findOrFail($id);
   }
 
   /**
@@ -123,7 +141,7 @@ class BaseRepository implements BaseRepositoryInterface
   {
     $resource = $this->repo->findOrFail(array_get($input, $this->repo->getKeyName()));
 
-    $this->validate($resource->toArray() + $input);
+    $this->validate($input + $resource->toArray());
 
     return $resource->update($input);
   }

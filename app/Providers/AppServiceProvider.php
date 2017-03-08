@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,16 @@ class AppServiceProvider extends ServiceProvider
 
           return empty( $result ); // edited here
       });
+
+
+      Relation::morphMap([
+        'customers' => 'App\Customer',
+        'bills' => 'App\Bill',
+        'bill_items' => 'App\BillItem',
+        'receipts' => 'App\Receipt',
+        'bookings' => 'App\Booking',
+        'addons' => 'App\Addon',
+      ]);
     }
 
     /**

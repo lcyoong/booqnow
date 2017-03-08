@@ -56,7 +56,8 @@ elixir(mix => {
       'resources/assets/css/bootstrap-datepicker.css',
       'resources/assets/css/select2.css',
       'resources/assets/css/vue2-autocomplete.css',
-      'node_modules/font-awesome/css/font-awesome.min.css'
+      'node_modules/font-awesome/css/font-awesome.min.css',
+      'node_modules/bootstrap-toggle/css/bootstrap-toggle.min.css',
     ], 'public/css/app.css', './');
 
     // mix.scripts(['moment/locales.min.js', 'moment/moment.min.js', 'app.js'], 'public/js/app.js');

@@ -3,12 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AuditTrailRelationship;
 use Carbon\Carbon;
 
 class Addon extends TenantModel
 {
-  protected $audit = true;
+  use AuditTrailRelationship;
   
+  protected $audit = true;
+
   protected $primaryKey = 'add_id';
 
   protected $fillable = ['add_booking', 'add_bill', 'add_resource', 'add_customer', 'add_date', 'add_status', 'add_reference', 'add_tracking', 'add_pax', 'add_unit', 'created_by'];

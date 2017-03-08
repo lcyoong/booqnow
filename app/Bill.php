@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\AuditTrailRelationship;
+use App\Traits\CommentRelationship;
+use Carbon\Carbon;
 
 class Bill extends TenantModel
 {
   use AuditTrailRelationship;
+  use CommentRelationship;
   protected $audit = true;
 
   protected $primaryKey = 'bil_id';
@@ -15,6 +18,15 @@ class Bill extends TenantModel
   protected $fillable = ['bil_accounting', 'bil_customer', 'bil_booking', 'bil_description', 'bil_date', 'bil_due_date', 'bil_gross', 'bil_tax', 'bil_status', 'created_by'];
 
   protected $appends = ['total_amount', 'outstanding'];
+
+  /**
+   * Mutator to set the formatted receipt date
+   * @param string $value
+   */
+  public function setBilDateAttribute($value)
+  {
+      $this->attributes['bil_date'] = Carbon::parse($value)->format('Y-m-d');
+  }
 
   /**
    * Accessor to get the outstanding amount for the bill
@@ -32,6 +44,15 @@ class Bill extends TenantModel
   public function getTotalAmountAttribute($value)
   {
     return $this->bil_gross + $this->bil_tax;
+  }
+
+  /**
+   * Accessor to bill date
+   * @return numeric
+   */
+  public function getBilDateAttribute($value)
+  {
+    return Carbon::parse($value)->format('d-m-Y');
   }
 
   /**
@@ -80,9 +101,9 @@ class Bill extends TenantModel
    */
   public function refreshGrossTax()
   {
-    $this->bil_gross = $this->items->sum('bili_gross');
+    $this->bil_gross = $this->items->where('bili_active', '=', 1)->sum('bili_gross');
 
-    $this->bil_tax = $this->items->sum('bili_tax');
+    $this->bil_tax = $this->items->where('bili_active', '=', 1)->sum('bili_tax');
 
     $this->save();
   }
@@ -93,7 +114,7 @@ class Bill extends TenantModel
    */
   public function refreshPaid()
   {
-    $this->bil_paid = $this->receipts->sum('rc_amount');
+    $this->bil_paid = $this->receipts()->where('rc_status', '=', 'active')->sum('rc_amount');
 
     $this->save();
   }

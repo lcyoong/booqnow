@@ -30,4 +30,9 @@ class BillApiController extends ApiController
      return $this->repo_bil->filter($filters)->with(['customer'])->getPages();
    }
 
+   public function show(Request $request, $id)
+   {
+     return $this->repo_bil->with(['items', 'customer'])->findById($id);
+   }
+
 }

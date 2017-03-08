@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Repositories\AuditTrailRepository;
+use Filters\AuditTrailFilter;
 
 class AuditTrailController extends MainController
 {
@@ -16,11 +17,11 @@ class AuditTrailController extends MainController
     $this->tenant = true;
   }
 
-  public function trail($object)
+  public function get(Request $requet, $type, $id)
   {
-    // $object = $this->repo->findById($id);
+    $filters = new AuditTrailFilter(['modelType' => $type, 'modelId' => $id]);
 
-    $trail = $object->auditTrails;
+    $trail = (new AuditTrailRepository)->with(['creator'])->get($filters, null, ['au_id' => 'desc']);
 
     $this->layout = 'layouts.modal';
 
@@ -30,6 +31,21 @@ class AuditTrailController extends MainController
 
     return view('audit.view', $this->vdata);
   }
+
+  // public function trail($object)
+  // {
+  //   // $object = $this->repo->findById($id);
+  //
+  //   $trail = $object->auditTrails;
+  //
+  //   $this->layout = 'layouts.modal';
+  //
+  //   $this->page_title = trans('audit.list');
+  //
+  //   $this->vdata(compact('trail'));
+  //
+  //   return view('audit.view', $this->vdata);
+  // }
 
 
 }

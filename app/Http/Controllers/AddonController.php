@@ -151,7 +151,7 @@ class AddonController extends MainController
 
     $unit_price = array_get($input, 'add_price', $item->rs_price);
 
-    $gross = $unit_price * $unit;
+    // $gross = $unit_price * $unit;
 
     return (new BillItemRepository)->store([
       'bili_resource' => $item->rs_id,
@@ -159,8 +159,8 @@ class AddonController extends MainController
       'bili_bill' => array_get($input, 'add_bill'),
       'bili_unit_price' => $unit_price,
       'bili_unit' => $unit,
-      'bili_gross' => $gross,
-      'bili_tax' => calcTax($gross),
+      // 'bili_gross' => $gross,
+      // 'bili_tax' => calcTax($gross),
     ]);
   }
 

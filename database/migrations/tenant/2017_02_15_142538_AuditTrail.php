@@ -14,13 +14,13 @@ class AuditTrail extends Migration
     public function up()
     {
       Schema::create('audit_trails', function (Blueprint $table) {
-          $table->increments('au_id')->unsigned();
-          $table->string('au_model');
-          $table->string('au_mode');
-          $table->integer('au_model_id')->unsigned();
-          $table->text('au_data');
-          $table->integer('created_by');
-          $table->timestamps();
+        $table->increments('au_id')->unsigned();
+        $table->string('au_mode');
+        $table->string('au_model_type');
+        $table->integer('au_model_id')->unsigned();
+        $table->text('au_data');
+        $table->integer('created_by');
+        $table->timestamps();
       });
     }
 

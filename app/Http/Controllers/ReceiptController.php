@@ -66,13 +66,43 @@ class ReceiptController extends MainController
   }
 
   /**
-   * Process storing of new customer
+   * Display edit receipt form
+   * @param  int $id - Receipt id
+   * @return Response
+   */
+  public function edit($id)
+  {
+    $receipt = $this->repo->findById($id);
+
+    $this->page_title = trans('receipt.edit');
+
+    $this->layout = 'layouts.modal';
+
+    $this->vdata(compact('receipt'));
+
+    return view('receipt.edit', $this->vdata);
+  }
+
+  /**
+   * Process storing of receipt
    * @param  Request $request
    * @return Response
    */
   public function store(Request $request)
   {
     $this->repo->store($request->input());
+
+    return $this->goodReponse();
+  }
+
+  /**
+   * Process updating of receipt
+   * @param  Request $request
+   * @return Response
+   */
+  public function update(Request $request)
+  {
+    $this->repo->update($request->input());
 
     return $this->goodReponse();
   }

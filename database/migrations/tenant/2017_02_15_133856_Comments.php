@@ -15,7 +15,7 @@ class Comments extends Migration
     {
       Schema::create('comments', function (Blueprint $table) {
           $table->increments('com_id')->unsigned();
-          $table->string('com_model');
+          $table->string('com_model_type');
           $table->integer('com_model_id')->unsigned();
           $table->text('com_content');
           $table->integer('created_by');

@@ -18,7 +18,7 @@ class CommentRepository extends BaseRepository {
     parent::__construct('App\Comment');
 
     $this->rules = [
-      'com_content' => 'required|min:10',
+      'com_content' => 'required|min:5',
     ];
   }
 }

@@ -8,7 +8,7 @@ return [
   'nights' => 'nights',
   'bills' => 'Bills',
   'duration' => 'Duration',
-  'book_id' => 'Booking #',
+  'book_id' => 'Booking no',
   'book_from' => 'Check in',
   'book_to' => 'Check out',
   'book_checkin' => 'Check in',

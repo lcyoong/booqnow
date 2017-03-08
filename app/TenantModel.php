@@ -17,6 +17,8 @@ class TenantModel extends BaseModel
    */
   public function __construct($attributes = array())
 	{
+    DB::connection()->enableQueryLog();
+    
     parent::__construct($attributes);
 
     if (config('myapp.multi_tenant')) {
