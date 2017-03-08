@@ -75,9 +75,18 @@ class BookingController extends MainController
 
     $input = $request->input();
 
+    $resource_id = array_get($input, 'resource');
+
     $slot = $this->selectedSlot($input);
 
-    $resource = array_get($slot, 'resource');
+    // $resource = array_get($slot, 'resource');
+
+    // $rates = $resource->pricing;
+
+    // foreach ($rates as $rate)
+    // {
+    //   $days = datesOverlap($rate->season->sea_from, $rate->season->sea_to, $slot['start'], $slot['end']);
+    // }
 
     $start = array_get($slot, 'start');
 
@@ -87,7 +96,7 @@ class BookingController extends MainController
 
     $this->page_title = trans('booking.new');
 
-    $this->vdata(compact('customer', 'resource', 'start', 'end', 'cus_id'));
+    $this->vdata(compact('customer', 'start', 'end', 'cus_id', 'resource_id'));
 
     return view('booking.new_basic', $this->vdata);
   }
@@ -157,9 +166,9 @@ class BookingController extends MainController
    */
   protected function selectedSlot($input)
   {
-    if (array_get($input, 'resource')) {
-      session(['booking.resource' => (new ResourceRepository)->findById(array_get($input, 'resource'))]);
-    }
+    // if (array_get($input, 'resource')) {
+    //   session(['booking.resource' => (new ResourceRepository)->findById(array_get($input, 'resource'))]);
+    // }
 
     if (array_get($input, 'start')) {
       session(['booking.start' => array_get($input, 'start')]);
@@ -169,7 +178,7 @@ class BookingController extends MainController
       session(['booking.end' => array_get($input, 'end')]);
     }
 
-    $slot['resource'] =  session('booking.resource');
+    // $slot['resource'] =  session('booking.resource');
     $slot['start'] =  session('booking.start');
     $slot['end'] =  session('booking.end');
 
@@ -261,5 +270,4 @@ class BookingController extends MainController
       ]);
     }
   }
-
 }

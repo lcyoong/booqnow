@@ -32,6 +32,18 @@ class Pricing extends Migration
           $table->integer('created_by');
           $table->timestamps();
       });
+
+      Schema::create('resource_pricing_tiers', function (Blueprint $table) {
+          $table->increments('rpr_id')->unsigned();
+          $table->integer('rpr_resource')->unsigned();
+          $table->integer('rpr_season')->unsigned();
+          $table->integer('rpr_from')->unsigned()->default(0);
+          $table->integer('rpr_to')->unsigned()->default(0);
+          $table->decimal('rpr_price', 15, 2)->default(0);
+          $table->integer('created_by');
+          $table->timestamps();
+      });
+
     }
 
     /**

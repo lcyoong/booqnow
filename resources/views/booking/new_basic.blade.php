@@ -2,11 +2,11 @@
 
 @prepend('content')
 <div id="booking-new-basic">
-<h3><i class="fa fa-bed"></i> {{ $resource->rs_name }} <u>{{ showDate($start) }}</u> @lang('form.to') <u>{{ showDate($end) }}</u> <span class="label label-info">{{ dayDiff($start, $end) }} @lang('booking.nights')</span></h3>
+<h3><i class="fa fa-bed"></i> @{{ resource.rs_name }} <u>{{ showDate($start) }}</u> @lang('form.to') <u>{{ showDate($end) }}</u> <span class="label label-info">{{ dayDiff($start, $end) }} @lang('booking.nights')</span></h3>
 <form-ajax action = "{{ urlTenant('bookings/new') }}" method="POST" reload-on-complete = true @startwait="startWait" @endwait="endWait">
   {{ Form::hidden('book_from', $start) }}
   {{ Form::hidden('book_to', $end) }}
-  {{ Form::hidden('book_resource', $resource->rs_id) }}
+  {{ Form::hidden('book_resource', '', ['v-model' => 'resource.rs_id']) }}
   {{ Form::hidden('book_customer', null, ['v-model'=>'book_customer']) }}
   <!--Section 1 - Select customer-->
   <div v-if="section1">
@@ -40,7 +40,6 @@
     </div>
     <button @click = "selectCustomer" class="btn btn-primary btn-sm">Change customer</button>
 
-    {{ Form::hidden('resource[0]', $resource->rs_id) }}
     <div class="row">
       {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources) }}
       {{ Form::bsNumber('book_pax', trans('booking.book_pax'), 1, ['min' => 1, 'max'=>20]) }}
@@ -58,12 +57,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>{{ Form::text('name[0]', $resource->rs_name, ['class' => 'form-control']) }}</td>
-          <td>{{ Form::text('rate[0]', null, ['class' => 'form-control', 'v-model' => 'rate']) }}</td>
-          <td>{{ Form::text('unit[0]', null, ['class' => 'form-control', 'readonly', 'v-model' => 'nights']) }}</td>
-          <!-- <td>{{ showMoney($resource->rs_price * dayDiff($start, $end)) }}</td> -->
-          <td>@{{ rate * nights }}</td>
+        <tr v-for = "(day, index) in days">
+          {{ Form::hidden('resource[0]', '', ['name' => "resource[]", 'v-model' => 'resource.rs_id']) }}
+          <td>{{ Form::text('', '', ['class' => 'form-control', 'name' => "name[]", 'v-model' => 'day.description']) }}</td>
+          <td>{{ Form::text('', null, ['class' => 'form-control', 'name' => "rate[]", 'v-model' => 'day.price']) }}</td>
+          <td>{{ Form::text('', null, ['class' => 'form-control', 'readonly', 'name' => "unit[]", 'v-model' => 'day.nights']) }}</td>
+          <td>@{{ day.price * day.nights }}</td>
         </tr>
       <tbody>
     </table>
@@ -83,6 +82,7 @@ new Vue({
     created: function () {
       this.init()
       this.getCustomers()
+      this.getResource()
       // this.selectCustomer()
     },
 
@@ -93,9 +93,10 @@ new Vue({
       customers : [],
       customer_label: '',
       book_customer: '',
+      resource: {},
+      days: [],
       value: '',
       nights: {{ dayDiff($start, $end) }},
-      rate: {{ $resource->rs_price }},
     },
 
     watch: {
@@ -111,6 +112,15 @@ new Vue({
           this.$http.get("{{ urlTenant("api/v1/customers/active") }}")
               .then(function (response) {
                 this.customers = response.data
+              });
+        },
+
+        getResource: function () {
+          this.$http.get("{{ urlTenant("api/v1/resources/$resource_id/$start/$end") }}")
+              .then(function (response) {
+                this.resource = response.data.resource
+                this.days = response.data.days
+                console.log(response.data)
               });
         },
 

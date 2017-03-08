@@ -12,6 +12,7 @@ use Repositories\ResourceMaintenanceRepository;
 // use App\ResourceType;
 use Filters\ResourceFilter;
 use Filters\ResourceMaintenanceFilter;
+use Carbon\Carbon;
 
 class ResourceApiController extends ApiController
 {
@@ -79,6 +80,40 @@ class ResourceApiController extends ApiController
     $rs = new ResourceRepository;
 
     return $rs->findById($resource)->pricing()->with(['season'])->get();
+  }
+
+  public function selected($resource_id, $start, $end, Request $request)
+  {
+    $nights = Carbon::parse($start)->diffInDays(Carbon::parse($end));
+
+    $rs = new ResourceRepository;
+
+    $resource = $rs->with(['pricing.season'])->findById($resource_id);
+
+    $days = [];
+
+    foreach ($resource->pricing as $rate)
+    {
+      $overlap = datesOverlap($rate->season->sea_from, $rate->season->sea_to, $start, $end);
+
+      if ($overlap > 0) {
+        $days[] = [
+          'price' => $rate->rpr_price,
+          'nights' => $overlap,
+          'description' => $resource->rs_name
+        ];
+      }
+    }
+
+    if ($nights > array_sum(array_column($days, 'nights'))) {
+      $days[] = [
+        'price' => $resource->rs_price,
+        'nights' => $nights - array_sum(array_column($days, 'nights')),
+        'description' => $resource->rs_name
+      ];
+    }
+
+    return collect(['resource' => $resource, 'days' => $days]);
   }
 
 }
