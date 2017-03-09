@@ -1,23 +1,57 @@
 @extends($layout)
 
-@push('content')
+@prepend('content')
+<div id="booking-edit">
+  <a v-modal href="{{ urlTenant(sprintf('trail/bookings/%s', $booking->book_id)) }}"><i class="fa fa-history"></i></a>
+  <a class="icon-button-margin" v-modal href="{{ urlTenant(sprintf('comments/bookings/%s', $booking->book_id)) }}" title="@lang('form.comments')"><i class="fa fa-comment-o"></i></a>
+  <!-- Customer info -->
+  <h4>
+    <i class="fa fa-user"></i> {{ $booking->customer->full_name }}
+  </h4>
+  <div class="row">
+    <div class="col-md-3"><i class="fa fa-envelope-o"></i> {{ $booking->customer->cus_email }}</div>
+    <div class="col-md-3"><i class="fa fa-phone"></i> {{ $booking->customer->cus_contact1 }}</div>
+    <div class="col-md-3"><i class="fa fa-globe"></i> {{ $booking->customer->cus_country }}</div>
+  </div>
 
-{{ Form::open(['url' => 'customers/update', 'v-ajax', 'class' => '']) }}
-{{ Form::hidden('cus_id', $customer->cus_id) }}
-<div class="row">
-  {{ Form::bsText('cus_first_name', trans('customer.cus_first_name'), $customer->cus_first_name) }}
-  {{ Form::bsText('cus_last_name', trans('customer.cus_last_name'), $customer->cus_last_name) }}
+  <form-ajax action = "{{ urlTenant('bookings/update') }}" method="POST" @startwait="startWait" @endwait="endWait">
+    {{ Form::hidden('book_id', $booking->book_id) }}
+    <div class="row">
+      {{ Form::bsSelect('book_resource', trans('booking.book_resource'), $rooms, $booking->book_resource, ['style' => 'width:100%', 'vmodel' => 'booking.book_resource', 'class'=>'select2']) }}
+      {{ Form::bsDate('book_from', trans('booking.book_from'), $booking->book_from, ['vmodel' => 'booking.book_from']) }}
+      {{ Form::bsDate('book_to', trans('booking.book_to'), $booking->book_to, ['vmodel' => 'booking.book_to']) }}
+    </div>
+    <div class="row">
+      {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources, $booking->book_source) }}
+      {{ Form::bsNumber('book_pax', trans('booking.book_pax'), $booking->book_pax, ['min' => 1, 'max'=>20]) }}
+      {{ Form::bsText('book_reference', trans('booking.book_reference'), $booking->book_reference) }}
+    </div>
+    <div class="row">
+      {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), $booking->book_remarks, ['rows' => 4]) }}
+      {{ Form::bsSelect('book_status', trans('booking.book_status'), $book_status, $booking->book_status, ['style' => 'width:100%', 'vmodel' => 'booking.book_status']) }}
+    </div>
+    {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
+    <a href="{{ url('bookings') }}">{{ Form::button(trans('form.cancel'), ['class' => 'btn btn-primary btn-sm']) }}</a>
+  </form-ajax>
 </div>
-<div class="row">
-  {{ Form::bsEmail('cus_email', trans('customer.cus_email'), $customer->cus_email) }}
-  {{ Form::bsText('cus_contact1', trans('customer.cus_contact1'), $customer->cus_contact1) }}
-  {{ Form::bsText('cus_contact2', trans('customer.cus_contact2'), $customer->cus_contact2) }}
-</div>
-<div class="row">
-  {{ Form::bsSelect('cus_country', trans('customer.cus_country'), $countries, $customer->cus_country) }}
-  {{ Form::bsTextarea('cus_address', trans('customer.cus_address'), $customer->cus_address) }}
-</div>
-{{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary']) }}
-<redirect-btn label="@lang('form.cancel')" redirect="{{ urlTenant('customers') }}"></redirect-btn>
-{{ Form::close() }}
-@endpush
+@endprepend
+
+@prepend('scripts')
+<script>
+new Vue ({
+
+  el: "#booking-edit",
+
+  mixins: [mixForm],
+
+  created: function () {
+  },
+
+  data: {
+  },
+
+  methods: {
+  }
+})
+</script>
+@endprepend

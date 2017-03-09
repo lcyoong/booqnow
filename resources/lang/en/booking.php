@@ -4,6 +4,7 @@ return [
   'list' => 'Bookings',
   'new' => 'New Booking',
   'view' => 'View Booking #:id',
+  'edit' => 'Edit Booking #:id',
   'action' => 'Booking #:id',
   'nights' => 'nights',
   'bills' => 'Bills',

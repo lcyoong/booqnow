@@ -5816,6 +5816,9 @@ body {
   background-color: LightGray !important;
   color: red !important; }
 
+.icon-button-margin {
+  margin-left: 20px; }
+
 [v-cloak] {
   display: none; }
 

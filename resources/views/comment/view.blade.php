@@ -28,7 +28,7 @@ new Vue ({
 
   data: {
     items: [],
-    url: 'api/v1/comments/{{ $type }}/{{ $id }}',
+    url: '{{ urlTenant("api/v1/comments/$type/$id") }}',
     newItem: ''
   },
 

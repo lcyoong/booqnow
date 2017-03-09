@@ -45,14 +45,25 @@ class AppServiceProvider extends ServiceProvider
        */
       Validator::extend( 'overlap_booking', function ( $attribute, $value, $parameters, $validator ) {
 
-          $table = "bookings";
+        $table = "bookings";
 
-          $from = array_get($validator->getData(), array_shift( $parameters ));
-          $to = array_get($validator->getData(), array_shift( $parameters ));
+        $from = array_get($validator->getData(), array_shift( $parameters ));
 
-          $result = \DB::table( $table )->select( \DB::raw( 1 ) )->where( 'book_resource', '=', $value )->whereDate('book_to', '>', Carbon::parse($from)->format('Y-m-d'))->whereDate('book_from', '<', Carbon::parse($to)->format('Y-m-d'))->first();
+        $to = array_get($validator->getData(), array_shift( $parameters ));
 
-          return empty( $result );
+        $parm_id = array_shift( $parameters );
+
+        $id = !is_null($parm_id) ? array_get($validator->getData(), $parm_id, 0) : 0;
+
+        $query = \DB::table( $table )->select( \DB::raw( 1 ) )->where( 'book_resource', '=', $value )->whereDate('book_to', '>', Carbon::parse($from)->format('Y-m-d'))->whereDate('book_from', '<', Carbon::parse($to)->format('Y-m-d'));
+
+        if ($id > 0) {
+          $query->where('book_id', '!=', $id);
+        }
+
+        $result = $query->first();
+
+        return empty( $result );
 
       });
 

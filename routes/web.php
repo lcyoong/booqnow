@@ -106,12 +106,14 @@ function tenantRoutes()
   Route::get('bookings', 'BookingController@index');
   // Route::get('bookings/{booking}/trail', 'BookingController@auditTrail');
   Route::get('bookings/new/{customer?}', 'BookingController@create');
-  Route::post('bookings/new', 'BookingController@store');
-  Route::post('bookings/checkin/{booking}', 'BookingController@checkin');
-  Route::post('bookings/checkout/{booking}', 'BookingController@checkout');
   // Route::get('bookings/{booking}/view', 'BookingController@view');
   Route::get('bookings/{booking}', 'BookingController@action');
+  Route::get('bookings/{booking}/edit', 'BookingController@edit');
   // Route::get('bookings/{booking}/bills', 'BookingController@bills');
+  Route::post('bookings/new', 'BookingController@store');
+  Route::post('bookings/update', 'BookingController@update');
+  Route::post('bookings/checkin/{booking}', 'BookingController@checkin');
+  Route::post('bookings/checkout/{booking}', 'BookingController@checkout');
 
   Route::get('trail/{type}/{id}', 'AuditTrailController@get');
   // Route::get('trail/bookings/{booking_repo}', 'AuditTrailController@trail');

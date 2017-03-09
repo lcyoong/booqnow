@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\AuditTrailRelationship;
 use App\Traits\CommentRelationship;
+use Carbon\Carbon;
 
 class Booking extends TenantModel
 {
@@ -89,4 +90,23 @@ class Booking extends TenantModel
   {
     $this->update(['book_status' => 'checkedout']);
   }
+
+  /**
+   * Mutator to set the formatted booking from date
+   * @param string $value
+   */
+  public function setBookFromAttribute($value)
+  {
+      $this->attributes['book_from'] = Carbon::parse($value)->format('Y-m-d');
+  }
+
+  /**
+   * Mutator to set the formatted booking to date
+   * @param string $value
+   */
+  public function setBookToAttribute($value)
+  {
+      $this->attributes['book_to'] = Carbon::parse($value)->format('Y-m-d');
+  }
+
 }

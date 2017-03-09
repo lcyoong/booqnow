@@ -101,6 +101,25 @@ class BookingController extends MainController
     return view('booking.new_basic', $this->vdata);
   }
 
+
+  /**
+   * Display edit booking form
+   * @param  int $id - Booking id
+   * @return Response
+   */
+  public function edit($book_id)
+  {
+    $booking = $this->repo_book->findById($book_id);
+
+    $rooms = (new ResourceRepository)->ofType(1)->getDropDown('rs_id', 'rs_name');
+
+    $this->page_title = trans('booking.edit', ['id' => $book_id]);
+
+    $this->vdata(compact('book_id', 'booking', 'rooms'));
+
+    return view('booking.edit', $this->vdata);
+  }
+
   /**
    * Process storing of new booking
    * @param  Request $request
@@ -124,18 +143,16 @@ class BookingController extends MainController
   }
 
   /**
-   * Display the customer-selection form
+   * Process updating of booking
    * @param  Request $request
    * @return Response
    */
-  // public function pick(Request $request)
-  // {
-  //   $this->layout = 'layouts.modal';
-  //
-  //   $this->page_title = trans('customer.new');
-  //
-  //   return view('customer.new_basic', $this->vdata);
-  // }
+  public function update(Request $request)
+  {
+    $this->repo_book->update($request->input());
+
+    return $this->goodReponse();
+  }
 
   /**
    * Display the booking 'action' pop-up form
