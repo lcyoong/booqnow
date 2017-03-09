@@ -17,8 +17,8 @@ class ResourceMaintenanceRepository extends BaseRepository{
     $this->filter = new ResourceMaintenanceFilter();
 
     $this->rules = [
-      'rm_resource' => 'required|exists:resources,rs_id',
-      'rm_from' => 'required|date',
+      'rm_resource' => 'required|exists:resources,rs_id|overlap_booking:rm_from,rm_to|overlap_maintenance:rm_from,rm_to',
+      'rm_from' => 'required|date|before:rm_to',
       'rm_to' => 'required|date',
       'rm_description' => 'required|max:255',
     ];

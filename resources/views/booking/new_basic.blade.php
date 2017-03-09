@@ -3,7 +3,7 @@
 @prepend('content')
 <div id="booking-new-basic">
 <h3><i class="fa fa-bed"></i> @{{ resource.rs_name }} <u>{{ showDate($start) }}</u> @lang('form.to') <u>{{ showDate($end) }}</u> <span class="label label-info">{{ dayDiff($start, $end) }} @lang('booking.nights')</span></h3>
-<form-ajax action = "{{ urlTenant('bookings/new') }}" method="POST" reload-on-complete = true @startwait="startWait" @endwait="endWait">
+<form-ajax action = "{{ urlTenant('bookings/new') }}" method="POST" reload-on-completex = true @startwait="startWait" @endwait="endWait">
   {{ Form::hidden('book_from', $start) }}
   {{ Form::hidden('book_to', $end) }}
   {{ Form::hidden('book_resource', '', ['v-model' => 'resource.rs_id']) }}

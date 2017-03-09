@@ -19,10 +19,10 @@ class BookingRepository extends BaseRepository
     $this->filter = new BookingFilter();
 
     $this->rules = [
-      'book_resource' => 'required|exists:resources,rs_id',
+      'book_resource' => 'required|exists:resources,rs_id|overlap_booking:book_from,book_to|overlap_maintenance:book_from,book_to',
       'book_customer' => 'required|exists:customers,cus_id',
       'book_source' => 'required|exists:booking_sources,bs_id',
-      'book_from' => 'required|date',
+      'book_from' => 'required|date|before:book_to',
       'book_to' => 'required|date',
       'book_pax' => 'required|min:1|numeric',
       'book_reference' => 'max:255',

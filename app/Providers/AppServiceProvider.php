@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,46 @@ class AppServiceProvider extends ServiceProvider
           $result = \DB::table( $table )->select( \DB::raw( 1 ) )->where( $fields )->first();
 
           return empty( $result ); // edited here
+      });
+
+      /**
+       * Check if the attempt overlap an existing booking
+       * $attribute       The field to be validated
+       * $value           The value of $attribute
+       * $parameters      Additional parameters
+       * @var string
+       */
+      Validator::extend( 'overlap_booking', function ( $attribute, $value, $parameters, $validator ) {
+
+          $table = "bookings";
+
+          $from = array_get($validator->getData(), array_shift( $parameters ));
+          $to = array_get($validator->getData(), array_shift( $parameters ));
+
+          $result = \DB::table( $table )->select( \DB::raw( 1 ) )->where( 'book_resource', '=', $value )->whereDate('book_to', '>', Carbon::parse($from)->format('Y-m-d'))->whereDate('book_from', '<', Carbon::parse($to)->format('Y-m-d'))->first();
+
+          return empty( $result );
+
+      });
+
+      /**
+       * Check if the attempt overlap an existing maintenance
+       * $attribute       The field to be validated
+       * $value           The value of $attribute
+       * $parameters      Additional parameters
+       * @var string
+       */
+      Validator::extend( 'overlap_maintenance', function ( $attribute, $value, $parameters, $validator ) {
+
+          $table = "resource_maintenances";
+
+          $from = array_get($validator->getData(), array_shift( $parameters ));
+          $to = array_get($validator->getData(), array_shift( $parameters ));
+
+          $result = \DB::table( $table )->select( \DB::raw( 1 ) )->where( 'rm_resource', '=', $value )->whereDate('rm_to', '>', Carbon::parse($from)->format('Y-m-d'))->whereDate('rm_from', '<', Carbon::parse($to)->format('Y-m-d'))->where('rm_status', '=', 'active')->first();
+
+          return empty( $result );
+
       });
 
 

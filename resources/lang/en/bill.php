@@ -13,7 +13,7 @@ return [
   'bil_status' => 'Bill status',
   'bil_gross' => 'Total',
   'bil_tax' => 'Tax',
-  'total' => 'Total',
+  'total' => 'Total + Tax',
   'grand_total' => 'Grand total',
   'bil_paid' => 'Paid',
   'bili_unit_price' => sprintf('Unit price (%s)', config('myapp.base_currency')),

@@ -84,6 +84,8 @@ return [
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
     "composite_unique" => "The :attribute must be unique.",
+    "overlap_booking" => "This overlaps an existing booking.",
+    "overlap_maintenance" => "This overlaps a room maintenance.",
 
 
     /*
