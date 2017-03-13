@@ -1,7 +1,7 @@
 @extends($layout)
 
 @prepend('content')
-<div id="bill-edit">
+<div id="bill-edit" v-cloak>
   <form-ajax action = "{{ urlTenant('bills/update') }}" method="POST" @startwait="startWait" @endwait="endWait">
   {{ Form::hidden('bil_id', '', ['v-model' => 'bill.bil_id']) }}
   <div class="row">
@@ -32,7 +32,7 @@
           <div class="col-md-1"><itemized :item = "item" class="form-control btn btn-primary" action="{{ urlTenant('bills/item/update') }}" @completesuccess="getList">Save</itemized></div>
         </div>
       </li>
-      <li class="list-group-item">
+      <li class="list-group-item list-group-item-success">
         <div class="row">
           <input type="hidden" v-model="new_item.bili_bill">
           <div class="col-md-4">{{ Form::text('bili_description', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_description']) }}</div>
@@ -40,7 +40,7 @@
           <div class="col-md-1">{{ Form::number('bili_unit', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_unit', 'min' => 0, 'max' => 20]) }}</div>
           <div class="col-md-2">@{{ new_item.bili_unit_price * new_item.bili_unit }}</div>
           <div class="col-md-1"></div>
-          <div class="col-md-1"><itemized :item = "new_item" class="form-control btn btn-primary" action="{{ urlTenant('bills/item') }}" @completesuccess="doneAddNew">Save</itemized></div>
+          <div class="col-md-1"><itemized :item = "new_item" class="form-control btn btn-primary" action="{{ urlTenant('bills/item') }}" @completesuccess="doneAddNew"> <i class="fa fa-plus"></i> @lang('form.new')</itemized></div>
         </div>
       </li>
     </ul>

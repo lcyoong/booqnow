@@ -127,6 +127,8 @@ class BaseRepository implements BaseRepositoryInterface
    */
   public function store($input)
   {
+    $input = array_filter($input);
+
     $this->validate($input);
 
     return $this->repo->create($input);
@@ -141,7 +143,7 @@ class BaseRepository implements BaseRepositoryInterface
   {
     $resource = $this->repo->findOrFail(array_get($input, $this->repo->getKeyName()));
 
-    $this->validate($input + $resource->toArray());
+    $this->validate(array_filter($input + $resource->toArray()));
 
     return $resource->update($input);
   }
