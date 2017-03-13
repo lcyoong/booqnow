@@ -193,4 +193,16 @@ class AddonController extends MainController
     return $this->goodReponse(trans('form.item_removed', ['item' => $resource->rs_name]));
   }
 
+  /**
+   * Process updating of addon
+   * @param  Request $request
+   * @return Response
+   */
+  public function update(Request $request)
+  {
+    $this->repo->update($request->input());
+
+    return $this->goodReponse('Update successful. Please reconcile your bill if needed.');
+  }
+
 }

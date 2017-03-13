@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class Addon extends TenantModel
 {
   use AuditTrailRelationship;
-  
+
   protected $audit = true;
 
   protected $primaryKey = 'add_id';
@@ -23,6 +23,15 @@ class Addon extends TenantModel
   public function setAddDateAttribute($value)
   {
       $this->attributes['add_date'] = Carbon::parse($value)->format('Y-m-d');
+  }
+
+  /**
+   * Accessor to addon date
+   * @return numeric
+   */
+  public function getAddDateAttribute($value)
+  {
+    return Carbon::parse($value)->format('d-m-Y');
   }
 
   /**

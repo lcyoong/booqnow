@@ -47,6 +47,8 @@ class BillController extends MainController
 
     $list = $this->repo->getPages($filters);
 
+    $this->new_path = urlTenant('bills/new');
+
     $this->vdata(compact('list'));
 
     return view('bill.list', $this->vdata);
@@ -68,6 +70,17 @@ class BillController extends MainController
     $this->vdata(compact('bill'));
 
     return view('bill.view', $this->vdata);
+  }
+
+  /**
+   * Display the new bill form
+   * @return Response
+   */
+  public function create()
+  {
+    $this->page_title = trans('bill.new');
+
+    return view('bill.new', $this->vdata);
   }
 
   /**
@@ -147,6 +160,18 @@ class BillController extends MainController
   public function update(Request $request)
   {
     $this->repo->update($request->input());
+
+    return $this->goodReponse();
+  }
+
+  /**
+   * Process storing of bill item
+   * @param  Request $request
+   * @return Response
+   */
+  public function storeItem(Request $request)
+  {
+    (new BillItemRepository)->store($request->input());
 
     return $this->goodReponse();
   }

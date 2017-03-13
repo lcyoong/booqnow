@@ -23,6 +23,9 @@ class CodesTableSeeder extends Seeder
         ['cod_group' => 'cus_status','cod_key' => 'suspended', 'cod_description' => 'Suspended', 'created_by' => 1],
         ['cod_group' => 'rs_status','cod_key' => 'active', 'cod_description' => 'Active', 'created_by' => 1],
         ['cod_group' => 'rs_status','cod_key' => 'inactive', 'cod_description' => 'Inactive', 'created_by' => 1],
+        ['cod_group' => 'add_status','cod_key' => 'active', 'cod_description' => 'Active', 'created_by' => 1],
+        ['cod_group' => 'add_status','cod_key' => 'cancelled', 'cod_description' => 'Cancelled', 'created_by' => 1],
+        ['cod_group' => 'add_status','cod_key' => 'completed', 'cod_description' => 'Completed', 'created_by' => 1],
       ]);
     }
 }

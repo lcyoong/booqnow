@@ -11,7 +11,7 @@
   </div>
   <div class="row">
     {{ Form::bsText('bil_description', trans('bill.bil_description'), '', ['v-model' => 'bill.bil_description']) }}
-    {{ Form::bsDate('bil_date', trans('bill.bil_date'), '', ['v-model' => 'bill.bil_date']) }}
+    {{ Form::bsDate('bil_date', trans('bill.bil_date'), null, ['v-model' => 'bill.bil_date']) }}
     {{ Form::bsSelect('bil_status', trans('bill.bil_status'), $rs_status, '', ['style' => 'width:100%', 'v-model' => 'bill.bil_status']) }}
   </div>
   {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
@@ -24,13 +24,23 @@
     <ul class="list-group">
       <li class="list-group-item" v-for="item in items">
         <div class="row">
-          {{ Form::hidden('bili_id', '', ['v-model' => 'item.bili_id']) }}
           <div class="col-md-4">{{ Form::text('bili_description', '', ['class' => 'form-control', 'v-model' => 'item.bili_description', '@keyup' => 'change(item)']) }}</div>
           <div class="col-md-2">{{ Form::text('bili_unit_price', '', ['class' => 'form-control', 'v-model' => 'item.bili_unit_price']) }}</div>
           <div class="col-md-1">{{ Form::number('bili_unit', '', ['class' => 'form-control', 'v-model' => 'item.bili_unit', 'min' => 0, 'max' => 20]) }}</div>
           <div class="col-md-2">@{{ item.bili_unit_price * item.bili_unit }}</div>
           <div class="col-md-1"><bootstrap-toggler name="bili_active" v-model="item.bili_active" data-size="normal"/></div>
           <div class="col-md-1"><itemized :item = "item" class="form-control btn btn-primary" action="{{ urlTenant('bills/item/update') }}" @completesuccess="getList">Save</itemized></div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <input type="hidden" v-model="new_item.bili_bill">
+          <div class="col-md-4">{{ Form::text('bili_description', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_description']) }}</div>
+          <div class="col-md-2">{{ Form::text('bili_unit_price', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_unit_price']) }}</div>
+          <div class="col-md-1">{{ Form::number('bili_unit', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_unit', 'min' => 0, 'max' => 20]) }}</div>
+          <div class="col-md-2">@{{ new_item.bili_unit_price * new_item.bili_unit }}</div>
+          <div class="col-md-1"></div>
+          <div class="col-md-1"><itemized :item = "new_item" class="form-control btn btn-primary" action="{{ urlTenant('bills/item') }}" @completesuccess="doneAddNew">Save</itemized></div>
         </div>
       </li>
     </ul>
@@ -52,10 +62,16 @@ new Vue ({
 
   data: {
     bill: {'bil_id': '', 'bil_description': '', 'bil_date' : '', 'bil_status': ''},
-    items: {}
+    items: {},
+    new_item: {'bili_description': '', 'bili_unit_price': 0.00, 'bili_unit': 1, 'bili_bill' : {{ $id }}}
   },
 
   methods: {
+    doneAddNew: function () {
+      this.getList()
+      this.new_item = {'bili_description': '', 'bili_unit_price': 0.00, 'bili_unit': 1, 'bili_bill' : {{ $id }}}
+    },
+
     getList: function () {
       this.$http.get('{{ urlTenant("api/v1/bills/$id") }}')
           .then(function (response) {

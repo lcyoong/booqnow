@@ -109,6 +109,7 @@ function tenantRoutes()
   // Route::get('bookings/{booking}/view', 'BookingController@view');
   Route::get('bookings/{booking}', 'BookingController@action');
   Route::get('bookings/{booking}/edit', 'BookingController@edit');
+  Route::get('bookings/{booking}/addons', 'BookingController@addons');
   // Route::get('bookings/{booking}/bills', 'BookingController@bills');
   Route::post('bookings/new', 'BookingController@store');
   Route::post('bookings/update', 'BookingController@update');
@@ -122,18 +123,22 @@ function tenantRoutes()
 
   Route::get('bookings/{booking}/addons/{resource_type}/new', 'AddonController@create');
   Route::get('bookings/{booking}/addons/{resource_type}/pos', 'AddonController@createPos');
+  Route::get('addons/pop/{booking}', 'AddonController@pop');
   Route::post('addons/new', 'AddonController@store');
   Route::post('addons/new/list', 'AddonController@storeList');
   Route::post('addons/push/{booking}/{resource}', 'AddonController@push');
-  Route::get('addons/pop/{booking}', 'AddonController@pop');
+  Route::post('addons/update', 'AddonController@update');
 
   Route::get('bills', 'BillController@index');
+  Route::get('bills/new', 'BillController@create');
   Route::get('bills/{bill}', 'BillController@view');
   Route::get('bills/{bill}/edit', 'BillController@edit');
   Route::get('bills/{bill}/print', 'BillController@download');
+  Route::post('bills/new', 'BillController@store');
   Route::post('bills/export', 'BillController@export');
   Route::post('bills/update', 'BillController@update');
   Route::post('bills/item/update', 'BillController@updateItem');
+  Route::post('bills/item', 'BillController@storeItem');
 
   Route::get('receipts', 'ReceiptController@index');
   Route::get('receipts/new/{bill}', 'ReceiptController@create');

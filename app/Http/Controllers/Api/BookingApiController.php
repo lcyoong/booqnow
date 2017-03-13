@@ -68,4 +68,16 @@ class BookingApiController extends ApiController
     return $this->repo_book->with(['customer', 'bills'])->getPages($filters);
   }
 
+  /**
+   * Get addons for a booking
+   * @param  Request $request
+   * @return array
+   */
+  public function addons(Request $request, $id)
+  {
+    $booking = (new BookingRepository)->findById($id);
+
+    return $booking->addons()->with('resource')->get();
+  }
+
 }

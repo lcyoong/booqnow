@@ -5,6 +5,7 @@ return [
   'items' => 'Items',
   'view' => 'View Bill #:id',
   'edit' => 'Edit Bill #:id',
+  'new' => 'New Bill',
   'bil_id' => 'Bill No',
   'bil_description' => 'Description',
   'bil_booking' => 'Booking No',

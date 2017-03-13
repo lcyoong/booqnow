@@ -35,6 +35,8 @@ class MainController extends Controller
 
     $book_status = (new CodeRepository)->getDropDown('book_status', true);
 
+    $add_status = (new CodeRepository)->getDropDown('add_status', true);
+
     $cus_status = (new CodeRepository)->getDropDown('cus_status', true);
 
     $rs_status = (new CodeRepository)->getDropDown('rs_status', true);
@@ -51,7 +53,7 @@ class MainController extends Controller
 
     $layout = 'layouts.tenant';
 
-    $this->vdata = compact('left_section_col', 'tenant', 'layout', 'pay_methods', 'book_status', 'countries', 'resource_types', 'booking_sources', 'cus_status', 'rs_status');
+    $this->vdata = compact('left_section_col', 'tenant', 'layout', 'pay_methods', 'book_status', 'add_status', 'countries', 'resource_types', 'booking_sources', 'cus_status', 'rs_status');
 
     // $this->vdata = [
     //   'left_section_col' => 12,

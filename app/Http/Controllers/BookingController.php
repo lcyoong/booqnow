@@ -233,6 +233,24 @@ class BookingController extends MainController
   }
 
   /**
+   * Display the booking add-ons for edit
+   * @param  int $book_id Booking id
+   * @return Response
+   */
+  public function addons($book_id)
+  {
+    $booking = $this->repo_book->findById($book_id);
+
+    // $addons = $booking->addons;
+
+    $this->page_title = trans('booking.action', ['id' => $booking->book_id]);
+
+    $this->vdata(compact('booking', 'book_id'));
+
+    return view('booking.addons', $this->vdata);
+  }
+
+  /**
    * Create bill for new booking
    * @param  array $input - User input data
    * @param  App\Booking $new_booking

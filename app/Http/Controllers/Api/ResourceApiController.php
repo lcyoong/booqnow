@@ -116,4 +116,9 @@ class ResourceApiController extends ApiController
     return collect(['resource' => $resource, 'days' => $days]);
   }
 
+  public function types()
+  {
+    return (new ResourceTypeRepository)->get();
+  }
+
 }
