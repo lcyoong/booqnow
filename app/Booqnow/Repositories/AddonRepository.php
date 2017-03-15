@@ -19,10 +19,11 @@ class AddonRepository extends BaseRepository {
     $this->filter = new AddonFilter();
 
     $this->rules = [
-      'add_booking' => 'required|exists:bookings,book_id',
+      'add_booking' => 'sometimes|exists:bookings,book_id',
       'add_resource' => 'required|exists:resources,rs_id',
-      'add_bill' => 'required|exists:bills,bil_id',
-      'add_customer' => 'required|exists:customers,cus_id',
+      // 'add_bill' => 'required|exists:bills,bil_id',
+      'add_customer' => 'sometimes|exists:customers,cus_id',
+      'add_customer_name' => 'required',
       'add_date' => 'required|date',
       'add_pax' => 'required|min:1|numeric',
       'add_unit' => 'required|min:1|numeric',

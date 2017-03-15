@@ -38,7 +38,7 @@
 
         this.$emit('endwait');
 
-        this.$emit('completesuccess');
+        this.$emit('completesuccess', response.data);
 
         if (this.reloadOnComplete) {
 

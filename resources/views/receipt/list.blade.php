@@ -5,7 +5,7 @@
 @endsection
 
 @section('content_list')
-<table class="table table-condensed">
+<table class="table table-condensed table-striped table-hover">
   <thead>
     <tr>
       <th>@lang('receipt.rc_id')</th>
@@ -23,7 +23,7 @@
     @foreach ($list as $item)
     <tr>
       <td>{{ $item->rc_id }}</td>
-      <td>{{ $item->customer->full_name }}</td>
+      <td>{{ $item->bill->bil_customer_name }}</td>
       <td>{{ showDate($item->rc_date) }}</td>
       <td>{{ $item->rc_bill }} <a v-modal href="{{ url ('bills/' . $item->rc_bill) }}"><i class="fa fa-eye"></i></a></td>
       <td>{{ $item->rc_remark }}</td>

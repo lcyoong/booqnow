@@ -35,7 +35,7 @@
 
         this.$emit('endwait');
 
-        this.$emit('completesuccess');
+        this.$emit('completesuccess', response.data);
 
         if (this.reloadOnComplete) {
           location.reload();
@@ -51,7 +51,7 @@
 
         this.$emit('endwait');
 
-        this.$emit('completeerror');        
+        this.$emit('completeerror');
       },
     },
 

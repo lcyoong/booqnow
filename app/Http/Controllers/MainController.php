@@ -20,6 +20,7 @@ class MainController extends Controller
   private $left_section_col;
   private $layout;
   private $new_path;
+  private $new_path_attr;
   private $filter;
 
   /**

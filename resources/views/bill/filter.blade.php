@@ -9,5 +9,6 @@
 </div>
 {{ Form::submit(trans('form.filter'), ['class' => 'btn btn-primary btn-sm']) }}
 <redirect-btn label="@lang('form.clear')" redirect="{{ urlTenant('bills') }}" class="btn-sm"></redirect-btn>
+<post-ajax :post-to="'{{ urlTenant(sprintf("bills/export")) }}'"><button class="btn btn-primary btn-sm">@lang('form.export')</button></post-ajax>
 <!-- <button v-post class="btn btn-primary btn-sm" postto="{{ urlTenant('bills/export') }}"><i class="fa fa-download"></i> @lang('form.export')</button> -->
 {{ Form::close() }}

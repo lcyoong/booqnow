@@ -77,7 +77,7 @@ class BookingApiController extends ApiController
   {
     $booking = (new BookingRepository)->findById($id);
 
-    return $booking->addons()->with('resource')->get();
+    return $booking->addons()->with(['resource', 'bill_item'])->get();
   }
 
 }

@@ -1,13 +1,13 @@
 @extends($layout)
 
 @prepend('content')
-<div id="receipt-new">
+@if($bill->customer)
 @include('customer.profile', ['customer' => $bill->customer])
-<hr/>
+@endif
+<div id="receipt-new">
 <h4>{{ $bill->bil_description }}</h4>
 @include('bill.basic', ['bill' => $bill])
 <hr/>
-<!-- {{ Form::open(['url' => urlTenant('receipts/new'), 'v-ajax', 'gotonext' => urlTenant(sprintf("bookings/%s", $bill->bil_booking)), 'hidecompletemessage' => true]) }} -->
 <form-ajax action = "{{ urlTenant('receipts/new') }}" method="POST" go-to-next ="{{ urlTenant(sprintf("bookings/%s", $bill->bil_booking)) }}" @startwait="startWait" @endwait="endWait">
 {{ Form::hidden('rc_bill', $bill->bil_id) }}
 <div class="row">

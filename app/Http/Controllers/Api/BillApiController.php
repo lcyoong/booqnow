@@ -32,7 +32,7 @@ class BillApiController extends ApiController
 
    public function show(Request $request, $id)
    {
-     return $this->repo_bil->with(['items', 'customer'])->findById($id);
+     return $this->repo_bil->with(['items', 'customer', 'booking'])->findById($id);
    }
 
 }

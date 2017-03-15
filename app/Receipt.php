@@ -60,7 +60,11 @@ class Receipt extends TenantModel
 
     Self::creating(function ($post) {
 
-      $post->rc_customer = Bill::find($post->rc_bill)->customer->cus_id;
+      $bill = Bill::find($post->rc_bill);
+
+      if (!empty($bill->customer)) {
+        $post->rc_customer = $bill->customer->cus_id;
+      }
 
     });
 

@@ -9,7 +9,7 @@
     <thead>
       <tr>
         <th>@lang('bill.bil_id')</th>
-        <th>@lang('bill.bil_customer')</th>
+        <th>@lang('bill.bil_customer_name')</th>
         <th>@lang('bill.bil_booking')</th>
         <th>@lang('bill.bil_date')</th>
         <th>{{ appendCurrency(trans('bill.total')) }}</th>
@@ -22,8 +22,8 @@
       @foreach ($list as $item)
         <tr>
           <td>{{ $item->bil_id }}</td>
-          <td>{{ $item->customer->full_name }}</td>
-          <td>{{ $item->bil_booking }} : {{ $item->bil_description }}</td>
+          <td>{{ $item->bil_customer_name }}</td>
+          <td>{{ $item->bil_booking or 'N/A' }} : {{ $item->bil_description }}</td>
           <td>{{ $item->bil_date }}</td>
           <td>{{ $item->total_amount }}</td>
           <td>{{ $item->outstanding }}</td>

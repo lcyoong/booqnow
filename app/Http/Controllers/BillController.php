@@ -49,6 +49,8 @@ class BillController extends MainController
 
     $this->new_path = urlTenant('bills/new');
 
+    $this->new_path_attr = "v-modal";
+
     $this->vdata(compact('list'));
 
     return view('bill.list', $this->vdata);
@@ -80,7 +82,9 @@ class BillController extends MainController
   {
     $this->page_title = trans('bill.new');
 
-    return view('bill.new', $this->vdata);
+    $this->layout = 'layouts.modal';
+
+    return view('bill.new_type', $this->vdata);
   }
 
   /**
@@ -116,9 +120,11 @@ class BillController extends MainController
 
     $items = $bill->getItems();
 
+    $indie_items = $bill->indieItems();
+
     $resource_name = array_column(array_get($this->vdata, 'resource_types')->toArray(), 'rty_name', 'rty_id');
 
-    $this->vdata(compact('bill', 'title', 'items', 'resource_name'));
+    $this->vdata(compact('bill', 'title', 'items', 'indie_items', 'resource_name'));
 
     return PDF::loadView('bill.print', $this->vdata)->stream(sprintf("bill-%s.pdf", $bill->bil_id));
   }
@@ -131,8 +137,6 @@ class BillController extends MainController
   public function export(Request $request)
   {
     $filters = new BillFilter($request->input());
-
-    dd($filters);
 
     $report = new BillExportExcel('bill');
 
@@ -162,6 +166,40 @@ class BillController extends MainController
     $this->repo->update($request->input());
 
     return $this->goodReponse();
+  }
+
+  /**
+   * Process storing of bill
+   * @param  Request $request
+   * @return Response
+   */
+  public function store(Request $request)
+  {
+    $this->repo->store($request->input());
+
+    return $this->goodReponse();
+  }
+
+  /**
+   * Process storing of walk-in bill
+   * @param  Request $request
+   * @return Response
+   */
+  public function storeWalkIn(Request $request)
+  {
+    $input = $request->input();
+
+    $walkin = [
+      'bil_accounting' => 1,
+      'bil_customer_name' => array_get($input, 'bil_customer_name'),
+      'bil_description' => trans('bill.walkin_default_description'),
+      'bil_date' => today('Y-m-d'),
+      'bil_due_date' => today('Y-m-d'),
+    ];
+
+    $result = $this->repo->store($walkin);
+
+    return $this->goodReponse(null, ['bill' => $result]);
   }
 
   /**

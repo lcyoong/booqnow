@@ -41,10 +41,12 @@ class Booking extends Migration
 
       Schema::create('addons', function (Blueprint $table) {
           $table->increments('add_id');
-          $table->integer('add_booking');
+          $table->integer('add_booking')->nullable();
           $table->integer('add_resource');
-          $table->integer('add_bill');
-          $table->integer('add_customer');
+          // $table->integer('add_bill');
+          $table->integer('add_bill_item');
+          $table->integer('add_customer')->nullable();
+          $table->string('add_customer_name')->nullable();
           $table->datetime('add_date')->nullable();
           $table->integer('add_pax')->default(0);
           $table->integer('add_unit')->default(0);

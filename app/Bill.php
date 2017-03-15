@@ -15,7 +15,7 @@ class Bill extends TenantModel
 
   protected $primaryKey = 'bil_id';
 
-  protected $fillable = ['bil_accounting', 'bil_customer', 'bil_booking', 'bil_description', 'bil_date', 'bil_due_date', 'bil_gross', 'bil_tax', 'bil_status', 'created_by'];
+  protected $fillable = ['bil_accounting', 'bil_customer', 'bil_customer_name', 'bil_booking', 'bil_description', 'bil_date', 'bil_due_date', 'bil_gross', 'bil_tax', 'bil_status', 'created_by'];
 
   protected $appends = ['total_amount', 'outstanding'];
 
@@ -126,6 +126,15 @@ class Bill extends TenantModel
   public function getItems()
   {
     return $this->items()->join('resources', 'rs_id', 'bili_resource')->orderBy('rs_type')->get();
+  }
+
+  /**
+   * Get the independent items of the bill
+   * @return Collection
+   */
+  public function indieItems()
+  {
+    return $this->items()->whereNull('bili_resource')->get();
   }
 
 }

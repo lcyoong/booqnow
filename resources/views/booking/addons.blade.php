@@ -13,28 +13,20 @@
     </ul>
 
     <div class="tab-content">
-      <div v-for = "type in types" role="tabpanel" class="tab-pane" :id="type.rty_code">
-        <table class="table table-striped table-hover" v-if = "type.rty_master == 0">
-          <thead>
-            <tr>
-              <th>@lang('addon.add_resource')</th>
-              <th>@lang('addon.add_date')</th>
-              <th>@lang('addon.add_unit')</th>
-              <th>@lang('addon.add_reference')</th>
-              <th>@lang('addon.add_status')</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for = "item in items" v-if = "item.resource.rs_type === type.rty_id">
-              <td>@{{ item.resource.rs_name }}</td>
-              <td>{{ Form::datepicker('add_date', trans('addon.add_date'), null, ['v-model' => 'item.add_date']) }}</td>
-              <td>{{ Form::number('add_unit', null, ['v-model' => 'item.add_unit', 'class' => 'form-control', 'min' => 1, 'max' => 20]) }}</td>
-              <td>{{ Form::text('add_reference', null, ['v-model' => 'item.add_reference', 'class' => 'form-control']) }}</td>
-              <td>{{ Form::selectBasic('add_status', trans('addon.add_status'), $add_status, null, ['v-model' => 'item.add_status', 'class' => 'form-control']) }}</td>
-              <td><itemized :item = "item" class="form-control btn btn-primary" action="{{ urlTenant('addons/update') }}" @completesuccess="doneUpdate">Save</itemized></td>
-            </tr>
-          </tbody>
-        </table>
+      <div v-for = "type in types" role="tabpanel" class="tab-pane" :id="type.rty_code" v-if="type.rty_master == 0">
+      <ul class="list-group">
+        <li class="list-group-item" v-for="item in items" v-if="item.resource.rs_type === type.rty_id">
+          <div class="row">
+            <div class="col-md-2">@{{ item.resource.rs_name }}</div>
+            <div class="col-md-2">{{ Form::datepicker('add_date', trans('addon.add_date'), null, ['v-model' => 'item.add_date']) }}</div>
+            <div class="col-md-1">{{ Form::number('add_unit', null, ['v-model' => 'item.add_unit', 'class' => 'form-control', 'min' => 1, 'max' => 20]) }}</div>
+            <div class="col-md-2">{{ Form::text('add_reference', null, ['v-model' => 'item.add_reference', 'class' => 'form-control', 'placeholder' => trans('addon.add_reference')]) }}</div>
+            <div class="col-md-2">{{ Form::selectBasic('add_status', trans('addon.add_status'), $add_status, null, ['v-model' => 'item.add_status', 'class' => 'form-control']) }}</div>
+            <div class="col-md-1"><itemized :item = "item" class="form-control btn btn-primary" action="{{ urlTenant('addons/update') }}" @completesuccess="doneUpdate">Save</itemized></div>
+          </div>
+          Billed: @{{ item.bill_item.bili_unit_price }} x @{{ item.bill_item.bili_unit }} unit(s) = @{{ item.bill_item.bili_gross }}
+        </li>
+      </ul>
       </div>
     </div>
   </div>

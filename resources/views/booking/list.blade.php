@@ -31,8 +31,8 @@
     <!-- <td>{{ $item->book_tracking }}</td> -->
     <td><i class="fa fa-circle status-{{ $item->book_status }}"></i> {{ $book_status[$item->book_status] }}</td>
     <td>
-      <a href="{{ url(sprintf('bookings/%s/edit', $item->book_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>
       <a v-modal href="{{ url(sprintf('bookings/%s', $item->book_id)) }}" title="@lang('form.view')"><i class="fa fa-eye"></i></a>
+      <a href="{{ url(sprintf('bookings/%s/edit', $item->book_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>
       <a href="{{ url(sprintf('bookings/%s/addons', $item->book_id)) }}" title="@lang('form.view')"><i class="fa fa-plus"></i></a>
       <a v-modal href="{{ url(sprintf('trail/bookings/%s', $item->book_id)) }}"><i class="fa fa-history"></i></a>
       <a v-modal href="{{ url(sprintf('comments/bookings/%s', $item->book_id)) }}" title="@lang('form.comments')"><i class="fa fa-comment-o"></i></a>

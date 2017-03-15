@@ -14,7 +14,7 @@ class Addon extends TenantModel
 
   protected $primaryKey = 'add_id';
 
-  protected $fillable = ['add_booking', 'add_bill', 'add_resource', 'add_customer', 'add_date', 'add_status', 'add_reference', 'add_tracking', 'add_pax', 'add_unit', 'created_by'];
+  protected $fillable = ['add_booking', 'add_bill_item', 'add_resource', 'add_customer', 'add_customer_name', 'add_date', 'add_status', 'add_reference', 'add_tracking', 'add_pax', 'add_unit', 'created_by'];
 
   /**
    * Mutator to set the addon date
@@ -56,6 +56,14 @@ class Addon extends TenantModel
   public function customer()
   {
     return $this->belongsTo(Customer::class, 'add_customer');
+  }
+
+  /**
+   * Get bill item of the addon
+   */
+  public function bill_item()
+  {
+    return $this->belongsTo(BillItem::class, 'add_bill_item');
   }
 
 }

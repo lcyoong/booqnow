@@ -75,8 +75,6 @@ class BookingController extends MainController
 
     $input = $request->input();
 
-    $resource_id = array_get($input, 'resource');
-
     $slot = $this->selectedSlot($input);
 
     // $resource = array_get($slot, 'resource');
@@ -87,6 +85,7 @@ class BookingController extends MainController
     // {
     //   $days = datesOverlap($rate->season->sea_from, $rate->season->sea_to, $slot['start'], $slot['end']);
     // }
+    $resource_id = array_get($slot, 'resource_id');
 
     $start = array_get($slot, 'start');
 
@@ -186,6 +185,9 @@ class BookingController extends MainController
     // if (array_get($input, 'resource')) {
     //   session(['booking.resource' => (new ResourceRepository)->findById(array_get($input, 'resource'))]);
     // }
+    if (array_get($input, 'resource')) {
+      session(['booking.resource' => array_get($input, 'resource')]);
+    }
 
     if (array_get($input, 'start')) {
       session(['booking.start' => array_get($input, 'start')]);
@@ -198,6 +200,7 @@ class BookingController extends MainController
     // $slot['resource'] =  session('booking.resource');
     $slot['start'] =  session('booking.start');
     $slot['end'] =  session('booking.end');
+    $slot['resource_id'] =  session('booking.resource');
 
     return $slot;
   }
@@ -264,6 +267,7 @@ class BookingController extends MainController
 
       $new_bill = (new BillRepository)->store([
         'bil_customer' => array_get($input, 'book_customer'),
+        'bil_customer_name' => array_get($input, 'bil_customer_name'),
         'bil_booking' => $new_booking->book_id,
         'bil_accounting' => $accounting->acc_id,
         'bil_description' => $accounting->acc_bill_description,

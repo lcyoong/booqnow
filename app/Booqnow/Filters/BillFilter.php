@@ -13,9 +13,10 @@ class BillFilter extends QueryFilter
   {
     if (!empty($value)) {
 
-      $this->joins[] = 'joinCustomers';
-
-      return $this->builder->whereRaw("concat(cus_first_name, ' ', cus_last_name) like '%$value%'");
+      // $this->joins[] = 'joinCustomers';
+      //
+      // return $this->builder->whereRaw("concat(cus_first_name, ' ', cus_last_name) like '%$value%'");
+      return $this->builder->where('bil_customer_name', 'like', "%$value%");
     }
   }
 

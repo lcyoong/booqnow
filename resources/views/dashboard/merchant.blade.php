@@ -49,8 +49,8 @@
     @foreach($tours as $tour)
       <li class="list-group-item">
         <div class="row">
-          <div class="col-md-4">{{ $tour->customer->full_name }}
-            <div><span class="label label-info">{{ $tour->booking->resource->rs_name }}</span></div>
+          <div class="col-md-4">{{ $tour->add_customer_name }}
+            <div><span class="label label-info">{{ $tour->booking->resource->rs_name or '' }}</span></div>
           </div>
           <div class="col-md-4">{{ $tour->resource->rs_name }}</div>
           <div class="col-md-2">{{ $tour->add_pax }} @lang('addon.add_pax')</div>

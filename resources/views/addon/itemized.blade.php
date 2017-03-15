@@ -28,4 +28,4 @@
 @else
 <div class="v_margin_10"><span class="label label-danger">@lang('form.no_itinerary')</span></div>
 @endif
-<a href="{{ urlTenant(sprintf("bookings/%s/addons/%s/" . ($type->rty_pos ? 'pos' : 'new'), $booking->book_id, $type->rty_id)) }}" v-modal><button class="btn btn-primary btn-sm"><i class="fa {{ config('myapp.icon-' . $type->rty_code) }}"></i> @lang('form.add_itinerary', ['name' => $type->rty_name])</button></a>
+<a href="{{ urlTenant(sprintf("addons/%s/new/booking/%s/" . ($type->rty_pos ? '1' : ''), $type->rty_id, $booking->book_id)) }}" v-modal><button class="btn btn-primary btn-sm"><i class="fa {{ config('myapp.icon-' . $type->rty_code) }}"></i> @lang('form.add_itinerary', ['name' => $type->rty_name])</button></a>

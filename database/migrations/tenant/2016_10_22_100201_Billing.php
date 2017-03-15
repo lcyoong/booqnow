@@ -24,8 +24,9 @@ class Billing extends Migration
       Schema::create('bills', function (Blueprint $table) {
           $table->increments('bil_id');
           $table->integer('bil_accounting')->default(1);
-          $table->integer('bil_customer');
-          $table->integer('bil_booking');
+          $table->integer('bil_customer')->nullable();
+          $table->string('bil_customer_name');
+          $table->integer('bil_booking')->nullable();
           $table->string('bil_description')->nullable();
           $table->date('bil_date');
           $table->date('bil_due_date');
@@ -55,7 +56,7 @@ class Billing extends Migration
 
       Schema::create('receipts', function (Blueprint $table) {
           $table->increments('rc_id');
-          $table->integer('rc_customer');
+          $table->integer('rc_customer')->nullable();
           $table->integer('rc_bill');
           $table->date('rc_date');
           $table->decimal('rc_amount', 15, 2)->default(0);

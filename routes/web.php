@@ -123,6 +123,10 @@ function tenantRoutes()
 
   Route::get('bookings/{booking}/addons/{resource_type}/new', 'AddonController@create');
   Route::get('bookings/{booking}/addons/{resource_type}/pos', 'AddonController@createPos');
+
+  Route::get('addons/{resource_type}/new/booking/{booking}/{pos?}', 'AddonController@createForBooking');
+  Route::get('addons/{resource_type}/new/bill/{bill}/{pos?}', 'AddonController@createForBill');
+
   Route::get('addons/pop/{booking}', 'AddonController@pop');
   Route::post('addons/new', 'AddonController@store');
   Route::post('addons/new/list', 'AddonController@storeList');
@@ -134,6 +138,8 @@ function tenantRoutes()
   Route::get('bills/{bill}', 'BillController@view');
   Route::get('bills/{bill}/edit', 'BillController@edit');
   Route::get('bills/{bill}/print', 'BillController@download');
+  Route::get('bills/{bill}/addons/{resource_type}/new', 'AddonController@addToBill');
+  Route::post('bills/new/walkin', 'BillController@storeWalkIn');
   Route::post('bills/new', 'BillController@store');
   Route::post('bills/export', 'BillController@export');
   Route::post('bills/update', 'BillController@update');

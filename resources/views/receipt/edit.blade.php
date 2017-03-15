@@ -8,12 +8,12 @@
   <div class="row">
     {{ Form::bsDate('rc_date', trans('receipt.rc_date'), $receipt->rc_date) }}
     {{ Form::bsText('rc_amount', trans('receipt.rc_amount'), $receipt->rc_amount) }}
-    {{ Form::bsText('rc_remark', trans('receipt.rc_remark'), $receipt->rc_remark) }}
-    {{ Form::bsText('rc_reference', trans('receipt.rc_reference'), $receipt->rc_reference) }}
-  </div>
-  <div class="row">
     {{ Form::bsSelect('rc_method', trans('receipt.rc_method'), $pay_methods, $receipt->rc_method, ['class' => 'select2', 'style' => 'width:100%']) }}
     {{ Form::bsSelect('rc_status', trans('receipt.rc_status'), $rs_status, $receipt->rc_status, ['style' => 'width:100%']) }}
+  </div>
+  <div class="row">
+    {{ Form::bsText('rc_reference', trans('receipt.rc_reference'), $receipt->rc_reference) }}
+    {{ Form::bsTextarea('rc_remark', trans('receipt.rc_remark'), $receipt->rc_remark, ['rows' => 4]) }}
   </div>
   {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
   <!-- <a href="{{ url('receipts') }}">{{ Form::button(trans('form.cancel'), ['class' => 'btn btn-primary btn-sm']) }}</a> -->

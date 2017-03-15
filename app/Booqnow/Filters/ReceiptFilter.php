@@ -13,9 +13,9 @@ class ReceiptFilter extends QueryFilter
   {
     if (!empty($value)) {
 
-      $this->joins[] = 'joinCustomers';
+      $this->joins[] = 'joinBills';
 
-      return $this->builder->whereRaw("concat(cus_first_name, ' ', cus_last_name) like '%$value%'");
+      return $this->builder->where("bil_customer_name", "like", "%$value%");
     }
   }
 
@@ -91,6 +91,15 @@ class ReceiptFilter extends QueryFilter
   public function joinCustomers()
   {
     $this->builder->join('customers', 'cus_id', 'rc_customer');
+  }
+
+  /**
+   * Join customers to query
+   * @return Builder
+   */
+  public function joinBills()
+  {
+    $this->builder->join('bills', 'bil_id', 'rc_bill');
   }
 
 }
