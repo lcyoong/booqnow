@@ -5,18 +5,23 @@
 @endsection
 
 @section('content_list')
-<thead>
-  <tr>
-    <th>@lang('resource_type.rty_name')</th>
-    <th>@lang('resource_type.rty_price')</th>
-    <th>@lang('form.actions')</th>
-  </tr>
-</thead>
-<tbody>
-</tbody>
+@include('report.list', ['list' => $list])
 @endsection
 
+@prepend('content')
+<div id="pnl-new">
+@include('layouts.list', ['count' => $list->total()])
+{{ $list->appends(Request::input())->links() }}
+</div>
+@endprepend
 
-@push('content')
-@include('layouts.list')
-@endpush
+@prepend('scripts')
+<script>
+new Vue ({
+
+  el: "#pnl-new",
+
+  mixins: [mixForm, mixResponse],
+})
+</script>
+@endprepend

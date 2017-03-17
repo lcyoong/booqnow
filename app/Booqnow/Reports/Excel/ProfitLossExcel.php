@@ -14,12 +14,23 @@ class ProfitLossExcel extends ExcelReport
 {
   protected $year;
 
+  public $filter;
+
+  public function __construct($reportname)
+  {
+    parent::__construct($reportname);
+  }
+
   /**
    * Handle report generation
    * @return void
    */
   public function handle()
   {
+    extract(unserialize($this->filter));
+
+    $this->year = $year;
+
     Excel::create($this->reportname, function($excel) {
 
       $excel->sheet('Sheet1', function($sheet) {
@@ -42,8 +53,6 @@ class ProfitLossExcel extends ExcelReport
 
   		});
 		})->store($this->ext);
-
-    event(new ReportCreated($this));
   }
 
   /**

@@ -50,11 +50,11 @@ return [
 
         'sqs' => [
             'driver' => 'sqs',
-            'key' => 'your-public-key',
-            'secret' => 'your-secret-key',
-            'prefix' => 'https://sqs.us-east-1.amazonaws.com/your-account-id',
-            'queue' => 'your-queue-name',
-            'region' => 'us-east-1',
+            'key' => 'AKIAJXV4MCWIN5NTZE2A',
+            'secret' => 'gbvnD7VVDpwef6wgtZK9RhKHrTuZyhjg7guBedtp',
+            'prefix' => 'https://sqs.ap-southeast-1.amazonaws.com/994506801273',
+            'queue' => 'booqnow',
+            'region' => 'ap-southeast-1',
         ],
 
         'redis' => [

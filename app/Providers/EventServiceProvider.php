@@ -18,14 +18,26 @@ class EventServiceProvider extends ServiceProvider
           'App\Listeners\AddDefaultOwner',
           'App\Listeners\CreateAndMigrateDatabase',
         ],
-        'App\Events\ReportCreated' => [
-          'App\Listeners\LogReport',
-        ],
+        // 'App\Events\ReportCreated' => [
+        //   'App\Listeners\LogReport',
+        // ],
         'App\Events\ModelCreated' => [
           'App\Listeners\AuditLogCreated',
         ],
         'App\Events\ModelUpdated' => [
           'App\Listeners\AuditLogUpdated',
+        ],
+        // 'App\Events\ReportRequested' => [
+        //   'App\Listeners\QueueReport',
+        // ],
+        'App\Events\ReportCompleted' => [
+          'App\Listeners\UpdateReportCompleted',
+          // 'App\Listeners\LogReport',
+          // 'App\Listeners\SendNotification',
+        ],
+        'App\Events\ReportFailed' => [
+          'App\Listeners\UpdateReportRetry',
+          // 'App\Listeners\SendNotification',
         ],
     ];
 

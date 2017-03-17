@@ -28,8 +28,6 @@ class BillController extends MainController
     $this->repo = $repo;
 
     $this->tenant = true;
-
-    $this->layout = 'layouts.tenant';
   }
 
   /**

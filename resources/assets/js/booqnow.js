@@ -5,6 +5,12 @@ $(function() {
     format: 'dd-mm-yyyy',
   });
 
+  $('.yearpicker').datepicker({
+    format: "yyyy",
+    viewMode: "years",
+    minViewMode: "years"
+  });
+
 });
 
 

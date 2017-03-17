@@ -48,4 +48,8 @@ trait ReportTrait
     return sprintf('reports/%s.%s', $this->reportname, $this->ext);
   }
 
+  public function getReportname()
+  {
+    return $this->reportname . '.' . $this->ext;
+  }
 }
