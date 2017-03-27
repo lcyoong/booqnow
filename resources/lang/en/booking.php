@@ -22,6 +22,7 @@ return [
   'book_tracking' => 'Tracking no',
   'book_reference' => 'Reference no',
   'book_remarks' => 'Remarks',
+  'book_special' => 'Special?',
   'pick_customer' => 'Pick the customer',
   'pick_customer_desc' => 'Search by name OR register a new customer',
   'fill_booking' => 'Fill booking',

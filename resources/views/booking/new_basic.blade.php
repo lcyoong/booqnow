@@ -3,7 +3,7 @@
 @prepend('content')
 <div id="booking-new-basic">
 <h3><i class="fa fa-bed"></i> @{{ resource.rs_name }} <u>{{ showDate($start) }}</u> @lang('form.to') <u>{{ showDate($end) }}</u> <span class="label label-info">{{ dayDiff($start, $end) }} @lang('booking.nights')</span></h3>
-<form-ajax action = "{{ urlTenant('bookings/new') }}" method="POST" reload-on-complete = true @startwait="startWait" @endwait="endWait">
+<form-ajax action = "{{ urlTenant('bookings/new') }}" method="POST" reload-on-complete=true @startwait="startWait" @endwait="endWait">
   {{ Form::hidden('book_from', $start) }}
   {{ Form::hidden('book_to', $end) }}
   {{ Form::hidden('book_resource', '', ['v-model' => 'resource.rs_id']) }}
@@ -47,6 +47,17 @@
       {{ Form::bsText('book_reference', trans('booking.book_reference')) }}
       {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), null, ['rows' => 4]) }}
       <!-- {{ Form::bsText('book_tracking', trans('booking.book_tracking')) }} -->
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="book_special" class="control-label">@lang('booking.book_special')</label>
+          <div>
+            <!-- <bootstrap-toggler name="bili_active" data-size="normal"/> -->
+            {{ Form::checkbox('book_special', 1, false, ['class' => 'toggleIt']) }}
+          </div>
+        </div>
+      </div>
     </div>
     <table class="table">
       <thead>
@@ -136,6 +147,9 @@ new Vue({
               });
           this.section2 = true
           this.section1 = false
+          $(function() {
+            $('.toggleIt').bootstrapToggle()
+          })
         },
 
         selectCustomer: function () {

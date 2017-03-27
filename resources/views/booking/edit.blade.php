@@ -29,6 +29,15 @@
     <div class="row">
       {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), $booking->book_remarks, ['rows' => 4]) }}
       {{ Form::bsSelect('book_status', trans('booking.book_status'), $book_status, $booking->book_status, ['style' => 'width:100%', 'vmodel' => 'booking.book_status']) }}
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="book_special" class="control-label">@lang('booking.book_special')</label>
+          <div>
+            {{ Form::hidden('book_special', 0) }}
+            {{ Form::checkbox('book_special', 1, $booking->book_special ? true : false, ['data-toggle' => 'toggle']) }}
+          </div>
+        </div>
+      </div>
     </div>
     {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
     <a href="{{ url('bookings') }}">{{ Form::button(trans('form.cancel'), ['class' => 'btn btn-primary btn-sm']) }}</a>
@@ -48,6 +57,7 @@ new Vue ({
   },
 
   data: {
+    book_special: Boolean({{ $booking->book_special }})
   },
 
   methods: {

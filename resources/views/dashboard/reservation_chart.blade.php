@@ -63,6 +63,9 @@ $('#calendar').fullCalendar({
     eventRender: function(event, element, view) {
       if (event.type == "booking") {
         element.find('.fc-title').append(' #' + event.id);
+        if (event.special == "1") {
+          element.find('.fc-title').prepend('<i class="fa fa-star special-color"></i> ');
+        }
         element.find('.fc-title').prepend('<i class="fa fa-circle status-' + event.status + '"></i> ');
       } else if (event.type == "maintenance") {
         element.find('.fc-title').prepend('<i class="fa fa-wrench"></i> ');

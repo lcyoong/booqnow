@@ -35,6 +35,7 @@ class Booking extends Migration
           $table->string('book_tracking')->nullable();
           $table->string('book_status')->default('active');
           $table->text('book_remarks')->nullable();
+          $table->boolean('book_special')->default(0);
           $table->integer('created_by');
           $table->timestamps();
       });

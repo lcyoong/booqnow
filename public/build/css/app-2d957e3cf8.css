@@ -5833,6 +5833,9 @@ body {
 [v-cloak] {
   display: none; }
 
+.special-color {
+  color: #FFCC00; }
+
 /*# sourceMappingURL=app.css.map */
 
 /*!

@@ -16,7 +16,7 @@ class Booking extends TenantModel
 
   protected $primaryKey = 'book_id';
 
-  protected $fillable = ['book_resource', 'book_customer', 'book_from', 'book_to', 'book_status', 'book_checkin', 'book_checkout', 'book_reference', 'book_tracking', 'book_pax', 'book_source', 'book_remarks', 'created_by'];
+  protected $fillable = ['book_resource', 'book_customer', 'book_from', 'book_to', 'book_status', 'book_checkin', 'book_checkout', 'book_reference', 'book_tracking', 'book_pax', 'book_source', 'book_remarks', 'book_special', 'created_by'];
 
   /**
    * Get the customer of the booking

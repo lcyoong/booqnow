@@ -44,6 +44,7 @@ class BookingApiController extends ApiController
         'start' => $item->book_from,
         'end' => $item->book_to,
         'resourceId' => $item->book_resource,
+        'special' => $item->book_special,
         'status' => $item->book_status,
         'backgroundColor' => config('myapp.bg-source-' . $item->book_source),
         'textColor' => '#999999',

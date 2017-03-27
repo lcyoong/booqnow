@@ -3,7 +3,7 @@
     <a data-toggle="collapse" data-parent="#accordionx" href="#collapse-book{{ $booking->book_id }}">
     <div class="row">
       <div class="col-md-3">
-        <i class="fa fa-bed"></i> {{ $booking->resource->rs_name }}
+        <i class="fa fa-bed"></i> {{ $booking->resource->rs_name }} @if($booking->book_special) <i class="fa fa-star special-color"></i> @endif
       </div>
       <div class="col-md-3">
         {{ showDate($booking->book_from) }} - {{ showDate($booking->book_to) }}
