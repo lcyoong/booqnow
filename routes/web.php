@@ -153,6 +153,7 @@ function tenantRoutes()
   Route::post('receipts/update', 'ReceiptController@update');
 
   Route::get('reports/profitloss', 'ReportController@profitLoss');
+  Route::get('reports/monthly_occupancy', 'ReportController@monthlyOccupancy');
   Route::get('reports/download/{report}', 'ReportController@download');
   Route::post('reports/request', 'ReportController@request');
   // Route::post('reports/profitloss', 'ReportController@profitLoss');

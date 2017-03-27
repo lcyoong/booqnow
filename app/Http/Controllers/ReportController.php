@@ -37,25 +37,15 @@ class ReportController extends MainController
     return view('report.pnl', $this->vdata);
   }
 
-  /**
-   * Generate Profit Loss report
-   * @param  Request $request
-   * @return Response
-   */
-  public function profitLossx(Request $request)
+  public function monthlyOccupancy(Request $request)
   {
-    $report = new ProfitLossExcel('pnl');
+    $this->page_title = trans('report.monthly_occupancy_title');
 
-    $report->setYear($request->input('year'));
+    $list = $this->repo->ofType('MonthlyOccupancy')->getPages();
 
-    $report->handle();
+    $this->vdata(compact('list'));
 
-    return $this->goodReponse();
-  }
-
-  public function occupancy(Occupancy $report, Request $request)
-  {
-    $report->handle($request);
+    return view('report.monthly_occupancy', $this->vdata);
   }
 
   public function request(Request $request)
