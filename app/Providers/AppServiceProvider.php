@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Blade;
 use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,6 +33,25 @@ class AppServiceProvider extends ServiceProvider
 
           // query the table with all the conditions
           $result = \DB::table( $table )->select( \DB::raw( 1 ) )->where( $fields )->first();
+
+          return empty( $result ); // edited here
+      });
+
+      Validator::extend( 'unique_but_self', function ( $attribute, $value, $parameters, $validator ) {
+
+          // remove first parameter and assume it is the table name
+          $table = array_shift( $parameters );
+
+          $unique_field = array_shift( $parameters );
+
+          $unique_value = !is_null($unique_field) ? array_get($validator->getData(), $unique_field, '') : '';
+
+          $self_field = array_shift( $parameters );
+
+          $self_id = !is_null($self_field) ? array_get($validator->getData(), $self_field, 0) : 0;
+
+          // query the table with all the conditions
+          $result = \DB::table( $table )->select( \DB::raw( 1 ) )->where($unique_field, '=', $unique_value)->where($self_field, '!=', $self_id)->first();
 
           return empty( $result ); // edited here
       });
@@ -87,6 +107,14 @@ class AppServiceProvider extends ServiceProvider
 
       });
 
+      Blade::directive('permitted', function ($expression) {
+          return "<?php if (Auth::user()->can($expression) || Auth::user()->hasRole('super_admin')): ?>";
+      });
+
+
+      Blade::directive('endpermitted', function ($expression) {
+          return "<?php endif; ?>";
+      });
 
       Relation::morphMap([
         'customers' => 'App\Customer',

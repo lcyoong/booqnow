@@ -41,6 +41,9 @@ Route::group(['prefix' => '/v1'], function () {
   Route::get('/bookings/active', 'Api\BookingApiController@active');
   Route::get('/bookings/{id}/addons', 'Api\BookingApiController@addons');
 
+  Route::get('/actives_permissions', 'Api\PermissionApiController@active');
+  Route::get('/role/{id}/permissions', 'Api\RoleApiController@permissions');
+
   Route::group(['prefix' => '/bills'], function () {
     Route::get('/{id}', 'Api\BillApiController@show');
     Route::get('/', 'Api\BillApiController@get');

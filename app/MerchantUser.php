@@ -21,4 +21,9 @@ class MerchantUser extends BaseModel
     return $this->belongsTo('App\User', 'mus_user');
   }
 
+  // public function role()
+  // {
+  //   return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
+  // }
+
 }

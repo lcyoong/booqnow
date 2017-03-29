@@ -86,6 +86,7 @@ return [
     "composite_unique" => "The :attribute must be unique.",
     "overlap_booking" => "This overlaps an existing booking.",
     "overlap_maintenance" => "This overlaps a room maintenance.",
+    "unique_but_self" => "This :attribute must be unique.",
 
 
     /*

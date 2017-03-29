@@ -66,95 +66,129 @@ function tenantRoutes()
   Route::get('', 'DashboardController@frontDesk');
   Route::get('dashboard', 'DashboardController@merchant');
 
-  Route::get('resource_types', 'ResourceTypeController@index');
-  Route::get('resource_types/new', 'ResourceTypeController@create');
-  Route::post('resource_types/new', 'ResourceTypeController@store');
-  Route::get('resource_types/{resource_type}/edit', 'ResourceTypeController@edit');
-  Route::post('resource_types/update', 'ResourceTypeController@update');
+  Route::group(['middleware' => ['role:super_admin'], 'prefix' => '/resource_types'], function () {
+    Route::get('/', 'ResourceTypeController@index');
+    Route::get('/new', 'ResourceTypeController@create');
+    Route::post('/new', 'ResourceTypeController@store');
+    Route::get('/{resource_type}/edit', 'ResourceTypeController@edit');
+    Route::post('/update', 'ResourceTypeController@update');
+  });
 
-  // Route::get('resources', 'ResourceController@index');
-  // Route::get('resources/new', 'ResourceController@create');
-  // Route::post('resources/new', 'ResourceController@store');
-  // Route::get('resources/{resource}/edit', 'ResourceController@edit');
-  // Route::post('resources/update', 'ResourceController@update');
+  Route::group(['middleware' => ['permitted:resource'], 'prefix' => '/resources'], function () {
+    Route::get('/{resource_type}', 'ResourceController@index');
+    Route::get('/{resource_type}/new', 'ResourceController@create');
+    Route::get('/{resource}/edit', 'ResourceController@edit');
+    Route::get('/{resource}/maintenance', 'ResourceMaintenanceController@create');
+    Route::get('/{resource}/pricing', 'ResourcePricingController@index');
 
-  Route::get('resources/{resource_type}', 'ResourceController@index');
-  Route::get('resources/{resource_type}/new', 'ResourceController@create');
-  Route::post('resources/new', 'ResourceController@store');
-  Route::get('resources/{resource}/edit', 'ResourceController@edit');
-  Route::post('resources/update', 'ResourceController@update');
-  Route::get('resources/{resource}/maintenance', 'ResourceMaintenanceController@create');
-  Route::post('resources/maintenance', 'ResourceMaintenanceController@store');
-  Route::post('resources/{resource}/maintenance/{resource_maintenance}/delete', 'ResourceMaintenanceController@delete');
-  Route::get('resources/{resource}/pricing', 'ResourcePricingController@index');
-  Route::post('resources/pricing', 'ResourcePricingController@store');
-  Route::post('resources/pricing/{resource_pricing}/delete', 'ResourcePricingController@delete');
+    Route::post('/new', 'ResourceController@store');
+    Route::post('/update', 'ResourceController@update');
+    Route::post('/maintenance', 'ResourceMaintenanceController@store');
+    Route::post('/{resource}/maintenance/{resource_maintenance}/delete', 'ResourceMaintenanceController@delete');
+    Route::post('/pricing', 'ResourcePricingController@store');
+    Route::post('/pricing/{resource_pricing}/delete', 'ResourcePricingController@delete');
+  });
 
-  Route::get('comments/{type}/{id}/', 'CommentController@get');
-  Route::post('comments', 'CommentController@store');
 
-  Route::get('customers', 'CustomerController@index');
-  Route::get('customers/new', 'CustomerController@create');
-  Route::post('customers/new', 'CustomerController@store');
-  Route::get('customers/{customer}/edit', 'CustomerController@edit');
-  Route::post('customers/update', 'CustomerController@update');
-  Route::get('customers/new_quick', 'CustomerController@pick');
+  Route::group(['middleware' => ['permitted:customer'], 'prefix' => '/customers'], function () {
+    Route::get('/', 'CustomerController@index');
+    Route::get('/new', 'CustomerController@create');
+    Route::post('/new', 'CustomerController@store');
+    Route::get('/{customer}/edit', 'CustomerController@edit');
+    Route::post('/update', 'CustomerController@update');
+    Route::get('/new_quick', 'CustomerController@pick');
+  });
 
   // Route::get('customers/{customer}/comments', 'CustomerController@comments');
   // Route::post('comments/customer/{id}', 'CustomerController@storeComment');
 
-  Route::get('bookings', 'BookingController@index');
-  // Route::get('bookings/{booking}/trail', 'BookingController@auditTrail');
-  Route::get('bookings/new/{customer?}', 'BookingController@create');
-  // Route::get('bookings/{booking}/view', 'BookingController@view');
-  Route::get('bookings/{booking}', 'BookingController@action');
-  Route::get('bookings/{booking}/edit', 'BookingController@edit');
-  Route::get('bookings/{booking}/addons', 'BookingController@addons');
-  // Route::get('bookings/{booking}/bills', 'BookingController@bills');
-  Route::post('bookings/new', 'BookingController@store');
-  Route::post('bookings/update', 'BookingController@update');
-  Route::post('bookings/checkin/{booking}', 'BookingController@checkin');
-  Route::post('bookings/checkout/{booking}', 'BookingController@checkout');
+
+  Route::group(['middleware' => ['permitted:booking'], 'prefix' => '/bookings'], function () {
+    Route::get('/', 'BookingController@index');
+    Route::get('/new/{customer?}', 'BookingController@create');
+    Route::get('/{booking}', 'BookingController@action');
+    Route::get('/{booking}/edit', 'BookingController@edit');
+    Route::get('/{booking}/addons', 'BookingController@addons');
+    Route::post('/new', 'BookingController@store');
+    Route::post('/update', 'BookingController@update');
+    Route::post('/checkin/{booking}', 'BookingController@checkin');
+    Route::post('/checkout/{booking}', 'BookingController@checkout');
+  });
 
   Route::get('trail/{type}/{id}', 'AuditTrailController@get');
+  Route::get('comments/{type}/{id}/', 'CommentController@get');
+  Route::post('comments', 'CommentController@store');
+
   // Route::get('trail/bookings/{booking_repo}', 'AuditTrailController@trail');
   // Route::get('trail/bills/{bill_repo}', 'AuditTrailController@trail');
   // Route::get('trail/resources/{resource_repo}', 'AuditTrailController@trail');
 
   Route::get('bookings/{booking}/addons/{resource_type}/new', 'AddonController@create');
   Route::get('bookings/{booking}/addons/{resource_type}/pos', 'AddonController@createPos');
-
   Route::get('addons/{resource_type}/new/booking/{booking}/{pos?}', 'AddonController@createForBooking');
   Route::get('addons/{resource_type}/new/bill/{bill}/{pos?}', 'AddonController@createForBill');
-
   Route::get('addons/pop/{booking}', 'AddonController@pop');
   Route::post('addons/new', 'AddonController@store');
   Route::post('addons/new/list', 'AddonController@storeList');
   Route::post('addons/push/{booking}/{resource}', 'AddonController@push');
   Route::post('addons/update', 'AddonController@update');
 
-  Route::get('bills', 'BillController@index');
-  Route::get('bills/new', 'BillController@create');
-  Route::get('bills/{bill}', 'BillController@view');
-  Route::get('bills/{bill}/edit', 'BillController@edit');
-  Route::get('bills/{bill}/print', 'BillController@download');
-  Route::get('bills/{bill}/addons/{resource_type}/new', 'AddonController@addToBill');
-  Route::post('bills/new/walkin', 'BillController@storeWalkIn');
-  Route::post('bills/new', 'BillController@store');
-  Route::post('bills/export', 'BillController@export');
-  Route::post('bills/update', 'BillController@update');
-  Route::post('bills/item/update', 'BillController@updateItem');
-  Route::post('bills/item', 'BillController@storeItem');
+  Route::group(['middleware' => ['permitted:bill'], 'prefix' => '/bills'], function () {
+    Route::get('/', 'BillController@index');
+    Route::get('/new', 'BillController@create');
+    Route::get('/{bill}', 'BillController@view');
+    Route::get('/{bill}/edit', 'BillController@edit');
+    Route::get('/{bill}/print', 'BillController@download');
+    Route::get('/{bill}/addons/{resource_type}/new', 'AddonController@addToBill');
+    Route::post('/new/walkin', 'BillController@storeWalkIn');
+    Route::post('/new', 'BillController@store');
+    Route::post('/export', 'BillController@export');
+    Route::post('/update', 'BillController@update');
+    Route::post('/item/update', 'BillController@updateItem');
+    Route::post('/item', 'BillController@storeItem');
+  });
 
-  Route::get('receipts', 'ReceiptController@index');
-  Route::get('receipts/new/{bill}', 'ReceiptController@create');
-  Route::get('receipts/{receipt}/edit', 'ReceiptController@edit');
-  Route::post('receipts/new', 'ReceiptController@store');
-  Route::post('receipts/update', 'ReceiptController@update');
+  Route::group(['middleware' => ['permitted:payment'], 'prefix' => '/receipts'], function () {
+    Route::get('/', 'ReceiptController@index');
+    Route::get('/new/{bill}', 'ReceiptController@create');
+    Route::get('/{receipt}/edit', 'ReceiptController@edit');
+    Route::post('/new', 'ReceiptController@store');
+    Route::post('/update', 'ReceiptController@update');
+  });
 
-  Route::get('reports/profitloss', 'ReportController@profitLoss');
-  Route::get('reports/monthly_occupancy', 'ReportController@monthlyOccupancy');
-  Route::get('reports/download/{report}', 'ReportController@download');
-  Route::post('reports/request', 'ReportController@request');
-  // Route::post('reports/profitloss', 'ReportController@profitLoss');
+  Route::group(['middleware' => ['permitted:report'], 'prefix' => '/report'], function () {
+    Route::get('/profitloss', 'ReportController@profitLoss');
+    Route::get('/monthly_occupancy', 'ReportController@monthlyOccupancy');
+    Route::get('/download/{report}', 'ReportController@download');
+    Route::post('/request', 'ReportController@request');
+    // Route::post('/profitloss', 'ReportController@profitLoss');
+  });
+
+  Route::group(['middleware' => ['permitted:manage_user'], 'prefix' => '/users'], function () {
+    Route::get('/', 'Access\UserController@index');
+    Route::get('/new', 'Access\UserController@create');
+    Route::get('/{user}/edit', 'Access\UserController@edit');
+    Route::post('/new', 'Access\UserController@store');
+    Route::post('/update', 'Access\UserController@update');
+  });
+
+  Route::group(['middleware' => ['permitted:manage_role'], 'prefix' => '/roles'], function () {
+    Route::get('/', 'Access\RoleController@index');
+    Route::get('/new', 'Access\RoleController@create');
+    Route::get('/{role}/edit', 'Access\RoleController@edit');
+    Route::get('/{role_id}/permission', 'Access\RoleController@permission');
+    Route::post('/new', 'Access\RoleController@store');
+    Route::post('/update', 'Access\RoleController@update');
+    Route::post('/{role}/permissions/add/{permission}', 'Access\RoleController@addPermission');
+    Route::post('/{role}/permissions', 'Access\RoleController@syncPermission');
+  });
+
+  Route::group(['middleware' => ['permitted:manage_permission'], 'prefix' => '/permissions'], function () {
+    Route::get('/', 'Access\PermissionController@index');
+    Route::get('/new', 'Access\PermissionController@create');
+    Route::get('/{role}/edit', 'Access\PermissionController@edit');
+    Route::post('/new', 'Access\PermissionController@store');
+    Route::post('/update', 'Access\PermissionController@update');
+  });
+
 }

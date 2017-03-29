@@ -38,4 +38,5 @@ return [
   'created_at' => 'Created at',
   'created_by' => 'Created by',
   'export' => 'Export',
+  'permission' => 'Permission',
 ];

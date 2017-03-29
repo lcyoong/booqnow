@@ -11,9 +11,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li><a href="{{ urlTenant('dashboard') }}">@lang('nav.dashboard')</a></li>
+        @permitted('booking')
         <li><a href="{{ urlTenant('') }}">@lang('nav.frontdesk')</a></li>
+        @endpermitted
+        @permitted('booking')
         <li><a href="{{ urlTenant('bookings') }}">@lang('nav.appointments')</a></li>
+        @endpermitted
+        @permitted('bill')
         <li><a href="{{ urlTenant('bills') }}">@lang('nav.billing')</a></li>
+        @endpermitted
+        @permitted('report')
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.reports') <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -21,8 +28,27 @@
             <li><a href="{{ urlTenant('reports/monthly_occupancy') }}">@lang('report.monthly_occupancy_title')</a></li>
           </ul>
         </li>
+        @endpermitted
+        @permitted('payment')
         <li><a href="{{ urlTenant('receipts') }}">@lang('nav.receipts')</a></li>
+        @endpermitted
+        @permitted('customer')
         <li><a href="{{ urlTenant('customers') }}">@lang('nav.customers')</a></li>
+        @endpermitted
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.access') <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            @permitted('manage_user')
+            <li><a href="{{ urlTenant('users') }}">@lang('nav.users')</a></li>
+            @endpermitted
+            @permitted('manage_role')
+            <li><a href="{{ urlTenant('roles') }}">@lang('nav.roles')</a></li>
+            @endpermitted
+            @permitted('manage_permitted')
+            <li><a href="{{ urlTenant('permissions') }}">@lang('nav.permissions')</a></li>
+            @endpermitted
+          </ul>
+        </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.resources') <span class="caret"></span></a>
           <ul class="dropdown-menu">

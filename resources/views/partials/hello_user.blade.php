@@ -1,6 +1,6 @@
 @if(auth()->check())
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.hello', ['name' => auth()->user()->name])<span class="caret"></span></a>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.hello', ['name' => Auth::user()->name])<span class="caret"></span></a>
   <ul class="dropdown-menu">
     <li><a href="{{ urlTenant('/logout') }}">@lang('nav.logout')</a></li>
     <li><a href="/settings/account">@lang('nav.settings')</a></li>

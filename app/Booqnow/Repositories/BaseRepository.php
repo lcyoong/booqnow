@@ -18,9 +18,13 @@ class BaseRepository implements BaseRepositoryInterface
 
   protected $rules = [];
 
+  protected $rules_alt = [];
+
   protected $expectsJson = false;
 
   protected $filter;
+
+  protected $update = false;
 
   protected $withs = [];
 
@@ -165,7 +169,9 @@ class BaseRepository implements BaseRepositoryInterface
    */
   public function validate($input)
   {
-    $validator = Validator::make($input, $this->rules);
+    $this->update = array_key_exists($this->repo->getKeyName(), $input);
+
+    $validator = Validator::make($input, $this->rules());
 
     if ($validator->fails()) {
 
@@ -224,6 +230,15 @@ class BaseRepository implements BaseRepositoryInterface
     $this->withs = $values;
 
     return $this;
+  }
+
+  protected function rules()
+  {
+    if ($this->update && method_exists($this, 'alt_rules')) {
+      return call_user_func([$this, 'alt_rules']);
+    }
+
+    return $this->rules;
   }
 
 }

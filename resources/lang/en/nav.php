@@ -16,4 +16,8 @@ return [
   'setting' => 'Setting',
   'frontdesk' => 'Reservation',
   'reports' => 'Reports',
+  'access' => 'Access',
+  'users' => 'Users',
+  'roles' => 'Roles',
+  'permissions' => 'Permissions',
 ];
