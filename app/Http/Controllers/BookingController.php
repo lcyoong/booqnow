@@ -11,6 +11,7 @@ use Repositories\BillRepository;
 use Repositories\AddonRepository;
 use Repositories\CustomerRepository;
 use Repositories\BillItemRepository;
+use Repositories\AgentRepository;
 use Filters\BookingFilter;
 use GuzzleHttp\Client;
 use DB;
@@ -77,6 +78,8 @@ class BookingController extends MainController
 
     $slot = $this->selectedSlot($input);
 
+    $agents = $this->agents();
+
     // $resource = array_get($slot, 'resource');
 
     // $rates = $resource->pricing;
@@ -95,7 +98,7 @@ class BookingController extends MainController
 
     $this->page_title = trans('booking.new');
 
-    $this->vdata(compact('customer', 'start', 'end', 'cus_id', 'resource_id'));
+    $this->vdata(compact('customer', 'start', 'end', 'cus_id', 'resource_id', 'agents'));
 
     return view('booking.new_basic', $this->vdata);
   }
@@ -112,9 +115,11 @@ class BookingController extends MainController
 
     $rooms = (new ResourceRepository)->ofType(1)->getDropDown('rs_id', 'rs_name');
 
+    $agents = $this->agents();
+
     $this->page_title = trans('booking.edit', ['id' => $book_id]);
 
-    $this->vdata(compact('book_id', 'booking', 'rooms'));
+    $this->vdata(compact('book_id', 'booking', 'rooms', 'agents'));
 
     return view('booking.edit', $this->vdata);
   }
@@ -244,11 +249,11 @@ class BookingController extends MainController
   {
     $booking = $this->repo_book->findById($book_id);
 
-    // $addons = $booking->addons;
-
     $this->page_title = trans('booking.action', ['id' => $booking->book_id]);
 
-    $this->vdata(compact('booking', 'book_id'));
+    $agents = $this->agents();
+
+    $this->vdata(compact('booking', 'book_id', 'agents'));
 
     return view('booking.addons', $this->vdata);
   }
@@ -308,5 +313,14 @@ class BookingController extends MainController
         // 'bili_tax' => calcTax($gross),
       ]);
     }
+  }
+
+  /**
+   * Return agents list
+   * @return array
+   */
+  private function agents()
+  {
+    return (new AgentRepository)->getDropDown('ag_id', 'ag_name');
   }
 }

@@ -26,10 +26,14 @@
 
       <div class="row">
         {{ Form::showField(array_get($booking_sources, $booking->book_source), trans('booking.book_source')) }}
+        {{ Form::showField( isset($booking->agent) ? $booking->agent->ag_name : '', trans('booking.book_agent')) }}
         {{ Form::showField($booking->book_pax, trans('booking.book_pax')) }}
         {{ Form::showField($booking->book_reference, trans('booking.book_reference')) }}
-        {{ Form::showField($booking->book_remarks, trans('booking.book_remarks')) }}
         <!-- {{ Form::showField($booking->book_tracking, trans('booking.book_tracking')) }} -->
+      </div>
+
+      <div class="row">
+        {{ Form::showField($booking->book_remarks, trans('booking.book_remarks')) }}
       </div>
 
       <div class="row">

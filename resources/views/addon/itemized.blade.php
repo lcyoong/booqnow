@@ -7,6 +7,7 @@
       <!-- <th>@lang('addon.add_pax')</th> -->
       <th>@lang('addon.add_unit')</th>
       <th>@lang('addon.add_reference')</th>
+      <th>@lang('addon.add_agent')</th>
       <th>@lang('addon.add_status')</th>
     </tr>
   </thead>
@@ -19,6 +20,7 @@
         <!-- <td>{{ $item->add_pax }}</td> -->
         <td>{{ $item->add_unit }}</td>
         <td>{{ $item->add_reference }}</td>
+        <td>{{ isset($item->agent) ? $item->agent->ag_name : trans('form.na') }}</td>
         <td>{{ $add_status[$item->add_status] }}</td>
       </tr>
     @endif

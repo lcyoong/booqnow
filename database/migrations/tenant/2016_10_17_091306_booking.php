@@ -28,6 +28,7 @@ class Booking extends Migration
           $table->datetime('book_from');
           $table->datetime('book_to');
           $table->integer('book_source');
+          $table->integer('book_agent')->nullable();
           $table->datetime('book_checkin')->nullable();
           $table->datetime('book_checkout')->nullable();
           $table->integer('book_pax')->default(0);
@@ -46,6 +47,7 @@ class Booking extends Migration
           $table->integer('add_resource');
           // $table->integer('add_bill');
           $table->integer('add_bill_item');
+          $table->integer('add_agent')->nullable();
           $table->integer('add_customer')->nullable();
           $table->string('add_customer_name')->nullable();
           $table->datetime('add_date')->nullable();

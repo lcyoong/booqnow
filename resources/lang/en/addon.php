@@ -11,5 +11,5 @@ return [
   'add_reference' => 'Reference',
   'add_tracking' => 'Tracking no',
   'add_status' => 'Status',
-
+  'add_agent' => 'Agent',
 ];

@@ -27,7 +27,6 @@
     </div>
     <div class="row">
       {{ Form::bsText('add_reference', trans('addon.add_reference')) }}
-      {{ Form::bsSelect('add_agent', trans('addon.add_agent'), $agents, null, ['class' => 'form-control select2']) }}
       <!-- {{ Form::bsText('add_tracking', trans('addon.add_tracking')) }} -->
     </div>
     {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btm-sm', ':disabled' => 'waiting']) }}
@@ -37,6 +36,9 @@
 
 @prepend('scripts')
 <script>
+$(function() {
+  $('.select2').select2();
+
   new Vue({
     el: '#addon-new',
 
@@ -52,13 +54,6 @@
 
     created: function () {
       this.getResources()
-      $(function() {
-        $('.datepicker').datepicker({
-          format: 'dd-mm-yyyy',
-        })
-
-        $('.select2').select2()
-      })
     },
 
     methods: {
@@ -81,5 +76,11 @@
       },
     }
   });
+
+  $('.datepicker').datepicker({
+    format: 'dd-mm-yyyy',
+  });
+
+});
 </script>
 @endprepend

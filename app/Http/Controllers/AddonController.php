@@ -12,6 +12,7 @@ use Repositories\BillItemRepository;
 use Repositories\BookingRepository;
 use Repositories\BillRepository;
 use Repositories\ResourceTypeRepository;
+use Repositories\AgentRepository;
 
 class AddonController extends MainController
 {
@@ -66,6 +67,10 @@ class AddonController extends MainController
   // }
   public function create($rty_id, $pos)
   {
+    $agents = $this->agents();
+
+    $this->vdata(compact('agents'));
+
     return view($pos ? 'addon.new_pos' : 'addon.new_basic', $this->vdata);
   }
 
@@ -257,6 +262,15 @@ class AddonController extends MainController
     $this->repo->update($request->input());
 
     return $this->goodReponse('Update successful. Please reconcile your bill if needed.');
+  }
+
+  /**
+   * Return agents list
+   * @return array
+   */
+  private function agents()
+  {
+    return (new AgentRepository)->getDropDown('ag_id', 'ag_name');
   }
 
 }

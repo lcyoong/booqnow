@@ -43,12 +43,13 @@
 
     <div class="row">
       {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources) }}
+      {{ Form::bsSelect('book_agent', trans('booking.book_agent'), $agents, null, ['class' => 'form-control select2']) }}
       {{ Form::bsNumber('book_pax', trans('booking.book_pax'), 1, ['min' => 1, 'max'=>20]) }}
       {{ Form::bsText('book_reference', trans('booking.book_reference')) }}
-      {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), null, ['rows' => 4]) }}
       <!-- {{ Form::bsText('book_tracking', trans('booking.book_tracking')) }} -->
     </div>
     <div class="row">
+      {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), null, ['rows' => 3]) }}
       <div class="col-md-3">
         <div class="form-group">
           <label for="book_special" class="control-label">@lang('booking.book_special')</label>
@@ -149,6 +150,7 @@ new Vue({
           this.section1 = false
           $(function() {
             $('.toggleIt').bootstrapToggle()
+            $('.select2').select2()
           })
         },
 

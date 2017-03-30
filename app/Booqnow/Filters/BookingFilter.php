@@ -20,6 +20,21 @@ class BookingFilter extends QueryFilter
   }
 
   /**
+   * Agent name filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function agent_name($value = '')
+  {
+    if (!empty($value)) {
+
+      $this->joins[] = 'joinAgents';
+
+      return $this->builder->whereRaw("ag_name like '%$value%'");
+    }
+  }
+
+  /**
    * Customer email filter
    * @param  string $value
    * @return Builder
@@ -132,6 +147,15 @@ class BookingFilter extends QueryFilter
   public function joinCustomers()
   {
     $this->builder->join('customers', 'cus_id', 'book_customer');
+  }
+
+  /**
+   * Join angents to query
+   * @return Builder
+   */
+  public function joinAgents()
+  {
+    $this->builder->join('agents', 'ag_id', 'book_agent');
   }
 
 }

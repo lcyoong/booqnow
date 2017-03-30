@@ -29,6 +29,7 @@ class AddonRepository extends BaseRepository {
       'add_unit' => 'required|min:1|numeric',
       'add_reference' => 'max:255',
       'add_tracking' => 'max:255',
+      'add_agent' => 'sometimes|exists:agents,ag_id'
     ];
   }
 

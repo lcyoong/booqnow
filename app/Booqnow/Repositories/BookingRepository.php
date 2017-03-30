@@ -27,6 +27,7 @@ class BookingRepository extends BaseRepository
       'book_pax' => 'required|min:1|numeric',
       'book_reference' => 'max:255',
       'book_tracking' => 'max:255',
+      // 'book_agent' => 'sometimes|exists:agents,ag_id'
     ];
   }
 
