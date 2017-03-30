@@ -156,6 +156,24 @@ function tenantRoutes()
     Route::post('/update', 'ReceiptController@update');
   });
 
+  Route::group(['middleware' => ['permitted:accounting'], 'prefix' => '/expenses_category'], function () {
+    Route::get('/', 'ExpenseCategoryController@index');
+    Route::get('/new', 'ExpenseCategoryController@create');
+    Route::get('/{expense_cat}/edit', 'ExpenseCategoryController@edit');
+    Route::get('/{expense_cat}', 'ExpenseCategoryController@view');
+    Route::post('/new', 'ExpenseCategoryController@store');
+    Route::post('/update', 'ExpenseCategoryController@update');
+  });
+
+  Route::group(['middleware' => ['permitted:accounting'], 'prefix' => '/expenses'], function () {
+    Route::get('/', 'ExpenseController@index');
+    Route::get('/new', 'ExpenseController@create');
+    Route::get('/{expense}/edit', 'ExpenseController@edit');
+    Route::get('/{expense}', 'ExpenseController@view');
+    Route::post('/new', 'ExpenseController@store');
+    Route::post('/update', 'ExpenseController@update');
+  });
+
   Route::group(['middleware' => ['permitted:report'], 'prefix' => '/report'], function () {
     Route::get('/profitloss', 'ReportController@profitLoss');
     Route::get('/monthly_occupancy', 'ReportController@monthlyOccupancy');

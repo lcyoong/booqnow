@@ -20,4 +20,7 @@ return [
   'users' => 'Users',
   'roles' => 'Roles',
   'permissions' => 'Permissions',
+  'accounting' => 'Accounting',
+  'expenses' => 'Expenses',
+  'expenses_category' => 'Expenses Category',
 ];

@@ -60,7 +60,7 @@ class SingleTenantTableSeeder extends Seeder
         ['id'=>6, 'name' => 'payment', 'display_name' => 'Payments'],
         ['id'=>7, 'name' => 'customer', 'display_name' => 'Customers'],
         ['id'=>8, 'name' => 'resource', 'display_name' => 'Resources'],
-        ['id'=>9, 'name' => 'reports', 'display_name' => 'Reports'],
+        ['id'=>9, 'name' => 'report', 'display_name' => 'Reports'],
       ]);
 
       DB::table('role_user')->insert([

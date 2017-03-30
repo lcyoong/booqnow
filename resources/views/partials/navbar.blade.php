@@ -35,20 +35,15 @@
         @permitted('customer')
         <li><a href="{{ urlTenant('customers') }}">@lang('nav.customers')</a></li>
         @endpermitted
+        @permitted('accounting')
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.access') <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.accounting') <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            @permitted('manage_user')
-            <li><a href="{{ urlTenant('users') }}">@lang('nav.users')</a></li>
-            @endpermitted
-            @permitted('manage_role')
-            <li><a href="{{ urlTenant('roles') }}">@lang('nav.roles')</a></li>
-            @endpermitted
-            @permitted('manage_permitted')
-            <li><a href="{{ urlTenant('permissions') }}">@lang('nav.permissions')</a></li>
-            @endpermitted
+            <li><a href="{{ urlTenant('expenses') }}">@lang('nav.expenses')</a></li>
+            <li><a href="{{ urlTenant('expenses_category') }}">@lang('nav.expenses_category')</a></li>
           </ul>
         </li>
+        @endpermitted
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.resources') <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -58,7 +53,22 @@
             <!-- <li><a href="{{ urlTenant('resource_types') }}">@lang('nav.resource_types')</a></li> -->
           </ul>
         </li>
-        <!-- <li><a href="{{ urlTenant('invoices') }}">@lang('nav.setting')</a></li> -->
+        @permitted(['manage_user', 'manage_role', 'manage_permission'])
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.access') <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            @permitted('manage_user')
+            <li><a href="{{ urlTenant('users') }}">@lang('nav.users')</a></li>
+            @endpermitted
+            @permitted('manage_role')
+            <li><a href="{{ urlTenant('roles') }}">@lang('nav.roles')</a></li>
+            @endpermitted
+            @permitted('manage_permission')
+            <li><a href="{{ urlTenant('permissions') }}">@lang('nav.permissions')</a></li>
+            @endpermitted
+          </ul>
+        </li>
+        @endpermitted
       </ul>
     </div><!--/.nav-collapse -->
   </div>

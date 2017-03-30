@@ -123,6 +123,8 @@ class AppServiceProvider extends ServiceProvider
         'receipts' => 'App\Receipt',
         'bookings' => 'App\Booking',
         'addons' => 'App\Addon',
+        'expenses_category' => 'App\ExpenseCategory',
+        'expenses' => 'App\Expense',
       ]);
     }
 

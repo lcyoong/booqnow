@@ -12,6 +12,9 @@ class CodesTableSeeder extends Seeder
     public function run()
     {
       DB::table('codes')->insert([
+        ['cod_group' => 'account','cod_key' => 'cash', 'cod_description' => 'Cash', 'created_by' => 1],
+        ['cod_group' => 'account','cod_key' => 'bank1', 'cod_description' => 'Bank 1', 'created_by' => 1],
+        ['cod_group' => 'account','cod_key' => 'bank2', 'cod_description' => 'Bank 2', 'created_by' => 1],
         ['cod_group' => 'pay_method','cod_key' => 'cash', 'cod_description' => 'Cash', 'created_by' => 1],
         ['cod_group' => 'pay_method','cod_key' => 'tt', 'cod_description' => 'Transfer', 'created_by' => 1],
         ['cod_group' => 'pay_method','cod_key' => 'ccdc', 'cod_description' => 'Credit/Debit Card', 'created_by' => 1],
