@@ -18,7 +18,7 @@ class ExpenseRepository extends BaseRepository {
       'exp_description' => 'required',
       'exp_category' => 'required|exists:expense_categories,exc_id',
       'exp_date' => 'required|date',
-      // 'exp_account' => 'required',
+      'exp_account' => 'required',
     ];
   }
 }

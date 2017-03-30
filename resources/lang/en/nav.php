@@ -23,4 +23,5 @@ return [
   'accounting' => 'Accounting',
   'expenses' => 'Expenses',
   'expenses_category' => 'Expenses Category',
+  'agents' => 'Agents',
 ];

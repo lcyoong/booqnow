@@ -174,6 +174,15 @@ function tenantRoutes()
     Route::post('/update', 'ExpenseController@update');
   });
 
+  Route::group(['middleware' => ['permitted:resource'], 'prefix' => '/agents'], function () {
+    Route::get('/', 'AgentController@index');
+    Route::get('/new', 'AgentController@create');
+    Route::get('/{agent}/edit', 'AgentController@edit');
+    Route::post('/new', 'AgentController@store');
+    Route::post('/update', 'AgentController@update');
+  });
+
+
   Route::group(['middleware' => ['permitted:report'], 'prefix' => '/report'], function () {
     Route::get('/profitloss', 'ReportController@profitLoss');
     Route::get('/monthly_occupancy', 'ReportController@monthlyOccupancy');

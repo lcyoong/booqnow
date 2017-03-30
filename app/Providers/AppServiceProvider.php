@@ -125,6 +125,7 @@ class AppServiceProvider extends ServiceProvider
         'addons' => 'App\Addon',
         'expenses_category' => 'App\ExpenseCategory',
         'expenses' => 'App\Expense',
+        'agents' => 'App\Agent',
       ]);
     }
 
