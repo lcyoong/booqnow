@@ -16,7 +16,7 @@ class Expense extends TenantModel
 
   protected $primaryKey = 'exp_id';
 
-  protected $fillable = ['exp_name', 'exp_date', 'exp_description', 'exp_category', 'exp_account', 'exp_memo', 'exp_status', 'created_by'];
+  protected $fillable = ['exp_name', 'exp_date', 'exp_description', 'exp_category', 'exp_account', 'exp_amount', 'exp_memo', 'exp_status', 'created_by'];
 
   /**
    * Mutator to set the formatted date

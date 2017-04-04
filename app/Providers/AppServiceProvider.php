@@ -17,6 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+      // config(['app.timezone' => 'Asia/Kuala_Lumpur']);
+
       Validator::extend( 'composite_unique', function ( $attribute, $value, $parameters, $validator ) {
 
           // remove first parameter and assume it is the table name
@@ -75,7 +77,11 @@ class AppServiceProvider extends ServiceProvider
 
         $id = !is_null($parm_id) ? array_get($validator->getData(), $parm_id, 0) : 0;
 
-        $query = \DB::table( $table )->select( \DB::raw( 1 ) )->where( 'book_resource', '=', $value )->whereDate('book_to', '>', Carbon::parse($from)->format('Y-m-d'))->whereDate('book_from', '<', Carbon::parse($to)->format('Y-m-d'));
+        $query = \DB::table( $table )->select( \DB::raw( 1 ) )
+              ->where( 'book_resource', '=', $value )
+              ->where( 'book_status', '!=', 'cancelled' )
+              ->whereDate('book_to', '>', Carbon::parse($from)->format('Y-m-d'))
+              ->whereDate('book_from', '<', Carbon::parse($to)->format('Y-m-d'));
 
         if ($id > 0) {
           $query->where('book_id', '!=', $id);

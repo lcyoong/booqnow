@@ -39,20 +39,15 @@ class ProcessReport implements ShouldQueue
     {
       $this->repo->update(['rep_status' => 'inprocess']);
 
-      $report_service = $this->repo->rep_function;
+      $report_service = $this->repo->rep_class;
 
-      $report = new ProfitLossExcel('pnl');
-
-      $report->filter = $this->repo->rep_filter;
+      $report = new $report_service($this->repo);
 
       $report->handle();
 
       // $report = $this->app->bind('ExcelReport', "Reports\$report_service");
       // $report = new ("Reports\$report_service");
-      //
-      // if ($report_service->handle()) {
       event(new ReportCompleted($this->repo, $report->getReportname()));
-      // }
     }
 
     /**

@@ -25,7 +25,8 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.reports') <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="{{ urlTenant('reports/profitloss') }}">@lang('report.pnl_title')</a></li>
-            <li><a href="{{ urlTenant('reports/monthly_occupancy') }}">@lang('report.monthly_occupancy_title')</a></li>
+            <li><a href="{{ urlTenant('reports/occupancy_by_room') }}">@lang('report.monthly_occupancy_title')</a></li>
+            <li><a href="{{ urlTenant('reports/occupancy_by_day') }}">@lang('report.daily_occupancy_title')</a></li>
           </ul>
         </li>
         @endpermitted

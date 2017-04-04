@@ -11,6 +11,7 @@
         <th>@lang('expense.exp_id')</th>
         <th>@lang('expense.exp_date')</th>
         <th>@lang('expense.exp_description')</th>
+        <th>@lang('expense.exp_amount')</th>
         <th>@lang('expense.exp_category')</th>
         <th>@lang('expense.exp_memo')</th>
         <th>@lang('expense.exp_account')</th>
@@ -24,6 +25,7 @@
           <td>{{ $item->exp_id }}</td>
           <td>{{ $item->exp_date }}</td>
           <td>{{ $item->exp_description }}</td>
+          <td>{{ $item->exp_amount }}</td>
           <td>{{ $item->exp_category }} - {{ $category[$item->exp_category] }}</td>
           <td>{{ $item->exp_memo }}</td>
           <td>{{ array_get($account, $item->exp_account, '') }}</td>

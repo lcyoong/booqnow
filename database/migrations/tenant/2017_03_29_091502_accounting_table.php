@@ -28,6 +28,7 @@ class AccountingTable extends Migration
           $table->integer('exp_category');
           $table->string('exp_account');
           $table->text('exp_memo');
+          $table->decimal('exp_amount', 15, 2)->default(0);
           $table->string('exp_status')->default('active');
           $table->integer('created_by');
           $table->timestamps();

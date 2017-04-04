@@ -28,8 +28,6 @@ abstract class ExcelReport implements ReportInterface
 
   abstract protected function header();
 
-  abstract protected function footer();
-
   /**
    * Rename the report
    * @return void
@@ -50,5 +48,31 @@ abstract class ExcelReport implements ReportInterface
     $this->sheet->row($this->row, $content);
 
     $this->row ++;
+  }
+
+  /**
+   * Report footer
+   * @return void
+   */
+  protected function footer()
+  {
+    $this->fillRow([session('merchant')->mer_name], 1);
+
+    $this->fillRow(['Generated: ' . date('d-m-Y H:i:s')]);
+
+    $this->fillRow(['**End of report**']);
+  }
+
+  /**
+   * Report sheet setting
+   * @return void
+   */
+  protected function setting()
+  {
+    $this->sheet->setStyle (
+      ['font' => ['name' => 'Calibri', 'size' => 12]]
+    );
+
+    $this->sheet->setWidth('A', 35);
   }
 }

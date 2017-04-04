@@ -259,6 +259,8 @@ class AddonController extends MainController
    */
   public function update(Request $request)
   {
+    dd($request->input());
+
     $this->repo->update($request->input());
 
     return $this->goodReponse('Update successful. Please reconcile your bill if needed.');

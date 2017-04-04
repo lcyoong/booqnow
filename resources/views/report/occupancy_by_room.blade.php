@@ -1,7 +1,7 @@
 @extends($layout)
 
 @section('content_above_list')
-@include('report.monthly_occupancy_filter')
+@include('report.occupancy_by_room_filter')
 @endsection
 
 @section('content_list')

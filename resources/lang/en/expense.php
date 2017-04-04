@@ -13,4 +13,5 @@ return [
   'exp_status' => 'Status',
   'exp_date_start' => 'From date',
   'exp_date_end' => 'To date',
+  'exp_amount' => 'Amount',
 ];

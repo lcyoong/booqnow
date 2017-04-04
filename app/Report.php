@@ -8,7 +8,7 @@ class Report extends TenantModel
 {
   protected $primaryKey = 'rep_id';
 
-  protected $fillable = ['rep_function', 'rep_tries', 'rep_filter', 'rep_output_path', 'rep_status', 'created_by'];
+  protected $fillable = ['rep_function', 'rep_tries', 'rep_filter', 'rep_output_path', 'rep_status', 'created_by', 'rep_class'];
 
   protected $appends = ['filter'];
 

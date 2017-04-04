@@ -183,9 +183,10 @@ function tenantRoutes()
   });
 
 
-  Route::group(['middleware' => ['permitted:report'], 'prefix' => '/report'], function () {
+  Route::group(['middleware' => ['permitted:report'], 'prefix' => '/reports'], function () {
     Route::get('/profitloss', 'ReportController@profitLoss');
-    Route::get('/monthly_occupancy', 'ReportController@monthlyOccupancy');
+    Route::get('/occupancy_by_room', 'ReportController@occupancyByRoom');
+    Route::get('/occupancy_by_day', 'ReportController@occupancyByDay');
     Route::get('/download/{report}', 'ReportController@download');
     Route::post('/request', 'ReportController@request');
     // Route::post('/profitloss', 'ReportController@profitLoss');

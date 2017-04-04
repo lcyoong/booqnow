@@ -115,7 +115,7 @@ class Booking extends TenantModel
    */
   public function setBookFromAttribute($value)
   {
-      $this->attributes['book_from'] = Carbon::parse($value)->format('Y-m-d');
+    $this->attributes['book_from'] = Carbon::parse($value)->format('Y-m-d');
   }
 
   /**
@@ -124,7 +124,36 @@ class Booking extends TenantModel
    */
   public function setBookToAttribute($value)
   {
-      $this->attributes['book_to'] = Carbon::parse($value)->format('Y-m-d');
+    $this->attributes['book_to'] = Carbon::parse($value)->format('Y-m-d');
+  }
+
+  /**
+   * Accessor to book date
+   * @return string
+   */
+  public function getBookFromAttribute($value)
+  {
+    return Carbon::parse($value)->format('d-m-Y');
+  }
+
+  /**
+   * Accessor to book date
+   * @return string
+   */
+  public function getBookToAttribute($value)
+  {
+    return Carbon::parse($value)->format('d-m-Y');
+  }
+
+  public static function boot()
+  {
+    parent::boot();
+
+    Self::saved(function ($post) {
+
+      (new RoomOccupancy)->process($post->book_id, $post['original'], $post['attributes']);
+
+    });
   }
 
 }

@@ -6,6 +6,7 @@
   <div class="row">
     {{ Form::bsDate('exp_date', trans('expense.exp_date')) }}
     {{ Form::bsText('exp_description', trans('expense.exp_description')) }}
+    {{ Form::bsText('exp_amount', trans('expense.exp_amount')) }}
     {{ Form::bsText('exp_memo', trans('expense.exp_memo')) }}
   </div>
   <div class="row">

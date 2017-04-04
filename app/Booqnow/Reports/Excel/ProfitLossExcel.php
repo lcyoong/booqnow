@@ -2,23 +2,29 @@
 
 namespace Reports;
 
-// use Contracts\ExcelReportInterface;
-// use App\Traits\ReportTrait;
 use App\Events\ReportCreated;
 use DB;
 use Excel;
 use App\Bill;
 use Carbon\Carbon;
+use Repositories\ExpenseCategoryRepository;
+use Repositories\ExpenseRepository;
+use Repositories\ResourceTypeRepository;
+use Repositories\BillItemRepository;
 
 class ProfitLossExcel extends ExcelReport
 {
   protected $year;
 
-  public $filter;
+  protected $resource_types;
 
-  public function __construct($reportname)
+  public function __construct($report)
   {
-    parent::__construct($reportname);
+    parent::__construct($report->rep_function);
+
+    extract(unserialize($report->rep_filter));
+
+    $this->year = $year;
   }
 
   /**
@@ -27,10 +33,6 @@ class ProfitLossExcel extends ExcelReport
    */
   public function handle()
   {
-    extract(unserialize($this->filter));
-
-    $this->year = $year;
-
     Excel::create($this->reportname, function($excel) {
 
       $excel->sheet('Sheet1', function($sheet) {
@@ -40,6 +42,8 @@ class ProfitLossExcel extends ExcelReport
         $this->setting();
 
         $this->header();
+
+        $this->getData();
 
         $this->income();
 
@@ -61,19 +65,23 @@ class ProfitLossExcel extends ExcelReport
    */
   protected function header()
   {
-    $this->sheet->setHeight($this->row, 25);
+    // title
+    $this->sheet->getStyle("A1")->getFont()->setSize(18);
 
-    $this->fillRow(['Monthly P&L']);
+    $this->fillRow([trans('report.pnl_report_heading', ['ext' => $this->year])]);
 
-    $output = [''];
+    // Header
+    $row = [''];
 
     for ($month = 1; $month <= 12; $month++) {
-      $output[] = Carbon::parse(sprintf("{$this->year}-%s-01", $month))->format('F');
+
+      $row[] = Carbon::createFromDate(null, $month, 1)->format('M');
+
     }
 
-    array_push($output, 'TOTAL', '% of inc');
+    array_push($row, 'TOTAL', '% of inc');
 
-    $this->fillRow($output);
+    $this->fillRow($row);
   }
 
   /**
@@ -84,29 +92,56 @@ class ProfitLossExcel extends ExcelReport
   {
     $this->fillRow(['INCOME']);
 
-    $year = trim($this->year);
+    $incomes = (new BillItemRepository)->sumByMonthType($this->year);
+
+    $inc_types = (new ResourceTypeRepository)->getDropDown('rty_id', 'rty_name');
+
+    $inc_arr = [];
+
+    foreach ($incomes as $income) {
+
+      $inc_arr[$income->rty_id][$income->mth] = $income->total;
+
+    }
+
 
     $output = [''];
 
-    // Get bill grouped by month for the year
-    $income = Bill::select(DB::raw('MONTH(bil_date) as month, SUM(bil_gross) as sum_gross'))
-                    ->where('bil_status', '=', 'active')
-                    ->where('bil_date', 'like', "%{$this->year}%")->groupBy(DB::raw('MONTH(bil_date)'))
-                    ->get();
+    foreach ($inc_arr as $type => $month_amount) {
 
-    $col = [];
+      $col = [$inc_types[$type]];
 
-    for ($month = 1; $month <= 12; $month++) {
-      $col[$month] = 0;
+      for ($month = 1; $month <= 12; $month++) {
+
+        $col[$month] = 0;
+
+      }
+
+      foreach ($month_amount as $month => $amount) {
+
+        $col[$month] = $amount;
+
+      }
+
+      $col[] = array_sum($col);
+
+      $this->fillRow($col);
     }
 
-    foreach ($income as $monthly) {
-      $col[$monthly->month] = (float) $monthly->sum_gross;
+
+    // Summary row
+    $col = ['TOTAL INCOME'];
+
+    for ($month = 1; $month <= 12; $month++) {
+
+      $col[$month] = 0;
+
     }
 
     $col[] = array_sum($col);
 
-    $this->fillRow($col, 0, 1);
+    $this->fillRow($col);
+
   }
 
   /**
@@ -116,6 +151,52 @@ class ProfitLossExcel extends ExcelReport
   protected function expenses()
   {
     $this->fillRow(['EXPENSES'], 1);
+
+    $expenses = (new ExpenseRepository)->sumByMonthCategory($this->year);
+
+    $exp_cats = (new ExpenseCategoryRepository)->isActive()->getDropDown('exc_id', 'exc_name');
+
+    $exp_arr = [];
+
+    foreach ($expenses as $expense) {
+
+      $exp_arr[$expense->exp_category][$expense->mth] = $expense->total;
+
+    }
+
+    foreach ($exp_arr as $cat => $month_amount) {
+
+      $col = [$exp_cats[$cat]];
+
+      for ($month = 1; $month <= 12; $month++) {
+
+        $col[$month] = 0;
+
+      }
+
+      foreach ($month_amount as $month => $amount) {
+        $col[$month] = $amount;
+      }
+
+      $col[] = array_sum($col);
+
+      $this->fillRow($col);
+
+    }
+
+    // Summary row
+    $col = ['TOTAL EXPENSES'];
+
+    for ($month = 1; $month <= 12; $month++) {
+
+      $col[$month] = 0;
+
+    }
+
+    $col[] = array_sum($col);
+
+    $this->fillRow($col, 0);
+
   }
 
   /**
@@ -125,6 +206,36 @@ class ProfitLossExcel extends ExcelReport
   protected function profit()
   {
     $this->fillRow(['NET PROFIT'], 1);
+
+    foreach ($this->resource_types as $type) {
+
+      $col = [$type->rty_name];
+
+      for ($month = 1; $month <= 12; $month++) {
+
+        $col[$month] = 0;
+
+      }
+
+      $col[] = array_sum($col);
+
+      $this->fillRow($col, 0);
+
+    }
+
+    // Summary row
+    $col = ['TOTAL'];
+
+    for ($month = 1; $month <= 12; $month++) {
+
+      $col[$month] = 0;
+
+    }
+
+    $col[] = array_sum($col);
+
+    $this->fillRow($col, 0);
+
   }
 
   /**
@@ -134,33 +245,30 @@ class ProfitLossExcel extends ExcelReport
   protected function cost_ratio()
   {
     $this->fillRow(['COST RATIO'], 1);
+
+    foreach ($this->resource_types as $type) {
+
+      $col = [$type->rty_name];
+
+      for ($month = 1; $month <= 12; $month++) {
+
+        $col[$month] = 0;
+
+      }
+
+      $col[] = array_sum($col);
+
+      $this->fillRow($col, 0);
+
+    }
   }
 
   /**
-   * Report footer
+   * Get data for report
    * @return void
    */
-  protected function footer()
+  protected function getData()
   {
-    $this->fillRow(['Note: Room ratio includes Housekeeping, Bldg & repair, Equ repair'], 1);
-    $this->fillRow(['Important: Jan-August does not include mgmt salaries as an expense, resulting in much higher net profit than Sept 14 onwards.']);
-  }
-
-  /**
-   * Sheet setting
-   * @return void
-   */
-  protected function setting()
-  {
-    $this->sheet->setStyle (
-      ['font' => ['name' => 'Calibri', 'size' => 12]]
-    );
-
-    $this->sheet->setWidth('A', 35);
-  }
-
-  public function setYear($value)
-  {
-    $this->year = trim($value);
+    $this->resource_types = (new ResourceTypeRepository)->get();
   }
 }

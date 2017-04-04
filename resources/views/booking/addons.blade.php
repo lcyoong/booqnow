@@ -23,7 +23,7 @@
             <div class="col-md-2">{{ Form::text('add_reference', null, ['v-model' => 'item.add_reference', 'class' => 'form-control', 'placeholder' => trans('addon.add_reference')]) }}</div>
             <div class="col-md-2">{{ Form::selectBasic('add_agent', trans('addon.add_agent'), $agents, null, ['v-model' => 'item.add_agent', 'class' => 'form-control select2']) }}</div>
             <div class="col-md-2">{{ Form::selectBasic('add_status', trans('addon.add_status'), $add_status, null, ['v-model' => 'item.add_status', 'class' => 'form-control']) }}</div>
-            <div class="col-md-1"><itemized :item = "item" class="form-control btn btn-primary" action="{{ urlTenant('addons/update') }}" @completesuccess="doneUpdate">Save</itemized></div>
+            <div class="col-md-1"><itemized :item = "item" class="form-control btn btn-primary" action="{{ urlTenant('addons/update') }}" @completesuccessx="doneUpdate">Save</itemized></div>
           </div>
           Billed: @{{ item.bill_item.bili_unit_price }} x @{{ item.bill_item.bili_unit }} unit(s) = @{{ item.bill_item.bili_gross }}
         </li>
@@ -46,9 +46,6 @@ new Vue ({
   created: function () {
     this.getTypes()
     this.getItems()
-    $(function() {
-      $('.select2').select2()
-    })
   },
 
   data: {
@@ -74,6 +71,17 @@ new Vue ({
           .then(function (response) {
             console.log(response.data)
             this.items = response.data
+
+            $(function() {
+
+              $('.select2').select2()
+
+              $('.datepicker').datepicker({
+                format: 'dd-mm-yyyy',
+              })
+
+            })
+
           });
     },
   }

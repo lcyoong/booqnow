@@ -24,30 +24,61 @@ class ReportController extends MainController
     $this->repo = $repo;
   }
 
+  /**
+   * P&L report display form
+   * @param  Request $request
+   * @return Response
+   */
   public function profitLoss(Request $request)
   {
     $this->filter = $request->input();
 
     $this->page_title = trans('report.pnl_title');
 
-    $list = $this->repo->ofType('ProfitLossExcel')->getPages();
+    $list = $this->repo->ofType('pnl')->getPages();
 
     $this->vdata(compact('list'));
 
     return view('report.pnl', $this->vdata);
   }
 
-  public function monthlyOccupancy(Request $request)
+  /**
+   * Occupancy (by room) display form
+   * @param  Request $request
+   * @return Response
+   */
+  public function occupancyByRoom(Request $request)
   {
     $this->page_title = trans('report.monthly_occupancy_title');
 
-    $list = $this->repo->ofType('MonthlyOccupancy')->getPages();
+    $list = $this->repo->ofType('occupancy_by_room')->getPages();
 
     $this->vdata(compact('list'));
 
-    return view('report.monthly_occupancy', $this->vdata);
+    return view('report.occupancy_by_room', $this->vdata);
   }
 
+  /**
+   * Occupancy (by day of month) display form
+   * @param  Request $request
+   * @return Response
+   */
+  public function occupancyByDay(Request $request)
+  {
+    $this->page_title = trans('report.daily_occupancy_title');
+
+    $list = $this->repo->ofType('occupancy_by_day')->getPages();
+
+    $this->vdata(compact('list'));
+
+    return view('report.occupancy_by_day', $this->vdata);
+  }
+
+  /**
+   * Report request submission
+   * @param  Request $request
+   * @return Response
+   */
   public function request(Request $request)
   {
     $input = $request->input();
@@ -57,12 +88,19 @@ class ReportController extends MainController
     $report = $this->repo->store($input);
 
     if ($report->rep_id) {
+
       dispatch(new ProcessReport($report));
+
 		}
 
     return $this->goodReponse();
   }
 
+  /**
+   * Report download
+   * @param  Request $request
+   * @return Response
+   */
   public function download($report_id)
   {
     $report = $this->repo->findById($report_id);

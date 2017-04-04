@@ -51,4 +51,14 @@ class ResourceRepository extends BaseRepository {
 
     return $this;
   }
+
+  public function occupancyByRoom($year)
+  {
+    return $this->repo->select(DB::raw("rs_name, month(ro_date) as mth, count(*) as counter"))
+                ->leftJoin('room_occupancies', 'ro_room', '=', 'rs_id')
+                ->join('resource_types', 'rty_id', '=', 'rs_type')
+                ->where('rty_id', '=', 1)
+                ->groupBy(DB::raw("rs_name, month(ro_date)"))->get();
+  }
+
 }

@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 use Repositories\BookingRepository;
 use Filters\BookingFilter;
+use Carbon\Carbon;
 
 class BookingApiController extends ApiController
 {
@@ -41,8 +42,8 @@ class BookingApiController extends ApiController
         'type' => 'booking',
         'id' => $item->book_id,
         'title' => $item->customer->full_name,
-        'start' => $item->book_from,
-        'end' => $item->book_to,
+        'start' => Carbon::parse($item->book_from)->format('Y-m-d'),
+        'end' => Carbon::parse($item->book_to)->format('Y-m-d'),
         'resourceId' => $item->book_resource,
         'special' => $item->book_special,
         'status' => $item->book_status,
