@@ -45,7 +45,6 @@ class Receipt extends TenantModel
     return $this->belongsTo(Bill::class, 'rc_bill');
   }
 
-
   /**
    * Get the customer of the receipt
    */

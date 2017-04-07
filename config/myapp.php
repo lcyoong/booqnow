@@ -22,6 +22,7 @@ return [
   'icon-fnb' => 'fa-cutlery',
   'icon-transfer' => 'fa-cab',
   'single_bill_booking' => true,
+  'default_booking_source' => 2,
 
   'bg-source-1' => '#e0fdff',
   'bg-source-2' => '#fce0e0',

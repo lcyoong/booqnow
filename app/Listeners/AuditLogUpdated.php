@@ -16,9 +16,8 @@ class AuditLogUpdated
   *
   * @return void
   */
-  public function __construct(AuditTrailRepository $repo)
+  public function __construct()
   {
-    $this->repo = $repo;
   }
 
   /**

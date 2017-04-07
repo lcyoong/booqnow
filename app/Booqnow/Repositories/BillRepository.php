@@ -30,4 +30,12 @@ class BillRepository extends BaseRepository {
       'bil_tax' => 'sometimes|numeric|min:0',
     ];
   }
+
+  public function byMonthNational($year)
+  {
+    return $this->repo->select(DB::raw("cus_country as country, month(bil_date) as mth, sum(bil_gross) as sum"))
+                ->join('customers', 'cus_id', '=', 'bil_customer')
+                ->where('bil_status', '=', 'active')
+                ->groupBy(DB::raw("cus_country, month(bil_date)"))->get();
+  }
 }

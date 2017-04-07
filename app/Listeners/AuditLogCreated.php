@@ -7,6 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Repositories\AuditTrailRepository;
 use App\AuditTrail;
+use Log;
 
 class AuditLogCreated
 {
@@ -17,9 +18,9 @@ class AuditLogCreated
    *
    * @return void
    */
-  public function __construct(AuditTrailRepository $repo)
+  public function __construct()
   {
-    $this->repo = $repo;
+    // $this->repo = $repo;
   }
 
   /**

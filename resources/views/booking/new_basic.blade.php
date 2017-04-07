@@ -6,6 +6,7 @@
 <form-ajax action = "{{ urlTenant('bookings/new') }}" method="POST" reload-on-complete=true @startwait="startWait" @endwait="endWait">
   {{ Form::hidden('book_from', $start) }}
   {{ Form::hidden('book_to', $end) }}
+  {{ Form::hidden('book_status', 'active') }}
   {{ Form::hidden('book_resource', '', ['v-model' => 'resource.rs_id']) }}
   {{ Form::hidden('book_customer', null, ['v-model'=>'book_customer']) }}
   <!--Section 1 - Select customer-->
@@ -42,7 +43,7 @@
     <button @click = "selectCustomer" class="btn btn-primary btn-sm">Change customer</button>
 
     <div class="row">
-      {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources) }}
+      {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources, config('myapp.default_booking_source')) }}
       {{ Form::bsSelect('book_agent', trans('booking.book_agent'), $agents, null, ['class' => 'form-control select2']) }}
       {{ Form::bsNumber('book_pax', trans('booking.book_pax'), 1, ['min' => 1, 'max'=>20]) }}
       {{ Form::bsText('book_reference', trans('booking.book_reference')) }}

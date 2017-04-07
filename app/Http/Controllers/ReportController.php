@@ -75,6 +75,64 @@ class ReportController extends MainController
   }
 
   /**
+   * Occupancy (by national) display form
+   * @param  Request $request
+   * @return Response
+   */
+  public function occupancyByNational(Request $request)
+  {
+    $type = 'occupancy_by_national';
+
+    $this->page_title = trans('report.national_occupancy_title');
+
+    $list = $this->repo->ofType($type)->getPages();
+
+    $this->vdata(compact('list', 'type'));
+
+    return view('report.occupancy_by_national', $this->vdata);
+  }
+
+  /**
+   * Export bills display form
+   * @param  Request $request
+   * @return Response
+   */
+  public function exportBills(Request $request)
+  {
+    $type = 'export_bills';
+
+    $this->filter = $request->input();
+
+    $this->page_title = trans('report.export_bills_title');
+
+    $list = $this->repo->ofType('export_bills')->getPages();
+
+    $this->vdata(compact('list', 'type'));
+
+    return view('report.export_bills', $this->vdata);
+  }
+
+  /**
+   * Export receipts display form
+   * @param  Request $request
+   * @return Response
+   */
+  public function exportReceipts(Request $request)
+  {
+    $type = 'export_receipts';
+
+    $this->filter = $request->input();
+
+    $this->page_title = trans('report.export_receipts_title');
+
+    $list = $this->repo->ofType('export_receipts')->getPages();
+
+    $this->vdata(compact('list', 'type'));
+
+    return view('report.export_receipts', $this->vdata);
+  }
+
+  /**
    * Report request submission
    * @param  Request $request
    * @return Response

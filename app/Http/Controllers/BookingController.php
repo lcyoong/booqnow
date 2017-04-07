@@ -281,6 +281,7 @@ class BookingController extends MainController
       ]);
 
       $bili_bill = $new_bill->bil_id;
+
     } else {
 
       $bili_bill = $input['bil_id'];

@@ -8,4 +8,5 @@
 </div>
 {{ Form::submit(trans('form.filter'), ['class' => 'btn btn-primary btn-sm']) }}
 <redirect-btn label="@lang('form.clear')" redirect="{{ urlTenant('receipts') }}" class="btn-sm"></redirect-btn>
+<redirect-btn label="@lang('form.export')" redirect="{{ urlTenant('reports/export_receipts') }}" class="btn-sm"></redirect-btn>
 {{ Form::close() }}

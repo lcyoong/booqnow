@@ -187,6 +187,9 @@ function tenantRoutes()
     Route::get('/profitloss', 'ReportController@profitLoss');
     Route::get('/occupancy_by_room', 'ReportController@occupancyByRoom');
     Route::get('/occupancy_by_day', 'ReportController@occupancyByDay');
+    Route::get('/occupancy_by_national', 'ReportController@occupancyByNational');
+    Route::get('/export_bills', 'ReportController@exportBills');
+    Route::get('/export_receipts', 'ReportController@exportReceipts');
     Route::get('/download/{report}', 'ReportController@download');
     Route::post('/request', 'ReportController@request');
     // Route::post('/profitloss', 'ReportController@profitLoss');
