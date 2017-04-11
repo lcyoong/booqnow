@@ -29,7 +29,7 @@
     <td><span class="label label-info">{{ dayDiff($item->book_from, $item->book_to) }} @lang('booking.nights')</span> {{ showDate($item->book_from) }} - {{ showDate($item->book_to) }}</td>
     <td>{{ $item->book_pax }}</td>
     <td>{{ $item->book_reference }}</td>
-    <td>{{ isset($item->agent) ? $item->agent->ag_name : trans('form.na') }}</td>
+    <td>{{ isset($item->agent) ? $item->agent->ag_name : null }}</td>
     <!-- <td>{{ $item->book_tracking }}</td> -->
     <td><i class="fa fa-circle status-{{ $item->book_status }}"></i> {{ $book_status[$item->book_status] }}</td>
     <td>

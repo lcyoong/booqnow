@@ -28,6 +28,7 @@
             <li><a href="{{ urlTenant('reports/occupancy_by_room') }}">@lang('report.monthly_occupancy_title')</a></li>
             <li><a href="{{ urlTenant('reports/occupancy_by_day') }}">@lang('report.daily_occupancy_title')</a></li>
             <li><a href="{{ urlTenant('reports/occupancy_by_national') }}">@lang('report.national_occupancy_title')</a></li>
+            <li><a href="{{ urlTenant('reports/monthly_stat') }}">@lang('report.monthly_stat_title')</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="{{ urlTenant('reports/export_bills') }}">@lang('report.export_bills_title')</a></li>
             <li><a href="{{ urlTenant('reports/export_receipts') }}">@lang('report.export_receipts_title')</a></li>

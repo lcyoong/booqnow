@@ -9,6 +9,8 @@ return [
   'daily_occupancy_report_heading' => 'Monthly Occupancy Report - By Day :ext',
   'national_occupancy_title' => 'Monthly Occupancy Report - By National',
   'national_occupancy_report_heading' => 'Monthly Occupancy Report - By National :ext',
+  'monthly_stat_title' => 'Monthly Stat Report',
+  'monthly_stat_report_heading' => 'Monthly Stat Report :ext',
   'export_bills_title' => 'Export Bills',
   'export_bills_report_heading' => 'Export Bills :ext',
   'export_receipts_title' => 'Export Receipts',

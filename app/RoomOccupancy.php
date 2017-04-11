@@ -72,4 +72,10 @@ class RoomOccupancy extends TenantModel
                 ->groupBy(DB::raw("month(ro_date), cus_country"))->get();
   }
 
+  public function byMonth($year)
+  {
+    return $this->select(DB::raw("month(ro_date) as mth, count(*) as counter"))
+                ->whereRaw("year(ro_date) = $year")
+                ->groupBy(DB::raw("month(ro_date)"))->get();
+  }
 }

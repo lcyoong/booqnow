@@ -12,7 +12,7 @@
 {{ Form::hidden('rc_bill', $bill->bil_id) }}
 <div class="row">
   {{ Form::bsSelect('rc_method', trans('receipt.rc_method'), $pay_methods, null, ['class' => 'select2', 'style' => 'width:100%']) }}
-  {{ Form::bsText('rc_amount', trans('receipt.rc_amount')) }}
+  {{ Form::bsText('rc_amount', appendCurrency(trans('receipt.rc_amount'))) }}
   {{ Form::bsDate('rc_date', trans('receipt.rc_date'), today()) }}
 </div>
 <div class="row">

@@ -21,7 +21,7 @@ return [
   'bil_paid' => 'Paid',
   'bili_unit_price' => sprintf('Unit price (%s)', config('myapp.base_currency')),
   'bili_unit' => 'Unit',
-  'bili_gross' => 'Gross',
+  'bili_gross' => sprintf('Gross (%s)', config('myapp.base_currency')),
   'bili_tax' => 'Tax',
   'bili_description' => 'Item description',
   'print_title' => 'Invoice :no',

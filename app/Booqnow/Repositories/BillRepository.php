@@ -38,4 +38,15 @@ class BillRepository extends BaseRepository {
                 ->where('bil_status', '=', 'active')
                 ->groupBy(DB::raw("cus_country, month(bil_date)"))->get();
   }
+
+  public function avgSpendPerNightMonthly($year)
+  {
+    return $this->repo->select(DB::raw("month(bil_date) as mth, avg(bil_gross/datediff(book_to, book_from)) as avg_gross"))
+                ->join('bookings', 'book_id', '=', 'bil_booking')
+                ->where('bil_status', '=', 'active')
+                ->where('book_status', '!=', 'cancelled')
+                ->whereRaw("year(bil_date) = $year")
+                ->groupBy(DB::raw("month(bil_date)"))->get();
+  }
+
 }

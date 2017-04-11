@@ -9,6 +9,7 @@ use App\Bill;
 use Carbon\Carbon;
 use App\RoomOccupancy;
 use Repositories\BillRepository;
+use Repositories\CountryRepository;
 
 class OccupancyByNationalExcel extends ExcelReport
 {
@@ -18,8 +19,12 @@ class OccupancyByNationalExcel extends ExcelReport
 
   protected $spend_arr = [];
 
+  protected $countries;
+
   public function __construct($report)
   {
+    $this->countries = (new CountryRepository)->getDropDown();
+
     parent::__construct($report->rep_function);
 
     extract(unserialize($report->rep_filter));
@@ -100,7 +105,7 @@ class OccupancyByNationalExcel extends ExcelReport
 
     foreach ($this->occ_arr as $country => $month_counter) {
 
-      $row = [$country];
+      $row = [array_get($this->countries, $country, '')];
 
       for ($month = 1; $month <= 12; $month++) {
 

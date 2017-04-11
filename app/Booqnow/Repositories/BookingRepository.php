@@ -60,4 +60,18 @@ class BookingRepository extends BaseRepository
     return $this;
   }
 
+  public function byAverageNights($year)
+  {
+    return $this->repo->select(DB::raw("month(book_from) as mth, avg(datediff(book_to, book_from)) as nights"))
+                ->where('book_status', '!=', 'cancelled')
+                ->groupBy(DB::raw("month(book_from)"))->get();
+  }
+
+  public function byAveragePax($year)
+  {
+    return $this->repo->select(DB::raw("month(book_from) as mth, avg(book_pax) as pax"))
+                ->where('book_status', '!=', 'cancelled')
+                ->groupBy(DB::raw("month(book_from)"))->get();
+  }
+
 }

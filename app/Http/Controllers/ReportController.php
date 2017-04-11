@@ -93,6 +93,24 @@ class ReportController extends MainController
   }
 
   /**
+   * Monthly stat display form
+   * @param  Request $request
+   * @return Response
+   */
+  public function monthlyStat(Request $request)
+  {
+    $type = 'monthly_stat';
+
+    $this->page_title = trans('report.monthly_stat_title');
+
+    $list = $this->repo->ofType($type)->getPages();
+
+    $this->vdata(compact('list', 'type'));
+
+    return view('report.monthly_stat', $this->vdata);
+  }
+
+  /**
    * Export bills display form
    * @param  Request $request
    * @return Response

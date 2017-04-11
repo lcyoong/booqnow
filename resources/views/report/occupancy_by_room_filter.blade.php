@@ -1,4 +1,4 @@
-<form-ajax action = "{{ urlTenant('reports/request') }}" method="POST" @startwait="startWait" @endwait="endWait">
+<form-ajax action = "{{ urlTenant('reports/request') }}" method="POST" @startwait="startWait" @endwait="endWait" :reload-on-complete=true>
 {{ Form::hidden('rep_function', 'occupancy_by_room') }}
 {{ Form::hidden('rep_class', 'Reports\OccupancyByRoomExcel') }}
 <div class="row">

@@ -2,7 +2,7 @@
 
 @prepend('content')
 <div id="bill-new">
-<form-ajax action = "{{ urlTenant('bills/new') }}" method="POST" redirect-on-completex = "{{ urlTenant('bills') }}" @startwait="startWait" @endwait="endWait">
+<form-ajax action = "{{ urlTenant('bills/new') }}" method="POST" redirect-on-complete = "{{ urlTenant('bills') }}" @startwait="startWait" @endwait="endWait">
   {{ Form::hidden('bil_customer', null, ['v-model' => 'bil_customer']) }}
   <div class="row">
     {{ Form::bsText('bil_description', trans('bill.bil_description')) }}
