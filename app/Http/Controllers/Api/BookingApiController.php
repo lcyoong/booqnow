@@ -28,7 +28,9 @@ class BookingApiController extends ApiController
   {
     $input = $request->input();
 
-    $filters = new BookingFilter($request->input());
+    $input['notStatus'] = 'cancelled';
+
+    $filters = new BookingFilter($input);
 
     // $filters = new BookingFilter(['start' => array($input, 'start'), 'end' => array($input, 'end')]);
 

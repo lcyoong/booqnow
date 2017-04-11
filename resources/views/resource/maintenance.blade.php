@@ -1,6 +1,8 @@
 @extends($layout)
 
 @push('content')
+@include('resource.basic_info', ['resource' => $resource])
+
 <div id="maintenance-new">
 <form-ajax action = "{{ urlTenant('resources/maintenance') }}" method="POST">
 {{ Form::hidden('rm_resource', $resource->rs_id) }}

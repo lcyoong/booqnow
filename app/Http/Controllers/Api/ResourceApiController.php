@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 use Repositories\ResourceRepository;
 use Repositories\ResourceTypeRepository;
+use Repositories\ResourcePricingRepository;
 use Repositories\ResourceMaintenanceRepository;
 // use App\ResourceType;
 use Filters\ResourceFilter;
@@ -79,7 +80,12 @@ class ResourceApiController extends ApiController
   {
     $rs = new ResourceRepository;
 
-    return $rs->findById($resource)->pricing()->with(['season'])->get();
+    return $rs->findById($resource)->pricing()->with(['season', 'tiers'])->get();
+  }
+
+  public function pricingTier($pricing_id, Request $request)
+  {
+    return (new ResourcePricingRepository)->findById($pricing_id)->tiers()->get();
   }
 
   public function selected($resource_id, $start, $end, Request $request)

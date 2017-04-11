@@ -140,6 +140,14 @@ class BookingFilter extends QueryFilter
     }
   }
 
+  public function notStatus($value = '')
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where("book_status", '!=', $value);
+    }
+  }
+
   /**
    * Join customers to query
    * @return Builder

@@ -83,13 +83,40 @@ function calcTax($gross)
 function datesOverlap($start_one,$end_one,$start_two,$end_two) {
 
   $start_one = Carbon::parse($start_one);
+
   $end_one = Carbon::parse($end_one);
+
   $start_two = Carbon::parse($start_two);
+
   $end_two = Carbon::parse($end_two);
 
-   if($start_one->lte($end_two) && $end_one->gte($start_two) || $start_two->lte($end_one) && $end_two->gte($start_one)) { //If the dates overlap
-    return $end_one->min($end_two)->diffInDays($start_two->max($start_one)); //return how many days overlap
-   }
+  // If season crosses years
+  if ($start_one->year != $end_one->year) {
 
-   return 0; //Return 0 if there is no overlap
+    if ($start_two->month >= $start_one->month) {
+
+      $start_one->year = $start_two->year;
+
+    } else {
+
+      $start_one->year = $start_two->year - 1;
+
+    }
+
+    $end_one->year = $start_one->year + 1;
+
+  // If season doesn't cross years
+  } else {
+
+    $end_one->year = $start_one->year = $start_two->year;
+
+  }
+
+  if($start_one->lte($end_two) && $end_one->gte($start_two) || $start_two->lte($end_one) && $end_two->gte($start_one)) { //If the dates overlap
+
+    return $end_one->min($end_two)->diffInDays($start_two->max($start_one)); //return how many days overlap
+
+  }
+
+  return 0; //Return 0 if there is no overlap
 }

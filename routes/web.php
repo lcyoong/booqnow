@@ -79,14 +79,18 @@ function tenantRoutes()
     Route::get('/{resource_type}/new', 'ResourceController@create');
     Route::get('/{resource}/edit', 'ResourceController@edit');
     Route::get('/{resource}/maintenance', 'ResourceMaintenanceController@create');
-    Route::get('/{resource}/pricing', 'ResourcePricingController@index');
-
     Route::post('/new', 'ResourceController@store');
     Route::post('/update', 'ResourceController@update');
     Route::post('/maintenance', 'ResourceMaintenanceController@store');
     Route::post('/{resource}/maintenance/{resource_maintenance}/delete', 'ResourceMaintenanceController@delete');
+
+    Route::get('/{resource}/pricing', 'ResourcePricingController@index');
     Route::post('/pricing', 'ResourcePricingController@store');
     Route::post('/pricing/{resource_pricing}/delete', 'ResourcePricingController@delete');
+
+    Route::get('/pricing/{resource_pricing}/tier', 'ResourcePricingTierController@index');
+    Route::post('/pricing/tier', 'ResourcePricingTierController@store');
+    Route::post('/pricing/tier/{resource_pricing_tier}/delete', 'ResourcePricingTierController@delete');
   });
 
 

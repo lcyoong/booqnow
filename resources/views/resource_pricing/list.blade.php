@@ -1,6 +1,7 @@
 @extends($layout)
 
 @section('content_above_list')
+@include('resource.basic_info', ['resource' => $resource])
 <form-ajax action = "{{ urlTenant('resources/pricing') }}" method="POST" @startwait="startWait" @endwait="endWait" @completesuccess="refresh">
   {{ Form::hidden('rpr_resource', $resource->rs_id) }}
   <div class="row">
@@ -18,6 +19,7 @@
       <tr>
         <th>@lang('resource_pricing.rpr_season')</th>
         <th>{{ appendCurrency(trans('resource_pricing.rpr_price')) }}</th>
+        @if(config('myapp.pax_tier_pricing'))<th>@lang('resource_pricing.tier')</th>@endif
         <th>@lang('form.actions')</th>
       </tr>
     </thead>
@@ -25,8 +27,10 @@
       <tr v-for = "item in list">
         <td>@{{ item.season.season_text }}</td>
         <td>@{{ item.rpr_price }}</td>
+        @if(config('myapp.pax_tier_pricing'))<td><h5 v-for = "tier in item.tiers"><span class="label label-info">@{{ tier.rpt_from }} - @{{ tier.rpt_to }} pax : @{{ tier.rpt_price }}</span></h5></td>@endif
         <td>
           <post-ajax :post-to="'{{ urlTenant(sprintf("resources/pricing/")) }}/' + item.rpr_id + '/delete'" @completesuccess = "refresh"><i class="fa fa-trash"></i></post-ajax>
+          @if(config('myapp.pax_tier_pricing'))<a v-modal :href="'{{ urlTenant("resources/pricing/") }}/' + item.rpr_id + '/tier'"><i class="fa fa-list"></i></a>@endif
         </td>
       </tr>
     </tbody>

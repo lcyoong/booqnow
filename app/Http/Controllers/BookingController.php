@@ -80,14 +80,6 @@ class BookingController extends MainController
 
     $agents = $this->agents();
 
-    // $resource = array_get($slot, 'resource');
-
-    // $rates = $resource->pricing;
-
-    // foreach ($rates as $rate)
-    // {
-    //   $days = datesOverlap($rate->season->sea_from, $rate->season->sea_to, $slot['start'], $slot['end']);
-    // }
     $resource_id = array_get($slot, 'resource_id');
 
     $start = array_get($slot, 'start');
