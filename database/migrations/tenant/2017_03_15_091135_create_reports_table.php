@@ -18,6 +18,7 @@ class CreateReportsTable extends Migration
           $table->string('rep_function');
           $table->integer('rep_tries')->default(0);
           $table->text('rep_filter');
+          $table->string('rep_class');
           $table->text('rep_output_path')->nullable();
           $table->string('rep_status')->default('pending');
           $table->integer('created_by');
