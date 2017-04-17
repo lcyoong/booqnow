@@ -26,7 +26,7 @@ $('#calendar').fullCalendar({
     // editable: true,
     resourceLabelText: 'Rooms',
     resourceRender: function(resource, cellEls) {
-      cellEls.find('.fc-cell-text').append(' <span class="label label-info">' + resource.price + '</span>');
+      // cellEls.find('.fc-cell-text').append(' <span class="label label-info">' + resource.price + '</span>');
 			cellEls.on('click', function() {
 				if (confirm('Are you sure you want to delete ' + resource.title + '?')) {
 					$('#calendar').fullCalendar('removeResource', resource);

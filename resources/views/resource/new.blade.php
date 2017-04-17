@@ -9,6 +9,7 @@
     {{ Form::bsText('rs_price', trans('resource.rs_price')) }}
   </div>
   <div class="row">
+    {{ Form::bsText('rs_label', trans('resource.rs_label')) }}
     {{ Form::bsTextarea('rs_description', trans('resource.rs_description')) }}
   </div>
   {{ Form::submit(trans('form.add'), ['class' => 'btn btn-primary']) }}

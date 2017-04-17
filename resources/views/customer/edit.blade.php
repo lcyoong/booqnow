@@ -2,7 +2,7 @@
 
 @prepend('content')
 <div id="customer-edit">
-  <a v-modal href="{{ url(sprintf('trail/customers/%s', $customer->cus_id)) }}" title="@lang('form.trail')"><i class="fa fa-history"></i></a>
+  <!-- <a v-modal href="{{ url(sprintf('trail/customers/%s', $customer->cus_id)) }}" title="@lang('form.trail')"><i class="fa fa-history"></i></a> -->
   <form-ajax action = "{{ urlTenant('customers/update') }}" method="POST" @startwait="startWait" @endwait="endWait">
   {{ Form::hidden('cus_id', $customer->cus_id) }}
   <div class="row">

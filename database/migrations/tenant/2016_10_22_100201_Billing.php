@@ -64,6 +64,7 @@ class Billing extends Migration
           $table->string('rc_intremark')->nullable();
           $table->string('rc_reference')->nullable();
           $table->string('rc_method');
+          $table->string('rc_type');
           $table->string('rc_status')->default('active');
           $table->integer('created_by');
           $table->timestamps();

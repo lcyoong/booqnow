@@ -23,16 +23,16 @@
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $bill->bil_id }}">
           <div class="row">
             <div class="col-md-3">
-              # {{ $bill->bil_id }} - {{ $bill->bil_description }}
+              #{{ $bill->bil_id }} - {{ $bill->bil_description }}
             </div>
             <div class="col-md-3">
               {{ showDate($bill->bil_date) }}
             </div>
             <div class="col-md-3">
-              <span class="label label-success">@lang('bill.total') {{ showMoney($bill->bil_gross + $bill->bil_tax, true) }}</span>
+              @lang('bill.total') : {{ showMoney($bill->total_amount) }}
             </div>
             <div class="col-md-3">
-              <span class="label label-info">@lang('bill.bil_paid') {{ showMoney($bill->bil_paid, true) }}</span>
+              @lang('bill.outstanding') : {{ showMoney($bill->outstanding) }}
             </div>
           </div>
           </a>
@@ -41,8 +41,8 @@
           <div class="panel-body">
             @include('bill.itemized', ['items' => $bill->items])
             @include('receipt.itemized', ['rcitems' => $bill->receipts])
-            <a href="{{ urlTenant('receipts/new/' . $bill->bil_id) }}" v-modal><button class="btn btn-primary btn-sm"><i class="fa fa-money"></i> @lang('form.pay')</button></a>
-            <a href="{{ urlTenant(sprintf("bills/%s/print", $bill->bil_id)) }}" target=_blank><button class="btn btn-primary btn-sm"><i class="fa fa-print"></i> @lang('form.print')</button></a>
+            <a href="{{ urlTenant('receipts/new/' . $bill->bil_id) }}" v-modal><button class="btn btn-primary btn-sm">@lang('form.pay')</button></a>
+            <a href="{{ urlTenant(sprintf("bills/%s/print", $bill->bil_id)) }}" target=_blank><button class="btn btn-primary btn-sm">@lang('form.print')</button></a>
             <!-- <div class="col-md-3"><a href="{{ urlTenant(sprintf("bookings/bill/%s/addons/%s/pos", $bill->bil_id, 3)) }}" v-modal><button class="form-control btn-primary"><i class="fa fa-glass"></i> @lang('form.add_fnb')</button></a></div> -->
           </div>
         </div>

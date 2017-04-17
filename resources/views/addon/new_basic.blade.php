@@ -23,7 +23,7 @@
       {{ Form::bsSelect2('add_resource', trans('addon.add_resource'), [':options' => 'resources', 'style' => 'width: 100%', 'v-model' => 'add_resource', '@input' => 'updatePrice']) }}
       {{ Form::bsNumber('add_unit', trans('addon.add_unit'), 1, ['min' => 1, 'max'=>20]) }}
       {{ Form::bsText('add_price', trans('resource.rs_price'), null, ['v-model' => 'add_price']) }}
-      {{ Form::bsDate('add_date', trans('addon.add_date'), today()) }}
+      {{ Form::bsDate('add_date', trans('addon.add_date'), today('d-m-Y 12:00'), ['class' => 'datetimepicker form-control']) }}
     </div>
     <div class="row">
       {{ Form::bsText('add_reference', trans('addon.add_reference')) }}
@@ -46,7 +46,7 @@
       add_price: 0,
       resources: [],
       add_resource: '',
-      gotonext: undefined,
+      gotonext: '{{ urlTenant(sprintf("bookings/%s", $booking->book_id)) }}',
       reloadoncomplete: false
     },
 
@@ -56,6 +56,10 @@
         $('.datepicker').datepicker({
           format: 'dd-mm-yyyy',
         })
+
+        $('.datetimepicker').datetimepicker({
+          format: 'DD-MM-YYYY HH:mm',
+        });
 
         $('.select2').select2()
       })

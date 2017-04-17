@@ -22,6 +22,7 @@ class ReceiptRepository extends BaseRepository {
       'rc_date' => 'required|date',
       'rc_amount' => 'required|numeric|min:0',
       'rc_method' => 'required',
+      'rc_type' => 'required',
     ];
   }
 }

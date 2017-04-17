@@ -6,7 +6,7 @@
   {{ Form::hidden('rpr_resource', $resource->rs_id) }}
   <div class="row">
     {{ Form::bsSelect('rpr_season', trans('resource_pricing.rpr_season'), $seasons, null, ['v-model' => 'rpr_season']) }}
-    {{ Form::bsText('rpr_price', appendCurrency(trans('resource_pricing.rpr_price')), null, ['v-model' => 'rpr_price']) }}
+    {{ Form::bsText('rpr_price', trans('resource_pricing.rpr_price'), null, ['v-model' => 'rpr_price']) }}
   </div>
   {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
   <redirect-btn label="@lang('form.cancel')" redirect="{{ urlTenant('resources/' . $resource->rs_type) }}" class="btn-sm"></redirect-btn>
@@ -18,7 +18,7 @@
     <thead>
       <tr>
         <th>@lang('resource_pricing.rpr_season')</th>
-        <th>{{ appendCurrency(trans('resource_pricing.rpr_price')) }}</th>
+        <th>{{ trans('resource_pricing.rpr_price') }}</th>
         @if(config('myapp.pax_tier_pricing'))<th>@lang('resource_pricing.tier')</th>@endif
         <th>@lang('form.actions')</th>
       </tr>

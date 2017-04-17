@@ -11,6 +11,12 @@ class OjhSeeder extends Seeder
      */
     public function run()
     {
+      DB::statement("ALTER TABLE agents AUTO_INCREMENT = 100001;");
+      DB::statement("ALTER TABLE customers AUTO_INCREMENT = 100001;");
+      DB::statement("ALTER TABLE bookings AUTO_INCREMENT = 100001;");
+      DB::statement("ALTER TABLE bills AUTO_INCREMENT = 100001;");
+      DB::statement("ALTER TABLE receipts AUTO_INCREMENT = 100001;");
+
       DB::table('resource_types')->insert([
         ['rty_id'=> 1, 'rty_accounting' => 1, 'rty_pos' => false, 'rty_seasonal' => true, 'rty_master' => true, 'rty_code' => 'room', 'rty_name' => 'Room', 'rty_plural' => 'Rooms', 'rty_price' => 0, 'created_by' => 1],
         ['rty_id'=> 2, 'rty_accounting' => 2, 'rty_pos' => false, 'rty_seasonal' => false, 'rty_master' => false, 'rty_code' => 'tour','rty_name' => 'Tour', 'rty_plural' => 'Tours', 'rty_price' => 0, 'created_by' => 1],
@@ -41,9 +47,12 @@ class OjhSeeder extends Seeder
         ['rs_name'=> 'Bungalow Nature', 'rs_type' => 1,'rs_price' => 1100, 'rs_order' => 19, 'created_by' => 1],
         ['rs_name'=> 'Jungle Treehouse Park View', 'rs_type' => 1,'rs_price' => 2200, 'rs_order' => 20, 'created_by' => 1],
         ['rs_name'=> 'Hideaway Treehouse (TH9)', 'rs_type' => 1,'rs_price' => 2200, 'rs_order' => 21, 'created_by' => 1],
-        ['rs_name'=> 'Tent 1', 'rs_type' => 1,'rs_price' => 500, 'rs_order' => 22, 'created_by' => 1],
-        ['rs_name'=> 'Tent 2', 'rs_type' => 1,'rs_price' => 500, 'rs_order' => 23, 'created_by' => 1],
-        ['rs_name'=> 'Tent 3', 'rs_type' => 1,'rs_price' => 500, 'rs_order' => 24, 'created_by' => 1],
+      ]);
+
+      DB::table('resources')->insert([
+        ['rs_name'=> 'Tent 1', 'rs_type' => 1,'rs_price' => 500, 'rs_order' => 22, 'rs_label' => 'tent', 'created_by' => 1],
+        ['rs_name'=> 'Tent 2', 'rs_type' => 1,'rs_price' => 500, 'rs_order' => 23, 'rs_label' => 'tent', 'created_by' => 1],
+        ['rs_name'=> 'Tent 3', 'rs_type' => 1,'rs_price' => 500, 'rs_order' => 24, 'rs_label' => 'tent', 'created_by' => 1],
       ]);
 
       $this->call(OjhSeasonSeeder::class);

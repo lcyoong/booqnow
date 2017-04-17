@@ -12,8 +12,9 @@
 {{ Form::hidden('rc_bill', $bill->bil_id) }}
 <div class="row">
   {{ Form::bsSelect('rc_method', trans('receipt.rc_method'), $pay_methods, null, ['class' => 'select2', 'style' => 'width:100%']) }}
-  {{ Form::bsText('rc_amount', appendCurrency(trans('receipt.rc_amount'))) }}
+  {{ Form::bsText('rc_amount', trans('receipt.rc_amount'), $bill->outstanding) }}
   {{ Form::bsDate('rc_date', trans('receipt.rc_date'), today()) }}
+  {{ Form::bsSelect('rc_type', trans('receipt.rc_type'), $rc_type, null, ['class' => 'select2', 'style' => 'width:100%']) }}
 </div>
 <div class="row">
   {{ Form::bsText('rc_remark', trans('receipt.rc_remark'), null, ['placeholder' => trans('receipt.rc_remark_placeholder')]) }}

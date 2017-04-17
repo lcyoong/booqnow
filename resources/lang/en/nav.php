@@ -5,7 +5,7 @@ return [
   'hello' => 'Hello, :name',
   'logout' => 'Logout',
   'settings' => 'Settings',
-  'customers' => 'Customers',
+  'customers' => 'Guests',
   'resources' => 'Setup',
   'appointments' => 'Bookings',
   'billing' => 'Bills',

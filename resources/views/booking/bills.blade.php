@@ -12,10 +12,10 @@
         {{ showDate($bill->bil_date) }}
       </div>
       <div class="col-md-3">
-        <span class="label label-success">@lang('bill.total') {{ showMoney($bill->bil_gross + $bill->bil_tax, true) }}</span>
+        <span class="label label-success">@lang('bill.total') {{ showMoney($bill->bil_gross + $bill->bil_tax) }}</span>
       </div>
       <div class="col-md-3">
-        <span class="label label-info">@lang('bill.bil_paid') {{ showMoney($bill->bil_paid, true) }}</span>
+        <span class="label label-info">@lang('bill.bil_paid') {{ showMoney($bill->bil_paid) }}</span>
       </div>
       <!-- <div class="col-md-3">
         {{ $bill->bil_status }}

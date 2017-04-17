@@ -33,7 +33,7 @@
             <div><span class="label label-info">{{ $departure->resource->rs_name }}</span></div>
           </div>
           <div class="col-md-3"><i class="fa fa-circle status-{{ $departure->book_status }}"></i> {{ $book_status[$departure->book_status] }}</div>
-          <div class="col-md-4">O/S: <span class="label label-success">{{ showMoney($departure->totalBillOS(), true) }}</span></div>
+          <div class="col-md-4">O/S: <span class="label label-success">{{ showMoney($departure->totalBillOS()) }}</span></div>
           <div class="col-md-1"><a href="{{ urlTenant(sprintf("bookings/%s", $departure->book_id)) }}" v-modal><i class="fa fa-eye"></i></a></div>
         </div>
       </li>

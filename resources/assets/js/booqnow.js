@@ -5,6 +5,10 @@ $(function() {
     format: 'dd-mm-yyyy',
   });
 
+  $('.datetimepicker').datetimepicker({
+    format: 'DD-MM-YYYY HH:mm',
+  });
+
   $('.yearpicker').datepicker({
     format: "yyyy",
     viewMode: "years",

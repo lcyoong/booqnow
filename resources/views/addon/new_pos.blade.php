@@ -21,7 +21,7 @@
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-6">
         <div class="row row-eq-height" v-for = "chunk in chunkedResources">
           <div v-for = "resource in chunk" class="col-md-2" style="padding: 10px 3px; margin-right: 2px; margin-bottom: 2px; background: #fdfdfd; text-align: center; font-size: 0.8em;">
             <div style="">
@@ -30,13 +30,17 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <ul class="list-group">
         <li class="list-group-item" v-for="item in items">
           <div class="row">
             <div class="col-md-6">@{{ item.text }}</div>
-            <div class="col-md-4">@{{ item.price }}</div>
-            <div class="col-md-2"><span @click="removeItem(item)"><i class="fa fa-trash"></i></span></div>
+            <div class="col-md-3">@{{ item.price }} x @{{ item.unit }}</div>
+            <div class="col-md-3">
+              <a href="#"><span @click="incrementItem(item)"><i class="fa fa-plus"></i></span></a>
+              <a href="#"><span @click="decrementItem(item)"><i class="fa fa-minus"></i></span></a>
+              <a href="#"><span @click="removeItem(item)"><i class="fa fa-trash"></i></span></a>
+            </div>
           </div>
           <input type="hidden" name="addon_id[]" :value="item.json">
         </li>
@@ -60,7 +64,7 @@ var app2 = new Vue({
     data: {
       items: [],
       resources: [],
-      gotonext: undefined,
+      gotonext: '{{ urlTenant(sprintf("bookings/%s", $booking->book_id)) }}',
     },
 
     computed: {
@@ -69,7 +73,7 @@ var app2 = new Vue({
         var sum = 0
 
         for( var i = 0; i < this.items.length; i++ ){
-          sum += parseFloat(this.items[i].price)
+          sum += parseFloat(this.items[i].price * this.items[i].unit)
         }
 
         return sum
@@ -104,9 +108,27 @@ var app2 = new Vue({
        */
       addItem: function(item) {
 
-        item.json = JSON.stringify({rs_name: item.text, rs_price: item.price, rs_id: item.id})
+        var found = false
 
-        this.items.push(item)
+        for (var i = 0; i < this.items.length; i++) {
+        	if (this.items[i].id === item.id) {
+            temp = this.items[i]
+            temp.unit ++
+            Vue.set(this.items, i, temp)
+            found = true
+        	}
+        }
+
+        if (found === false) {
+
+          item.unit = 1
+
+          this.items.push(item)
+
+        }
+
+        item.json = JSON.stringify({rs_name: item.text, rs_unit: item.unit, rs_price: item.price, rs_id: item.id})
+
       },
 
       /**
@@ -118,6 +140,38 @@ var app2 = new Vue({
 
         this.items.splice(index, 1)
       },
+
+      decrementItem: function(item) {
+
+        var index = this.items.indexOf(item)
+
+        if (item.unit > 1) {
+
+          temp = this.items[index]
+
+          temp.unit --
+
+          Vue.set(this.items, index, temp)
+
+        } else {
+
+          this.removeItem(item)
+
+        }
+
+      },
+
+      incrementItem: function(item) {
+
+        var index = this.items.indexOf(item)
+
+        temp = this.items[index]
+
+        temp.unit ++
+
+        Vue.set(this.items, index, temp)
+
+      }
 
     }
 });

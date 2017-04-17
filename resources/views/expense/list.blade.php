@@ -11,7 +11,7 @@
         <th>@lang('expense.exp_id')</th>
         <th>@lang('expense.exp_date')</th>
         <th>@lang('expense.exp_description')</th>
-        <th>{{ appendCurrency(trans('expense.exp_amount')) }}</th>
+        <th>{{ trans('expense.exp_amount') }}</th>
         <th>@lang('expense.exp_category')</th>
         <th>@lang('expense.exp_memo')</th>
         <th>@lang('expense.exp_account')</th>

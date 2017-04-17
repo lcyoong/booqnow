@@ -26,7 +26,7 @@ class CodeRepository {
         $return = [''=> trans('form.select_any') ];
       }
 
-      return $return + array_column(Code::where('cod_group', '=', $group)->where('cod_status', '=', 'active')->get()->toArray(), 'cod_description', 'cod_key');
+      return $return + array_column(Code::where('cod_group', '=', $group)->where('cod_status', '=', 'active')->orderBy('cod_order', 'cod_description')->get()->toArray(), 'cod_description', 'cod_key');
     });
 
   }

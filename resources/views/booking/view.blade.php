@@ -36,7 +36,7 @@
           </h4>
         </div>
         <div class="col-md-3">
-          <span class="label label-success">{{ showMoney($bill->bil_gross + $bill->bil_tax, true) }}</span>
+          <span class="label label-success">{{ showMoney($bill->bil_gross + $bill->bil_tax) }}</span>
         </div>
         <div class="col-md-3">
           {{ showDate($bill->bil_date) }}

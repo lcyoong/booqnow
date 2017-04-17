@@ -42,6 +42,7 @@ class SingleTenantTableSeeder extends Seeder
         ['bs_id'=>1, 'bs_description' => 'Online', 'created_by' => 1],
         ['bs_id'=>2, 'bs_description' => 'Walk-in', 'created_by' => 1],
         ['bs_id'=>3, 'bs_description' => 'Agent', 'created_by' => 1],
+        ['bs_id'=>4, 'bs_description' => 'Auto-Booking', 'created_by' => 1],
       ]);
 
       DB::table('roles')->insert([
@@ -61,6 +62,7 @@ class SingleTenantTableSeeder extends Seeder
         ['id'=>7, 'name' => 'customer', 'display_name' => 'Customers'],
         ['id'=>8, 'name' => 'resource', 'display_name' => 'Resources'],
         ['id'=>9, 'name' => 'report', 'display_name' => 'Reports'],
+        ['id'=>10, 'name' => 'accounting', 'display_name' => 'Accounting'],
       ]);
 
       DB::table('role_user')->insert([
@@ -76,6 +78,7 @@ class SingleTenantTableSeeder extends Seeder
         ['role_id' => 2, 'permission_id'=>7],
         ['role_id' => 2, 'permission_id'=>8],
         ['role_id' => 2, 'permission_id'=>9],
+        ['role_id' => 2, 'permission_id'=>10],
 
         ['role_id' => 3, 'permission_id'=>4],
         ['role_id' => 3, 'permission_id'=>5],

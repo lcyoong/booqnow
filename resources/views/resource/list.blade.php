@@ -11,6 +11,7 @@
     <th>@lang('resource.rs_name')</th>
     <th>@lang('resource.rs_description')</th>
     <th>@lang('resource.rs_price')</th>
+    <th>@lang('resource.rs_label')</th>
     <th>@lang('resource.rs_status')</th>
     <th>@lang('form.actions')</th>
   </tr>
@@ -21,6 +22,7 @@
     <td>{{ $resource->rs_name }}</td>
     <td>{{ $resource->rs_description }}</td>
     <td>{{ showMoney($resource->rs_price) }}</td>
+    <td>{{ $resource->rs_label }}</td>
     <td>{{ $resource->rs_status }}</td>
     <td>
       <a href="{{ urlTenant(sprintf('resources/%s/edit', $resource->rs_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>

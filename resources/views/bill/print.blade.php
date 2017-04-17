@@ -97,20 +97,24 @@
 
 <table width="100%" style="font-size: 1.1em;">
   <tr>
-    <td width="80%" class="text-right bold">@lang('bill.bil_gross'):</td>
-    <td width="20%" class="text-right">{{ showMoney($bill->bil_gross) }}</td>
+    <td width="80%" class="text-right bold">{{ appendCurrency(trans('bill.bil_gross')) }}:</td>
+    <td width="20%" class="text-right">{{ showMoney($bill->bil_gross, false, 2) }}</td>
   </tr>
   <tr>
-    <td width="80%" class="text-right bold">@lang('bill.bil_tax'):</td>
-    <td width="20%" class="text-right">{{ showMoney($bill->bil_tax) }}</td>
+    <td width="80%" class="text-right bold">{{ appendCurrency(trans('bill.bil_tax')) }}:</td>
+    <td width="20%" class="text-right">{{ showMoney($bill->bil_tax, false, 2) }}</td>
   </tr>
   <tr>
-    <td width="80%" class="text-right bold">@lang('bill.grand_total'):</td>
-    <td width="20%" class="text-right">{{ showMoney($bill->bil_gross + $bill->bil_tax) }}</td>
+    <td width="80%" class="text-right bold">{{ appendCurrency(trans('bill.grand_total')) }}:</td>
+    <td width="20%" class="text-right">{{ showMoney($bill->total_amount, false, 2) }}</td>
   </tr>
   <tr>
-    <td width="80%" class="text-right bold">@lang('bill.bil_paid'):</td>
-    <td width="20%" class="text-right">{{ showMoney($bill->bil_paid) }}</td>
+    <td width="80%" class="text-right bold">{{ appendCurrency(trans('bill.bil_paid')) }}:</td>
+    <td width="20%" class="text-right">{{ showMoney($bill->bil_paid, false, 2) }}</td>
+  </tr>
+  <tr>
+    <td width="80%" class="text-right bold">{{ appendCurrency(trans('bill.outstanding')) }}:</td>
+    <td width="20%" class="text-right">{{ showMoney($bill->outstanding, false, 2) }}</td>
   </tr>
 </table>
 @endpush

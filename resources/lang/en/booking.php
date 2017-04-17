@@ -6,6 +6,7 @@ return [
   'view' => 'View Booking #:id',
   'edit' => 'Edit Booking #:id',
   'action' => 'Booking #:id',
+  'addons' => 'Booking Add-ons #:id',
   'nights' => 'nights',
   'bills' => 'Bills',
   'duration' => 'Duration',

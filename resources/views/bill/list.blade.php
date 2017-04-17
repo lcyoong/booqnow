@@ -12,8 +12,8 @@
         <th>@lang('bill.bil_customer_name')</th>
         <th>@lang('bill.bil_booking')</th>
         <th>@lang('bill.bil_date')</th>
-        <th>{{ appendCurrency(trans('bill.total')) }}</th>
-        <th>{{ appendCurrency(trans('bill.outstanding')) }}</th>
+        <th>{{ trans('bill.total') }}</th>
+        <th>{{ trans('bill.outstanding') }}</th>
         <th>@lang('bill.bil_status')</th>
         <th>@lang('form.actions')</th>
       </tr>
@@ -34,7 +34,7 @@
             <a v-modal href="{{ urlTenant('receipts/new/' . $item->bil_id) }}" title="@lang('form.pay')"><i class="fa fa-money"></i></a>
             <a href="{{ urlTenant(sprintf("bills/%s/print", $item->bil_id)) }}" target=_blank title="@lang('form.print')"><i class="fa fa-print"></i></a>
             <a v-modal href="{{ url(sprintf('trail/bills/%s', $item->bil_id)) }}" title="@lang('form.trail')"><i class="fa fa-history"></i></a>
-            <a v-modal href="{{ url(sprintf('comments/bills/%s', $item->bil_id)) }}" title="@lang('form.comments')"><i class="fa fa-comment-o"></i></a>
+            <!-- <a v-modal href="{{ url(sprintf('comments/bills/%s', $item->bil_id)) }}" title="@lang('form.comments')"><i class="fa fa-comment-o"></i></a> -->
           </td>
         </tr>
       @endforeach

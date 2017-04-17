@@ -1,9 +1,9 @@
 <?php
 
 return [
-  'list' => 'Customers',
-  'new' => 'New Customer',
-  'edit' => 'Edit Customer',
+  'list' => 'Guests',
+  'new' => 'New Guest',
+  'edit' => 'Edit Guest',
   'ltv' => 'LTV',
   'full_name' => 'Full name',
   'cus_country' => 'Country',

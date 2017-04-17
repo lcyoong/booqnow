@@ -241,7 +241,7 @@ class BookingController extends MainController
   {
     $booking = $this->repo_book->findById($book_id);
 
-    $this->page_title = trans('booking.action', ['id' => $booking->book_id]);
+    $this->page_title = trans('booking.addons', ['id' => $booking->book_id]);
 
     $agents = $this->agents();
 

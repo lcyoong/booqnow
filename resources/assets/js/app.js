@@ -11,6 +11,7 @@ require('fullcalendar');
 require('fullcalendar-scheduler');
 require('./notify');
 require('bootstrap-datepicker');
+require('eonasdan-bootstrap-datetimepicker');
 require('bootstrap-toggle');
 require('select2'); //require('./select2');
 require('./booqnow');

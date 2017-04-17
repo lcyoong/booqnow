@@ -38,7 +38,7 @@ class ResourceApiController extends ApiController
     } else {
       foreach ($list as $item)
       {
-        $return[] = ['id' => $item->rs_id, 'title' => $item->rs_name, 'price' => showMoney($item->rs_price, true)];
+        $return[] = ['id' => $item->rs_id, 'title' => $item->rs_name, 'price' => showMoney($item->rs_price)];
       }
     }
 

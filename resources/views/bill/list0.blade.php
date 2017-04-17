@@ -17,8 +17,8 @@
         <th>@lang('bill.bil_id')</th>
         <th>@lang('bill.bil_customer')</th>
         <th>@lang('bill.bil_date')</th>
-        <th>{{ appendCurrency(trans('bill.total')) }}</th>
-        <th>{{ appendCurrency(trans('bill.outstanding')) }}</th>
+        <th>{{ trans('bill.total') }}</th>
+        <th>{{ trans('bill.outstanding') }}</th>
         <th>@lang('form.actions')</th>
       </tr>
     </thead>

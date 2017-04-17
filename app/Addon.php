@@ -22,7 +22,7 @@ class Addon extends TenantModel
    */
   public function setAddDateAttribute($value)
   {
-      $this->attributes['add_date'] = Carbon::parse($value)->format('Y-m-d');
+      $this->attributes['add_date'] = Carbon::parse($value)->format('Y-m-d H:i:s');
   }
 
   /**
@@ -31,7 +31,7 @@ class Addon extends TenantModel
    */
   public function getAddDateAttribute($value)
   {
-    return Carbon::parse($value)->format('d-m-Y');
+    return Carbon::parse($value)->format('d-m-Y H:i:s');
   }
 
   /**

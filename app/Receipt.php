@@ -16,7 +16,7 @@ class Receipt extends TenantModel
 
   protected $primaryKey = 'rc_id';
 
-  protected $fillable = ['rc_customer', 'rc_bill', 'rc_date', 'rc_amount', 'rc_remark', 'rc_intremark', 'rc_reference', 'rc_method', 'rc_status', 'created_by'];
+  protected $fillable = ['rc_customer', 'rc_bill', 'rc_date', 'rc_amount', 'rc_remark', 'rc_intremark', 'rc_reference', 'rc_method', 'rc_status', 'rc_type', 'created_by'];
 
   /**
    * Mutator to set the formatted receipt date

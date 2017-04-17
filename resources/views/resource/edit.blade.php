@@ -2,7 +2,7 @@
 
 @prepend('content')
 <div id="resource-edit">
-  <a v-modal href="{{ url(sprintf('trail/resources/%s', $resource->rs_id)) }}" title="@lang('form.trail')"><i class="fa fa-history"></i></a>
+  <!-- <a v-modal href="{{ url(sprintf('trail/resources/%s', $resource->rs_id)) }}" title="@lang('form.trail')"><i class="fa fa-history"></i></a> -->
   <form-ajax action = "{{ urlTenant('resources/update') }}" method="POST" @startwait="startWait" @endwait="endWait">
     {{ Form::hidden('rs_id', $resource->rs_id) }}
     <div class="row">
@@ -10,6 +10,7 @@
       {{ Form::bsText('rs_price', trans('resource.rs_price'), $resource->rs_price) }}
     </div>
     <div class="row">
+      {{ Form::bsText('rs_label', trans('resource.rs_label'), $resource->rs_label) }}
       {{ Form::bsTextarea('rs_description', trans('resource.rs_description'), $resource->rs_description) }}
       {{ Form::bsSelect('rs_status', trans('resource.rs_status'), $rs_status, $resource->rs_status, ['class' => 'select2', 'style' => 'width:100%']) }}
     </div>

@@ -6,7 +6,7 @@
 <form-ajax action = "{{ urlTenant('bookings/new') }}" method="POST" reload-on-complete=true @startwait="startWait" @endwait="endWait">
   {{ Form::hidden('book_from', $start) }}
   {{ Form::hidden('book_to', $end) }}
-  {{ Form::hidden('book_status', 'active') }}
+  {{ Form::hidden('book_status', 'hold') }}
   {{ Form::hidden('book_resource', '', ['v-model' => 'resource.rs_id']) }}
   {{ Form::hidden('book_customer', null, ['v-model'=>'book_customer']) }}
   <!--Section 1 - Select customer-->

@@ -45,6 +45,7 @@ class TenantApp extends Migration
           $table->integer('rs_type');
           $table->decimal('rs_price', 10, 2)->default(0);
           $table->integer('rs_order')->default(0);
+          $table->string('rs_label')->nullable();
           $table->string('rs_status')->default('active');
           $table->integer('created_by');
           $table->timestamps();

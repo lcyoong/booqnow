@@ -5,5 +5,5 @@ return [
   'edit' => 'Edit Resource Type',
   'new' => 'New Resource Type',
   'rty_name' => 'Name',
-  'rty_price' => 'Base Price',
+  'rty_price' => 'Rate',
 ];

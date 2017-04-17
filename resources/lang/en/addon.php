@@ -3,7 +3,7 @@
 return [
   'new' => 'New :type',
   'add_booking' => 'Booking #',
-  'add_resource' => 'Resource',
+  'add_resource' => 'Item',
   'add_customer' => 'Customer',
   'add_date' => 'Date',
   'add_pax' => 'Pax',

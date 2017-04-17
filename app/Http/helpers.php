@@ -27,6 +27,16 @@ function showDate($date)
 }
 
 /**
+ * Format date/time
+ * @param  string $date - Valid date string
+ * @return string
+ */
+function showDateTime($date)
+{
+  return Carbon::parse($date)->format('d, M Y @ H:i');
+}
+
+/**
  * Return today's date
  * @param  string $format - Valid PHP date format
  * @return string
@@ -53,9 +63,11 @@ function dayDiff($from, $to)
  * @param  boolean $withCurrency - to append default currency or not
  * @return string
  */
-function showMoney($value, $withCurrency = false)
+function showMoney($value, $withCurrency = false, $dec = null)
 {
   $decimal = config('myapp.hide_cent') ? 0 : 2;
+
+  $decimal = !is_null($dec) ? $dec : $decimal;
 
   return ($withCurrency ? config('myapp.base_currency') . ' ' : '') . number_format($value, $decimal);
 }

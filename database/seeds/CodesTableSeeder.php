@@ -20,7 +20,7 @@ class CodesTableSeeder extends Seeder
         ['cod_group' => 'pay_method','cod_key' => 'ccdc', 'cod_description' => 'Credit/Debit Card', 'created_by' => 1],
         ['cod_group' => 'book_status','cod_key' => 'checkedin', 'cod_description' => 'Checked-In', 'created_by' => 1],
         ['cod_group' => 'book_status','cod_key' => 'checkedout', 'cod_description' => 'Checked-Out', 'created_by' => 1],
-        ['cod_group' => 'book_status','cod_key' => 'active', 'cod_description' => 'Active', 'created_by' => 1],
+        ['cod_group' => 'book_status','cod_key' => 'confirmed', 'cod_description' => 'Confirmed', 'created_by' => 1],
         ['cod_group' => 'book_status','cod_key' => 'hold', 'cod_description' => 'Hold', 'created_by' => 1],
         ['cod_group' => 'book_status','cod_key' => 'cancelled', 'cod_description' => 'Cancelled', 'created_by' => 1],
         ['cod_group' => 'cus_status','cod_key' => 'active', 'cod_description' => 'Active', 'created_by' => 1],
@@ -35,6 +35,8 @@ class CodesTableSeeder extends Seeder
         ['cod_group' => 'rep_status','cod_key' => 'completed', 'cod_description' => 'Completed', 'created_by' => 1],
         ['cod_group' => 'rep_status','cod_key' => 'error', 'cod_description' => 'With error', 'created_by' => 1],
         ['cod_group' => 'rep_status','cod_key' => 'cancelled', 'cod_description' => 'Cancelled', 'created_by' => 1],
+        ['cod_group' => 'rc_type','cod_key' => 'deposit', 'cod_description' => 'Deposit', 'created_by' => 1],
+        ['cod_group' => 'rc_type','cod_key' => 'others', 'cod_description' => 'Non-Deposit', 'created_by' => 1],
       ]);
     }
 }

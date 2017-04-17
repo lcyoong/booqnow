@@ -18,7 +18,7 @@
         <li class="list-group-item" v-for="item in items" v-if="item.resource.rs_type === type.rty_id">
           <div class="row">
             <div class="col-md-2">@{{ item.resource.rs_name }}</div>
-            <div class="col-md-2">{{ Form::datepicker('add_date', trans('addon.add_date'), null, ['v-model' => 'item.add_date']) }}</div>
+            <div class="col-md-2">{{ Form::datepicker('add_date', trans('addon.add_date'), null, ['class' => 'datetimepicker form-control', 'v-model' => 'item.add_date']) }}</div>
             <div class="col-md-1">{{ Form::number('add_unit', null, ['v-model' => 'item.add_unit', 'class' => 'form-control', 'min' => 1, 'max' => 20]) }}</div>
             <div class="col-md-2">{{ Form::text('add_reference', null, ['v-model' => 'item.add_reference', 'class' => 'form-control', 'placeholder' => trans('addon.add_reference')]) }}</div>
             <div class="col-md-2">{{ Form::selectBasic('add_agent', trans('addon.add_agent'), $agents, null, ['v-model' => 'item.add_agent', 'class' => 'form-control select2']) }}</div>

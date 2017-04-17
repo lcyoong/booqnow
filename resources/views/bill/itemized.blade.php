@@ -5,17 +5,17 @@
       <th>@lang('bill.bili_description')</th>
       <th>@lang('bill.bili_unit_price')</th>
       <th>@lang('bill.bili_unit')</th>
-      <th>{{ appendCurrency(trans('bill.total')) }}</th>
-      @if(!config('myapp.hide_items_tax'))<th>{{ appendCurrency(trans('bill.bili_tax')) }}</th>@endif
+      <th>{{ trans('bill.bili_gross') }}</th>
+      @if(!config('myapp.hide_items_tax'))<th>{{ trans('bill.bili_tax') }}</th>@endif
     </tr>
   </thead>
   <tbody>
     @foreach($items as $item)
       <tr>
-        <td class="col-md-3">{{ $item->bili_description }}</td>
+        <td class="col-md-2">{{ $item->bili_description }}</td>
         <td class="col-md-2">{{ showMoney($item->bili_unit_price) }}</td>
-        <td class="col-md-1">{{ $item->bili_unit }}</td>
-        <td class="col-md-2">{{ showMoney($item->total_amount) }}</td>
+        <td class="col-md-2">{{ $item->bili_unit }}</td>
+        <td class="col-md-2">{{ showMoney($item->bili_gross) }}</td>
         @if(!config('myapp.hide_items_tax'))<td>{{ showMoney($item->bili_tax) }}</td>@endif
       </tr>
     @endforeach
