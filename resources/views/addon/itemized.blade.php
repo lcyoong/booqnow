@@ -15,7 +15,7 @@
     @if($item->resource->rs_type == $type->rty_id)
       <tr>
         <td>{{ $item->resource->rs_name }}</td>
-        <td>{{ showDateTime($item->rc_date) }}</td>
+        <td>{{ showDateTime($item->add_date) }}</td>
         <!-- <td>{{ $item->add_pax }}</td> -->
         <td>{{ $item->add_unit }}</td>
         <td>{{ $item->add_reference }}</td>
