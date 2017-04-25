@@ -11,7 +11,6 @@
       mounted: function () {
         var vm = this
 
-        alert(this.value)
         $(this.$el)
           // init select2
           .select2({ data: this.options})

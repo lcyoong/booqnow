@@ -4,7 +4,8 @@
       <th>@lang('addon.add_resource')</th>
       <th>@lang('addon.add_date')</th>
       <!-- <th>@lang('addon.add_pax')</th> -->
-      <th>@lang('addon.add_unit')</th>
+      <th>@lang('addon.add_pax')</th>
+      <th>@lang('addon.add_pax_child')</th>
       <th>@lang('addon.add_reference')</th>
       <th>@lang('addon.add_agent')</th>
       <th>@lang('addon.add_status')</th>
@@ -17,7 +18,8 @@
         <td>{{ $item->resource->rs_name }}</td>
         <td>{{ showDateTime($item->add_date) }}</td>
         <!-- <td>{{ $item->add_pax }}</td> -->
-        <td>{{ $item->add_unit }}</td>
+        <td>{{ $item->add_pax }}</td>
+        <td>{{ $item->add_pax_child }}</td>
         <td>{{ $item->add_reference }}</td>
         <td>{{ isset($item->agent) ? $item->agent->ag_name : trans('form.na') }}</td>
         <td>{{ $add_status[$item->add_status] }}</td>

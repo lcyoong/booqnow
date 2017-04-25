@@ -206,7 +206,9 @@ class AddonController extends MainController
    */
   private function createBillItem($item, $input)
   {
-    $unit = array_get($input, 'add_unit', 1);
+    // $unit = array_get($input, 'add_unit', 1);
+
+    $unit = array_get($input, 'add_pax', 1) + array_get($input, 'add_pax_child', 0);
 
     $unit_price = array_get($input, 'add_price', $item->rs_price);
 

@@ -27,6 +27,12 @@
       {{ Form::hidden('book_agent', '') }}
       </span>
       {{ Form::bsNumber('book_pax', trans('booking.book_pax'), $booking->book_pax, ['min' => 1, 'max'=>20]) }}
+      {{ Form::bsNumber('book_pax_child', trans('booking.book_pax_child'), $booking->book_pax_child, ['min' => 0, 'max'=>20]) }}
+    </div>
+    <div class="row">
+      {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), $booking->book_remarks, ['rows' => 4]) }}
+      {{ Form::bsText('book_reference', trans('booking.book_reference'), $booking->book_reference) }}
+      {{ Form::bsSelect('book_status', trans('booking.book_status'), $book_status, $booking->book_status, ['style' => 'width:100%', 'vmodel' => 'booking.book_status']) }}
       <div class="col-md-3">
         <div class="form-group">
           <label for="book_special" class="control-label">@lang('booking.book_special')</label>
@@ -36,11 +42,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      {{ Form::bsText('book_reference', trans('booking.book_reference'), $booking->book_reference) }}
-      {{ Form::bsSelect('book_status', trans('booking.book_status'), $book_status, $booking->book_status, ['style' => 'width:100%', 'vmodel' => 'booking.book_status']) }}
-      {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), $booking->book_remarks, ['rows' => 4]) }}
     </div>
     {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
     <a href="{{ url('bookings') }}">{{ Form::button(trans('form.cancel'), ['class' => 'btn btn-primary btn-sm']) }}</a>

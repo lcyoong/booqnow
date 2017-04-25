@@ -19,14 +19,15 @@
     @if('myapp.single_bill_booking')
     {{ Form::hidden('add_to_bill', $add_to_bill) }}
     @endif
-    {{ Form::hidden('add_pax', 1) }}
+    {{ Form::hidden('add_unit', 1) }}
     <div class="row">
       {{ Form::bsSelect2('add_resource', trans('addon.add_resource'), [':options' => 'resources', 'style' => 'width: 100%', 'v-model' => 'add_resource', '@input' => 'updatePrice']) }}
-      {{ Form::bsNumber('add_unit', trans('addon.add_unit'), 1, ['min' => 1, 'max'=>20]) }}
+      {{ Form::bsNumber('add_pax', trans('addon.add_pax'), 1, ['min' => 1, 'max'=>20]) }}
+      {{ Form::bsNumber('add_pax_child', trans('addon.add_pax_child'), 0, ['min' => 0, 'max'=>20]) }}
       {{ Form::bsText('add_price', trans('resource.rs_price'), null, ['v-model' => 'add_price']) }}
-      {{ Form::bsDate('add_date', trans('addon.add_date'), today('d-m-Y 12:00'), ['class' => 'datetimepicker form-control']) }}
     </div>
     <div class="row">
+      {{ Form::bsDate('add_date', trans('addon.add_date'), today('d-m-Y 12:00'), ['class' => 'datetimepicker form-control']) }}
       {{ Form::bsText('add_reference', trans('addon.add_reference')) }}
       {{ Form::bsSelect('add_agent', trans('addon.add_agent'), $agents, null, ['class' => 'form-control select2']) }}
       <!-- {{ Form::bsText('add_tracking', trans('addon.add_tracking')) }} -->

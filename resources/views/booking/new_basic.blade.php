@@ -43,12 +43,11 @@
       {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources, null, ['v-model' => 'source', '@change' => 'switchSource']) }}
       {{ Form::bsSelect2('book_agent', trans('booking.book_agent'), ['style' => 'width: 100%', 'id' => 'book_agent', ':options' => 'agents', ':value' => 'agent']) }}
       {{ Form::bsNumber('book_pax', trans('booking.book_pax'), 1, ['min' => 1, 'max'=>20]) }}
-      {{ Form::bsDate('book_expiry', trans('booking.book_expiry'), null, ['class' => 'datetimepicker form-control']) }}
+      {{ Form::bsNumber('book_pax_child', trans('booking.book_pax_child'), 0, ['min' => 0, 'max'=>20]) }}
       <!-- {{ Form::bsText('book_tracking', trans('booking.book_tracking')) }} -->
     </div>
     <div class="row">
-      {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), null, ['rows' => 3]) }}
-      {{ Form::bsText('book_reference', trans('booking.book_reference')) }}
+      {{ Form::bsDate('book_expiry', trans('booking.book_expiry'), null, ['class' => 'datetimepicker form-control']) }}
       <div class="col-md-3">
         <div class="form-group">
           <label for="book_special" class="control-label">@lang('booking.book_special')</label>
@@ -58,6 +57,8 @@
           </div>
         </div>
       </div>
+      {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), null, ['rows' => 3]) }}
+      {{ Form::bsText('book_reference', trans('booking.book_reference')) }}
     </div>
     <table class="table">
       <thead>

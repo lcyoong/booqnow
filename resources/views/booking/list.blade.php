@@ -13,6 +13,7 @@
     <th>@lang('booking.book_resource')</th>
     <th>@lang('booking.duration')</th>
     <th>@lang('booking.book_pax')</th>
+    <th>@lang('booking.book_pax_child')</th>
     <th>@lang('booking.book_reference')</th>
     <th>@lang('booking.book_agent')</th>
     <!-- <th>@lang('booking.book_tracking')</th> -->
@@ -28,6 +29,7 @@
     <td>{{ $item->resource->rs_name }}</td>
     <td><span class="label label-info">{{ dayDiff($item->book_from, $item->book_to) }} @lang('booking.nights')</span> {{ showDate($item->book_from) }} - {{ showDate($item->book_to) }}</td>
     <td>{{ $item->book_pax }}</td>
+    <td>{{ $item->book_pax_child }}</td>
     <td>{{ $item->book_reference }}</td>
     <td>{{ isset($item->agent) ? $item->agent->ag_name : null }}</td>
     <!-- <td>{{ $item->book_tracking }}</td> -->

@@ -33,6 +33,7 @@ class Booking extends Migration
           $table->datetime('book_checkout')->nullable();
           $table->datetime('book_expiry')->nullable();
           $table->integer('book_pax')->default(0);
+          $table->integer('book_pax_child')->default(0);
           $table->string('book_reference')->nullable();
           $table->string('book_tracking')->nullable();
           $table->string('book_status')->default('hold');
@@ -53,6 +54,7 @@ class Booking extends Migration
           $table->string('add_customer_name')->nullable();
           $table->datetime('add_date')->nullable();
           $table->integer('add_pax')->default(0);
+          $table->integer('add_pax_child')->default(0);
           $table->integer('add_unit')->default(0);
           $table->string('add_reference')->nullable();
           $table->string('add_tracking')->nullable();

@@ -9,7 +9,7 @@
         {{ showDate($booking->book_from) }} - {{ showDate($booking->book_to) }}
       </div>
       <div class="col-md-3">
-        {{ dayDiff($booking->book_from, $booking->book_to) }} @lang('booking.nights') x {{ $booking->book_pax }} @lang('booking.book_pax')
+        {{ dayDiff($booking->book_from, $booking->book_to) }} @lang('booking.nights') x {{ $booking->book_pax }} @lang('booking.book_pax') + {{ $booking->book_pax_child }} @lang('booking.book_pax_child')
       </div>
       <div class="col-md-3">
         <i class="fa fa-circle status-{{ $booking->book_status }}"></i> {{ array_get($book_status, $booking->book_status) }}
