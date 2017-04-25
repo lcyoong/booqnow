@@ -16,7 +16,7 @@ class CountryRepository {
   {
     return Cache::remember('countries', 90, function()
     {
-      return Country::orderBy('coun_name', 'asc')->toDropDown('coun_code', 'coun_name');
+      return Country::orderBy('coun_name', 'asc')->where('coun_active', '=', 1)->toDropDown('coun_code', 'coun_name');
     });
 
   }
