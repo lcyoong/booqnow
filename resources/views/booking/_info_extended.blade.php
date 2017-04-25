@@ -23,7 +23,7 @@
         {{ Form::showField(array_get($booking_sources, $booking->book_source), trans('booking.book_source')) }}
         {{ Form::showField( isset($booking->agent) ? $booking->agent->ag_name : '', trans('booking.book_agent')) }}
         {{ Form::showField($booking->book_pax, trans('booking.book_pax')) }}
-        {{ Form::showField($booking->book_reference, trans('booking.book_reference')) }}
+        {{ Form::showField(!is_null($booking->book_expiry) ? showHumanDiff($booking->book_expiry) : null, trans('booking.book_expiry')) }}
         <!-- {{ Form::showField($booking->book_tracking, trans('booking.book_tracking')) }} -->
       </div>
 
@@ -31,6 +31,7 @@
         {{ Form::showField($booking->creator->name, trans('form.created_by')) }}
         {{ Form::showField($booking->created_at, trans('form.created_at')) }}
         {{ Form::showField($booking->book_remarks, trans('booking.book_remarks')) }}
+        {{ Form::showField($booking->book_reference, trans('booking.book_reference')) }}
       </div>
 
       <div class="row">

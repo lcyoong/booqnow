@@ -31,6 +31,7 @@ class Booking extends Migration
           $table->integer('book_agent')->nullable();
           $table->datetime('book_checkin')->nullable();
           $table->datetime('book_checkout')->nullable();
+          $table->datetime('book_expiry')->nullable();
           $table->integer('book_pax')->default(0);
           $table->string('book_reference')->nullable();
           $table->string('book_tracking')->nullable();

@@ -21,7 +21,7 @@ body { padding-top: 50px; margin-bottom: 60px;}
   background-color: #f5f5f5;
 }
 
-.value { font-weight: bold; padding-bottom: 5px; }
+.value { font-weight: bolder; padding-bottom: 5px; color: #000000}
 
 .fc-time{ display : none; }
 
@@ -62,4 +62,8 @@ body { padding-top: 50px; margin-bottom: 60px;}
 
 .special-color {
   color: #FFCC00;
+}
+
+.navbar-fixed-top-l2{
+  top: 40px;
 }

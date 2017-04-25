@@ -10,14 +10,16 @@
 
       mounted: function () {
         var vm = this
+
+        alert(this.value)
         $(this.$el)
-          .val(this.value)
           // init select2
-          .select2({ data: this.options })
+          .select2({ data: this.options})
           // emit event on change.
           .on('change', function () {
             vm.$emit('input', this.value)
           })
+          .val(this.value)
       },
 
       watch: {
@@ -25,6 +27,7 @@
           // update value
           $(this.$el).val(value)
         },
+
         options: function (options) {
           // update options
           $(this.$el).select2({ data: options })

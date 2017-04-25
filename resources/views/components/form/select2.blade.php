@@ -7,7 +7,7 @@
         {{ $key }} = "{{ $value }}"
         @endforeach
       >
-        <option disabled value="">Select one</option>
+      <option value="">--</option>
       </vue-select>
       </div>
   </div>

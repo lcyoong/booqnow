@@ -37,6 +37,9 @@ class CodesTableSeeder extends Seeder
         ['cod_group' => 'rep_status','cod_key' => 'cancelled', 'cod_description' => 'Cancelled', 'created_by' => 1],
         ['cod_group' => 'rc_type','cod_key' => 'deposit', 'cod_description' => 'Deposit', 'created_by' => 1],
         ['cod_group' => 'rc_type','cod_key' => 'others', 'cod_description' => 'Non-Deposit', 'created_by' => 1],
+        ['cod_group' => 'ag_type','cod_key' => 'sales', 'cod_description' => 'Sales', 'created_by' => 1],
+        ['cod_group' => 'ag_type','cod_key' => 'agents', 'cod_description' => 'Agents', 'created_by' => 1],
+        ['cod_group' => 'ag_type','cod_key' => 'suppliers', 'cod_description' => 'Suppliers', 'created_by' => 1],
       ]);
     }
 }

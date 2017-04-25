@@ -16,7 +16,8 @@ class CreateAgentsTable extends Migration
         Schema::create('agents', function (Blueprint $table) {
             $table->increments('ag_id');
             $table->string('ag_name');
-            $table->text('ag_remarks');
+            $table->string('ag_type');
+            $table->text('ag_remarks')->nullable();
             $table->string('ag_status')->default('active');
             $table->integer('created_by');
             $table->timestamps();

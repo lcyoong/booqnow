@@ -32,25 +32,23 @@
     @include('customer.profile', ['customer' => $customer])
     @endif -->
     {{ Form::hidden('bil_customer_name', null, ['v-model' => 'customer.full_name']) }}
-    <h4>
-      <i class="fa fa-user"></i> @{{ customer.full_name }}
-    </h4>
-    <div class="row">
+    <h4><i class="fa fa-user"></i> @{{ customer.full_name }} <a href="#" @click = "selectCustomer" class="btn-sm"><i class="fa fa-edit"></i> Change customer</a></h4>
+    <!-- <div class="row">
       <div class="col-md-3"><i class="fa fa-envelope-o"></i> @{{ customer.cus_email }}</div>
       <div class="col-md-3"><i class="fa fa-phone"></i> @{{ customer.cus_contact1 }}</div>
       <div class="col-md-3"><i class="fa fa-globe"></i>@{{ customer.cus_country }}</div>
-    </div>
-    <button @click = "selectCustomer" class="btn btn-primary btn-sm">Change customer</button>
+    </div> -->
 
     <div class="row">
-      {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources, config('myapp.default_booking_source')) }}
-      {{ Form::bsSelect('book_agent', trans('booking.book_agent'), $agents, null, ['class' => 'form-control select2']) }}
+      {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources, null, ['v-model' => 'source', '@change' => 'switchSource']) }}
+      {{ Form::bsSelect2('book_agent', trans('booking.book_agent'), ['style' => 'width: 100%', 'id' => 'book_agent', ':options' => 'agents', ':value' => 'agent']) }}
       {{ Form::bsNumber('book_pax', trans('booking.book_pax'), 1, ['min' => 1, 'max'=>20]) }}
-      {{ Form::bsText('book_reference', trans('booking.book_reference')) }}
+      {{ Form::bsDate('book_expiry', trans('booking.book_expiry'), null, ['class' => 'datetimepicker form-control']) }}
       <!-- {{ Form::bsText('book_tracking', trans('booking.book_tracking')) }} -->
     </div>
     <div class="row">
       {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), null, ['rows' => 3]) }}
+      {{ Form::bsText('book_reference', trans('booking.book_reference')) }}
       <div class="col-md-3">
         <div class="form-group">
           <label for="book_special" class="control-label">@lang('booking.book_special')</label>
@@ -97,6 +95,7 @@ new Vue({
       this.init()
       this.getCustomers()
       this.getResource()
+      this.switchSource()
       // this.selectCustomer()
     },
 
@@ -105,11 +104,14 @@ new Vue({
       section2: false,
       customer: {cus_id: '', cus_email: '', cus_contact1: '', full_name: ''},
       customers : [],
+      agents: [],
+      agent: '',
       customer_label: '',
       book_customer: '',
       resource: {},
       days: [],
       value: '',
+      source: {{ config('myapp.default_booking_source') }},
       nights: {{ dayDiff($start, $end) }},
     },
 
@@ -122,53 +124,84 @@ new Vue({
     },
 
     methods: {
-        getCustomers: function () {
-          this.$http.get("{{ urlTenant("api/v1/customers/active") }}")
-              .then(function (response) {
-                this.customers = response.data
-              });
-        },
+      switchSource: function () {
 
-        getResource: function () {
-          this.$http.get("{{ urlTenant("api/v1/resources/$resource_id/$start/$end") }}")
-              .then(function (response) {
-                this.resource = response.data.resource
-                this.days = response.data.days
-                console.log(response.data)
-              });
-        },
+        $('#book_agent option[value!=""]').remove()
 
-        setCustomer: function (value) {
-          this.book_customer = value.id
-        },
+        if (this.source == 3) {
 
-        customerReady: function (value) {
-          this.$http.get("api/v1/customers/" + value)
-              .then(function (response) {
-                this.customer = response.data
-              });
-          this.section2 = true
-          this.section1 = false
-          $(function() {
-            $('.toggleIt').bootstrapToggle()
-            $('.select2').select2()
-          })
-        },
+          this.getAgents('agents')
 
-        selectCustomer: function () {
-          this.section2 = false
-          this.section1 = true
-          this.book_customer = ''
-          this.customer = {}
-        },
+        } else if (this.source == 1) {
 
-        init: function () {
-          this.section2 = false
-          this.section1 = true
-          this.book_customer = '{{ $cus_id }}'
+          this.getAgents('sales')
+
+        } else {
+
+          this.agents = []
+
         }
 
+      },
 
+      getCustomers: function () {
+
+        this.$http.get("{{ urlTenant("api/v1/customers/active") }}")
+            .then(function (response) {
+              this.customers = response.data
+            })
+
+      },
+
+      getAgents: function (type) {
+
+        this.$http.get("{{ urlTenant("api/v1/agents/") }}/" + type)
+            .then(function (response) {
+              this.agents = response.data
+            })
+
+      },
+
+      getResource: function () {
+        this.$http.get("{{ urlTenant("api/v1/resources/$resource_id/$start/$end") }}")
+            .then(function (response) {
+              this.resource = response.data.resource
+              this.days = response.data.days
+            });
+      },
+
+      setCustomer: function (value) {
+        this.book_customer = value.id
+      },
+
+      customerReady: function (value) {
+        this.$http.get("api/v1/customers/" + value)
+            .then(function (response) {
+              this.customer = response.data
+            });
+        this.section2 = true
+        this.section1 = false
+        $(function() {
+          $('.toggleIt').bootstrapToggle()
+          $('.select2').select2()
+          $('.datetimepicker').datetimepicker({
+            format: 'DD-MM-YYYY HH:mm',
+          });
+        })
+      },
+
+      selectCustomer: function () {
+        this.section2 = false
+        this.section1 = true
+        this.book_customer = ''
+        this.customer = {}
+      },
+
+      init: function () {
+        this.section2 = false
+        this.section1 = true
+        this.book_customer = '{{ $cus_id }}'
+      }
     },
 });
 </script>

@@ -4,7 +4,8 @@
 <div id="add-pos">
 <form-ajax action = "{{ urlTenant('addons/new/list') }}" method="POST" :go-to-next = "gotonext" @startwait="startWait" @endwait="endWait">
   @if (!empty($booking))
-  @include('customer.profile', ['customer' => $booking->customer])
+  <!-- @include('customer.profile', ['customer' => $booking->customer]) -->
+  <h4><i class="fa fa-user"></i> {{ $booking->customer->full_name }}</h4>
 
   {{ Form::hidden('add_booking', $booking->book_id) }}
   {{ Form::hidden('add_customer', $booking->book_customer) }}
@@ -34,8 +35,8 @@
         <ul class="list-group">
         <li class="list-group-item" v-for="item in items">
           <div class="row">
-            <div class="col-md-6">@{{ item.text }}</div>
-            <div class="col-md-3">@{{ item.price }} x @{{ item.unit }}</div>
+            <div class="col-md-5">@{{ item.text }}</div>
+            <div class="col-md-4">@{{ item.price }} x @{{ item.unit }}</div>
             <div class="col-md-3">
               <a href="#"><span @click="incrementItem(item)"><i class="fa fa-plus"></i></span></a>
               <a href="#"><span @click="decrementItem(item)"><i class="fa fa-minus"></i></span></a>
@@ -64,7 +65,7 @@ var app2 = new Vue({
     data: {
       items: [],
       resources: [],
-      gotonext: '{{ urlTenant(sprintf("bookings/%s", $booking->book_id)) }}',
+      gotonext: '{{ !empty($booking) ? urlTenant(sprintf("bookings/%s", $booking->book_id)) : '' }}',
     },
 
     computed: {

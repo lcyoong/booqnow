@@ -46,6 +46,7 @@ class BookingApiController extends ApiController
         'title' => $item->customer->full_name,
         'start' => Carbon::parse($item->book_from)->format('Y-m-d'),
         'end' => Carbon::parse($item->book_to)->format('Y-m-d'),
+        'expiry' => Carbon::parse($item->book_expiry)->format('Y-m-d H:i:s'),
         'resourceId' => $item->book_resource,
         'special' => $item->book_special,
         'status' => $item->book_status,

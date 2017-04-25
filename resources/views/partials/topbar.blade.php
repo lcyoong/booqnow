@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -10,7 +10,7 @@
       <a class="navbar-brand" href="#">{{ config('app.name') }}</a>
     </div>
     @if(auth()->check())
-    <div id="navbar" class="navbar-collapse collapse">
+    <div id="topbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         @if(config('myapp.multi_tenant'))
         <pick-merchant list="{{ json_encode($merchants) }}" default="@lang('nav.pick_merchant')"></pick-merchant>

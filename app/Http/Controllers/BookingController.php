@@ -78,7 +78,7 @@ class BookingController extends MainController
 
     $slot = $this->selectedSlot($input);
 
-    $agents = $this->agents();
+    $agents = $this->agents('agents');
 
     $resource_id = array_get($slot, 'resource_id');
 
@@ -107,11 +107,13 @@ class BookingController extends MainController
 
     $rooms = (new ResourceRepository)->ofType(1)->getDropDown('rs_id', 'rs_name');
 
-    $agents = $this->agents();
+    $agents = $this->agents('agents');
+
+    $sales = $this->agents('sales');
 
     $this->page_title = trans('booking.edit', ['id' => $book_id]);
 
-    $this->vdata(compact('book_id', 'booking', 'rooms', 'agents'));
+    $this->vdata(compact('book_id', 'booking', 'rooms', 'agents', 'sales'));
 
     return view('booking.edit', $this->vdata);
   }
@@ -243,7 +245,7 @@ class BookingController extends MainController
 
     $this->page_title = trans('booking.addons', ['id' => $booking->book_id]);
 
-    $agents = $this->agents();
+    $agents = $this->agents('suppliers');
 
     $this->vdata(compact('booking', 'book_id', 'agents'));
 
@@ -312,8 +314,8 @@ class BookingController extends MainController
    * Return agents list
    * @return array
    */
-  private function agents()
+  private function agents($type)
   {
-    return (new AgentRepository)->getDropDown('ag_id', 'ag_name');
+    return (new AgentRepository)->ofType($type)->getDropDown('ag_id', 'ag_name');
   }
 }

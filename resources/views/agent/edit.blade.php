@@ -11,7 +11,8 @@
   </div>
   <div class="row">
     {{ Form::bsText('ag_name', trans('agent.ag_name'), $agent->ag_name) }}
-    {{ Form::bsText('ag_remarks', trans('agent.ag_remarks'), $agent->ag_remarks) }}
+    {{ Form::bsSelect('ag_type', trans('agent.ag_type'), $ag_type, $agent->ag_type) }}
+    <!-- {{ Form::bsText('ag_remarks', trans('agent.ag_remarks'), $agent->ag_remarks) }} -->
     {{ Form::bsSelect('ag_status', trans('agent.ag_status'), $rs_status, $agent->ag_status) }}
   </div>
   {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}

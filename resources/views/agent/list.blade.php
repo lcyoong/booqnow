@@ -10,7 +10,7 @@
       <tr>
         <th>@lang('agent.ag_id')</th>
         <th>@lang('agent.ag_name')</th>
-        <th>@lang('agent.ag_remarks')</th>
+        <th>@lang('agent.ag_type')</th>
         <th>@lang('agent.ag_status')</th>
         <th>@lang('form.actions')</th>
       </tr>
@@ -20,7 +20,7 @@
         <tr>
           <td>{{ $item->ag_id }}</td>
           <td>{{ $item->ag_name }}</td>
-          <td>{{ $item->ag_remarks }}</td>
+          <td>{{ array_get($ag_type, $item->ag_type, null) }}</td>
           <td>{{ $item->ag_status }}</td>
           <td>
             <a v-modal href="{{ url(sprintf('agents/%s/edit', $item->ag_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>

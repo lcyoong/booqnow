@@ -1,18 +1,11 @@
 @extends($layout)
 
 @prepend('content')
-<div id="booking-edit">
+<div id="booking-edit" v-cloak>
   <!-- <a v-modal href="{{ urlTenant(sprintf('trail/bookings/%s', $booking->book_id)) }}"><i class="fa fa-history"></i></a>
   <a class="icon-button-margin" v-modal href="{{ urlTenant(sprintf('comments/bookings/%s', $booking->book_id)) }}" title="@lang('form.comments')"><i class="fa fa-comment-o"></i></a> -->
   <!-- Customer info -->
-  <h4>
-    <i class="fa fa-user"></i> {{ $booking->customer->full_name }}
-  </h4>
-  <div class="row">
-    <div class="col-md-3"><i class="fa fa-envelope-o"></i> {{ $booking->customer->cus_email }}</div>
-    <div class="col-md-3"><i class="fa fa-phone"></i> {{ $booking->customer->cus_contact1 }}</div>
-    <div class="col-md-3"><i class="fa fa-globe"></i> {{ $booking->customer->cus_country }}</div>
-  </div>
+  @include('customer.profile', ['customer' => $booking->customer])
 
   <form-ajax action = "{{ urlTenant('bookings/update') }}" method="POST" @startwait="startWait" @endwait="endWait">
     {{ Form::hidden('book_id', $booking->book_id) }}
@@ -20,6 +13,20 @@
       {{ Form::bsSelect('book_resource', trans('booking.book_resource'), $rooms, $booking->book_resource, ['style' => 'width:100%', 'vmodel' => 'booking.book_resource', 'class'=>'select2']) }}
       {{ Form::bsDate('book_from', trans('booking.book_from'), $booking->book_from, ['vmodel' => 'booking.book_from']) }}
       {{ Form::bsDate('book_to', trans('booking.book_to'), $booking->book_to, ['vmodel' => 'booking.book_to']) }}
+      {{ Form::bsDate('book_expiry', trans('booking.book_expiry'), $booking->book_expiry, ['class' => 'datetimepicker form-control', 'vmodel' => 'booking.book_to']) }}
+    </div>
+    <div class="row">
+      {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources, null, ['v-model' => 'source', '@change' => 'switchSource']) }}
+      <span v-if="source == 3">
+      {{ Form::bsSelect('book_agent', trans('booking.book_agent'), $agents, $booking->book_agent, ['class' => 'select2 form-control']) }}
+      </span>
+      <span v-else-if="source == 1">
+      {{ Form::bsSelect('book_agent', trans('booking.book_sales'), $sales, $booking->book_agent, ['class' => 'select2 form-control']) }}
+      </span>
+      <span v-else>
+      {{ Form::hidden('book_agent', '') }}
+      </span>
+      {{ Form::bsNumber('book_pax', trans('booking.book_pax'), $booking->book_pax, ['min' => 1, 'max'=>20]) }}
       <div class="col-md-3">
         <div class="form-group">
           <label for="book_special" class="control-label">@lang('booking.book_special')</label>
@@ -29,11 +36,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources, $booking->book_source) }}
-      {{ Form::bsSelect('book_agent', trans('booking.book_agent'), $agents, $booking->book_agent, ['class' => 'form-control select2']) }}
-      {{ Form::bsNumber('book_pax', trans('booking.book_pax'), $booking->book_pax, ['min' => 1, 'max'=>20]) }}
     </div>
     <div class="row">
       {{ Form::bsText('book_reference', trans('booking.book_reference'), $booking->book_reference) }}
@@ -55,13 +57,46 @@ new Vue ({
   mixins: [mixForm],
 
   created: function () {
+    this.switchSource()
   },
 
   data: {
-    book_special: Boolean({{ $booking->book_special }})
+    book_special: Boolean({{ $booking->book_special }}),
+    agents: [],
+    agent: '{{ $booking->book_agent }}',
+    source: '{{ $booking->book_source }}',
   },
 
   methods: {
+    switchSource: function () {
+
+      $('#book_agent option[value!=""]').remove()
+
+      if (this.source == 3) {
+
+        this.getAgents('agents')
+
+      } else if (this.source == 1) {
+
+        this.getAgents('sales')
+
+      } else {
+
+        this.agents = []
+
+      }
+
+    },
+
+    getAgents: function (type) {
+
+      this.$http.get("{{ urlTenant("api/v1/agents/") }}/" + type)
+          .then(function (response) {
+
+            this.agents = response.data
+
+          });
+    }
   }
 })
 </script>

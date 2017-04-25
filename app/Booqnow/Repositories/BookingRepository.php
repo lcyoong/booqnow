@@ -24,6 +24,7 @@ class BookingRepository extends BaseRepository
       'book_source' => 'required|exists:booking_sources,bs_id',
       'book_from' => 'required|date|before:book_to',
       'book_to' => 'required|date',
+      'book_expiry' => 'sometimes|date',
       'book_pax' => 'required|min:1|numeric',
       'book_reference' => 'max:255',
       'book_tracking' => 'max:255',

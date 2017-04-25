@@ -30,4 +30,17 @@ class AgentFilter extends QueryFilter
     }
   }
 
+  /**
+   * Type filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function type($value = '')
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where("ag_type", '=', $value);
+    }
+  }
+
 }

@@ -4,7 +4,8 @@
 <div id="addon-new">
   <form-ajax action = "{{ urlTenant('addons/new') }}" method="POST" :go-to-next="gotonext" @startwait="startWait" @endwait="endWait" :reload-on-complete="reloadoncomplete">
     @if (!empty($booking))
-    @include('customer.profile', ['customer' => $booking->customer])
+    <!-- @include('customer.profile', ['customer' => $booking->customer]) -->
+    <h4><i class="fa fa-user"></i> {{ $booking->customer->full_name }}</h4>
     @include('booking._info_extended', ['booking' => $booking])
 
     {{ Form::hidden('add_booking', $booking->book_id) }}
@@ -46,7 +47,7 @@
       add_price: 0,
       resources: [],
       add_resource: '',
-      gotonext: '{{ urlTenant(sprintf("bookings/%s", $booking->book_id)) }}',
+      gotonext: '{{ !empty($booking) ? urlTenant(sprintf("bookings/%s", $booking->book_id)) : '' }}',
       reloadoncomplete: false
     },
 

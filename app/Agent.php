@@ -15,5 +15,5 @@ class Agent extends TenantModel
 
   protected $primaryKey = 'ag_id';
 
-  protected $fillable = ['ag_name', 'ag_remarks', 'ag_status', 'created_by'];
+  protected $fillable = ['ag_name', 'ag_remarks', 'ag_status', 'ag_type', 'created_by'];
 }

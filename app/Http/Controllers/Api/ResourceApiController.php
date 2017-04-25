@@ -33,7 +33,7 @@ class ResourceApiController extends ApiController
     if ($mode == 'select') {
       foreach ($list as $item)
       {
-        $return[] = ['id' => $item->rs_id, 'text' => $item->rs_name, 'price' => $item->rs_price];
+        $return[] = ['id' => $item->rs_id, 'text' => $item->rs_name, 'price' => (int) $item->rs_price];
       }
     } else {
       foreach ($list as $item)
@@ -104,7 +104,7 @@ class ResourceApiController extends ApiController
 
       if ($overlap > 0) {
         $days[] = [
-          'price' => $rate->rpr_price,
+          'price' => (int) $rate->rpr_price,
           'nights' => $overlap,
           'description' => $resource->rs_name
         ];
@@ -113,7 +113,7 @@ class ResourceApiController extends ApiController
 
     if ($nights > array_sum(array_column($days, 'nights'))) {
       $days[] = [
-        'price' => $resource->rs_price,
+        'price' => (int) $resource->rs_price,
         'nights' => $nights - array_sum(array_column($days, 'nights')),
         'description' => $resource->rs_name
       ];

@@ -50,6 +50,10 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('/', 'Api\BillApiController@get');
   });
 
+  Route::group(['prefix' => '/agents'], function () {
+    Route::get('/{type?}', 'Api\AgentApiController@get');
+  });
+
   Route::group(['prefix' => '/customers'], function () {
     Route::get('/active', 'Api\CustomerApiController@active');
     Route::get('/{id}/comments', 'Api\CustomerApiController@comments');

@@ -37,6 +37,16 @@ function showDateTime($date)
 }
 
 /**
+ * Display difference in human readable form
+ * @param  string $date
+ * @return string
+ */
+function showHumanDiff($date)
+{
+  return Carbon::now()->diffForHumans(Carbon::parse($date));
+}
+
+/**
  * Return today's date
  * @param  string $format - Valid PHP date format
  * @return string
