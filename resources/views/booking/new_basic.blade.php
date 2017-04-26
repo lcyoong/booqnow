@@ -48,6 +48,8 @@
     </div>
     <div class="row">
       {{ Form::bsDate('book_expiry', trans('booking.book_expiry'), null, ['class' => 'datetimepicker form-control']) }}
+      {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), null, ['rows' => 3]) }}
+      {{ Form::bsText('book_reference', trans('booking.book_reference')) }}
       <div class="col-md-3">
         <div class="form-group">
           <label for="book_special" class="control-label">@lang('booking.book_special')</label>
@@ -57,8 +59,6 @@
           </div>
         </div>
       </div>
-      {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), null, ['rows' => 3]) }}
-      {{ Form::bsText('book_reference', trans('booking.book_reference')) }}
     </div>
     <table class="table">
       <thead>
