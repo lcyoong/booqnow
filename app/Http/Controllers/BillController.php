@@ -114,7 +114,7 @@ class BillController extends MainController
 
     $this->layout = 'layouts.print';
 
-    $title = trans('bill.print_title', ['no' => '#' . $bill->bil_id]);
+    $title = trans('bill.print_title', ['no' => '']);
 
     $items = $bill->getItems();
 

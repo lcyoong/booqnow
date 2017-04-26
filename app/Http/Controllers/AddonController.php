@@ -67,7 +67,7 @@ class AddonController extends MainController
   // }
   public function create($rty_id, $pos)
   {
-    $agents = $this->agents();
+    $agents = $this->agents('suppliers');
 
     $this->vdata(compact('agents'));
 
@@ -261,8 +261,6 @@ class AddonController extends MainController
    */
   public function update(Request $request)
   {
-    dd($request->input());
-
     $this->repo->update($request->input());
 
     return $this->goodReponse('Update successful. Please reconcile your bill if needed.');
@@ -272,9 +270,9 @@ class AddonController extends MainController
    * Return agents list
    * @return array
    */
-  private function agents()
+  private function agents($type)
   {
-    return (new AgentRepository)->getDropDown('ag_id', 'ag_name');
+    return (new AgentRepository)->ofType($type)->getDropDown('ag_id', 'ag_name');
   }
 
 }

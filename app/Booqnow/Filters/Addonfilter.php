@@ -33,6 +33,32 @@ class AddonFilter extends QueryFilter
   }
 
   /**
+   * Date filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function fromDate($value)
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where("add_date", '>=', $value);
+    }
+  }
+
+  /**
+   * Date filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function toDate($value)
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where("add_date", '<=', $value);
+    }
+  }
+
+  /**
    * Trancking no filter
    * @param  string $value
    * @return Builder

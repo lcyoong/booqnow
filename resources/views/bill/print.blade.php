@@ -56,7 +56,7 @@
         <th width="50%">{{ array_get($resource_name, $key) }}</th>
         <th width="10%" class="text-center">@lang('bill.bili_unit')</th>
         <th width="20%" class="text-right">@lang('bill.bili_unit_price')</th>
-        <th width="20%" class="text-right">@lang('bill.bili_gross')</th>
+        <th width="20%" class="text-right">{{ appendCurrency(trans('bill.bili_gross')) }}</th>
       </tr>
     </thead>
     <tbody>
@@ -79,7 +79,7 @@
         <th width="50%">@lang('bill.bili_description')</th>
         <th width="10%" class="text-center">@lang('bill.bili_unit')</th>
         <th width="20%" class="text-right">@lang('bill.bili_unit_price')</th>
-        <th width="20%" class="text-right">@lang('bill.bili_gross')</th>
+        <th width="20%" class="text-right">{{ appendCurrency(trans('bill.bili_gross')) }}</th>
       </tr>
     </thead>
     <tbody>
@@ -97,23 +97,23 @@
 
 <table width="100%" style="font-size: 1.1em;">
   <tr>
-    <td width="80%" class="text-right bold">{{ appendCurrency(trans('bill.bil_gross')) }}:</td>
+    <td width="80%" class="text-right bold">{{ trans('bill.bil_gross') }}:</td>
     <td width="20%" class="text-right">{{ showMoney($bill->bil_gross, false, 2) }}</td>
   </tr>
   <tr>
-    <td width="80%" class="text-right bold">{{ appendCurrency(trans('bill.bil_tax')) }}:</td>
+    <td width="80%" class="text-right bold">{{ trans('bill.bil_tax') }}:</td>
     <td width="20%" class="text-right">{{ showMoney($bill->bil_tax, false, 2) }}</td>
   </tr>
   <tr>
-    <td width="80%" class="text-right bold">{{ appendCurrency(trans('bill.grand_total')) }}:</td>
+    <td width="80%" class="text-right bold">{{ trans('bill.grand_total') }}:</td>
     <td width="20%" class="text-right">{{ showMoney($bill->total_amount, false, 2) }}</td>
   </tr>
   <tr>
-    <td width="80%" class="text-right bold">{{ appendCurrency(trans('bill.bil_paid')) }}:</td>
+    <td width="80%" class="text-right bold">{{ trans('bill.bil_paid') }}:</td>
     <td width="20%" class="text-right">{{ showMoney($bill->bil_paid, false, 2) }}</td>
   </tr>
   <tr>
-    <td width="80%" class="text-right bold">{{ appendCurrency(trans('bill.outstanding')) }}:</td>
+    <td width="80%" class="text-right bold">{{ trans('bill.outstanding') }}:</td>
     <td width="20%" class="text-right">{{ showMoney($bill->outstanding, false, 2) }}</td>
   </tr>
 </table>

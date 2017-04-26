@@ -111,6 +111,42 @@ class ReportController extends MainController
   }
 
   /**
+   * Daily tour display form
+   * @param  Request $request
+   * @return Response
+   */
+  public function dailyTour(Request $request)
+  {
+    $type = 'daily_tour';
+
+    $this->page_title = trans('report.daily_tour_title');
+
+    $list = $this->repo->ofType($type)->getPages();
+
+    $this->vdata(compact('list', 'type'));
+
+    return view('report.daily_tour', $this->vdata);
+  }
+
+  /**
+   * Daily transfer display form
+   * @param  Request $request
+   * @return Response
+   */
+  public function dailyTransfer(Request $request)
+  {
+    $type = 'daily_transfer';
+
+    $this->page_title = trans('report.daily_transfer_title');
+
+    $list = $this->repo->ofType($type)->getPages();
+
+    $this->vdata(compact('list', 'type'));
+
+    return view('report.daily_transfer', $this->vdata);
+  }
+
+  /**
    * Export bills display form
    * @param  Request $request
    * @return Response

@@ -3,7 +3,7 @@
   {{ $attrkey }} = "{{ $attrvalue }}"
   @endforeach
 >
-  <option value="">--</option>
+  <option>--</option>
   @foreach($list as $key => $label)
   <option @if ($key == $value) selected @endif value="{{ $key }}">{{ $label }}</option>
   @endforeach

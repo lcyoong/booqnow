@@ -193,6 +193,8 @@ function tenantRoutes()
     Route::get('/occupancy_by_day', 'ReportController@occupancyByDay');
     Route::get('/occupancy_by_national', 'ReportController@occupancyByNational');
     Route::get('/monthly_stat', 'ReportController@monthlyStat');
+    Route::get('/daily_tour', 'ReportController@dailyTour');
+    Route::get('/daily_transfer', 'ReportController@dailyTransfer');
     Route::get('/export_bills', 'ReportController@exportBills');
     Route::get('/export_receipts', 'ReportController@exportReceipts');
     Route::get('/download/{report}', 'ReportController@download');
