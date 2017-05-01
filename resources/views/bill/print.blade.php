@@ -2,7 +2,7 @@
 
 @push('header')
 <div class="float-left" style="width: 50%">
-  <table>
+  <table style="width:100%">
     <tr>
       <td>@lang('bill.bil_customer_name')</td><td> : </td><td>{{ $bill->bil_customer_name }}</td>
     </tr>
@@ -13,7 +13,7 @@
 </div>
 @if($bill->booking)
 <div class="float-right" style="text-align: right; width: 50%">
-  <table>
+  <table style="width:100%">
     <tr>
       <td>@lang('booking.book_resource')</td><td> : </td><td>{{ $bill->booking->resource->rs_name}} #{{ $bill->booking->book_id}}</td>
     </tr>
