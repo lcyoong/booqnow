@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\AuditTrailRelationship;
+use Carbon\Carbon;
 
 class BillItem extends TenantModel
 {
@@ -15,7 +16,7 @@ class BillItem extends TenantModel
 
   protected $fillable = ['bili_bill', 'bili_description', 'bili_resource', 'bili_unit_price', 'bili_unit', 'bili_gross', 'bili_tax', 'bili_order', 'bili_status', 'bili_active', 'created_by'];
 
-  // protected $appends = ['on_off'];
+  protected $appends = ['created_date'];
   /**
    * Get the resource of the bill item
    */
@@ -33,6 +34,14 @@ class BillItem extends TenantModel
     return $value == 1 ? true : false;
   }
 
+  /**
+   * Accessor to get the on/off status
+   * @return numeric
+   */
+  public function getCreatedDateAttribute($value)
+  {
+    return Carbon::parse($this->attributes['created_at'])->format('d-m-Y');
+  }
 
   // /**
   //  * Accessor to set the gross amount

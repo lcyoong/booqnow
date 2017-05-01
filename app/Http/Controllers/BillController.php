@@ -118,11 +118,15 @@ class BillController extends MainController
 
     $items = $bill->getItems();
 
+    $room_items = $bill->getRoomItems();
+
+    $addon_items = $bill->getAddonItems()->groupBy('created_date')->toArray();
+
     $indie_items = $bill->indieItems();
 
     $resource_name = array_column(array_get($this->vdata, 'resource_types')->toArray(), 'rty_name', 'rty_id');
 
-    $this->vdata(compact('bill', 'title', 'items', 'indie_items', 'resource_name'));
+    $this->vdata(compact('bill', 'title', 'items', 'room_items', 'addon_items', 'indie_items', 'resource_name'));
 
     return PDF::loadView('bill.print', $this->vdata)->stream(sprintf("bill-%s.pdf", $bill->bil_id));
   }

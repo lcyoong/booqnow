@@ -34,5 +34,5 @@ return [
   'arrival_today' => ':no arrivals',
   'departure_today' => ':no departures',
   'no_arrival' => 'No new arrival',
-  'created_by' => 'Booking exec',
+  'created_by' => 'Booked by',
 ];

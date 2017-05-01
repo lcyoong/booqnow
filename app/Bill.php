@@ -128,6 +128,16 @@ class Bill extends TenantModel
     return $this->items()->join('resources', 'rs_id', 'bili_resource')->orderBy('rs_type')->get();
   }
 
+  public function getRoomItems()
+  {
+    return $this->items()->join('resources', 'rs_id', 'bili_resource')->where('rs_type', '=', 1)->orderBy('rs_type')->get();
+  }
+
+  public function getAddonItems()
+  {
+    return $this->items()->join('resources', 'rs_id', 'bili_resource')->where('rs_type', '!=', 1)->orderBy('bili_id', 'desc')->get(['resources.*', 'bill_items.*']);
+  }
+
   /**
    * Get the independent items of the bill
    * @return Collection
@@ -135,6 +145,11 @@ class Bill extends TenantModel
   public function indieItems()
   {
     return $this->items()->whereNull('bili_resource')->get();
+  }
+
+  public function joinWithResources()
+  {
+    return $this->join('resources', 'rs_id', 'bili_resource');
   }
 
 }

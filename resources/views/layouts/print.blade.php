@@ -13,7 +13,7 @@
 			th{text-align: left;}
 			@page { margin: 200px 23px 20px 23px; font-family: Helvetica; }
 			.page-break { page-break-after: always;}
-			.header { position: fixed; left: 23px; top: -190px; right: 23px; height: 190px; background-color: transparent; border-bottom: 1px solid #cccccc; }
+			.header { position: fixed; left: 23px; top: -190px; right: 23px; height: 190px; background-color: transparent; border-bottom: 0px solid #cccccc; }
 			/*.header_content {border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc;}*/
 			.footer { position: fixed; left: 23px; bottom: 0px; right: 23px; height: 20px; background-color: transparent; }
      		/*#footer .page:after { content: "Page " counter(page); }*/
@@ -25,16 +25,25 @@
 				.text-right {text-align: right;}
 				.text-center {text-align: center;}
 
+				.table {border-collapse: collapse;}
+
+				.table td {
+					padding: 3px;
+					border: 1px solid #666666;
+				}
+
 				.striped tbody tr:nth-child(odd) {
 				   background-color: #ededed;
 				}
 
-				.striped td {
-					padding: 3px;
-				}
-
 				.bold {font-weight: bold;}
 				.small {font-size: 0.8em;}
+
+				.tr-header td{
+				  background-color: #dfdfdf;
+				  font-weight: bolder;
+				}
+
 		</style>
 	</header>
     <body>
