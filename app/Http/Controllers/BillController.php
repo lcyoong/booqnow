@@ -110,6 +110,8 @@ class BillController extends MainController
    */
   public function download($bil_id)
   {
+    $ref = "#" . $bil_id;
+
     $bill = $this->repo->findById($bil_id);
 
     $this->layout = 'layouts.print';
@@ -126,7 +128,7 @@ class BillController extends MainController
 
     $resource_name = array_column(array_get($this->vdata, 'resource_types')->toArray(), 'rty_name', 'rty_id');
 
-    $this->vdata(compact('bill', 'title', 'items', 'room_items', 'addon_items', 'indie_items', 'resource_name'));
+    $this->vdata(compact('bill', 'title', 'items', 'room_items', 'addon_items', 'indie_items', 'resource_name', 'ref'));
 
     return PDF::loadView('bill.print', $this->vdata)->stream(sprintf("bill-%s.pdf", $bill->bil_id));
   }

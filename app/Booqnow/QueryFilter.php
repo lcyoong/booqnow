@@ -50,6 +50,11 @@ abstract class QueryFilter {
     return $this->joins;
   }
 
+  public function addJoins($join)
+  {
+    $this->joins[] = $join;
+  }
+
   /**
    * Apply the filters into query
    * @param  Builder $builder
@@ -61,7 +66,8 @@ abstract class QueryFilter {
 
     foreach ($this->filters() as $name => $value) {
       if (method_exists($this, $name)) {
-        call_user_func_array([$this, $name], array_filter([$value]));
+        $value = is_array($value) ? $value : [$value];
+        call_user_func_array([$this, $name], array_filter($value));
       }
     }
 

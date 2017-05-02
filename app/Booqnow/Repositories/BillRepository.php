@@ -33,19 +33,23 @@ class BillRepository extends BaseRepository {
 
   public function byMonthNational($year)
   {
+    $this->status('active')->ofBookStatus(['checkedin', 'checkedout'])->ofYear($year);
+
+    $this->filter->addJoins('joinCustomers');
+
     return $this->repo->select(DB::raw("cus_country as country, month(bil_date) as mth, sum(bil_gross) as sum"))
-                ->join('customers', 'cus_id', '=', 'bil_customer')
-                ->where('bil_status', '=', 'active')
+                ->filter($this->filter)
                 ->groupBy(DB::raw("cus_country, month(bil_date)"))->get();
   }
 
   public function avgSpendPerNightMonthly($year)
   {
+    $this->status('active')->ofBookStatus(['checkedin', 'checkedout'])->ofYear($year);
+
+    $this->filter->addJoins('joinCustomers');
+
     return $this->repo->select(DB::raw("month(bil_date) as mth, avg(bil_gross/datediff(book_to, book_from)) as avg_gross"))
-                ->join('bookings', 'book_id', '=', 'bil_booking')
-                ->where('bil_status', '=', 'active')
-                ->where('book_status', '!=', 'cancelled')
-                ->whereRaw("year(bil_date) = $year")
+                ->filter($this->filter)
                 ->groupBy(DB::raw("month(bil_date)"))->get();
   }
 

@@ -61,17 +61,30 @@ class BookingRepository extends BaseRepository
     return $this;
   }
 
+  public function averageTentsByMonth($year)
+  {
+    $this->withResourceLabel(['tent'])->ofStatus(['checkedin', 'checkedout'])->ofYear($year);
+
+    return $this->repo->select(DB::raw("month(book_from) as mth, sum(datediff(book_to, book_from)) as counter"))
+                ->filter($this->filter)
+                ->groupBy(DB::raw("month(book_from)"))->get();
+  }
+
   public function byAverageNights($year)
   {
+    $this->ofStatus(['checkedin', 'checkedout'])->ofYear($year);
+
     return $this->repo->select(DB::raw("month(book_from) as mth, avg(datediff(book_to, book_from)) as nights"))
-                ->where('book_status', '!=', 'cancelled')
+                ->filter($this->filter)
                 ->groupBy(DB::raw("month(book_from)"))->get();
   }
 
   public function byAveragePax($year)
   {
+    $this->ofStatus(['checkedin', 'checkedout'])->ofYear($year);
+
     return $this->repo->select(DB::raw("month(book_from) as mth, avg(book_pax) as pax"))
-                ->where('book_status', '!=', 'cancelled')
+                ->filter($this->filter)
                 ->groupBy(DB::raw("month(book_from)"))->get();
   }
 

@@ -7,7 +7,7 @@ use DB;
 use Excel;
 use App\Bill;
 use Carbon\Carbon;
-use App\RoomOccupancy;
+use Repositories\RoomOccupancyRepository;
 use Repositories\BookingRepository;
 use Repositories\BillRepository;
 
@@ -16,6 +16,8 @@ class MonthlyStatExcel extends ExcelReport
   protected $year;
 
   protected $occ_arr = [];
+
+  protected $tent_arr = [];
 
   protected $avg_night_arr = [];
 
@@ -90,13 +92,27 @@ class MonthlyStatExcel extends ExcelReport
   {
     $row = ['Overall occupancy'];
 
+    $this->resetRow($row);
+
     foreach ($this->occ_arr as $month => $counter) {
       $row[$month] = $counter;
     }
 
     $this->fillRow($row, 0);
 
+    $row = ['No of nights tents sold'];
+
+    $this->resetRow($row);
+
+    foreach ($this->tent_arr as $month => $counter) {
+      $row[$month] = $counter;
+    }
+
+    $this->fillRow($row, 0);
+
     $row = ['Average length of stay (nights)'];
+
+    $this->resetRow($row);
 
     foreach ($this->avg_night_arr as $month => $night) {
 
@@ -108,6 +124,8 @@ class MonthlyStatExcel extends ExcelReport
 
     $row = ['Average pax per room'];
 
+    $this->resetRow($row);
+
     foreach ($this->avg_pax_arr as $month => $pax) {
 
       $row[$month] = $pax;
@@ -117,6 +135,8 @@ class MonthlyStatExcel extends ExcelReport
     $this->fillRow($row, 0);
 
     $row = ['Average spend per night per room'];
+
+    $this->resetRow($row);
 
     $spendings = (new BillRepository)->avgSpendPerNightMonthly($this->year);
 
@@ -136,15 +156,23 @@ class MonthlyStatExcel extends ExcelReport
    */
   protected function getData()
   {
-    $occupancies = (new RoomOccupancy)->byMonth($this->year);
+    $occupancies = (new RoomOccupancyRepository)->byMonth($this->year);
 
     $nights = (new BookingRepository)->byAverageNights($this->year);
 
     $paxs = (new BookingRepository)->byAveragePax($this->year);
 
+    $tents = (new BookingRepository)->averageTentsByMonth($this->year);
+
     foreach ($occupancies as $occupancy) {
 
       $this->occ_arr[$occupancy->mth] = $occupancy->counter;
+
+    }
+
+    foreach ($tents as $tent) {
+
+      $this->tent_arr[$tent->mth] = $tent->counter;
 
     }
 
@@ -166,6 +194,13 @@ class MonthlyStatExcel extends ExcelReport
     //
     // }
 
+  }
+
+  private function resetRow(&$row)
+  {
+    for ($month = 1; $month <= 12; $month++) {
+      $row[] = 0;
+    }
   }
 
 }

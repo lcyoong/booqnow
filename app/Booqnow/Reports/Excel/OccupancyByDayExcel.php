@@ -7,11 +7,16 @@ use DB;
 use Excel;
 use App\Bill;
 use Carbon\Carbon;
-use App\RoomOccupancy;
+use Repositories\RoomOccupancyRepository;
+use Repositories\ResourceRepository;
 
 class OccupancyByDayExcel extends ExcelReport
 {
   protected $year;
+
+  protected $total_rooms;
+
+  protected $occ_arr, $occ_day;
 
   public function __construct($report)
   {
@@ -68,7 +73,7 @@ class OccupancyByDayExcel extends ExcelReport
 
     }
 
-    $row[] = 'Average';
+    $row[] = 'Total';
 
     $this->fillRow($row, 1);
   }
@@ -103,7 +108,41 @@ class OccupancyByDayExcel extends ExcelReport
 
       $this->fillRow($row, 0);
 
+      // Percentage
+      $row = ["%"];
+
+      for ($day = 1; $day <= 31; $day++) {
+
+        $row[$day] = 0;
+
+      }
+
+      if (isset($this->occ_arr[$mth])) {
+
+        foreach ($this->occ_arr[$mth] as $day => $counter) {
+
+          $row[$day] = number_format($counter/$this->total_rooms, 2);
+
+        }
+
+      }
+
+      $this->fillRow($row, 0);
+
     }
+
+    // Summary
+    $row = ["Total rooms occupied"];
+
+    for ($day = 1; $day <= 31; $day++) {
+
+      $row[$day] = array_get($this->occ_day, $day, 0);
+
+    }
+
+    $row[] = array_sum($row);
+
+    $this->fillRow($row, 0);
   }
 
   /**
@@ -112,13 +151,22 @@ class OccupancyByDayExcel extends ExcelReport
    */
   protected function getData()
   {
-    $occupancies = (new RoomOccupancy)->byDayOfMonth($this->year);
+    // $occupancies = (new RoomOccupancy)->withoutLabel(['tent'])->byDayOfMonth($this->year);
+    $occupancies = (new RoomOccupancyRepository)->withoutLabel(['tent'])->byDayOfMonth($this->year);
+
+    $this->total_rooms = (new ResourceRepository)->countByType([1]);
 
     $this->occ_arr = [];
 
     foreach ($occupancies as $occupancy) {
 
       $this->occ_arr[$occupancy->mth][$occupancy->day] = $occupancy->counter;
+
+      if (array_get($this->occ_day, $occupancy->day)) {
+        $this->occ_day[$occupancy->day] += $occupancy->counter;
+      } else {
+        $this->occ_day[$occupancy->day] = $occupancy->counter;
+      }
 
     }
   }

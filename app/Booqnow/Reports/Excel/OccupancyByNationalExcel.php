@@ -7,7 +7,7 @@ use DB;
 use Excel;
 use App\Bill;
 use Carbon\Carbon;
-use App\RoomOccupancy;
+use Repositories\RoomOccupancyRepository;
 use Repositories\BillRepository;
 use Repositories\CountryRepository;
 
@@ -190,7 +190,7 @@ class OccupancyByNationalExcel extends ExcelReport
    */
   protected function getData()
   {
-    $occupancies = (new RoomOccupancy)->byNational($this->year);
+    $occupancies = (new RoomOccupancyRepository)->byNational($this->year);
 
     $spendings = (new BillRepository)->byMonthNational($this->year);
 

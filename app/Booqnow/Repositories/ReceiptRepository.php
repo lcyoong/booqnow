@@ -25,4 +25,14 @@ class ReceiptRepository extends BaseRepository {
       'rc_type' => 'required',
     ];
   }
+
+  public function depositByMonth($year)
+  {
+    $this->status('active')->ofType(['deposit'])->ofYear($year);
+
+    return $this->repo->select(DB::raw("month(rc_date) as mth, sum(rc_amount) as total"))
+                ->filter($this->filter)
+                ->groupBy(DB::raw("month(rc_date)"))->get();
+  }
+
 }

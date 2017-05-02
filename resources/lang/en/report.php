@@ -9,6 +9,10 @@ return [
   'daily_occupancy_report_heading' => 'Monthly Occupancy Report - By Day :ext',
   'national_occupancy_title' => 'Monthly Occupancy Report - By National',
   'national_occupancy_report_heading' => 'Monthly Occupancy Report - By National :ext',
+  'monthly_deposit_title' => 'Monthly Deposit Report',
+  'monthly_deposit_by_future_title' => 'Monthly Deposit Report - By Future Month Booked',
+  'monthly_deposit_report_heading' => 'Monthly Deposit Report',
+  'monthly_deposit_by_future_report_heading' => 'Monthly Deposit Report - By Future Month Booked',
   'monthly_stat_title' => 'Monthly Stat Report',
   'monthly_stat_report_heading' => 'Monthly Stat Report :ext',
   'export_bills_title' => 'Export Bills',
@@ -21,4 +25,6 @@ return [
   'rep_status' => 'Status',
   'rep_filter' => 'Filter',
   'created_at' => 'Submitted at',
+  'from_year' => 'From Year',
+  'to_year' => 'To Year',
 ];

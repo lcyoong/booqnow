@@ -148,6 +148,30 @@ class BookingFilter extends QueryFilter
     }
   }
 
+  public function ofStatus($value = '')
+  {
+    if (!empty($value)) {
+      return $this->builder->whereIn('book_status', $value);
+    }
+  }
+
+  public function ofYear($value)
+  {
+    if (!empty($value)) {
+      return $this->builder->whereYear('book_from', $value);
+    }
+  }
+
+  public function withResourceLabel($value)
+  {
+    if (!empty($value)) {
+
+      $this->joins[] = 'joinResources';
+
+      return $this->builder->whereIn('rs_label', $value);
+    }
+  }
+
   /**
    * Join customers to query
    * @return Builder
@@ -164,6 +188,15 @@ class BookingFilter extends QueryFilter
   public function joinAgents()
   {
     $this->builder->join('agents', 'ag_id', 'book_agent');
+  }
+
+  /**
+   * Join angents to query
+   * @return Builder
+   */
+  public function joinResources()
+  {
+    $this->builder->join('resources', 'rs_id', 'book_resource');
   }
 
 }

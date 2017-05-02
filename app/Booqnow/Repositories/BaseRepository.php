@@ -241,4 +241,11 @@ class BaseRepository implements BaseRepositoryInterface
     return $this->rules;
   }
 
+  public function __call($name, $arguments)
+  {
+    $this->filter->add([$name => $arguments]);
+
+    return $this;
+  }
+
 }

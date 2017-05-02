@@ -62,7 +62,7 @@
 			</script>
     	@stack('content')
 			<div class="footer">
-				<div class="small">Tel : {{ config('myapp.contact1') }} | {{ config('myapp.web_url')}} | email : {{ config('myapp.admin_email') }} | Printed : {{ date('d M Y, H:i:s') }}</div>
+				<div class="small">Tel : {{ config('myapp.contact1') }} | {{ config('myapp.web_url')}} | email : {{ config('myapp.admin_email') }} | Printed : {{ date('d M Y, H:i:s') }} | {{ $ref or '' }}</div>
 			</div>
     </body>
 </html>

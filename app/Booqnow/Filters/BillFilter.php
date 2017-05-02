@@ -12,10 +12,6 @@ class BillFilter extends QueryFilter
   public function customer_name($value = '')
   {
     if (!empty($value)) {
-
-      // $this->joins[] = 'joinCustomers';
-      //
-      // return $this->builder->whereRaw("concat(cus_first_name, ' ', cus_last_name) like '%$value%'");
       return $this->builder->where('bil_customer_name', 'like', "%$value%");
     }
   }
@@ -100,6 +96,24 @@ class BillFilter extends QueryFilter
     }
   }
 
+  public function ofBookStatus($value)
+  {
+    if (!empty($value)) {
+
+      $this->joins[] = 'joinBookings';
+
+      return $this->builder->whereIn('book_status', $value);
+    }
+  }
+
+  public function ofYear($value)
+  {
+    if (!empty($value)) {
+
+      return $this->builder->whereYear('bil_date', $value);
+    }
+  }
+
   /**
    * Join customers to query
    * @return Builder
@@ -107,6 +121,15 @@ class BillFilter extends QueryFilter
   public function joinCustomers()
   {
     $this->builder->join('customers', 'cus_id', 'bil_customer');
+  }
+
+  /**
+   * Join resources to query
+   * @return Builder
+   */
+  public function joinBookings()
+  {
+    $this->builder->join('bookings', 'book_id', '=', 'bil_booking');
   }
 
 }

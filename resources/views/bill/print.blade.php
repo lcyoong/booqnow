@@ -4,7 +4,7 @@
 <div class="float-left" style="width: 50%">
   <table style="width:100%">
     <tr>
-      <td>@lang('bill.bil_customer_name')</td><td> : </td><td>{{ $bill->bil_customer_name }}</td>
+      <td width="25%">@lang('bill.bil_customer_name')</td><td width="5%"> : </td><td width="70%">{{ $bill->bil_customer_name }}</td>
     </tr>
     <!-- <tr>
       <td>@lang('bill.bil_date')</td><td> : </td><td>{{ showDate($bill->bil_date) }}</td>
@@ -15,7 +15,7 @@
 <div class="float-right" style="text-align: right; width: 50%">
   <table style="width:100%">
     <tr>
-      <td>@lang('booking.book_resource')</td><td> : </td><td>{{ $bill->booking->resource->rs_name}} #{{ $bill->booking->book_id}}</td>
+      <td width="25%">@lang('booking.book_resource')</td><td width="5%"> : </td><td width="70%">{{ $bill->booking->resource->rs_name}} #{{ $bill->booking->book_id}}</td>
     </tr>
     <tr>
       <td>@lang('booking.book_from')</td><td> : </td><td>{{ showDate($bill->booking->book_from) }}</td>

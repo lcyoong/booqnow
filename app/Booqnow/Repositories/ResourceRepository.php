@@ -61,4 +61,9 @@ class ResourceRepository extends BaseRepository {
                 ->groupBy(DB::raw("rs_name, month(ro_date)"))->get();
   }
 
+  public function countByType($value = [])
+  {
+    return $this->repo->whereIn('rs_type', $value)->where('rs_status', '=', 'active')->count();
+  }
+
 }

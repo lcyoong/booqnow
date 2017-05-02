@@ -58,24 +58,36 @@ class RoomOccupancy extends TenantModel
     }
   }
 
-  public function byDayOfMonth($year)
-  {
-    return $this->select(DB::raw("month(ro_date) as mth, day(ro_date) as day, count(*) as counter"))
-                ->groupBy(DB::raw("month(ro_date), day(ro_date)"))->get();
-  }
-
-  public function byNational($year)
-  {
-    return $this->select(DB::raw("month(ro_date) as mth, cus_country as country, count(*) as counter"))
-                ->join('bookings', 'book_id', '=', 'ro_booking')
-                ->join('customers', 'cus_id', '=', 'book_customer')
-                ->groupBy(DB::raw("month(ro_date), cus_country"))->get();
-  }
+  // public function byDayOfMonth($year)
+  // {
+  //   return $this->select(DB::raw("month(ro_date) as mth, day(ro_date) as day, count(*) as counter"))
+  //               ->join('bookings', 'book_id', '=', 'ro_booking')
+  //               ->join('resources', 'rs_id', '=', 'book_resource')
+  //               ->whereIn('book_status', ['checkedin', 'checkedout'])
+  //               ->whereYear('ro_date', $year)
+  //               ->groupBy(DB::raw("month(ro_date), day(ro_date)"))->get();
+  // }
+  //
+  // public function byNational($year)
+  // {
+  //   return $this->select(DB::raw("month(ro_date) as mth, cus_country as country, count(*) as counter"))
+  //               ->join('bookings', 'book_id', '=', 'ro_booking')
+  //               ->join('customers', 'cus_id', '=', 'book_customer')
+  //               ->whereYear('ro_date', $year)
+  //               ->groupBy(DB::raw("month(ro_date), cus_country"))->get();
+  // }
 
   public function byMonth($year)
   {
     return $this->select(DB::raw("month(ro_date) as mth, count(*) as counter"))
-                ->whereRaw("year(ro_date) = $year")
+                ->whereYear('ro_date', $year)
                 ->groupBy(DB::raw("month(ro_date)"))->get();
+  }
+
+  public function withoutLabel($value)
+  {
+    $this->whereNotIn('rs_label', $value);
+
+    return $this;
   }
 }

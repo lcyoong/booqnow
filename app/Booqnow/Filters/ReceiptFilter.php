@@ -84,6 +84,21 @@ class ReceiptFilter extends QueryFilter
     }
   }
 
+  public function ofYear($value)
+  {
+    if (!empty($value)) {
+
+      return $this->builder->whereYear('rc_date', $value);
+    }
+  }
+
+  public function ofType($value)
+  {
+    if (!empty($value)) {
+      return $this->builder->whereIn('rc_type', $value);
+    }
+  }
+
   /**
    * Join customers to query
    * @return Builder

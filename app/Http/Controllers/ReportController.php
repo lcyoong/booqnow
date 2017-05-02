@@ -147,6 +147,24 @@ class ReportController extends MainController
   }
 
   /**
+   * Monthly deposit display form
+   * @param  Request $request
+   * @return Response
+   */
+  public function monthlyDeposit(Request $request)
+  {
+    $type = 'monthly_deposit';
+
+    $this->page_title = trans('report.monthly_deposit_title');
+
+    $list = $this->repo->ofType($type)->getPages();
+
+    $this->vdata(compact('list', 'type'));
+
+    return view('report.monthly_deposit', $this->vdata);
+  }
+
+  /**
    * Export bills display form
    * @param  Request $request
    * @return Response

@@ -23,7 +23,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('home', 'DashboardController@user');
+Route::get('home', 'DashboardController@frontDesk');
 
 Route::get('signup', 'Auth\RegisterController@signup');
 
@@ -195,6 +195,8 @@ function tenantRoutes()
     Route::get('/monthly_stat', 'ReportController@monthlyStat');
     Route::get('/daily_tour', 'ReportController@dailyTour');
     Route::get('/daily_transfer', 'ReportController@dailyTransfer');
+    Route::get('/monthly_deposit', 'ReportController@monthlyDeposit');
+    Route::get('/monthly_deposit_future', 'ReportController@monthlyDepositByFuture');
     Route::get('/export_bills', 'ReportController@exportBills');
     Route::get('/export_receipts', 'ReportController@exportReceipts');
     Route::get('/download/{report}', 'ReportController@download');
