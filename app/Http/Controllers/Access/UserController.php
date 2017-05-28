@@ -101,7 +101,8 @@ class UserController extends MainController
 
     $merchant = session('merchant');
 
-    $input['password'] = str_random(8);
+    $input['password'] = bcrypt('111111');
+
     $input['api_token'] = str_random(60);
 
     $user = $this->repo->store($input);
