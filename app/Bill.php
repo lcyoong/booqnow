@@ -17,7 +17,7 @@ class Bill extends TenantModel
 
   protected $fillable = ['bil_accounting', 'bil_customer', 'bil_customer_name', 'bil_booking', 'bil_description', 'bil_date', 'bil_due_date', 'bil_gross', 'bil_tax', 'bil_status', 'created_by'];
 
-  protected $appends = ['total_amount', 'outstanding'];
+  protected $appends = ['total_amount', 'outstanding', 'display_id'];
 
   /**
    * Mutator to set the formatted receipt date
@@ -53,6 +53,15 @@ class Bill extends TenantModel
   public function getBilDateAttribute($value)
   {
     return Carbon::parse($value)->format('d-m-Y');
+  }
+
+  /**
+   * Accessor to display id
+   * @return string
+   */
+  public function getDisplayIdAttribute()
+  {
+    return "B" . $this->bil_id;
   }
 
   /**

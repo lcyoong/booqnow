@@ -6,6 +6,7 @@
   @if (!empty($booking))
   <!-- @include('customer.profile', ['customer' => $booking->customer]) -->
   <h4><i class="fa fa-user"></i> {{ $booking->customer->full_name }}</h4>
+  @include('booking._info_extended', ['booking' => $booking])
 
   {{ Form::hidden('add_booking', $booking->book_id) }}
   {{ Form::hidden('add_customer', $booking->book_customer) }}

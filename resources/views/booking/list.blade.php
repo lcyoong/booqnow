@@ -12,8 +12,8 @@
     <th>@lang('booking.book_customer')</th>
     <th>@lang('booking.book_resource')</th>
     <th>@lang('booking.duration')</th>
-    <th>@lang('booking.book_pax')</th>
-    <th>@lang('booking.book_pax_child')</th>
+    <th class="text-center">@lang('booking.book_pax')</th>
+    <th class="text-center">@lang('booking.book_pax_child')</th>
     <th>@lang('booking.book_reference')</th>
     <th>@lang('booking.book_agent')</th>
     <!-- <th>@lang('booking.book_tracking')</th> -->
@@ -24,12 +24,12 @@
 <tbody>
   @foreach ($list as $item)
   <tr>
-    <td>{{ $item->book_id }}</td>
+    <td>{{ $item->display_id }}</td>
     <td>{{ $item->customer->full_name }} @if($item->book_special) <i class="fa fa-star special-color"></i>@endif</td>
     <td>{{ $item->resource->rs_name }}</td>
     <td><span class="label label-info">{{ dayDiff($item->book_from, $item->book_to) }} @lang('booking.nights')</span> {{ showDate($item->book_from) }} - {{ showDate($item->book_to) }}</td>
-    <td>{{ $item->book_pax }}</td>
-    <td>{{ $item->book_pax_child }}</td>
+    <td class="text-center">{{ $item->book_pax }}</td>
+    <td class="text-center">{{ $item->book_pax_child }}</td>
     <td>{{ $item->book_reference }}</td>
     <td>{{ isset($item->agent) ? $item->agent->ag_name : null }}</td>
     <!-- <td>{{ $item->book_tracking }}</td> -->

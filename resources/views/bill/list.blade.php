@@ -12,22 +12,22 @@
         <th>@lang('bill.bil_customer_name')</th>
         <th>@lang('bill.bil_booking')</th>
         <th>@lang('bill.bil_date')</th>
-        <th>{{ trans('bill.total') }}</th>
-        <th>{{ trans('bill.outstanding') }}</th>
-        <th>@lang('bill.bil_status')</th>
+        <th class="text-right">{{ trans('bill.total') }}</th>
+        <th class="text-right">{{ trans('bill.outstanding') }}</th>
+        <th class="text-center">@lang('bill.bil_status')</th>
         <th>@lang('form.actions')</th>
       </tr>
     </thead>
     <tbody>
       @foreach ($list as $item)
         <tr>
-          <td>{{ $item->bil_id }}</td>
+          <td>{{ $item->display_id }}</td>
           <td>{{ $item->bil_customer_name }}</td>
-          <td>{{ $item->bil_booking or 'N/A' }} : {{ $item->bil_description }}</td>
+          <td>{{ $item->booking->display_id or 'N/A' }} : {{ $item->bil_description }}</td>
           <td>{{ $item->bil_date }}</td>
-          <td>{{ $item->total_amount }}</td>
-          <td>{{ $item->outstanding }}</td>
-          <td>{{ $item->bil_status }}</td>
+          <td class="text-right">{{ $item->total_amount }}</td>
+          <td class="text-right">{{ $item->outstanding }}</td>
+          <td class="text-center">{{ $item->bil_status }}</td>
           <td>
             <a v-modal href="{{ url('bills/' . $item->bil_id) }}" title="@lang('form.view')"><i class="fa fa-eye"></i></a>
             <a href="{{ url(sprintf('bills/%s/edit', $item->bil_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>

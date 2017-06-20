@@ -1,7 +1,7 @@
 @extends($layout)
 
 @push('header')
-<div class="float-left" style="width: 50%">
+<div style="width: 50%">
   <table style="width:100%">
     <tr>
       <td width="25%">@lang('bill.bil_customer_name')</td><td width="5%"> : </td><td width="70%">{{ $bill->bil_customer_name }}</td>

@@ -20,7 +20,7 @@ return [
   'book_customer' => 'Booking customer',
   'book_resource' => 'Room',
   'book_pax' => 'Adult',
-  'book_pax_child' => 'Child',
+  'book_pax_child' => 'Child (4-10)',
   'book_source' => 'Source',
   'book_tracking' => 'Tracking no',
   'book_reference' => 'Reference no',

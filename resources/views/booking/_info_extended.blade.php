@@ -3,10 +3,11 @@
     <a data-toggle="collapse" data-parent="#accordionx" href="#collapse-book{{ $booking->book_id }}">
     <div class="row">
       <div class="col-md-3">
-        <i class="fa fa-bed"></i> {{ $booking->resource->rs_name }} @if($booking->book_special) <i class="fa fa-star special-color"></i> @endif
+        {{ $booking->display_id }}
       </div>
       <div class="col-md-3">
-        {{ showDate($booking->book_from) }} - {{ showDate($booking->book_to) }}
+        <i class="fa fa-bed"></i> {{ $booking->resource->rs_name }} @if($booking->book_special) <i class="fa fa-star special-color"></i> @endif
+        <div>{{ showDate($booking->book_from) }} - {{ showDate($booking->book_to) }}</div>
       </div>
       <div class="col-md-3">
         {{ dayDiff($booking->book_from, $booking->book_to) }} @lang('booking.nights') x {{ $booking->book_pax }} @lang('booking.book_pax') + {{ $booking->book_pax_child }} @lang('booking.book_pax_child')

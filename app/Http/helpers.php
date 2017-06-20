@@ -142,3 +142,13 @@ function datesOverlap($start_one,$end_one,$start_two,$end_two) {
 
   return 0; //Return 0 if there is no overlap
 }
+
+function showBookingNo($id)
+{
+  return "R" . $id;
+}
+
+function showBillNo($id)
+{
+  return "B" . $id;
+}

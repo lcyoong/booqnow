@@ -8,7 +8,7 @@ return [
   'add_customer_name' => 'Customer name',
   'add_date' => 'Date',
   'add_pax' => 'Adult',
-  'add_pax_child' => 'Child',
+  'add_pax_child' => 'Child (4-10)',
   'add_unit' => 'Unit',
   'add_reference' => 'Reference',
   'add_tracking' => 'Tracking no',

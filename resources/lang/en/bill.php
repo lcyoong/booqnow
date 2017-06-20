@@ -10,7 +10,7 @@ return [
   'bil_description' => 'Description',
   'bil_booking' => 'Booking No',
   'bil_customer' => 'Customer',
-  'bil_customer_name' => 'Bill to name',
+  'bil_customer_name' => 'Guest name',
   'bil_date' => 'Bill date',
   'bil_due_date' => 'Due date',
   'bil_status' => 'Bill status',

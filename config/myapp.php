@@ -6,7 +6,7 @@ return [
   'web_url' => 'www.khaosokaccommodation.com',
   'contact1' => '+1234567890',
   'base_country' => 'MY',
-  'base_currency' => 'THB',
+  'base_currency' => 'Baht',
   'tax_percent' => 7,
   'multi_tenant' => false,
   'get_limit' => 10,

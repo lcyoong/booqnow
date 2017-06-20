@@ -10,9 +10,9 @@
   <tr>
     <th>@lang('resource.rs_name')</th>
     <th>@lang('resource.rs_description')</th>
-    <th>@lang('resource.rs_price')</th>
+    <th class="text-right">@lang('resource.rs_price')</th>
     <th>@lang('resource.rs_label')</th>
-    <th>@lang('resource.rs_status')</th>
+    <th class="text-center">@lang('resource.rs_status')</th>
     <th>@lang('form.actions')</th>
   </tr>
 </thead>
@@ -21,9 +21,9 @@
   <tr>
     <td>{{ $resource->rs_name }}</td>
     <td>{{ $resource->rs_description }}</td>
-    <td>{{ showMoney($resource->rs_price) }}</td>
+    <td class="text-right">{{ showMoney($resource->rs_price) }}</td>
     <td>{{ $resource->rs_label }}</td>
-    <td>{{ $resource->rs_status }}</td>
+    <td class="text-center">{{ $resource->rs_status }}</td>
     <td>
       <a href="{{ urlTenant(sprintf('resources/%s/edit', $resource->rs_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>
       <a href="{{ urlTenant(sprintf('resources/%s/maintenance', $resource->rs_id)) }}" title="@lang('form.maintenance')"><i class="fa fa-wrench"></i></a>

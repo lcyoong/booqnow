@@ -62,7 +62,7 @@ $('#calendar').fullCalendar({
     ],
     eventRender: function(event, element, view) {
       if (event.type == "booking") {
-        element.find('.fc-title').append(' #' + event.id);
+        element.find('.fc-title').append(' #' + event.display_id);
         if (event.special == "1") {
           element.find('.fc-title').prepend('<i class="fa fa-star special-color"></i> ');
         }

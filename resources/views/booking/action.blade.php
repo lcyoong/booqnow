@@ -23,7 +23,7 @@
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $bill->bil_id }}">
           <div class="row">
             <div class="col-md-3">
-              #{{ $bill->bil_id }} - {{ $bill->bil_description }}
+              #{{ $bill->display_id }} - {{ $bill->bil_description }}
             </div>
             <div class="col-md-3">
               {{ showDate($bill->bil_date) }}

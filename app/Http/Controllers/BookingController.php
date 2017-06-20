@@ -111,7 +111,7 @@ class BookingController extends MainController
 
     $sales = $this->agents('sales');
 
-    $this->page_title = trans('booking.edit', ['id' => $book_id]);
+    $this->page_title = trans('booking.edit', ['id' => $booking->display_id]);
 
     $this->vdata(compact('book_id', 'booking', 'rooms', 'agents', 'sales'));
 
@@ -163,7 +163,7 @@ class BookingController extends MainController
 
     $this->layout = 'layouts.modal';
 
-    $this->page_title = trans('booking.action', ['id' => $booking->book_id]);
+    $this->page_title = trans('booking.action', ['id' => $booking->display_id]);
 
     $bills = $booking->bills;
 
@@ -243,7 +243,7 @@ class BookingController extends MainController
   {
     $booking = $this->repo_book->findById($book_id);
 
-    $this->page_title = trans('booking.addons', ['id' => $booking->book_id]);
+    $this->page_title = trans('booking.addons', ['id' => $booking->display_id]);
 
     $agents = $this->agents('suppliers');
 
