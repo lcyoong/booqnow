@@ -49,7 +49,7 @@
       resources: [],
       add_resource: '',
       gotonext: '{{ !empty($booking) ? urlTenant(sprintf("bookings/%s", $booking->book_id)) : '' }}',
-      reloadoncomplete: false
+      reloadoncomplete: @if(empty($booking)) true @else false @endif
     },
 
     created: function () {
