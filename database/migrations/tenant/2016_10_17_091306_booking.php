@@ -39,6 +39,8 @@ class Booking extends Migration
           $table->string('book_status')->default('hold');
           $table->text('book_remarks')->nullable();
           $table->boolean('book_special')->default(0);
+          $table->string('book_lead_from')->nullable();
+          $table->integer('book_extra_bed')->default(0);
           $table->integer('created_by');
           $table->timestamps();
       });
@@ -58,6 +60,7 @@ class Booking extends Migration
           $table->integer('add_unit')->default(0);
           $table->string('add_reference')->nullable();
           $table->string('add_tracking')->nullable();
+          $table->string('add_remarks')->nullable();
           $table->string('add_status')->default('active');
           $table->integer('created_by');
           $table->timestamps();

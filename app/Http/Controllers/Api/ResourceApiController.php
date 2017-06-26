@@ -83,6 +83,13 @@ class ResourceApiController extends ApiController
     return $rs->findById($resource)->pricing()->with(['season', 'tiers'])->get();
   }
 
+  public function ofLabel($label, Request $request)
+  {
+    $rs = new ResourceRepository;
+
+    return $rs->ofLabel($label)->first();
+  }
+
   public function pricingTier($pricing_id, Request $request)
   {
     return (new ResourcePricingRepository)->findById($pricing_id)->tiers()->get();

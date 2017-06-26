@@ -74,9 +74,12 @@ class DailyAddonExcel extends ExcelReport
         trans('addon.add_date'),
         trans('addon.add_resource'),
         trans('addon.add_customer_name'),
+        trans('addon.add_booking'),
         trans('addon.add_pax'),
-        trans('addon.add_pax_child'),
+        trans('addon.add_pax_child_simple'),
         trans('addon.add_agent'),
+        trans('addon.add_remarks'),
+        trans('resource.rs_price'),
       ], 1
     );
   }
@@ -96,9 +99,12 @@ class DailyAddonExcel extends ExcelReport
       $row[] = $record->add_date;
       $row[] = $record->resource->rs_name;
       $row[] = $record->add_customer_name;
+      $row[] = !empty($record->add_booking) ? showBookingNo($record->add_booking) : 'Walk-in';
       $row[] = $record->add_pax;
       $row[] = $record->add_pax_child;
       $row[] = isset($record->agent) ? $record->agent->ag_name : '';
+      $row[] = $record->add_remarks;
+      $row[] = $record->bill_item->bili_gross;
       $this->fillRow($row);
 
     }

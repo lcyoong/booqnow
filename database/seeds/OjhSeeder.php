@@ -23,6 +23,7 @@ class OjhSeeder extends Seeder
         ['rty_id'=> 3, 'rty_accounting' => 1, 'rty_pos' => true, 'rty_seasonal' => false, 'rty_master' => false, 'rty_code' => 'fnb', 'rty_name' => 'F&B', 'rty_plural' => 'F&B', 'rty_price' => 0, 'created_by' => 1],
         ['rty_id'=> 4, 'rty_accounting' => 1, 'rty_pos' => false, 'rty_seasonal' => false, 'rty_master' => false, 'rty_code' => 'transfer', 'rty_name' => 'Transfer', 'rty_plural' => 'Transfers', 'rty_price' => 0, 'created_by' => 1],
         ['rty_id'=> 5, 'rty_accounting' => 1, 'rty_pos' => false, 'rty_seasonal' => false, 'rty_master' => false, 'rty_code' => 'other', 'rty_name' => 'Other', 'rty_plural' => 'Others', 'rty_price' => 0, 'created_by' => 1],
+        ['rty_id'=> 6, 'rty_accounting' => 1, 'rty_pos' => false, 'rty_seasonal' => false, 'rty_master' => 1, 'rty_code' => 'extra', 'rty_name' => 'Extra', 'rty_plural' => 'Extras', 'rty_price' => 0, 'created_by' => 1],
       ]);
 
       DB::table('resources')->insert([
@@ -53,6 +54,10 @@ class OjhSeeder extends Seeder
         ['rs_name'=> 'Tent 1', 'rs_type' => 1,'rs_price' => 500, 'rs_order' => 22, 'rs_label' => 'tent', 'created_by' => 1],
         ['rs_name'=> 'Tent 2', 'rs_type' => 1,'rs_price' => 500, 'rs_order' => 23, 'rs_label' => 'tent', 'created_by' => 1],
         ['rs_name'=> 'Tent 3', 'rs_type' => 1,'rs_price' => 500, 'rs_order' => 24, 'rs_label' => 'tent', 'created_by' => 1],
+      ]);
+
+      DB::table('resources')->insert([
+        ['rs_name'=> 'Bed', 'rs_type' => 6,'rs_price' => 300, 'rs_order' => 25, 'rs_label' => 'bed', 'created_by' => 1],
       ]);
 
       $this->call(OjhSeasonSeeder::class);

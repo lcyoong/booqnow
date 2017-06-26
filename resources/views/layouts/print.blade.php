@@ -11,9 +11,9 @@
 			.float-right{float:right;}
 			td{border-bottom: 0px solid #000000; vertical-align:top;}
 			th{text-align: left;}
-			@page { margin: 200px 23px 20px 23px; font-family: Helvetica; }
+			@page { margin: 250px 23px 20px 23px; font-family: Helvetica; }
 			.page-break { page-break-after: always;}
-			.header { position: fixed; left: 23px; top: -190px; right: 23px; height: 190px; background-color: transparent; border-bottom: 0px solid #cccccc; }
+			.header { position: fixed; left: 23px; top: -220px; right: 23px; height: 220px; background-color: transparent; border-bottom: 0px solid #cccccc; }
 			/*.header_content {border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc;}*/
 			.footer { position: fixed; left: 23px; bottom: 0px; right: 23px; height: 20px; background-color: transparent; }
      		/*#footer .page:after { content: "Page " counter(page); }*/
@@ -48,8 +48,13 @@
 	</header>
     <body>
 			<div class="header">
-				<h1>{{ config('myapp.client_name') }} {{ $title or ''}}</h1>
-				<div class="header_content">
+				<div style="width: 40%" class="float-left">
+					<img src="{{ asset('img/logo-ojh.png') }}">
+				</div>
+				<div style="width: 60%" class="float-right text-right">
+					<h1>{{ config('myapp.client_name') }} {{ $title or ''}}</h1>
+				</div>
+				<div class="header_content" style="clear:both; margin-top: 20px">
 				@stack('header')
 				</div>
 			</div>

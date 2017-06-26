@@ -28,7 +28,7 @@ class AddonFilter extends QueryFilter
   {
     if (!empty($value)) {
 
-      return $this->builder->where("add_date", '=', $value);
+      return $this->builder->where("add_date", 'like', "%$value%");
     }
   }
 

@@ -2,7 +2,7 @@
 
 @push('header')
 <div style="width: 50%">
-  <table style="width:100%">
+  <table class="float-left" style="width:100%">
     <tr>
       <td width="25%">@lang('bill.bil_customer_name')</td><td width="5%"> : </td><td width="70%">{{ $bill->bil_customer_name }}</td>
     </tr>
@@ -15,7 +15,7 @@
 <div class="float-right" style="text-align: right; width: 50%">
   <table style="width:100%">
     <tr>
-      <td width="25%">@lang('booking.book_resource')</td><td width="5%"> : </td><td width="70%">{{ $bill->booking->resource->rs_name}} #{{ $bill->booking->book_id}}</td>
+      <td width="25%">@lang('booking.book_resource')</td><td width="5%"> : </td><td width="70%">{{ $bill->booking->resource->rs_name}} #{{ showBookingNo($bill->booking->book_id) }}</td>
     </tr>
     <tr>
       <td>@lang('booking.book_from')</td><td> : </td><td>{{ showDate($bill->booking->book_from) }}</td>
@@ -23,9 +23,9 @@
     <tr>
       <td>@lang('booking.book_to')</td><td> : </td><td>{{ showDate($bill->booking->book_to) }}</td>
     </tr>
-    <!-- <tr>
+    <tr>
       <td>@lang('booking.book_reference')</td><td> : </td><td>{{ $bill->booking->book_reference }}</td>
-    </tr> -->
+    </tr>
     <!-- <tr>
       <td>@lang('booking.book_tracking')</td><td> : </td><td>{{ $bill->booking->book_tracking }}</td>
     </tr> -->
@@ -169,10 +169,10 @@
   </tr>
   <tr>
     <td width="80%" class="text-right bold">{{ trans('bill.bil_paid') }}:</td>
-    <td width="20%" class="text-right">{{ showMoney($bill->bil_paid, false, 2) }}</td>
+    <td width="20%" class="text-right">({{ showMoney($bill->bil_paid, false, 2) }})</td>
   </tr>
   <tr>
-    <td width="80%" class="text-right bold">{{ trans('bill.outstanding') }}:</td>
+    <td width="80%" class="text-right bold">{{ trans('bill.amount_due') }}:</td>
     <td width="20%" class="text-right">{{ showMoney($bill->outstanding, false, 2) }}</td>
   </tr>
 </table>

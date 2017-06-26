@@ -17,22 +17,24 @@
       <ul class="list-group">
         <li class="list-group-item">
           <div class="row">
-            <div class="col-md-2">@lang('addon.add_resource')</div>
+            <div class="col-md-1">@lang('addon.add_resource')</div>
             <div class="col-md-2">@lang('addon.add_date')</div>
             <div class="col-md-1">@lang('addon.add_pax')</div>
             <div class="col-md-1">@lang('addon.add_pax_child')</div>
-            <div class="col-md-2">@lang('addon.add_reference')</div>
+            <div class="col-md-1">@lang('addon.add_reference')</div>
+            <div class="col-md-2">@lang('addon.add_remarks')</div>
             <div class="col-md-2">@lang('addon.add_agent')</div>
             <div class="col-md-1">@lang('addon.add_status')</div>
           </div>
         </li>
         <li class="list-group-item" v-for="item in items" v-if="item.resource.rs_type === type.rty_id">
           <div class="row">
-            <div class="col-md-2">@{{ item.resource.rs_name }}</div>
+            <div class="col-md-1">@{{ item.resource.rs_name }}</div>
             <div class="col-md-2">{{ Form::datepicker('add_date', trans('addon.add_date'), null, ['class' => 'datetimepicker form-control', 'v-model' => 'item.add_date']) }}</div>
             <div class="col-md-1">{{ Form::number('add_pax', null, ['v-model' => 'item.add_pax', 'class' => 'form-control', 'min' => 1, 'max' => 20]) }}</div>
             <div class="col-md-1">{{ Form::number('add_pax_child', null, ['v-model' => 'item.add_pax_child', 'class' => 'form-control', 'min' => 0, 'max' => 20]) }}</div>
-            <div class="col-md-2">{{ Form::text('add_reference', null, ['v-model' => 'item.add_reference', 'class' => 'form-control', 'placeholder' => trans('addon.add_reference')]) }}</div>
+            <div class="col-md-1">{{ Form::text('add_reference', null, ['v-model' => 'item.add_reference', 'class' => 'form-control', 'placeholder' => trans('addon.add_reference')]) }}</div>
+            <div class="col-md-2">{{ Form::textarea('add_remarks', null, ['v-model' => 'item.add_remarks', 'class' => 'form-control', 'rows'=>3, 'placeholder' => trans('addon.add_remarks')]) }}</div>
             <div class="col-md-2">{{ Form::selectBasic('add_agent', trans('addon.add_agent'), $agents, null, ['style'=>'width:100%', 'v-model' => 'item.add_agent', 'class' => 'form-control']) }}</div>
             <div class="col-md-1">{{ Form::selectBasic('add_status', trans('addon.add_status'), $add_status, null, ['v-model' => 'item.add_status', 'class' => 'form-control']) }}</div>
             <div class="col-md-1"><itemized :item = "item" class="form-control btn btn-primary" action="{{ urlTenant('addons/update') }}" @completesuccessx="doneUpdate">Save</itemized></div>

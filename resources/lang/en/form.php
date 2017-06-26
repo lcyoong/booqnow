@@ -39,4 +39,5 @@ return [
   'export' => 'Export',
   'permission' => 'Permission',
   'addons' => 'Add-ons',
+  'go' => 'Go',
 ];

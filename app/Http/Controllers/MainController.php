@@ -32,6 +32,8 @@ class MainController extends Controller
 
     $this->middleware('connect.tenant');
 
+    $book_leads = (new CodeRepository)->getDropDown('book_lead_from', true);
+
     $pay_methods = (new CodeRepository)->getDropDown('pay_method', true);
 
     $book_status = (new CodeRepository)->getDropDown('book_status', true);
@@ -60,7 +62,7 @@ class MainController extends Controller
 
     $layout = 'layouts.tenant';
 
-    $this->vdata = compact('left_section_col', 'tenant', 'layout', 'account', 'pay_methods', 'book_status', 'add_status', 'countries', 'resource_types', 'booking_sources', 'cus_status', 'rs_status', 'rc_type', 'ag_type');
+    $this->vdata = compact('left_section_col', 'tenant', 'layout', 'account', 'book_leads', 'pay_methods', 'book_status', 'add_status', 'countries', 'resource_types', 'booking_sources', 'cus_status', 'rs_status', 'rc_type', 'ag_type');
 
     // $this->vdata = [
     //   'left_section_col' => 12,

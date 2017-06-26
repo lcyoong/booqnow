@@ -9,7 +9,7 @@ use App\Http\Requests;
 use App\Country;
 use App\Merchant;
 use App\Subscription;
-use Booqnow\Repositories\MerchantRepository;
+use Repositories\MerchantRepository;
 use Repositories\CountryRepository;
 
 class MerchantController extends MainController

@@ -31,6 +31,19 @@ class ResourceFilter extends QueryFilter
   }
 
   /**
+   * Resource label filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function label($value = '')
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where("rs_label", '=', $value);
+    }
+  }
+
+  /**
    * Resource status filter
    * @param  string $value
    * @return Builder

@@ -43,7 +43,7 @@ class SingleTenantTableSeeder extends Seeder
         ['bs_id'=>2, 'bs_description' => 'Walk-in', 'created_by' => 1],
         ['bs_id'=>3, 'bs_description' => 'Agent', 'created_by' => 1],
         ['bs_id'=>4, 'bs_description' => 'Reception', 'created_by' => 1],
-        ['bs_id'=>5, 'bs_description' => 'Auto', 'created_by' => 1],
+        ['bs_id'=>5, 'bs_description' => 'Online auto-booking', 'created_by' => 1],
       ]);
 
       DB::table('roles')->insert([

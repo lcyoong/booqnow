@@ -43,9 +43,9 @@ Route::post('merchants/new', 'MerchantController@store');
 Route::get('merchants/{merchant}/edit', 'MerchantController@edit');
 Route::post('merchants/update', 'MerchantController@update');
 
-Route::get('merchants/{merchant}/users', 'MerchantUserController@index');
-Route::get('merchants/{merchant}/users/new', 'MerchantUserController@create');
-Route::post('merchants/{merchant}/users/new', 'MerchantUserController@store');
+// Route::get('merchants/{merchant}/users', 'MerchantUserController@index');
+// Route::get('merchants/{merchant}/users/new', 'MerchantUserController@create');
+// Route::post('merchants/{merchant}/users/new', 'MerchantUserController@store');
 
 if (config('myapp.multi_tenant')) {
 

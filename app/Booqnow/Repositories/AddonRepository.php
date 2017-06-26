@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 // use App\Customer;
 use Filters\AddonFilter;
 use DB;
+use Carbon\Carbon;
 
 class AddonRepository extends BaseRepository {
 
@@ -52,7 +53,7 @@ class AddonRepository extends BaseRepository {
    */
   public function ofDate($date)
   {
-    $this->filter->add(['onDate' => $date]);
+    $this->filter->add(['onDate' => Carbon::parse($date)->format('Y-m-d')]);
 
     return $this;
   }

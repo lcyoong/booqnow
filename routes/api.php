@@ -37,6 +37,7 @@ Route::group(['prefix' => '/v1'], function () {
   Route::get('/resources/types', 'Api\ResourceApiController@types');
   Route::get('/resources/{resource_type}/active/{mode?}', 'Api\ResourceApiController@active');
   Route::get('/resources/{resource}/{start}/{end}', 'Api\ResourceApiController@selected');
+  Route::get('/resources/label/{label}', 'Api\ResourceApiController@ofLabel');
   // Route::get('/customers/active', 'Api\CustomerApiController@active');
   Route::get('/bookings', 'Api\BookingApiController@get');
   Route::get('/bookings/active', 'Api\BookingApiController@active');

@@ -135,6 +135,7 @@ class BookingController extends MainController
 
       $this->createBillItems($input, $bili_bill);
 
+      $this->createExtras($input, $new_booking, $bili_bill);
     });
 
     return $this->goodReponse();
@@ -296,16 +297,45 @@ class BookingController extends MainController
 
       // $gross = $value * $input['unit'][$key];
 
-      $resource = (new ResourceRepository)->findById($input['resource'][$key]);
+      // $resource = (new ResourceRepository)->findById($input['resource'][$key]);
 
       (new BillItemRepository)->store([
-        'bili_resource' => $resource->rs_id,
+        'bili_resource' => $input['resource'][$key],
         'bili_description' => $input['name'][$key],
         'bili_bill' => $bili_bill,
         'bili_unit_price' => $value,
         'bili_unit' => $input['unit'][$key],
         // 'bili_gross' => $gross,
         // 'bili_tax' => calcTax($gross),
+      ]);
+    }
+  }
+
+  /**
+   * Create bill items
+   * @param  array $input - User input data
+   * @param  int $booking - Booking object
+   * @return void
+   */
+  private function createExtras($input, $booking, $bil_id)
+  {
+    foreach (array_get($input, 'extra_rate', []) as $key => $value) {
+
+      $bili_item = (new BillItemRepository)->store([
+        'bili_resource' => $input['extra'][$key],
+        'bili_description' => $input['extra_name'][$key],
+        'bili_bill' => $bil_id,
+        'bili_unit_price' => $value,
+        'bili_unit' => $input['extra_unit'][$key],
+      ]);
+
+      $booking->addons()->create([
+        'add_resource' => $input['extra'][$key],
+        'add_bill_item' => $bili_item->bili_id,
+        'add_customer' => $booking->book_customer,
+        'add_customer_name' => $booking->customer->full_name,
+        'add_date' => date('Ymd'),
+        'add_pax' => $input['extra_unit'][$key],
       ]);
     }
   }

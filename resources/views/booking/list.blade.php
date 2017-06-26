@@ -14,6 +14,7 @@
     <th>@lang('booking.duration')</th>
     <th class="text-center">@lang('booking.book_pax')</th>
     <th class="text-center">@lang('booking.book_pax_child')</th>
+    <th class="text-center">@lang('booking.book_extra_bed')</th>
     <th>@lang('booking.book_reference')</th>
     <th>@lang('booking.book_agent')</th>
     <!-- <th>@lang('booking.book_tracking')</th> -->
@@ -30,6 +31,7 @@
     <td><span class="label label-info">{{ dayDiff($item->book_from, $item->book_to) }} @lang('booking.nights')</span> {{ showDate($item->book_from) }} - {{ showDate($item->book_to) }}</td>
     <td class="text-center">{{ $item->book_pax }}</td>
     <td class="text-center">{{ $item->book_pax_child }}</td>
+    <td class="text-center">{{ $item->book_extra_bed }}</td>
     <td>{{ $item->book_reference }}</td>
     <td>{{ isset($item->agent) ? $item->agent->ag_name : null }}</td>
     <!-- <td>{{ $item->book_tracking }}</td> -->
