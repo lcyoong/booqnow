@@ -64,7 +64,7 @@
   <div v-else>
     @foreach($resource_types as $type)
       @if(!$type->rty_master)
-        <a :href="'{{ urlTenant(sprintf("addons/%s/new/bill", $type->rty_id)) }}/' + bill.bil_id +  '/{{ $type->rty_pos ? '1' : '' }}'" v-modal><button class="btn btn-primary btn-sm"><i class="fa {{ config('myapp.icon-' . $type->rty_code) }}"></i> @lang('form.add_itinerary', ['name' => $type->rty_name])</button></a>
+        <a :href="'{{ urlTenant(sprintf("addons/%s/new/bill", $type->rty_id)) }}/' + bill.bil_id +  '/{{ $type->rty_pos ? '1' : '0' }}'" v-modal><button class="btn btn-primary btn-sm"><i class="fa {{ config('myapp.icon-' . $type->rty_code) }}"></i> @lang('form.add_itinerary', ['name' => $type->rty_name])</button></a>
       @endif
     @endforeach
   </div>
