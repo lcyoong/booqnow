@@ -35,4 +35,15 @@ class ReceiptRepository extends BaseRepository {
                 ->groupBy(DB::raw("month(rc_date)"))->get();
   }
 
+  public function depositByBookedMonth($year)
+  {
+    $this->status('active')->ofType(['deposit'])->ofYear($year);
+
+    return $this->repo->select(DB::raw("month(book_from) as mth, sum(rc_amount) as total"))
+                ->filter($this->filter)
+                ->join('bills', 'bil_id', '=', 'rc_bill')
+                ->join('bookings', 'book_id', '=', 'bil_booking')
+                ->groupBy(DB::raw("month(book_from)"))->get();
+  }
+
 }

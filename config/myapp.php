@@ -28,4 +28,6 @@ return [
   'bg-source-1' => '#e0fdff',
   'bg-source-2' => '#fce0e0',
   'bg-source-3' => '#f8fcd9',
+  'bg-source-4' => '#fbe0ff',
+  'bg-source-5' => '#ffdaaa',
 ];

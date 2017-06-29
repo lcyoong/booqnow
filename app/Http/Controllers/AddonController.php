@@ -190,7 +190,16 @@ class AddonController extends MainController
 
         $item = json_decode($content);
 
-        $this->createBillItem($item, $input);
+        $new_bill_item = $this->createBillItem($item, $input);
+
+        $input['add_bill_item'] = $new_bill_item->bili_id;
+        $input['add_resource'] = $item->rs_id;
+        $input['add_date'] = date('YmdHis');
+        $input['add_pax'] = $item->rs_unit;
+        $input['add_unit'] = $item->rs_unit;
+
+        $this->repo->store($input);
+
       }
     });
 

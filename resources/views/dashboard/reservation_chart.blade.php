@@ -2,6 +2,8 @@
 
 @push('content')
 @include('booking.status_legend', ['book_status' => $book_status])
+@include('booking.source_legend', ['sources' => $booking_sources])
+<div style="clear:both"></div>
 <div id="calendar"></div>
 @endpush
 
