@@ -32,7 +32,7 @@
             <a v-modal href="{{ url('bills/' . $item->bil_id) }}" title="@lang('form.view')"><i class="fa fa-eye"></i></a>
             <a href="{{ url(sprintf('bills/%s/edit', $item->bil_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>
             <a v-modal href="{{ urlTenant('receipts/new/' . $item->bil_id) }}" title="@lang('form.pay')"><i class="fa fa-money"></i></a>
-            <a href="{{ urlTenant(sprintf("bills/%s/print", $item->bil_id)) }}" target=_blank title="@lang('form.print')"><i class="fa fa-print"></i></a>
+            <a href="{{ urlTenant(sprintf("bills/%s/print?" . str_random(40), $item->bil_id)) }}" target=_blank title="@lang('form.print')"><i class="fa fa-print"></i></a>
             <a v-modal href="{{ url(sprintf('trail/bills/%s', $item->bil_id)) }}" title="@lang('form.trail')"><i class="fa fa-history"></i></a>
             <!-- <a v-modal href="{{ url(sprintf('comments/bills/%s', $item->bil_id)) }}" title="@lang('form.comments')"><i class="fa fa-comment-o"></i></a> -->
           </td>
