@@ -104,7 +104,7 @@ new Vue ({
             this.bill = response.data
             this.customer = response.data.customer
             this.booking = response.data.booking
-            this.items = response.data.items
+            this.items = response.data.allitems
           });
     },
 

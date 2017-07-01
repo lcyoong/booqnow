@@ -43,6 +43,11 @@ class BillItem extends TenantModel
     return Carbon::parse($this->attributes['created_at'])->format('d-m-Y');
   }
 
+  public function scopeActive($query)
+  {
+    return $query->where('bili_active', '=', 1);
+  }
+
   // /**
   //  * Accessor to set the gross amount
   //  * @return numeric
