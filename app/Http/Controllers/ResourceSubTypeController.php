@@ -5,24 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\StoreResourceSubType;
-use Repositories\ResourceSubTypeRepository;
 use App\ResourceSubType;
 
 class ResourceSubTypeController extends MainController
 {
-  protected $repo;
-
   /**
    * Create a new controller instance.
-   * @param ResourceSubTypeRepository $repo [description]
    */
-  public function __construct(ResourceSubTypeRepository $repo)
+  public function __construct()
   {
     parent::__construct();
 
     $this->tenant = true;
-
-    $this->repo = $repo;
   }
 
   /**
@@ -63,7 +57,7 @@ class ResourceSubTypeController extends MainController
    */
   public function edit($rty_id)
   {
-    $resource_sub_type = $this->repo->findById($rty_id);
+    $resource_sub_type = ResourceSubType::findOrFail($rty_id);
 
     $this->page_title = trans('resource_sub_type.edit');
 

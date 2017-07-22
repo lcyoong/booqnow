@@ -13,7 +13,7 @@ class CreateSubTypes extends Migration
      */
     public function up()
     {
-      Schema::create('resources_sub_types', function (Blueprint $table) {
+      Schema::create('resource_sub_types', function (Blueprint $table) {
           $table->increments('rsty_id');
           $table->integer('rsty_type');
           $table->string('rsty_code')->nullable();
@@ -31,6 +31,6 @@ class CreateSubTypes extends Migration
      */
     public function down()
     {
-      Schema::dropIfExists('resources_sub_types');
+      Schema::dropIfExists('resource_sub_types');
     }
 }
