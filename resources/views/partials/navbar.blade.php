@@ -64,6 +64,8 @@
             <li><a href="{{ urlTenant('resources/' . $type->rty_id) }}">{{ $type->rty_plural}}</a></li>
             @endforeach
             <li role="separator" class="divider"></li>
+            <li><a href="{{ urlTenant('resource_sub_types') }}">@lang('nav.sub_types')</a></li>
+            <li role="separator" class="divider"></li>
             <li><a href="{{ urlTenant('agents') }}">@lang('nav.agents')</a></li>
             @endpermitted
             <!-- <li><a href="{{ urlTenant('resource_types') }}">@lang('nav.resource_types')</a></li> -->

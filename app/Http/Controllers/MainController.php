@@ -54,6 +54,8 @@ class MainController extends Controller
 
     $resource_types = (new ResourceTypeRepository)->get();
 
+    $dd_resource_types = (new ResourceTypeRepository)->getDropDown('rty_id', 'rty_name');
+
     $booking_sources = (new BookingSourceRepository)->getDropDown('bs_id', 'bs_description');
 
     $left_section_col = 12;
@@ -62,7 +64,7 @@ class MainController extends Controller
 
     $layout = 'layouts.tenant';
 
-    $this->vdata = compact('left_section_col', 'tenant', 'layout', 'account', 'book_leads', 'pay_methods', 'book_status', 'add_status', 'countries', 'resource_types', 'booking_sources', 'cus_status', 'rs_status', 'rc_type', 'ag_type');
+    $this->vdata = compact('left_section_col', 'tenant', 'layout', 'account', 'book_leads', 'pay_methods', 'book_status', 'add_status', 'countries', 'resource_types', 'dd_resource_types', 'booking_sources', 'cus_status', 'rs_status', 'rc_type', 'ag_type');
 
     // $this->vdata = [
     //   'left_section_col' => 12,

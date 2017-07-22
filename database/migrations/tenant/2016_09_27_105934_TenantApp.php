@@ -43,6 +43,7 @@ class TenantApp extends Migration
           $table->string('rs_name');
           $table->text('rs_description')->nullable();
           $table->integer('rs_type');
+          $table->integer('rs_sub_type')->nullable();
           $table->decimal('rs_price', 10, 2)->default(0);
           $table->integer('rs_order')->default(0);
           $table->string('rs_label')->nullable();

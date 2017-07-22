@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\ResourceSubType;
 use Repositories\ResourceRepository;
 use Repositories\ResourceTypeRepository;
 use Filters\ResourceFilter;
@@ -60,11 +61,13 @@ class ResourceController extends MainController
    */
   public function create($rty_id)
   {
+    $sub_types = ResourceSubType::getDropDown($rty_id);
+
     $resource_type = (new ResourceTypeRepository)->findById($rty_id);
 
     $this->page_title = trans('resource.new', ['type' => $resource_type->rty_name]);
 
-    $this->vdata(compact('resource_type'));
+    $this->vdata(compact('resource_type', 'sub_types'));
 
     return view('resource.new', $this->vdata);
   }
@@ -78,11 +81,13 @@ class ResourceController extends MainController
   {
     $resource = $this->repo_rs->findById($rs_id);
 
+    $sub_types = ResourceSubType::getDropDown($resource->rs_type);
+
     $resource_type = (new ResourceTypeRepository)->findById($resource->rs_type);
 
     $this->page_title = trans('resource.edit', ['type' => $resource_type->rty_name]);
 
-    $this->vdata(compact('resource', 'resource_type'));
+    $this->vdata(compact('resource', 'resource_type', 'sub_types'));
 
     return view('resource.edit', $this->vdata);
   }

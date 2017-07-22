@@ -21,13 +21,18 @@
   {{ Form::hidden('add_to_bill', $add_to_bill) }}
   @endif
 
-  <div class="container-fluid">
+  <div class="container-fluid" style="padding: 20px">
     <div class="row">
-      <div class="col-md-6">
-        <div class="row row-eq-height" v-for = "chunk in chunkedResources">
-          <div v-for = "resource in chunk" class="col-md-2" style="padding: 10px 3px; margin-right: 2px; margin-bottom: 2px; background: #fdfdfd; text-align: center; font-size: 0.8em;">
-            <div style="">
-              <a href="#" @click="addItem(resource)">@{{ resource.text }}</a>
+      <div class="col-md-6" style="max-height: 400px; overflow-y: scroll;">
+        <div v-for = "(resources, index) in groupResources">
+          <div class="row">
+            <div class="col-md-12" style="padding: 5px 10px; background-color: #efefef;"><h5>@{{ !(index in sub_types) ? 'N/A' : sub_types[index] }}</h5></div>
+          </div>
+          <div class="row row-eq-height" v-for = "chunk in _.chunk(resources, 6)">
+            <div v-for = "resource in chunk" class="col-md-2" style="padding: 10px 3px; margin-right: 2px; margin-bottom: 2px; background: #fdfdfd; text-align: center; font-size: 0.8em;">
+              <div style="">
+                <a href="#" @click="addItem(resource)">@{{ resource.text }}</a>
+              </div>
             </div>
           </div>
         </div>
@@ -48,10 +53,10 @@
         </li>
         </ul>
         <h4><span class="label label-success">Total: @{{ sum_amount }}</span></h4>
+        {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
       </div>
     </div>
   </div>
-  {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
 </form-ajax>
 </div>
 @endprepend
@@ -66,6 +71,8 @@ var app2 = new Vue({
     data: {
       items: [],
       resources: [],
+      sub_types: [],
+      groupResources: [],
       gotonext: '{{ !empty($booking) ? urlTenant(sprintf("bookings/%s", $booking->book_id)) : '' }}',
     },
 
@@ -83,11 +90,13 @@ var app2 = new Vue({
 
       chunkedResources () {
          return _.chunk(this.resources, 6)
-       }
+       },
+
     },
 
     created: function () {
 
+      this.getSubTypes()
       this.getResources()
 
     },
@@ -98,10 +107,18 @@ var app2 = new Vue({
        */
       getResources: function () {
 
-        this.$http.get("{{ urlTenant("api/v1/resources/" . $resource_type->rty_id) }}/active/select")
+        this.$http.get("{{ urlTenant("api/v1/resources/" . $resource_type->rty_id) }}/active/grouped")
             .then(function (response) {
+              this.groupResources = response.data
+            });
+      },
 
-              this.resources = response.data
+      getSubTypes: function () {
+
+        this.$http.get("{{ urlTenant("api/v1/resources/sub_types/{$resource_type->rty_id}") }}")
+            .then(function (response) {
+              this.sub_types = response.data
+              console.log(this.sub_types)
             });
       },
 

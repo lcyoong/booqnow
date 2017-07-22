@@ -31,4 +31,6 @@ return [
   'walkin' => 'Walk-in',
   'walkin_default_description' => 'Walk-in bill',
   'amount_due' => 'Amount due',
+  'deposit_paid' => 'Deposit paid',
+  'others_paid' => 'Others paid',
 ];

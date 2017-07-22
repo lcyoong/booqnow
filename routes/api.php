@@ -35,6 +35,8 @@ Route::group(['prefix' => '/v1'], function () {
   Route::get('/resources/{resource}/pricing', 'Api\ResourceApiController@pricing');
   Route::get('/resources/pricing/{pricing}/tier', 'Api\ResourceApiController@pricingTier');
   Route::get('/resources/types', 'Api\ResourceApiController@types');
+  Route::get('/resources/sub_types/{resource_type}', 'Api\ResourceApiController@subTypes');
+  Route::get('/resources/{resource_type}/active/grouped', 'Api\ResourceApiController@activeGrouped');
   Route::get('/resources/{resource_type}/active/{mode?}', 'Api\ResourceApiController@active');
   Route::get('/resources/{resource}/{start}/{end}', 'Api\ResourceApiController@selected');
   Route::get('/resources/label/{label}', 'Api\ResourceApiController@ofLabel');

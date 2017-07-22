@@ -24,4 +24,5 @@ return [
   'expenses' => 'Expenses',
   'expenses_category' => 'Expenses Category',
   'agents' => 'Agents',
+  'sub_types' => 'Sub Types',
 ];

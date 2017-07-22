@@ -168,8 +168,12 @@
     <td width="20%" class="text-right">{{ showMoney($bill->total_amount, false, 2) }}</td>
   </tr>
   <tr>
-    <td width="80%" class="text-right bold">{{ trans('bill.bil_paid') }}:</td>
-    <td width="20%" class="text-right">({{ showMoney($bill->bil_paid, false, 2) }})</td>
+    <td width="80%" class="text-right bold">{{ trans('bill.deposit_paid') }}:</td>
+    <td width="20%" class="text-right">({{ showMoney($bill->deposit(), false, 2) }})</td>
+  </tr>
+  <tr>
+    <td width="80%" class="text-right bold">{{ trans('bill.others_paid') }}:</td>
+    <td width="20%" class="text-right">({{ showMoney($bill->bil_paid - $bill->deposit(), false, 2) }})</td>
   </tr>
   <tr>
     <td width="80%" class="text-right bold">{{ trans('bill.amount_due') }}:</td>

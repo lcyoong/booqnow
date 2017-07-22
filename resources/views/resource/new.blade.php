@@ -7,6 +7,7 @@
   <div class="row">
     {{ Form::bsText('rs_name', trans('resource.rs_name')) }}
     {{ Form::bsText('rs_price', trans('resource.rs_price')) }}
+    {{ Form::bsSelect('rs_sub_type', trans('resource.rs_sub_type'), $sub_types) }}
   </div>
   <div class="row">
     {{ Form::bsText('rs_label', trans('resource.rs_label')) }}
