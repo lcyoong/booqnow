@@ -49,7 +49,7 @@
       resources: [],
       add_resource: '',
       gotonext: '{{ !empty($booking) ? urlTenant(sprintf("bookings/%s", $booking->book_id)) : '' }}',
-      reloadoncomplete: false
+      reloadoncomplete: {{ $reload_on_complete }}
     },
 
     created: function () {
@@ -71,8 +71,8 @@
       getResources: function () {
         this.$http.get("{{ urlTenant("api/v1/resources/" . $resource_type->rty_id) }}/active/select")
             .then(function (response) {
-              console.log(response.data)
-              this.resources = response.data
+              var data = JSON.parse(response.data)
+              this.resources = data
             });
       },
 

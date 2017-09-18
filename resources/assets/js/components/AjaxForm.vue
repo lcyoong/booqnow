@@ -34,11 +34,15 @@
 
       onComplete: function(response) {
 
+        var data = JSON.parse(response.data)
+
+        console.log(data)
+
         util.onCompleteNotify(response);
 
         this.$emit('endwait');
 
-        this.$emit('completesuccess', response.data);
+        this.$emit('completesuccess', data);
 
         if (this.reloadOnComplete) {
 
@@ -53,7 +57,7 @@
           var next = this.goToNext
 
           if (this.goToAppendData !== undefined) {
-            next = next + '/' + response.data.data;
+            next = next + '/' + data.data;
           }
 
           util.showModal(next);

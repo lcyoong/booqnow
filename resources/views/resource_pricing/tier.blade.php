@@ -67,8 +67,8 @@ new Vue ({
     getList: function () {
       this.$http.get('{{ urlTenant("api/v1/resources/pricing/$pricing_id/tier") }}')
           .then(function (response) {
-            console.log(response.data)
-            this.tiers = response.data
+            var data = JSON.parse(response.data)
+            this.tiers = data
           });
     },
   }

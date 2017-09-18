@@ -93,8 +93,8 @@ new Vue ({
 
       this.$http.get("{{ urlTenant("api/v1/agents/") }}/" + type)
           .then(function (response) {
-
-            this.agents = response.data
+            var data = JSON.parse(response.data)
+            this.agents = data
 
           });
     }

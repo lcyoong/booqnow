@@ -2,7 +2,7 @@
 
 @prepend('content')
 <div id="add-pos">
-<form-ajax action = "{{ urlTenant('addons/new/list') }}" method="POST" :go-to-next = "gotonext" @startwait="startWait" @endwait="endWait">
+<form-ajax action = "{{ urlTenant('addons/new/list') }}" method="POST" :go-to-next = "gotonext" @startwait="startWait" @endwait="endWait" :reload-on-complete="reloadoncomplete">
   @if (!empty($booking))
   <!-- @include('customer.profile', ['customer' => $booking->customer]) -->
   <h4><i class="fa fa-user"></i> {{ $booking->customer->full_name }}</h4>
@@ -66,6 +66,7 @@ var app2 = new Vue({
       items: [],
       resources: [],
       gotonext: '{{ !empty($booking) ? urlTenant(sprintf("bookings/%s", $booking->book_id)) : '' }}',
+      reloadoncomplete: {{ $reload_on_complete }}
     },
 
     computed: {
@@ -99,8 +100,8 @@ var app2 = new Vue({
 
         this.$http.get("{{ urlTenant("api/v1/resources/" . $resource_type->rty_id) }}/active/select")
             .then(function (response) {
-
-              this.resources = response.data
+              var data = JSON.parse(response.data)
+              this.resources = data
             });
       },
 

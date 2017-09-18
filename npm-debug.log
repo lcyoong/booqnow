@@ -1,0 +1,63 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'rebuild', 'node-sass' ]
+2 info using npm@3.10.10
+3 info using node@v6.10.2
+4 info readInstalled object
+5 verbose rebuild path, id [ '/home/vagrant/Code/OJH/node_modules/node-sass',
+5 verbose rebuild   'node-sass@4.5.3' ]
+6 silly rebuild set [ '/home/vagrant/Code/OJH/node_modules/node-sass' ]
+7 info build /home/vagrant/Code/OJH/node_modules/node-sass
+8 info lifecycle node-sass@4.5.3~preinstall: node-sass@4.5.3
+9 silly lifecycle node-sass@4.5.3~preinstall: no script for preinstall, continuing
+10 info linkStuff node-sass@4.5.3
+11 silly linkStuff node-sass@4.5.3 has /home/vagrant/Code/OJH/node_modules as its parent node_modules
+12 verbose linkBins node-sass@4.5.3
+13 verbose link bins [ { 'node-sass': 'bin/node-sass' },
+13 verbose link bins   '/home/vagrant/Code/OJH/node_modules/.bin',
+13 verbose link bins   false ]
+14 verbose linkMans node-sass@4.5.3
+15 verbose rebuildBundles node-sass@4.5.3
+16 verbose rebuildBundles [ 'gaze', 'glob', 'globule', 'lodash.clonedeep', 'minimatch' ]
+17 verbose rebuild bundle /home/vagrant/Code/OJH/node_modules/node-sass/node_modules/globule
+18 info build /home/vagrant/Code/OJH/node_modules/node-sass/node_modules/globule
+19 silly gentlyRm /home/vagrant/Code/OJH/node_modules/.bin/node-sass is being purged
+20 verbose gentlyRm don't care about contents; nuking /home/vagrant/Code/OJH/node_modules/.bin/node-sass
+21 info lifecycle globule@1.2.0~preinstall: globule@1.2.0
+22 silly lifecycle globule@1.2.0~preinstall: no script for preinstall, continuing
+23 info linkStuff globule@1.2.0
+24 silly linkStuff globule@1.2.0 has /home/vagrant/Code/OJH/node_modules/node-sass/node_modules as its parent node_modules
+25 verbose linkBins globule@1.2.0
+26 verbose linkMans globule@1.2.0
+27 verbose rebuildBundles globule@1.2.0
+28 info lifecycle globule@1.2.0~install: globule@1.2.0
+29 silly lifecycle globule@1.2.0~install: no script for install, continuing
+30 info lifecycle globule@1.2.0~postinstall: globule@1.2.0
+31 silly lifecycle globule@1.2.0~postinstall: no script for postinstall, continuing
+32 verbose rebuild bundle /home/vagrant/Code/OJH/node_modules/node-sass/node_modules/minimatch
+33 info build /home/vagrant/Code/OJH/node_modules/node-sass/node_modules/minimatch
+34 info lifecycle minimatch@3.0.4~preinstall: minimatch@3.0.4
+35 silly lifecycle minimatch@3.0.4~preinstall: no script for preinstall, continuing
+36 info linkStuff minimatch@3.0.4
+37 silly linkStuff minimatch@3.0.4 has /home/vagrant/Code/OJH/node_modules/node-sass/node_modules as its parent node_modules
+38 verbose linkBins minimatch@3.0.4
+39 verbose linkMans minimatch@3.0.4
+40 verbose rebuildBundles minimatch@3.0.4
+41 info lifecycle minimatch@3.0.4~install: minimatch@3.0.4
+42 silly lifecycle minimatch@3.0.4~install: no script for install, continuing
+43 info lifecycle minimatch@3.0.4~postinstall: minimatch@3.0.4
+44 silly lifecycle minimatch@3.0.4~postinstall: no script for postinstall, continuing
+45 verbose stack Error: EPROTO: protocol error, symlink '../node-sass/bin/node-sass' -> '/home/vagrant/Code/OJH/node_modules/.bin/node-sass'
+45 verbose stack     at Error (native)
+46 verbose cwd /home/vagrant/Code/OJH
+47 error Linux 4.4.0-66-generic
+48 error argv "/usr/bin/nodejs" "/usr/bin/npm" "rebuild" "node-sass"
+49 error node v6.10.2
+50 error npm  v3.10.10
+51 error path ../node-sass/bin/node-sass
+52 error code EPROTO
+53 error errno -71
+54 error syscall symlink
+55 error EPROTO: protocol error, symlink '../node-sass/bin/node-sass' -> '/home/vagrant/Code/OJH/node_modules/.bin/node-sass'
+56 error If you need help, you may report this error at:
+56 error     <https://github.com/npm/npm/issues>
+57 verbose exit [ -71, true ]

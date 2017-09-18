@@ -65,11 +65,11 @@ class AddonController extends MainController
   //
   //   return view($pos ? 'addon.new_pos' : 'addon.new_basic', $this->vdata);
   // }
-  public function create($rty_id, $pos)
+  public function create($rty_id, $pos, $reload_on_complete = 'false')
   {
     $agents = $this->agents('suppliers');
 
-    $this->vdata(compact('agents'));
+    $this->vdata(compact('agents', 'reload_on_complete'));
 
     return view($pos ? 'addon.new_pos' : 'addon.new_basic', $this->vdata);
   }
@@ -118,7 +118,7 @@ class AddonController extends MainController
 
     $this->vdata(compact('bill', 'add_to_bill'));
 
-    return $this->create($rty_id, $pos);
+    return $this->create($rty_id, $pos, 'true');
   }
 
   /**

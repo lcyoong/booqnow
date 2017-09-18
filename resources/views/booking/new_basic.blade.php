@@ -149,7 +149,8 @@ new Vue({
 
         this.$http.get("{{ urlTenant("api/v1/customers/active") }}")
             .then(function (response) {
-              this.customers = response.data
+              var data = JSON.parse(response.data)
+              this.customers = data
             })
 
       },
@@ -158,7 +159,8 @@ new Vue({
 
         this.$http.get("{{ urlTenant("api/v1/agents/") }}/" + type)
             .then(function (response) {
-              this.agents = response.data
+              var data = JSON.parse(response.data)
+              this.agents = data
             })
 
       },
@@ -166,8 +168,9 @@ new Vue({
       getResource: function () {
         this.$http.get("{{ urlTenant("api/v1/resources/$resource_id/$start/$end") }}")
             .then(function (response) {
-              this.resource = response.data.resource
-              this.days = response.data.days
+              var data = JSON.parse(response.data)
+              this.resource = data.resource
+              this.days = data.days
             });
       },
 
@@ -178,7 +181,8 @@ new Vue({
       customerReady: function (value) {
         this.$http.get("api/v1/customers/" + value)
             .then(function (response) {
-              this.customer = response.data
+              var data = JSON.parse(response.data)
+              this.customer = data
             });
         this.section2 = true
         this.section1 = false

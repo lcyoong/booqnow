@@ -67,8 +67,8 @@ var now = new Vue({
     getPricing: function () {
       this.$http.get("{{ urlTenant("api/v1/resources/" . $resource->rs_id . "/pricing") }}")
           .then(function (response) {
-            this.list = response.data
-            console.log(this.list)
+            var data = JSON.parse(response.data)
+            this.list = data
           }).catch(function (response) {
             util.onErrorNotify(response);
           });

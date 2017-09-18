@@ -12,9 +12,9 @@ module.exports = {
   onCompleteNotify: function (response) {
 
     // $(el).prop('disabled', false);
-
-    if (response.data.message) {
-      $.notify(response.data.message, {
+    var data = JSON.parse(response.data)
+    if (data.message) {
+      $.notify(data.message, {
         position: "bottom right",
         className: "success"
       });
@@ -30,10 +30,10 @@ module.exports = {
   onErrorNotify: function (response) {
 
     // $(el).prop('disabled', false);
+    var data = JSON.parse(response.data)
+    if (util.isJson(data.message)) {
 
-    if (util.isJson(response.data.message)) {
-
-      var json = $.parseJSON(response.data.message);
+      var json = $.parseJSON(data.message);
 
       $.each(json, function(key, value) {
 
@@ -43,7 +43,7 @@ module.exports = {
         });
       });
     } else {
-      $.notify(response.data.message, {
+      $.notify(data.message, {
         position: "bottom right",
         className: "error"
       });
@@ -55,7 +55,7 @@ module.exports = {
     $('#basicModal').find('.modal-content').html('');
     $('#basicModal').modal('show');
     $('#basicModal').find('.modal-content').load(path);
-    
+
   }
 
 
