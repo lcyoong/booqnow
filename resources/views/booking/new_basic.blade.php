@@ -42,14 +42,15 @@
     <div class="row">
       {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources, null, ['v-model' => 'source', '@change' => 'switchSource']) }}
       {{ Form::bsSelect2('book_agent', trans('booking.book_agent'), ['style' => 'width: 100%', 'id' => 'book_agent', ':options' => 'agents', ':value' => 'agent']) }}
-      {{ Form::bsNumber('book_pax', trans('booking.book_pax'), 1, ['min' => 1, 'max'=>20]) }}
-      {{ Form::bsNumber('book_pax_child', trans('booking.book_pax_child'), 0, ['min' => 0, 'max'=>20]) }}
+      {{ Form::bsNumber('book_pax', trans('booking.book_pax'), 1, ['min' => 1, 'max'=>20], 2) }}
+      {{ Form::bsNumber('book_pax_child', trans('booking.book_pax_child'), 0, ['min' => 0, 'max'=>20], 2) }}
+      {{ Form::bsNumber('book_extra_bed', trans('booking.book_extra_bed'), null, ['min' => 0, 'max'=>5, 'v-model' => 'extra_bed'], 2) }}
       <!-- {{ Form::bsText('book_tracking', trans('booking.book_tracking')) }} -->
     </div>
     <div class="row">
       {{ Form::bsDate('book_expiry', trans('booking.book_expiry'), null, ['class' => 'datetimepicker form-control']) }}
-      {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), null, ['rows' => 3]) }}
       {{ Form::bsText('book_reference', trans('booking.book_reference')) }}
+      {{ Form::bsSelect('book_lead_from', trans('booking.book_lead_from'), $book_leads) }}
       <div class="col-md-3">
         <div class="form-group">
           <label for="book_special" class="control-label">@lang('booking.book_special')</label>
@@ -59,6 +60,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
+      {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), null, ['rows' => 3]) }}
     </div>
     <table class="table">
       <thead>
@@ -76,6 +80,13 @@
           <td>{{ Form::text('', null, ['class' => 'form-control', 'name' => "rate[]", 'v-model' => 'day.price']) }}</td>
           <td>{{ Form::text('', null, ['class' => 'form-control', 'readonly', 'name' => "unit[]", 'v-model' => 'day.nights']) }}</td>
           <td>@{{ day.price * day.nights }}</td>
+        </tr>
+        <tr v-if = "extra_bed > 0">
+          {{ Form::hidden('extra[0]', '', ['name' => "extra[]", 'v-model' => 'bed.rs_id']) }}
+          <td>{{ Form::text('', '', ['class' => 'form-control', 'name' => "extra_name[]", 'v-model' => 'bed.rs_name']) }}</td>
+          <td>{{ Form::text('', null, ['class' => 'form-control', 'name' => "extra_rate[]", 'v-model' => 'bed.rs_price']) }}</td>
+          <td>{{ Form::text('', null, ['class' => 'form-control', 'readonly', 'name' => "extra_unit[]", 'v-model' => 'extra_bed']) }}</td>
+          <td>@{{ bed.rs_price * extra_bed }}</td>
         </tr>
       <tbody>
     </table>
@@ -97,6 +108,7 @@ new Vue({
       this.getCustomers()
       this.getResource()
       this.switchSource()
+      this.getExtra('bed')
       // this.selectCustomer()
     },
 
@@ -112,6 +124,8 @@ new Vue({
       resource: {},
       days: [],
       value: '',
+      extra_bed: 0,
+      bed: {},
       source: {{ config('myapp.default_booking_source') }},
       nights: {{ dayDiff($start, $end) }},
     },
@@ -163,6 +177,15 @@ new Vue({
               this.agents = data
             })
 
+      },
+
+      getExtra: function (label) {
+
+        this.$http.get("{{ urlTenant("api/v1/resources/label") }}/" + label)
+            .then(function (response) {
+              this.bed = response.data
+              console.log(this.bed)
+            })
       },
 
       getResource: function () {

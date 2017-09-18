@@ -31,6 +31,7 @@
             <li><a href="{{ urlTenant('reports/monthly_stat') }}">@lang('report.monthly_stat_title')</a></li>
             <li><a href="{{ urlTenant('reports/monthly_deposit') }}">@lang('report.monthly_deposit_title')</a></li>
             <li><a href="{{ urlTenant('reports/monthly_deposit_future') }}">@lang('report.monthly_deposit_by_future_title')</a></li>
+            <li><a href="{{ urlTenant('reports/monthly_units_sold') }}">@lang('report.monthly_units_sold_title')</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="{{ urlTenant('reports/daily_tour') }}">@lang('report.daily_tour_title')</a></li>
             <li><a href="{{ urlTenant('reports/daily_transfer') }}">@lang('report.daily_transfer_title')</a></li>
@@ -62,6 +63,8 @@
             @foreach ($resource_types as $type)
             <li><a href="{{ urlTenant('resources/' . $type->rty_id) }}">{{ $type->rty_plural}}</a></li>
             @endforeach
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ urlTenant('resource_sub_types') }}">@lang('nav.sub_types')</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="{{ urlTenant('agents') }}">@lang('nav.agents')</a></li>
             @endpermitted

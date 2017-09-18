@@ -21,7 +21,7 @@
       @foreach ($customers as $customer)
       <tr>
         <td>{{ $customer->full_name }}</td>
-        <td>{{ $countries[$customer->cus_country] }}</td>
+        <td>{{ array_get($countries, $customer->cus_country, '') }}</td>
         <td>{{ $customer->cus_email }}</td>
         <td>{{ $customer->cus_contact1 }}</td>
         <td>{{ $customer->cus_status }}</td>

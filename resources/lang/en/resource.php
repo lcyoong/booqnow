@@ -12,6 +12,7 @@ return [
   'rs_price' => 'Rate',
   'rs_status' => 'Status',
   'rs_label' => 'Label',
+  'rs_sub_type' => 'Sub type',
   'rooms' => 'Rooms',
   'itineraries' => 'Tours',
   'fnb' => 'F&B',

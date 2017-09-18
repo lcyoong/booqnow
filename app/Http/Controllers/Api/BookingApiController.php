@@ -43,6 +43,7 @@ class BookingApiController extends ApiController
       $return[] = [
         'type' => 'booking',
         'id' => $item->book_id,
+        'display_id' => $item->display_id,
         'title' => $item->customer->full_name,
         'start' => Carbon::parse($item->book_from)->format('Y-m-d'),
         'end' => Carbon::parse($item->book_to)->format('Y-m-d'),

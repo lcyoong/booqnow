@@ -13,7 +13,7 @@ class MerchantRepository extends BaseRepository{
   {
     parent::__construct('App\Merchant');
 
-    $this->filter = new CustomerFilter();
+    // $this->filter = new CustomerFilter();
 
     $this->rules = [
       'mer_name' => 'required|max:255',

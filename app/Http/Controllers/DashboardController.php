@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Repositories\BookingRepository;
 use Repositories\AddonRepository;
+use Carbon\Carbon;
 
 class DashboardController extends MainController
 {
@@ -33,15 +34,19 @@ class DashboardController extends MainController
   {
     $input = $request->input();
 
-    $date = array_get($input, 'date', date('Ymd'));
+    $cdate = $date = array_get($input, 'date', date('d-m-Y'));
 
-    $arrivals['today'] = (new BookingRepository)->ofArrivalDate($date)->get(null, 5);
+    // $cdate = Carbon::parse($date)->format('Ymd');
 
-    $departures['today'] = (new BookingRepository)->ofDepartureDate($date)->get(null, 5);
+    $arrivals['today'] = (new BookingRepository)->ofArrivalDate($cdate)->get(null, 5);
 
-    $tours = (new AddonRepository)->ofDate($date)->ofType(2)->get();
+    $departures['today'] = (new BookingRepository)->ofDepartureDate($cdate)->get(null, 5);
 
-    $this->vdata(compact('arrivals', 'departures', 'tours'));
+    $tours = (new AddonRepository)->ofDate($cdate)->ofType(2)->get();
+
+    $transfers = (new AddonRepository)->ofDate($cdate)->ofType(4)->get();
+
+    $this->vdata(compact('arrivals', 'departures', 'tours', 'transfers', 'date'));
 
     return view('dashboard.merchant', $this->vdata);
   }

@@ -124,6 +124,19 @@ class BaseRepository implements BaseRepositoryInterface
     return $this->repo->with($this->withs)->findOrFail($id);
   }
 
+  public function first()
+  {
+    $resource = $this->repo->select('*');
+    
+    if (!is_null($this->filter)) {
+
+      $resource->filter($this->filter);
+
+    }
+
+    return $resource->first();
+  }
+
   /**
    * Process storing of new repository item
    * @param  array $input - input data

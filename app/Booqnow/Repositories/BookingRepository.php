@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 // use App\Customer;
 use Filters\BookingFilter;
 use DB;
+use Carbon\Carbon;
 
 class BookingRepository extends BaseRepository
 {
@@ -23,11 +24,13 @@ class BookingRepository extends BaseRepository
       'book_customer' => 'required|exists:customers,cus_id',
       'book_source' => 'required|exists:booking_sources,bs_id',
       'book_from' => 'required|date|before:book_to',
+      'book_lead_from' => 'required',
       'book_to' => 'required|date',
       'book_expiry' => 'sometimes|date',
       'book_pax' => 'required|min:1|numeric',
       'book_reference' => 'max:255',
       'book_tracking' => 'max:255',
+      'book_extra_bed' => 'numeric|min:0',
       // 'book_agent' => 'sometimes|exists:agents,ag_id'
     ];
   }
@@ -44,7 +47,7 @@ class BookingRepository extends BaseRepository
    */
   public function ofArrivalDate($date)
   {
-    $this->filter->add(['onStart' => $date]);
+    $this->filter->add(['onStart' => Carbon::parse($date)->format('Ymd')]);
 
     return $this;
   }
@@ -56,7 +59,7 @@ class BookingRepository extends BaseRepository
    */
   public function ofDepartureDate($date)
   {
-    $this->filter->add(['onEnd' => $date]);
+    $this->filter->add(['onEnd' => Carbon::parse($date)->format('Ymd')]);
 
     return $this;
   }

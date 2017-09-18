@@ -30,7 +30,7 @@
       {{ Form::bsDate('add_date', trans('addon.add_date'), today('d-m-Y 12:00'), ['class' => 'datetimepicker form-control']) }}
       {{ Form::bsText('add_reference', trans('addon.add_reference')) }}
       {{ Form::bsSelect('add_agent', trans('addon.add_agent'), $agents, null, ['class' => 'form-control select2']) }}
-      <!-- {{ Form::bsText('add_tracking', trans('addon.add_tracking')) }} -->
+      {{ Form::bsTextarea('add_remarks', trans('addon.add_remarks')) }}
     </div>
     {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btm-sm', ':disabled' => 'waiting']) }}
   </form-ajax>
@@ -49,7 +49,7 @@
       resources: [],
       add_resource: '',
       gotonext: '{{ !empty($booking) ? urlTenant(sprintf("bookings/%s", $booking->book_id)) : '' }}',
-      reloadoncomplete: {{ $reload_on_complete }}
+      reloadoncomplete: @if(empty($booking)) true @else false @endif
     },
 
     created: function () {

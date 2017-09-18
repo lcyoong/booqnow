@@ -19,6 +19,14 @@ class AddonFilter extends QueryFilter
     }
   }
 
+  public function masterType($value = 0)
+  {
+    $this->joins[] = 'joinResources';
+    $this->joins[] = 'joinResourceTypes';
+
+    return $this->builder->where("rty_master", '=', $value);
+  }
+
   /**
    * Date filter
    * @param  string $value
@@ -28,7 +36,7 @@ class AddonFilter extends QueryFilter
   {
     if (!empty($value)) {
 
-      return $this->builder->where("add_date", '=', $value);
+      return $this->builder->where("add_date", 'like', "%$value%");
     }
   }
 
@@ -91,6 +99,18 @@ class AddonFilter extends QueryFilter
   public function joinResources()
   {
     $this->builder->join('resources', 'rs_id', '=', 'add_resource');
+  }
+
+  public function joinResourceTypes()
+  {
+    $this->builder->join('resource_types', 'rty_id', '=', 'rs_type');
+  }
+
+  public function ofYear($value)
+  {
+    if (!empty($value)) {
+      return $this->builder->whereYear('add_date', $value);
+    }
   }
 
 }

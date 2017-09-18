@@ -17,7 +17,7 @@ class Bill extends TenantModel
 
   protected $fillable = ['bil_accounting', 'bil_customer', 'bil_customer_name', 'bil_booking', 'bil_description', 'bil_date', 'bil_due_date', 'bil_gross', 'bil_tax', 'bil_status', 'created_by'];
 
-  protected $appends = ['total_amount', 'outstanding'];
+  protected $appends = ['total_amount', 'outstanding', 'display_id'];
 
   /**
    * Mutator to set the formatted receipt date
@@ -56,9 +56,26 @@ class Bill extends TenantModel
   }
 
   /**
+   * Accessor to display id
+   * @return string
+   */
+  public function getDisplayIdAttribute()
+  {
+    return "B" . $this->bil_id;
+  }
+
+  /**
    * Get the items of the bill
    */
   public function items()
+  {
+    return $this->hasMany(BillItem::class, 'bili_bill')->active();
+  }
+
+  /**
+   * Get all items of the bill
+   */
+  public function allitems()
   {
     return $this->hasMany(BillItem::class, 'bili_bill');
   }
@@ -69,6 +86,11 @@ class Bill extends TenantModel
   public function receipts()
   {
     return $this->hasMany(Receipt::class, 'rc_bill');
+  }
+
+  public function deposit()
+  {
+    return $this->receipts()->where('rc_type', '=', 'deposit')->where('rc_status', '=', 'active')->sum('rc_amount');
   }
 
   /**
@@ -130,12 +152,12 @@ class Bill extends TenantModel
 
   public function getRoomItems()
   {
-    return $this->items()->join('resources', 'rs_id', 'bili_resource')->where('rs_type', '=', 1)->orderBy('rs_type')->get();
+    return $this->items()->active()->join('resources', 'rs_id', 'bili_resource')->where('rs_type', '=', 1)->orderBy('rs_type')->get();
   }
 
   public function getAddonItems()
   {
-    return $this->items()->join('resources', 'rs_id', 'bili_resource')->where('rs_type', '!=', 1)->orderBy('bili_id', 'desc')->get(['resources.*', 'bill_items.*']);
+    return $this->items()->active()->join('resources', 'rs_id', 'bili_resource')->where('rs_type', '!=', 1)->orderBy('bili_id', 'desc')->get(['resources.*', 'bill_items.*']);
   }
 
   /**
@@ -151,5 +173,4 @@ class Bill extends TenantModel
   {
     return $this->join('resources', 'rs_id', 'bili_resource');
   }
-
 }

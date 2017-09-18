@@ -43,9 +43,9 @@ Route::post('merchants/new', 'MerchantController@store');
 Route::get('merchants/{merchant}/edit', 'MerchantController@edit');
 Route::post('merchants/update', 'MerchantController@update');
 
-Route::get('merchants/{merchant}/users', 'MerchantUserController@index');
-Route::get('merchants/{merchant}/users/new', 'MerchantUserController@create');
-Route::post('merchants/{merchant}/users/new', 'MerchantUserController@store');
+// Route::get('merchants/{merchant}/users', 'MerchantUserController@index');
+// Route::get('merchants/{merchant}/users/new', 'MerchantUserController@create');
+// Route::post('merchants/{merchant}/users/new', 'MerchantUserController@store');
 
 if (config('myapp.multi_tenant')) {
 
@@ -72,6 +72,14 @@ function tenantRoutes()
     Route::post('/new', 'ResourceTypeController@store');
     Route::get('/{resource_type}/edit', 'ResourceTypeController@edit');
     Route::post('/update', 'ResourceTypeController@update');
+  });
+
+  Route::group(['middleware' => ['role:super_admin'], 'prefix' => '/resource_sub_types'], function () {
+    Route::get('/', 'ResourceSubTypeController@index');
+    Route::get('/new', 'ResourceSubTypeController@create');
+    Route::post('/new', 'ResourceSubTypeController@store');
+    Route::get('/{resource_sub_type}/edit', 'ResourceSubTypeController@edit');
+    Route::post('/update', 'ResourceSubTypeController@update');
   });
 
   Route::group(['middleware' => ['permitted:resource'], 'prefix' => '/resources'], function () {
@@ -197,6 +205,7 @@ function tenantRoutes()
     Route::get('/daily_transfer', 'ReportController@dailyTransfer');
     Route::get('/monthly_deposit', 'ReportController@monthlyDeposit');
     Route::get('/monthly_deposit_future', 'ReportController@monthlyDepositByFuture');
+    Route::get('/monthly_units_sold', 'ReportController@monthlyUnitsSold');
     Route::get('/export_bills', 'ReportController@exportBills');
     Route::get('/export_receipts', 'ReportController@exportReceipts');
     Route::get('/download/{report}', 'ReportController@download');

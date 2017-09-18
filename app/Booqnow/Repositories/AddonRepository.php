@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 // use App\Customer;
 use Filters\AddonFilter;
 use DB;
+use Carbon\Carbon;
 
 class AddonRepository extends BaseRepository {
 
@@ -52,9 +53,18 @@ class AddonRepository extends BaseRepository {
    */
   public function ofDate($date)
   {
-    $this->filter->add(['onDate' => $date]);
+    $this->filter->add(['onDate' => Carbon::parse($date)->format('Y-m-d')]);
 
     return $this;
+  }
+
+  public function soldByMonth($year)
+  {
+    $this->ofYear($year)->masterType();
+
+    return $this->repo->select(DB::raw("month(add_date) as mth, add_resource as resource, sum(add_pax) as counter"))
+                ->filter($this->filter)
+                ->groupBy(DB::raw("month(add_date), add_resource"))->get();
   }
 
 }

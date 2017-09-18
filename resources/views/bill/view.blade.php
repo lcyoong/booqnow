@@ -34,5 +34,5 @@
   </div>
 </div>
 </div>
-<a href="{{ urlTenant(sprintf("bills/%s/print", $bill->bil_id)) }}" target=_blank><i class="fa fa-print"></i> @lang('form.print')</a>
+<a href="{{ urlTenant(sprintf("bills/%s/print?" . str_random(40), $bill->bil_id)) }}" target=_blank><i class="fa fa-print"></i> @lang('form.print')</a>
 @endprepend

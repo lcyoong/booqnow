@@ -65,7 +65,7 @@ class BillController extends MainController
 
     $this->layout = 'layouts.modal';
 
-    $this->page_title = trans('bill.view', ['id' => $bil_id]);
+    $this->page_title = trans('bill.view', ['id' => $bill->display_id]);
 
     $this->vdata(compact('bill'));
 
@@ -110,9 +110,9 @@ class BillController extends MainController
    */
   public function download($bil_id)
   {
-    $ref = "#" . $bil_id;
-
     $bill = $this->repo->findById($bil_id);
+
+    $ref = "#" . $bill->display_id;
 
     $this->layout = 'layouts.print';
 

@@ -41,6 +41,18 @@ class ResourceRepository extends BaseRepository {
   }
 
   /**
+   * Add resource label filter to query
+   * @param  string $value
+   * @return Repository
+   */
+  public function ofLabel($value)
+  {
+    $this->filter->add(['label' => $value]);
+
+    return $this;
+  }
+
+  /**
    * Add resource type filter to query
    * @param  string $value
    * @return Repository

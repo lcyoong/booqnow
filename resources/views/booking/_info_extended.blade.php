@@ -3,13 +3,15 @@
     <a data-toggle="collapse" data-parent="#accordionx" href="#collapse-book{{ $booking->book_id }}">
     <div class="row">
       <div class="col-md-3">
+        {{ $booking->display_id }}
+      </div>
+      <div class="col-md-3">
         <i class="fa fa-bed"></i> {{ $booking->resource->rs_name }} @if($booking->book_special) <i class="fa fa-star special-color"></i> @endif
+        <div>{{ showDate($booking->book_from) }} - {{ showDate($booking->book_to) }}</div>
       </div>
       <div class="col-md-3">
-        {{ showDate($booking->book_from) }} - {{ showDate($booking->book_to) }}
-      </div>
-      <div class="col-md-3">
-        {{ dayDiff($booking->book_from, $booking->book_to) }} @lang('booking.nights') x {{ $booking->book_pax }} @lang('booking.book_pax') + {{ $booking->book_pax_child }} @lang('booking.book_pax_child')
+        {{ dayDiff($booking->book_from, $booking->book_to) }} @lang('booking.nights') x {{ $booking->book_pax }} @lang('booking.book_pax') + {{ $booking->book_pax_child }} @lang('booking.book_pax_child_simple')
+        @if($booking->book_extra_bed > 0) + <span class="label label-default">{{ $booking->book_extra_bed }} extra bed</span>  @endif
       </div>
       <div class="col-md-3">
         <i class="fa fa-circle status-{{ $booking->book_status }}"></i> {{ array_get($book_status, $booking->book_status) }}
@@ -23,7 +25,7 @@
         {{ Form::showField(array_get($booking_sources, $booking->book_source), trans('booking.book_source')) }}
         {{ Form::showField( isset($booking->agent) ? $booking->agent->ag_name : '', trans('booking.book_agent')) }}
         {{ Form::showField(!is_null($booking->book_expiry) ? showHumanDiff($booking->book_expiry) : null, trans('booking.book_expiry')) }}
-        <!-- {{ Form::showField($booking->book_tracking, trans('booking.book_tracking')) }} -->
+        {{ Form::showField( @$book_leads[$booking->book_lead_from], trans('booking.book_lead_from')) }}
       </div>
 
       <div class="row">

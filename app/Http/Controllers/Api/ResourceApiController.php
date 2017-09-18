@@ -14,6 +14,7 @@ use Repositories\ResourceMaintenanceRepository;
 use Filters\ResourceFilter;
 use Filters\ResourceMaintenanceFilter;
 use Carbon\Carbon;
+use App\ResourceSubType;
 
 class ResourceApiController extends ApiController
 {
@@ -40,6 +41,27 @@ class ResourceApiController extends ApiController
       {
         $return[] = ['id' => $item->rs_id, 'title' => $item->rs_name, 'price' => showMoney($item->rs_price)];
       }
+    }
+
+    return $return;
+  }
+
+  /**
+   * Get the active resources given the parameters
+   * @param  int $rty_id - Resource type id
+   * @return array
+   */
+  public function activeGrouped($rty_id)
+  {
+    $resource_type = (new ResourceTypeRepository)->findById($rty_id);
+
+    $list = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->orderBy('rs_sub_type', 'asc')->get();
+
+    $return = [];
+
+    foreach ($list as $item)
+    {
+      $return[!is_null($item->rs_sub_type) ? $item->rs_sub_type : 0][] = ['id' => $item->rs_id, 'text' => $item->rs_name, 'price' => (int) $item->rs_price];
     }
 
     return $return;
@@ -81,6 +103,13 @@ class ResourceApiController extends ApiController
     $rs = new ResourceRepository;
 
     return $rs->findById($resource)->pricing()->with(['season', 'tiers'])->get();
+  }
+
+  public function ofLabel($label, Request $request)
+  {
+    $rs = new ResourceRepository;
+
+    return $rs->ofLabel($label)->first();
   }
 
   public function pricingTier($pricing_id, Request $request)
@@ -125,6 +154,13 @@ class ResourceApiController extends ApiController
   public function types()
   {
     return (new ResourceTypeRepository)->get();
+  }
+
+  public function subTypes($rty_id)
+  {
+    // dd(ResourceSubType::getDropDown($rty_id));
+    return ResourceSubType::getDropDown($rty_id);
+    // return ResourceSubType::where('rsty_type', '=', $rty_id)->where('rsty_status', '=', 'active')->get();
   }
 
 }

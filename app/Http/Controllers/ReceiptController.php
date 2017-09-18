@@ -58,7 +58,7 @@ class ReceiptController extends MainController
 
     $this->layout = 'layouts.modal';
 
-    $this->page_title = trans('receipt.new');
+    $this->page_title = trans('receipt.new') . " {$bill->display_id}";
 
     $this->vdata(compact('bill'));
 
