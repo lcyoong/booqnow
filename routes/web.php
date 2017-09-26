@@ -194,6 +194,13 @@ function tenantRoutes()
     Route::post('/update', 'AgentController@update');
   });
 
+  Route::group(['middleware' => ['permitted:resource'], 'prefix' => '/countries'], function () {
+    Route::get('/', 'CountryController@index');
+    Route::get('/new', 'CountryController@create');
+    Route::get('/{country}/edit', 'CountryController@edit');
+    Route::post('/new', 'CountryController@store');
+    Route::post('/update', 'CountryController@update');
+  });
 
   Route::group(['middleware' => ['permitted:report'], 'prefix' => '/reports'], function () {
     Route::get('/profitloss', 'ReportController@profitLoss');

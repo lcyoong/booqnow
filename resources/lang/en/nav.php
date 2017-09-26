@@ -25,4 +25,5 @@ return [
   'expenses_category' => 'Expenses Category',
   'agents' => 'Agents',
   'sub_types' => 'Sub Types',
+  'countries' => 'Countries',
 ];
