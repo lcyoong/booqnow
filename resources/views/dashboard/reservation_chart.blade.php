@@ -18,7 +18,7 @@ $('.datepicker').datepicker({
 
 $(function() {
   $('#jump-date').datepicker().on('changeDate', function () {
-    var url = '/?date=' + moment(this.value).format('YYYY-MM-DD')
+    var url = '{{ url('/?date=') }}' + moment(this.value).format('YYYY-MM-DD')
     window.location.href = url
   });
 });
