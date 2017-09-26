@@ -40,4 +40,5 @@ return [
   'permission' => 'Permission',
   'addons' => 'Add-ons',
   'go' => 'Go',
+  'jump_date' => 'Jump to date',
 ];

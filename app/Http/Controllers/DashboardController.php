@@ -24,8 +24,14 @@ class DashboardController extends MainController
   }
 
   // Front end display
-  public function frontDesk()
+  public function frontDesk(Request $request)
   {
+    $def_date = $request->date;
+
+    // $def_date_alt = Carbon::parse($request->date)->format('m/d/Y');
+
+    $this->vdata(compact('def_date', 'def_date_alt'));
+
     return view('dashboard.reservation_chart', $this->vdata);
   }
 

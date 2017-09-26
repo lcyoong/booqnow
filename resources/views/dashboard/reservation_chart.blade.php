@@ -1,16 +1,34 @@
 @extends($layout)
 
 @push('content')
+<div id="reservation_chart">
 @include('booking.status_legend', ['book_status' => $book_status])
 @include('booking.source_legend', ['sources' => $booking_sources])
+{{ Form::filterDate('start', trans('form.jump_date'), $def_date, ['id'=>'jump-date', 'placeholder' => trans('form.jump_date')]) }}
 <div style="clear:both"></div>
 <div id="calendar"></div>
+</div>
 @endpush
 
 @push('scripts')
 <script>
+$('.datepicker').datepicker({
+  format: 'yyyy-mm-dd',
+});
+
+$(function() {
+  $('#jump-date').datepicker().on('changeDate', function () {
+    var url = '/?date=' + moment(this.value).format('YYYY-MM-DD')
+    window.location.href = url
+  });
+});
+
+
 $('#calendar').fullCalendar({
     defaultView: 'timelineFortnight',
+    @if($def_date)
+    defaultDate: moment('{{ $def_date }}'),
+    @endif
     views: {
         timelineFortnight: {
             type: 'timelineMonth',
@@ -97,6 +115,6 @@ $('#calendar').fullCalendar({
 
 // $('#calendar').fullCalendar('today');
 // $('#calendar').fullCalendar( "gotoDate", 2016, 10, 12 );
-// $('#calendar').fullCalendar('gotoDate', '2016-11-30');
+// $('#calendar').fullCalendar('gotoDate', '2012-05-30');
 </script>
 @endpush
