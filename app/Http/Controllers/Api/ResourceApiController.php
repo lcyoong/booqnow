@@ -158,7 +158,9 @@ class ResourceApiController extends ApiController
 
   public function subTypes($rty_id)
   {
+    // dd(ResourceSubType::getDropDown($rty_id));
     return ResourceSubType::getDropDown($rty_id);
+    // return ResourceSubType::where('rsty_type', '=', $rty_id)->where('rsty_status', '=', 'active')->get();
   }
 
 }

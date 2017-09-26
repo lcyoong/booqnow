@@ -100,11 +100,11 @@ new Vue ({
     getList: function () {
       this.$http.get('{{ urlTenant("api/v1/bills/$id") }}')
           .then(function (response) {
-            console.log(response.data)
-            this.bill = response.data
-            this.customer = response.data.customer
-            this.booking = response.data.booking
-            this.items = response.data.allitems
+            var data = JSON.parse(response.data)
+            this.bill = data
+            this.customer = data.customer
+            this.booking = data.booking
+            this.items = data.allitems
           });
     },
 

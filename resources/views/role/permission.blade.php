@@ -62,15 +62,15 @@ new Vue({
     getRolePermissions: function () {
       this.$http.get('{{ urlTenant("api/v1/role/$id/permissions") }}')
           .then(function (response) {
-            console.log(response.data)
-            this.permissions = response.data
+            var data = JSON.parse(response.data)
+            this.permissions = data
           });
     },
 
     addPermission: function (id) {
       this.$http.post('{{ urlTenant("roles/$id/permissions/add") }}/' + id)
           .then(function (response) {
-            console.log(response.data)
+            // console.log(response.data)
           });
     },
 

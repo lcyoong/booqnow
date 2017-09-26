@@ -75,16 +75,16 @@ new Vue ({
     getTypes: function () {
       this.$http.get('{{ urlTenant("api/v1/resources/types") }}')
           .then(function (response) {
-            console.log(response.data)
-            this.types = response.data
+            var data = JSON.parse(response.data)
+            this.types = data
           });
     },
 
     getItems: function () {
       this.$http.get('{{ urlTenant("api/v1/bookings/$book_id/addons") }}')
           .then(function (response) {
-            console.log(response.data)
-            this.items = response.data
+            var data = JSON.parse(response.data)
+            this.items = data
 
             $(function() {
 

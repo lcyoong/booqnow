@@ -4,7 +4,7 @@
 <div id="bill-new">
   <form-ajax action = "{{ urlTenant("bills/new/walkin") }}" method="POST" @startwait="startWait" @endwait="endWait" @completesuccess = "showBill">
   <div class="row">
-    <div class="col-md-12">      
+    <div class="col-md-12">
       <div class="form-group">
         {{ Form::text('bil_customer_name', null, ['class' => 'form-control', 'placeholder' => trans('bill.bil_customer_name')]) }}
       </div>
@@ -20,7 +20,7 @@
 new Vue({
   el: '#bill-new',
 
-  mixins: ['mixForm'],
+  mixins: [mixForm],
 
   data: {
     new_bill: {},

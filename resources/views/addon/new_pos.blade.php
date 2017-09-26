@@ -2,7 +2,7 @@
 
 @prepend('content')
 <div id="add-pos">
-<form-ajax action = "{{ urlTenant('addons/new/list') }}" method="POST" :go-to-next = "gotonext" @startwait="startWait" @endwait="endWait">
+<form-ajax action = "{{ urlTenant('addons/new/list') }}" method="POST" :go-to-next = "gotonext" @startwait="startWait" @endwait="endWait" :reload-on-complete="reloadoncomplete">
   @if (!empty($booking))
   <!-- @include('customer.profile', ['customer' => $booking->customer]) -->
   <h4><i class="fa fa-user"></i> {{ $booking->customer->full_name }}</h4>
@@ -74,6 +74,7 @@ var app2 = new Vue({
       sub_types: [],
       groupResources: [],
       gotonext: '{{ !empty($booking) ? urlTenant(sprintf("bookings/%s", $booking->book_id)) : '' }}',
+      reloadoncomplete: @if(empty($booking)) true @else false @endif
     },
 
     computed: {
@@ -109,7 +110,8 @@ var app2 = new Vue({
 
         this.$http.get("{{ urlTenant("api/v1/resources/" . $resource_type->rty_id) }}/active/grouped")
             .then(function (response) {
-              this.groupResources = response.data
+              var data = JSON.parse(response.data)
+              this.groupResources = data
             });
       },
 
@@ -117,8 +119,8 @@ var app2 = new Vue({
 
         this.$http.get("{{ urlTenant("api/v1/resources/sub_types/{$resource_type->rty_id}") }}")
             .then(function (response) {
-              this.sub_types = response.data
-              console.log(this.sub_types)
+              var data = JSON.parse(response.data)
+              this.sub_types = data
             });
       },
 

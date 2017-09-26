@@ -39,7 +39,8 @@ new Vue ({
     getCustomers: function () {
       this.$http.get("{{ urlTenant("api/v1/customers/active") }}")
           .then(function (response) {
-            this.customers = response.data
+            var data = JSON.parse(response.data)
+            this.customers = data
           });
     },
 

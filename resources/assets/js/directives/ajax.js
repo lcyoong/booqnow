@@ -41,7 +41,8 @@ Vue.directive('ajax', {
     if (this.params.gotonext) {
 
       if (this.params.gotoappenddata) {
-        this.params.gotonext = this.params.gotonext + '/' + response.data.data;
+        var data = JSON.parse(response.data)
+        this.params.gotonext = this.params.gotonext + '/' + data.data;
       }
 
       showModal(this.params.gotonext);

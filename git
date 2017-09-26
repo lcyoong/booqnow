@@ -1,0 +1,353 @@
+[33mcommit e85638047808ea9103049e36ebf941d74460e0e4[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Sep 18 08:59:21 2017 +0000
+
+    Fix json parsing
+
+[33mcommit 60532aed5e575cf43af04f245abfd539ed7d3e1e[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue May 2 22:53:09 2017 +0800
+
+    New reports and report modifications
+
+[33mcommit 15ff6d83b28fa749ba01d4cae8858939172026a4[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon May 1 20:11:01 2017 +0800
+
+    Bill printout modified
+
+[33mcommit a8b9dfdbf77f6a4e4b01d43f2edd0939ea265d09[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon May 1 20:07:08 2017 +0800
+
+    Modify invoice printout
+
+[33mcommit 124562dfac96f5829631e16ba2e2269f334da6b3[m
+Author: LC <lcyoong@creino.com>
+Date:   Wed Apr 26 16:54:11 2017 +0800
+
+    Report lang update
+
+[33mcommit b38a78fd4e67d41cdcf980127f7777b6a866122b[m
+Author: LC <lcyoong@creino.com>
+Date:   Wed Apr 26 16:49:14 2017 +0800
+
+    New reports - tour and transfer daily list
+
+[33mcommit a02cc0cab42d155ec4fce80218f84e45db963d98[m
+Author: LC <lcyoong@creino.com>
+Date:   Wed Apr 26 09:53:52 2017 +0800
+
+    UI change on booking info extended
+
+[33mcommit 20fa1ac9ea8d8fdcb2f6645d6c876d89df5756f5[m
+Author: LC <lcyoong@creino.com>
+Date:   Wed Apr 26 09:39:12 2017 +0800
+
+    Rearrange UI
+
+[33mcommit 8f9323fa29c5c79837bd3c4e467ef8d5fdb9eac4[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Apr 25 20:06:08 2017 +0800
+
+    Filter only active countries
+
+[33mcommit d9a2d3d6e032c331826df2c4bdf2843a54c7a1fc[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Apr 25 19:54:24 2017 +0800
+
+    Split pax into adult and child
+
+[33mcommit f9cbea2cff6bf9cbc8c5f8ebc64ea730850562f8[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Apr 25 19:24:10 2017 +0800
+
+    Cater for multiple booking sources
+
+[33mcommit c5dd302daa6b25ca0f69e44429000dcf37e7d7d0[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon Apr 17 13:49:42 2017 +0800
+
+    Fix addon date/time display
+
+[33mcommit f9c5aa431486db4970e39fd792bea84fd8bb251e[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon Apr 17 13:42:40 2017 +0800
+
+    Fixes and changes with client
+
+[33mcommit 2a0857e047f641bfaf3156ba92738359c3f5c054[m
+Author: LC <lcyoong@creino.com>
+Date:   Thu Apr 13 15:01:21 2017 +0800
+
+    migration updated
+
+[33mcommit f86917933faaf6a23959ef527068a26d21660e05[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Apr 11 18:11:05 2017 +0800
+
+    Fix seasonal price retrieval and implement tiered pax pricing
+
+[33mcommit 16aabe07edc039b8a34b0fc529464a95d82222ea[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Apr 11 11:10:19 2017 +0800
+
+    New reports
+
+[33mcommit 8871384e8e0247a6501b2f525069fe8d00d65081[m
+Author: LC <lcyoong@creino.com>
+Date:   Fri Apr 7 16:58:13 2017 +0800
+
+    Add bills, receipts export and Occupancy Report by National
+
+[33mcommit 2017cf1b8f4cb7176391d663e1d1cbc2dc0db597[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Apr 4 15:35:09 2017 +0800
+
+    Refactor report module
+
+[33mcommit ba77d6cd0170c4d096adc8029a361202b79d63a3[m
+Author: LC <lcyoong@creino.com>
+Date:   Thu Mar 30 14:23:10 2017 +0800
+
+    Link bookings and addons to agents - optional
+
+[33mcommit 334d07358fd7b2c4219ff4912bb1c657b5262c45[m
+Author: LC <lcyoong@creino.com>
+Date:   Thu Mar 30 12:45:43 2017 +0800
+
+    New agent module
+
+[33mcommit d73a7e511c6aa16f7b1be50b64082aed35d715cd[m
+Author: LC <lcyoong@creino.com>
+Date:   Thu Mar 30 12:14:40 2017 +0800
+
+    Expenses module
+
+[33mcommit 318ef1085fa64f55fbd6bdc2c137ddf26a094e2d[m
+Author: LC <lcyoong@creino.com>
+Date:   Wed Mar 29 17:01:09 2017 +0800
+
+    Role and permission implementation
+
+[33mcommit 363c58f30bb825bf3fb996f5078170401afe6325[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon Mar 27 18:26:30 2017 +0800
+
+    Add booking special status toggle
+
+[33mcommit f97f160c79823c1f57aab194c2e011bcd718aa1f[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon Mar 27 17:17:47 2017 +0800
+
+    Monthly Occupancy report
+
+[33mcommit 8c45524d2cdbd0fbbf1fb7c4ef05c3b9abebda2e[m
+Author: LC <lcyoong@creino.com>
+Date:   Fri Mar 17 20:17:08 2017 +0800
+
+    New report module - process flow, logging, events and retrieval
+
+[33mcommit ff9faf05006febefb050dc2c9947fa3ba9b05f13[m
+Author: LC <lcyoong@creino.com>
+Date:   Wed Mar 15 17:10:11 2017 +0800
+
+    New: Create walkin bill. Add addons to walkin bill
+
+[33mcommit 78b656e3bd743b715de7084cc1b0a8c2a133e698[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon Mar 13 14:06:58 2017 +0800
+
+    Add feature - Bill add new item
+
+[33mcommit 75d5151e38487dc348f298acb383ddad11799c1b[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon Mar 13 13:47:01 2017 +0800
+
+    Edit booking addons
+
+[33mcommit 3b70a3b817ebe16b0628498fc524312beb15aca0[m
+Author: LC <lcyoong@creino.com>
+Date:   Thu Mar 9 15:40:18 2017 +0800
+
+    Booking edit function
+
+[33mcommit 9bb0d23ac04d9eaa764e3ee06796ca1a1e784f3c[m
+Author: LC <lcyoong@creino.com>
+Date:   Thu Mar 9 13:02:01 2017 +0800
+
+    Add overlapping checking for existing booking and room maintenance
+
+[33mcommit ee4cdcbf904af44cc4328b65c7657afcdf16938b[m
+Author: LC <lcyoong@creino.com>
+Date:   Wed Mar 8 14:33:06 2017 +0800
+
+    Seasonal pricing implementation
+
+[33mcommit 9000dbf6247818eca1ebbee021ea2a5eb851b468[m
+Author: LC <lcyoong@creino.com>
+Date:   Wed Mar 8 11:10:34 2017 +0800
+
+    Audit trail refactoring
+
+[33mcommit 5f57d56de3002a2fa9f26e50581aec609a957b21[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon Feb 27 11:33:24 2017 +0100
+
+    Seasonal pricing
+
+[33mcommit 3ec3dab05241ff350f7afdfa48bda79ab0866bcb[m
+Author: LC <lcyoong@creino.com>
+Date:   Wed Feb 22 14:47:54 2017 +0100
+
+    Fix: datepicker not working on Vue form
+
+[33mcommit f229bc2a4bbfd766f61e0fe5aa270accdd085c64[m
+Author: LC <lcyoong@creino.com>
+Date:   Wed Feb 22 14:11:04 2017 +0100
+
+    Vue.js refactoring, audit trail, universal comment
+
+[33mcommit c83a0df8781dbdd89b0ad58de577dbf9a15c8e0c[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon Jan 9 15:00:18 2017 +0100
+
+    Report module added
+
+[33mcommit 6600d8d01645027cc3455bb6c1270be7fad761f7[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Dec 13 16:49:23 2016 +0100
+
+    Fix: booking repository expects filter parameter
+
+[33mcommit 6b89b92e9cb3bec50e1cf15c6ec7142a64d13cb2[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Dec 13 16:43:21 2016 +0100
+
+    Refactoring
+
+[33mcommit 2b604ba48741cd833d5e5954bebc2b151aca11e8[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Dec 13 16:41:33 2016 +0100
+
+    Refactoring
+
+[33mcommit 7b73534342e8448ea99b3e997bae375c71e6a1f1[m
+Author: LC <lcyoong@creino.com>
+Date:   Sat Dec 10 10:39:32 2016 +0100
+
+    Refactoring
+
+[33mcommit eb36dc013967e2d4cdb95fbca1dcd8bd5ac76c3b[m
+Author: LC <lcyoong@creino.com>
+Date:   Thu Dec 8 16:32:39 2016 +0100
+
+    Refactor controllers, repositories, filters
+
+[33mcommit acfcfc5fa349141bd9e75add73d8688cbaca5ec0[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Dec 6 21:05:49 2016 +0100
+
+    New enhancement
+
+[33mcommit 0edfbf5abafe3068a8b5ffb0e05836c85e40cafc[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Nov 8 17:49:32 2016 +0800
+
+    Addon POS
+
+[33mcommit 7d62421420e6b41f4deee8081d5c5bb4c84f1466[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Nov 8 17:12:05 2016 +0800
+
+    Addon POS
+
+[33mcommit 57a62164e9cd8ffc35473573e7f72dbd1b91a6f6[m
+Author: LC <lcyoong@creino.com>
+Date:   Sat Nov 5 20:11:29 2016 +0800
+
+    Fix bug: select2 script does not execute before Jquery loading
+
+[33mcommit 9928c4f61cb3cc5f38039e47627ddb9f17e9fc32[m
+Author: LC <lcyoong@creino.com>
+Date:   Sat Nov 5 20:02:46 2016 +0800
+
+    Remove tabindex from modal for select2 compatibility
+
+[33mcommit 31b5aa8c208d85dbf7c9966f539bc3706f5e7361[m
+Author: LC <lcyoong@creino.com>
+Date:   Sat Nov 5 19:47:26 2016 +0800
+
+    Add itinerary to booking
+
+[33mcommit c05127b4df9fa82ffc975f3b97c732c68977f28c[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Nov 1 23:30:43 2016 +0800
+
+    Fix bug: Add new room resource missing resource type
+
+[33mcommit 298b3a870e8afc9c160154cdee05294794beb071[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Nov 1 23:25:04 2016 +0800
+
+    Fix bug: New customer post success not redirecting
+
+[33mcommit c2358f438f8ae01c701c5253d0cf677c6c3e43ad[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Nov 1 11:52:50 2016 +0800
+
+    Default repo listing to desc order by key
+
+[33mcommit c0f8ee3f03b6a180b5058ffa5e1199b673ccaccc[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Nov 1 11:44:12 2016 +0800
+
+    Set anchor to merchant link
+
+[33mcommit c8df37bdbdd4c1eb425d09e4bca1fa4f3ff9733a[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Nov 1 11:37:39 2016 +0800
+
+    Logout url relative to tenant
+
+[33mcommit 9948b001956596e0003373ee4d4c8c1053d91bea[m
+Author: LC <lcyoong@creino.com>
+Date:   Tue Nov 1 11:20:53 2016 +0800
+
+    Accept payment for booking. Refresh screen after checkin/checkout
+
+[33mcommit 8443e6490534039f8ad6111d520211a34d39d13a[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon Oct 31 19:10:39 2016 +0800
+
+    Fix routing for booking - new supersedes view
+
+[33mcommit 840d20f3f9431043991a17fed1d32907209172d5[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon Oct 31 15:17:37 2016 +0800
+
+    Wrap elixir helper in asset to respect subfolder setup
+
+[33mcommit c50bff78400593a676f12df291d7d430543089df[m
+Author: LC <lcyoong@creino.com>
+Date:   Mon Oct 31 15:12:01 2016 +0800
+
+    Wrap elixir helper in asset to respect subfolder setup
+
+[33mcommit 53ff074a4bb3d831ad5ebb807bc70c1af05327fa[m
+Author: LC <lcyoong@creino.com>
+Date:   Fri Oct 28 22:50:15 2016 +0800
+
+    Reservation chart, initial booking, bill, customer registry, check in, check out
+
+[33mcommit a83424cff7ee434930d590dfc436c6bac782d832[m
+Author: LC <lcyoong@creino.com>
+Date:   Thu Oct 6 21:35:48 2016 +0800
+
+    Rename app
+
+[33mcommit d5db27749b485fd3ff83d48e8899825d0d6c3a1e[m
+Author: LC <lcyoong@creino.com>
+Date:   Thu Oct 6 21:21:10 2016 +0800
+
+    Initial commit

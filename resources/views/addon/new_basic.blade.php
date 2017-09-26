@@ -71,8 +71,8 @@
       getResources: function () {
         this.$http.get("{{ urlTenant("api/v1/resources/" . $resource_type->rty_id) }}/active/select")
             .then(function (response) {
-              console.log(response.data)
-              this.resources = response.data
+              var data = JSON.parse(response.data)
+              this.resources = data
             });
       },
 

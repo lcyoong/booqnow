@@ -47,8 +47,8 @@ new Vue ({
     getList: function () {
       this.$http.get(this.url)
           .then(function (response) {
-            console.log(response.data)
-            this.items = response.data
+            var data = JSON.parse(response.data)
+            this.items = data
           });
     }
   }

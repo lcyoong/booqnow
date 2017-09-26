@@ -22,7 +22,8 @@ module.exports = {
         var next = this.goToNext
 
         if (this.goToAppendData !== undefined) {
-          next = next + '/' + response.data.data;
+          var data = JSON.parse(response.data)
+          next = next + '/' + data.data;
         }
 
         util.showModal(next);
@@ -31,8 +32,6 @@ module.exports = {
     },
 
     onError: function(response) {
-
-      console.log(response);
 
       util.onErrorNotify(response);
 

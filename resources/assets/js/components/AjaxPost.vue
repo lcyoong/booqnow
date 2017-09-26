@@ -30,12 +30,12 @@
       },
 
       onComplete: function(response) {
-
+        var data = JSON.parse(response.data)
         util.onCompleteNotify(response);
 
         this.$emit('endwait');
 
-        this.$emit('completesuccess', response.data);
+        this.$emit('completesuccess', data);
 
         if (this.reloadOnComplete) {
           location.reload();
