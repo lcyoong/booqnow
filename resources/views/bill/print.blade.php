@@ -37,7 +37,7 @@
 @else
 -- Walk in --
 <div style="clear:both;"></div>
-<div class="float-left" style="width: 50%">
+<div class="float-right" style="width: 50%">
   <table>
     <tr>
       <td>@lang('bill.bil_date')</td><td> : </td><td>{{ showDate($bill->bil_date) }}</td>
