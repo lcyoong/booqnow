@@ -20,6 +20,10 @@
     <div class="col-md-3">@lang('bill.total') <div class="stat-value" style="font-weight: bold; font-size: 2em;">@{{ bill.total_amount }}</div></div>
     <div class="col-md-3">@lang('bill.bil_paid') <div class="stat-value" style="font-weight: bold; font-size: 2em;">@{{ bill.bil_paid }}</div></div>
     <div class="col-md-3">@lang('bill.outstanding') <div class="stat-value" style="font-weight: bold; font-size: 2em;">@{{ bill.outstanding }}</div></div>
+    <div class="col-md-3">@lang('bill.bil_with_tax') <div class="stat-value" style="font-weight: bold; font-size: 2em;">@{{ bill.bil_with_tax }}
+      <post-ajax v-if="bill.bil_with_tax == 1" :post-to="'{{ urlTenant("bills") }}/' + bill.bil_id + '/untax'" reload-on-complete="1">{{ Form::button(trans('form.untax'), ['class' => 'btn btn-primary btn-sm']) }}</post-ajax>
+      <post-ajax v-if="bill.bil_with_tax  == 0" :post-to="'{{ urlTenant("bills") }}/' + bill.bil_id + '/tax'" reload-on-complete="1">{{ Form::button(trans('form.tax'), ['class' => 'btn btn-primary btn-sm']) }}</post-ajax>
+    </div></div>
   </div>
   <div class="row">
     {{ Form::bsText('bil_customer_name', trans('bill.bil_customer_name'), '', ['v-model' => 'bill.bil_customer_name']) }}
@@ -29,6 +33,7 @@
   </div>
   {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
   <a href="{{ url('bills') }}">{{ Form::button(trans('form.cancel'), ['class' => 'btn btn-primary btn-sm']) }}</a>
+  <a :href="'{{ urlTenant("bills") }}/' + bill.bil_id + '/print?{{ str_random(40) }}'" target=_blank title="@lang('form.print')">{{ Form::button(trans('form.print'), ['class' => 'btn btn-primary btn-sm']) }}</a>
   </form-ajax>
   <hr/>
   <span class="label label-default">@{{ items.length }} @lang('bill.items')</span>

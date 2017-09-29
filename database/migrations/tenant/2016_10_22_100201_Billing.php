@@ -34,6 +34,7 @@ class Billing extends Migration
           $table->decimal('bil_tax', 15, 2)->default(0);
           $table->decimal('bil_paid', 15, 2)->default(0);
           $table->string('bil_status')->default('active');
+          $table->boolean('bil_with_tax')->default(1);
           $table->integer('created_by');
           $table->timestamps();
       });
@@ -47,6 +48,7 @@ class Billing extends Migration
           $table->integer('bili_unit')->default(0);
           $table->decimal('bili_gross', 15, 2)->default(0);
           $table->decimal('bili_tax', 15, 2)->default(0);
+          $table->boolean('bili_with_tax')->default(1);
           $table->integer('bili_order')->default(0);
           $table->string('bili_status')->default('active');
           $table->boolean('bili_active')->default(1);

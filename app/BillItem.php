@@ -14,7 +14,7 @@ class BillItem extends TenantModel
 
   protected $primaryKey = 'bili_id';
 
-  protected $fillable = ['bili_bill', 'bili_description', 'bili_resource', 'bili_unit_price', 'bili_unit', 'bili_gross', 'bili_tax', 'bili_order', 'bili_status', 'bili_active', 'created_by'];
+  protected $fillable = ['bili_bill', 'bili_description', 'bili_resource', 'bili_unit_price', 'bili_unit', 'bili_gross', 'bili_tax', 'bili_with_tax', 'bili_order', 'bili_status', 'bili_active', 'created_by'];
 
   protected $appends = ['created_date'];
   /**
@@ -78,7 +78,11 @@ class BillItem extends TenantModel
 
       $post->bili_gross = $post->bili_unit * $post->bili_unit_price;
 
-      $post->bili_tax = calcTax($post->bili_gross);
+      if ($post->bili_with_tax) {
+        $post->bili_tax = calcTax($post->bili_gross);
+      } else {
+        $post->bili_tax = 0;
+      }
 
     });
 

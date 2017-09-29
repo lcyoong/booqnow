@@ -12,6 +12,7 @@ use Filters\BillFilter;
 use DB;
 use PDF;
 use Reports\BillExportExcel;
+use App\Bill;
 
 class BillController extends MainController
 {
@@ -226,6 +227,46 @@ class BillController extends MainController
   public function updateItem(Request $request)
   {
     (new BillItemRepository)->update($request->input());
+
+    return $this->goodReponse();
+  }
+
+  /**
+   * Untax bill
+   * @param  Request $request
+   * @return Response
+   */
+  public function untax(Request $request, $id)
+  {
+    $bill = Bill::findOrFail($id);
+
+    $bill->update(['bil_with_tax' => 0]);
+
+    foreach ($bill->items as $item) {
+
+      $item->update(['bili_with_tax' => 0]);
+
+    }
+
+    return $this->goodReponse();
+  }
+
+  /**
+   * Tax bill
+   * @param  Request $request
+   * @return Response
+   */
+  public function tax(Request $request, $id)
+  {
+    $bill = Bill::findOrFail($id);
+
+    $bill->update(['bil_with_tax' => 1]);
+
+    foreach ($bill->items as $item) {
+
+      $item->update(['bili_with_tax' => 1]);
+
+    }
 
     return $this->goodReponse();
   }

@@ -16,6 +16,7 @@ return [
   'bil_status' => 'Bill status',
   'bil_gross' => 'Total',
   'bil_tax' => 'VAT 7%',
+  'bil_with_tax' => 'With Tax?',
   'total' => 'Total + Tax',
   'grand_total' => 'Grand total',
   'bil_paid' => 'Paid',

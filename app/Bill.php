@@ -15,7 +15,7 @@ class Bill extends TenantModel
 
   protected $primaryKey = 'bil_id';
 
-  protected $fillable = ['bil_accounting', 'bil_customer', 'bil_customer_name', 'bil_booking', 'bil_description', 'bil_date', 'bil_due_date', 'bil_gross', 'bil_tax', 'bil_status', 'created_by'];
+  protected $fillable = ['bil_accounting', 'bil_customer', 'bil_customer_name', 'bil_booking', 'bil_description', 'bil_date', 'bil_due_date', 'bil_gross', 'bil_tax', 'bil_status', 'bil_with_tax', 'created_by'];
 
   protected $appends = ['total_amount', 'outstanding', 'display_id'];
 

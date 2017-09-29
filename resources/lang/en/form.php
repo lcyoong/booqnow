@@ -41,4 +41,7 @@ return [
   'addons' => 'Add-ons',
   'go' => 'Go',
   'jump_date' => 'Jump to date',
+  'tax' => 'Add tax',
+  'untax' => 'Remove tax',
+  'yesno' => [0 => 'No', 1 => 'Yes']
 ];

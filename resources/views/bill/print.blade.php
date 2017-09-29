@@ -159,10 +159,12 @@
     <td width="80%" class="text-right bold">{{ trans('bill.bil_gross') }}:</td>
     <td width="20%" class="text-right">{{ showMoney($bill->bil_gross, false, 2) }}</td>
   </tr>
+  @if($bill->bil_with_tax)
   <tr>
     <td width="80%" class="text-right bold">{{ trans('bill.bil_tax') }}:</td>
     <td width="20%" class="text-right">{{ showMoney($bill->bil_tax, false, 2) }}</td>
   </tr>
+  @endif
   <tr>
     <td width="80%" class="text-right bold">{{ trans('bill.grand_total') }}:</td>
     <td width="20%" class="text-right">{{ showMoney($bill->total_amount, false, 2) }}</td>

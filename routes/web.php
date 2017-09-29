@@ -152,6 +152,8 @@ function tenantRoutes()
     Route::get('/{bill}/edit', 'BillController@edit');
     Route::get('/{bill}/print', 'BillController@download');
     Route::get('/{bill}/addons/{resource_type}/new', 'AddonController@addToBill');
+    Route::post('/{bill}/untax', 'BillController@untax');
+    Route::post('/{bill}/tax', 'BillController@tax');
     Route::post('/new/walkin', 'BillController@storeWalkIn');
     Route::post('/new', 'BillController@store');
     Route::post('/export', 'BillController@export');
