@@ -14,9 +14,9 @@ class BillItem extends TenantModel
 
   protected $primaryKey = 'bili_id';
 
-  protected $fillable = ['bili_bill', 'bili_description', 'bili_resource', 'bili_unit_price', 'bili_unit', 'bili_gross', 'bili_tax', 'bili_with_tax', 'bili_order', 'bili_status', 'bili_active', 'created_by'];
+  protected $fillable = ['bili_bill', 'bili_description', 'bili_resource', 'bili_unit_price', 'bili_unit', 'bili_gross', 'bili_tax', 'bili_with_tax', 'bili_order', 'bili_status', 'bili_active', 'bili_batch', 'created_by'];
 
-  protected $appends = ['created_date'];
+  protected $appends = ['created_date', 'created_date_hour'];
   /**
    * Get the resource of the bill item
    */
@@ -41,6 +41,15 @@ class BillItem extends TenantModel
   public function getCreatedDateAttribute($value)
   {
     return Carbon::parse($this->attributes['created_at'])->format('d-m-Y');
+  }
+
+  /**
+   * Accessor to get the creation date/hour
+   * @return numeric
+   */
+  public function getCreatedDateHourAttribute($value)
+  {
+    return Carbon::parse($this->attributes['created_at'])->format('d-m-Y:H');
   }
 
   public function scopeActive($query)

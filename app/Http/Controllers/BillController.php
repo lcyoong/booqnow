@@ -123,7 +123,11 @@ class BillController extends MainController
 
     $room_items = $bill->getRoomItems();
 
-    $addon_items = $bill->getAddonItems()->groupBy('created_date')->toArray();
+    // $addon_items = $bill->getAddonItems()->groupBy('created_date')->transform(function($item, $k) {
+    //     return $item->groupBy('created_date_hour');
+    // })->toArray();
+
+    $addon_items = $bill->getAddonItems()->groupBy('created_date_hour')->toArray();
 
     $indie_items = $bill->indieItems();
 
