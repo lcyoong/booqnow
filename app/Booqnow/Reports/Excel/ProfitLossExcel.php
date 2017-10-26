@@ -133,9 +133,9 @@ class ProfitLossExcel extends ExcelReport
 
       }
 
-      $col[] = array_sum($col);
+      $cat_sum = $col[] = array_sum($col);
 
-      $col[] = ((array_sum($col) / $total_income) * 100) . '%';
+      $col[] = number_format(($cat_sum / $total_income) * 100, 0) . '%';
 
       $this->fillRow($col);
     }
