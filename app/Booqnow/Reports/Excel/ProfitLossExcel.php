@@ -98,11 +98,13 @@ class ProfitLossExcel extends ExcelReport
 
     $inc_arr = [];
 
-    $total_income = array_sum($incomes);
+    $total_income = 0;
 
     foreach ($incomes as $income) {
 
       $inc_arr[$income->rty_id][$income->mth] = $income->total;
+
+      $total_income += $income->total;
 
     }
 
