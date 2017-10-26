@@ -98,6 +98,8 @@ class ProfitLossExcel extends ExcelReport
 
     $inc_arr = [];
 
+    $total_income = array_sum($incomes);
+
     foreach ($incomes as $income) {
 
       $inc_arr[$income->rty_id][$income->mth] = $income->total;
@@ -130,6 +132,8 @@ class ProfitLossExcel extends ExcelReport
       }
 
       $col[] = array_sum($col);
+
+      $col[] = ((array_sum($col) / $total_income) * 100) . '%';
 
       $this->fillRow($col);
     }
