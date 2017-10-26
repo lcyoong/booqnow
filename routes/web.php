@@ -74,7 +74,7 @@ function tenantRoutes()
     Route::post('/update', 'ResourceTypeController@update');
   });
 
-  Route::group(['middleware' => ['role:super_admin'], 'prefix' => '/resource_sub_types'], function () {
+  Route::group(['middleware' => ['permitted:resource'], 'prefix' => '/resource_sub_types'], function () {
     Route::get('/', 'ResourceSubTypeController@index');
     Route::get('/new', 'ResourceSubTypeController@create');
     Route::post('/new', 'ResourceSubTypeController@store');
