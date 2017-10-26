@@ -170,6 +170,14 @@ class ProfitLossExcel extends ExcelReport
 
     }
 
+    $output = [''];
+
+    for ($month = 1; $month <= 12; $month++) {
+
+      $sum[$month] = 0;
+
+    }
+
     foreach ($exp_arr as $cat => $month_amount) {
 
       $col = [$exp_cats[$cat]];
@@ -181,7 +189,9 @@ class ProfitLossExcel extends ExcelReport
       }
 
       foreach ($month_amount as $month => $amount) {
-        $col[$month] = $amount;
+
+        $sum[$month] += $col[$month] = $amount;
+
       }
 
       $col[] = array_sum($col);
@@ -195,7 +205,7 @@ class ProfitLossExcel extends ExcelReport
 
     for ($month = 1; $month <= 12; $month++) {
 
-      $col[$month] = 0;
+      $col[$month] = $sum[$month];
 
     }
 
