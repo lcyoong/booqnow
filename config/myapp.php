@@ -21,6 +21,7 @@ return [
   'icon-tour' => 'fa-leaf',
   'icon-fnb' => 'fa-cutlery',
   'icon-transfer' => 'fa-cab',
+  'icon-bar' => 'fa-glass',
   'single_bill_booking' => true,
   'default_booking_source' => 1,
   'pax_tier_pricing' => false,

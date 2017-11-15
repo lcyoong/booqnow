@@ -13,6 +13,7 @@ use Repositories\BookingRepository;
 use Repositories\BillRepository;
 use Repositories\ResourceTypeRepository;
 use Repositories\AgentRepository;
+use Carbon\Carbon;
 
 class AddonController extends MainController
 {
@@ -160,6 +161,10 @@ class AddonController extends MainController
           'bil_description' => $accounting->acc_bill_description,
           'bil_date' => today('Y-m-d'),
           'bil_due_date' => today('Y-m-d'),
+          // 'bil_date' => today('Y-m-d'),
+          // 'bil_due_date' => today('Y-m-d'),
+          'bil_date' => Carbon::parse($booking->book_from)->format('Y-m-d'),
+          'bil_due_date' => Carbon::parse($booking->book_from)->format('Y-m-d'),
         ]);
 
         $input['add_to_bill'] = $new_bill->bil_id;

@@ -15,6 +15,7 @@ use Repositories\AgentRepository;
 use Filters\BookingFilter;
 use GuzzleHttp\Client;
 use DB;
+use Carbon\Carbon;
 
 class BookingController extends MainController
 {
@@ -271,8 +272,10 @@ class BookingController extends MainController
         'bil_booking' => $new_booking->book_id,
         'bil_accounting' => $accounting->acc_id,
         'bil_description' => $accounting->acc_bill_description,
-        'bil_date' => date('Y-m-d'),
-        'bil_due_date' => date('Y-m-d'),
+        // 'bil_date' => date('Y-m-d'),
+        // 'bil_due_date' => date('Y-m-d'),
+        'bil_date' => Carbon::parse($new_booking->book_from)->format('Y-m-d'),
+        'bil_due_date' => Carbon::parse($new_booking->book_from)->format('Y-m-d'),
       ]);
 
       $bili_bill = $new_bill->bil_id;

@@ -16,7 +16,7 @@ class ProfitLossExcel extends ExcelReport
 {
   protected $year;
 
-  protected $resource_types;
+  protected $resource_types, $incomes, $expenses;
 
   public function __construct($report)
   {

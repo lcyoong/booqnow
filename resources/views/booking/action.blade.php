@@ -53,7 +53,9 @@
   @foreach($resource_types as $type)
   @if(!$type->rty_master)
   <div role="tabpanel" class="tab-pane" id="{{ $type->rty_code }}">
+    @if (view()->exists('addon.itemized.' . $type->rty_code))
     @include('addon.itemized.' . $type->rty_code, ['items' => $addons, 'type' => $type])
+    @endif
   </div>
   @endif
   @endforeach
