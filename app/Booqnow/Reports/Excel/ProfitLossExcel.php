@@ -6,6 +6,7 @@ use App\Events\ReportCreated;
 use DB;
 use Excel;
 use App\Bill;
+use App\ExpenseCategory;
 use Carbon\Carbon;
 use Repositories\ExpenseCategoryRepository;
 use Repositories\ExpenseRepository;
@@ -16,7 +17,9 @@ class ProfitLossExcel extends ExcelReport
 {
   protected $year;
 
-  protected $resource_types, $incomes, $expenses;
+  protected $resource_types, $inc_arr, $exp_arr, $np_arr;
+
+  protected $tot_expense, $tot_income;
 
   public function __construct($report)
   {
@@ -48,6 +51,8 @@ class ProfitLossExcel extends ExcelReport
         $this->income();
 
         $this->expenses();
+
+        $this->diff_income_expense();
 
         $this->profit();
 
@@ -92,9 +97,9 @@ class ProfitLossExcel extends ExcelReport
   {
     $this->fillRow(['INCOME']);
 
-    $incomes = (new BillItemRepository)->sumByMonthType($this->year);
+    $this->incomes = $incomes = (new BillItemRepository)->sumByMonthType($this->year);
 
-    $inc_types = (new ResourceTypeRepository)->getDropDown('rty_id', 'rty_name');
+    $inc_types = (new ResourceTypeRepository)->getDropDown('rty_code', 'rty_name');
 
     $inc_arr = [];
 
@@ -102,11 +107,13 @@ class ProfitLossExcel extends ExcelReport
 
     foreach ($incomes as $income) {
 
-      $inc_arr[$income->rty_id][$income->mth] = $income->total;
+      $inc_arr[$income->rty_code][$income->mth] = $income->total;
 
       $total_income += $income->total;
 
     }
+
+    $this->inc_arr = $inc_arr;
 
 
     $output = [''];
@@ -146,7 +153,7 @@ class ProfitLossExcel extends ExcelReport
 
     for ($month = 1; $month <= 12; $month++) {
 
-      $col[$month] = $sum[$month];
+      $this->tot_income[$month] = $col[$month] = $sum[$month];
 
     }
 
@@ -164,7 +171,7 @@ class ProfitLossExcel extends ExcelReport
   {
     $this->fillRow(['EXPENSES'], 1);
 
-    $expenses = (new ExpenseRepository)->sumByMonthCategory($this->year);
+    $this->expenses = $expenses = (new ExpenseRepository)->sumByMonthCategory($this->year);
 
     $exp_cats = (new ExpenseCategoryRepository)->isActive()->getDropDown('exc_id', 'exc_name');
 
@@ -175,6 +182,8 @@ class ProfitLossExcel extends ExcelReport
       $exp_arr[$expense->exp_category][$expense->mth] = $expense->total;
 
     }
+
+    $this->exp_arr = $exp_arr;
 
     $output = [''];
 
@@ -211,7 +220,7 @@ class ProfitLossExcel extends ExcelReport
 
     for ($month = 1; $month <= 12; $month++) {
 
-      $col[$month] = $sum[$month];
+      $this->tot_expense[$month] = $col[$month] = $sum[$month];
 
     }
 
@@ -229,13 +238,47 @@ class ProfitLossExcel extends ExcelReport
   {
     $this->fillRow(['NET PROFIT'], 1);
 
+    $ec_arr = ExpenseCategory::where('exc_label', '!=', '')->toDropDown('exc_id', 'exc_label');
+
     foreach ($this->resource_types as $type) {
 
       $col = [$type->rty_name];
 
       for ($month = 1; $month <= 12; $month++) {
 
-        $col[$month] = 0;
+        // Get the income for month-type
+        if (isset($this->inc_arr[$type->rty_code][$month])) {
+
+          $col[$month] = $this->inc_arr[$type->rty_code][$month];
+
+        } else {
+
+          $col[$month] = 0;
+
+        }
+
+        // Deduct the expenses for month-type
+        foreach ($ec_arr as $id => $label) {
+
+          if ($type->rty_code == $label) {
+
+            if (isset($this->exp_arr[$id][$month])) {
+
+              $col[$month] -= $this->exp_arr[$id][$month];
+
+            }
+
+          }
+
+        }
+
+        $this->np_arr[$type->rty_code][$month] = $col[$month];
+
+        if (isset($sum[$month])) {
+          $sum[$month] += $col[$month];
+        } else {
+          $sum[$month] = $col[$month];
+        }
 
       }
 
@@ -250,7 +293,7 @@ class ProfitLossExcel extends ExcelReport
 
     for ($month = 1; $month <= 12; $month++) {
 
-      $col[$month] = 0;
+      $col[$month] = $sum[$month];
 
     }
 
@@ -261,6 +304,25 @@ class ProfitLossExcel extends ExcelReport
   }
 
   /**
+   * Total income - expenses section
+   * @return void
+   */
+  protected function diff_income_expense()
+  {
+    $col = ['TOTAL INCOME - EXPENSES'];
+
+    for ($month = 1; $month <= 12; $month++) {
+
+      $col[] = $this->tot_income[$month] - $this->tot_expense[$month];
+
+    }
+
+    $col[] = array_sum($col);
+
+    $this->fillRow($col, 1);
+  }
+
+  /**
    * Report cost-ratio section
    * @return void
    */
@@ -268,17 +330,51 @@ class ProfitLossExcel extends ExcelReport
   {
     $this->fillRow(['COST RATIO'], 1);
 
+    $ec_arr = ExpenseCategory::where('exc_label', '!=', '')->toDropDown('exc_id', 'exc_label');
+
+    // Overall profit margin
+    $col = ['Overall profit margin'];
+
+    for ($month = 1; $month <= 12; $month++) {
+
+      $col[$month] = round($this->tot_income[$month] != 0 ? (($this->tot_income[$month] - $this->tot_expense[$month]) / $this->tot_income[$month])*100 : 0) . '%';
+
+    }
+
+    $this->fillRow($col, 0);
+
+
     foreach ($this->resource_types as $type) {
 
       $col = [$type->rty_name];
 
       for ($month = 1; $month <= 12; $month++) {
 
-        $col[$month] = 0;
+        // Get the income for month-type
+        $profit = isset($this->np_arr[$type->rty_code][$month]) ? $this->np_arr[$type->rty_code][$month] : 0;
+
+        // Deduct the expenses for month-type
+        $cost = 0;
+
+        foreach ($ec_arr as $id => $label) {
+
+          if ($type->rty_code == $label) {
+
+            if (isset($this->exp_arr[$id][$month])) {
+
+              $cost += $this->exp_arr[$id][$month];
+
+            }
+
+          }
+
+        }
+
+        $col[$month] = (($profit != 0) ? round(($cost / $profit) * 100) : 0) . '%';
 
       }
 
-      $col[] = array_sum($col);
+      // $col[] = array_sum($col);
 
       $this->fillRow($col, 0);
 

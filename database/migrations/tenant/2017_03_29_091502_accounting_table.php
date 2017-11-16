@@ -16,6 +16,7 @@ class AccountingTable extends Migration
       Schema::create('expense_categories', function (Blueprint $table) {
           $table->increments('exc_id');
           $table->string('exc_name');
+          $table->string('exc_label')->nullable();
           $table->string('exc_status')->default('active');
           $table->integer('created_by');
           $table->timestamps();

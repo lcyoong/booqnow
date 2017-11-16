@@ -27,11 +27,11 @@ class BillItemRepository extends BaseRepository {
 
   public function sumByMonthType($year)
   {
-    return $this->repo->select(DB::raw("rty_id, month(bil_date) as mth, sum(bili_gross) as total"))
+    return $this->repo->select(DB::raw("rty_code, month(bil_date) as mth, sum(bili_gross) as total"))
                 ->join('bills', 'bil_id', '=', 'bili_bill')
                 ->join('resources', 'rs_id', '=', 'bili_resource')
                 ->join('resource_types', 'rty_id', '=', 'rs_type')
-                ->groupBy(DB::raw("rty_id, month(bil_date)"))->get();
+                ->groupBy(DB::raw("rty_code, month(bil_date)"))->get();
   }
 
 }
