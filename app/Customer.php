@@ -26,7 +26,7 @@ class Customer extends TenantModel
    */
   public function getFullNameAttribute()
   {
-    return trim($this->cus_first_name . ' ' . $this->cus_last_name);
+    return trim(trim($this->cus_first_name) . ' ' . trim($this->cus_last_name));
   }
 
   /**
