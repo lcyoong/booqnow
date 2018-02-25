@@ -12,7 +12,9 @@ class BillFilter extends QueryFilter
   public function customer_name($value = '')
   {
     if (!empty($value)) {
-      return $this->builder->where('bil_customer_name', 'like', "%$value%");
+
+      return $this->builder->whereRaw("trim(concat(trim(cus_first_name), ' ', trim(cus_last_name))) like '%$value%'");
+      
     }
   }
 

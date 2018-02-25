@@ -16,6 +16,7 @@ class ReceiptFilter extends QueryFilter
       $this->joins[] = 'joinBills';
 
       return $this->builder->where("bil_customer_name", "like", "%$value%");
+
     }
   }
 
