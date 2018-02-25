@@ -95,6 +95,10 @@ class ProfitLossExcel extends ExcelReport
    */
   protected function income()
   {
+    $this->sheet->setColumnFormat(array(
+      'B1:O100' => '#,##'
+    ));
+
     $this->fillRow(['INCOME']);
 
     $this->incomes = $incomes = (new BillItemRepository)->sumByMonthType($this->year);

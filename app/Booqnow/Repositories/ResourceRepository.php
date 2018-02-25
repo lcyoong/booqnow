@@ -68,8 +68,10 @@ class ResourceRepository extends BaseRepository {
   {
     return $this->repo->select(DB::raw("rs_name, month(ro_date) as mth, count(*) as counter"))
                 ->leftJoin('room_occupancies', 'ro_room', '=', 'rs_id')
-                ->join('resource_types', 'rty_id', '=', 'rs_type')
-                ->where('rty_id', '=', 1)
+                ->join('bookings', 'book_id', '=', 'ro_booking')
+                // ->join('resource_types', 'rty_id', '=', 'rs_type')
+                ->where('rs_type', '=', 1)
+                ->whereIn('book_status', ['checkedin', 'checkedout'])
                 ->groupBy(DB::raw("rs_name, month(ro_date)"))->get();
   }
 

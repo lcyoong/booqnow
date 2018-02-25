@@ -163,10 +163,9 @@ class OccupancyByNationalExcel extends ExcelReport
 
       foreach ($month_counter as $month => $counter) {
 
-        if (isset($row[$month])) {
+        $row[$month * 2 - 1] += $counter;
 
-          // $row[$month] += $counter;
-          $row[$month * 2 - 1] += $counter;
+        if (isset($this->spend_arr[$country][$month])) {
 
           $row[$month * 2] += $this->spend_arr[$country][$month];
 

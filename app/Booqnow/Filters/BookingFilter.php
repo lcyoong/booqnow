@@ -15,7 +15,7 @@ class BookingFilter extends QueryFilter
 
       $this->joins[] = 'joinCustomers';
 
-      return $this->builder->whereRaw("concat(cus_first_name, ' ', cus_last_name) like '%$value%'");
+      return $this->builder->whereRaw("trim(concat(trim(cus_first_name), ' ', trim(cus_last_name))) like '%$value%'");
     }
   }
 
