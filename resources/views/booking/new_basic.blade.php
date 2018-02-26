@@ -183,7 +183,8 @@ new Vue({
 
         this.$http.get("{{ urlTenant("api/v1/resources/label") }}/" + label)
             .then(function (response) {
-              this.bed = response.data
+              var data = JSON.parse(response.data)
+              this.bed = data
               console.log(this.bed)
             })
       },
