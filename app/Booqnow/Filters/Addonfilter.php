@@ -49,7 +49,7 @@ class AddonFilter extends QueryFilter
   {
     if (!empty($value)) {
 
-      return $this->builder->where("add_date", '>=', $value);
+      return $this->builder->where("add_date", '>=', date('YmdHis', strtotime($value)));
     }
   }
 
@@ -62,7 +62,7 @@ class AddonFilter extends QueryFilter
   {
     if (!empty($value)) {
 
-      return $this->builder->where("add_date", '<=', $value);
+      return $this->builder->where("add_date", '<=', date('YmdHis', strtotime($value)));
     }
   }
 
