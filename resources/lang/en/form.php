@@ -43,5 +43,7 @@ return [
   'jump_date' => 'Jump to date',
   'tax' => 'Add tax',
   'untax' => 'Remove tax',
-  'yesno' => [0 => 'No', 1 => 'Yes']
+  'yesno' => [0 => 'No', 1 => 'Yes'],
+  'checkin' => 'Check In',
+  'checkout' => 'Check Out',
 ];

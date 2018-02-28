@@ -4,6 +4,15 @@
 @include('customer.profile', ['customer' => $booking->customer])
 @include('booking._info_extended', ['booking' => $booking])
 <div id="booking-action">
+  <a href="{{ urlTenant("/bookings/{$booking->book_id}/edit") }}">{{ Form::button('Edit booking', ['class' => 'btn btn-primary btn-sm']) }}</a>
+  @if($booking->book_status == 'confirmed')
+  <post-ajax :post-to="'{{ urlTenant("bookings/checkin/{$booking->book_id}") }}'" reload-on-complete="1">{{ Form::button(trans('form.checkin'), ['class' => 'btn btn-primary btn-sm']) }}</post-ajax>
+  @elseif($booking->book_status == 'checkedin')
+  <post-ajax :post-to="'{{ urlTenant("bookings/checkout/{$booking->book_id}") }}'" reload-on-complete="1">{{ Form::button(trans('form.checkin'), ['class' => 'btn btn-primary btn-sm']) }}</post-ajax>
+  @endif
+</div>
+<br/>
+
 <ul class="nav nav-tabs" role="tablist">
   <li role="presentation" class="active"><a href="#bill" aria-controls="bill" role="tab" data-toggle="tab"><i class="fa fa-list"></i> @lang('booking.bills')</a></li>
   @foreach($resource_types as $type)
