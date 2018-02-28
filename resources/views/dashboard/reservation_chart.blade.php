@@ -21,6 +21,7 @@ $(function() {
     var url = '{{ url('/?date=') }}' + moment(this.value).format('YYYY-MM-DD')
     window.location.href = url
   });
+
 });
 
 

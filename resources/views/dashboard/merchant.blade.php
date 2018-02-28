@@ -25,10 +25,10 @@
 
     <div class="row">
       <div class="col-md-6">
-        @include('dashboard.addons', ['addons' => $tours, 'id' => 'tours'])
+        @include('dashboard.addons', ['addons' => $tours, 'id' => 'tours', 'type' => 'Tour'])
       </div>
       <div class="col-md-6">
-        @include('dashboard.addons', ['addons' => $transfers, 'id' => 'transfers'])
+        @include('dashboard.addons', ['addons' => $transfers, 'id' => 'transfers', 'type' => 'Transfer'])
       </div>
     </div>
   </div>
