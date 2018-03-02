@@ -7,9 +7,9 @@
   <div>
   <a href="{{ urlTenant("/bookings/{$booking->book_id}/edit") }}">{{ Form::button('Edit booking', ['class' => 'btn btn-primary btn-sm']) }}</a>
   @if($booking->book_status == 'confirmed')
-  <post-ajax :post-to="'{{ urlTenant("bookings/checkin/{$booking->book_id}") }}'" reload-on-complete="1">{{ Form::button(trans('form.checkin'), ['class' => 'btn btn-primary btn-sm']) }}</post-ajax>
+  <post-ajax :post-to="'{{ urlTenant("bookings/checkin/{$booking->book_id}") }}'" reload-on-complete="1">{{ Form::button(trans('form.checkin'), ['class' => 'btn btn-primary btn-sm', 'style'=>'background: #8DC63F; border: #8DC63F']) }}</post-ajax>
   @elseif($booking->book_status == 'checkedin')
-  <post-ajax :post-to="'{{ urlTenant("bookings/checkout/{$booking->book_id}") }}'" reload-on-complete="1">{{ Form::button(trans('form.checkout'), ['class' => 'btn btn-primary btn-sm']) }}</post-ajax>
+  <post-ajax :post-to="'{{ urlTenant("bookings/checkout/{$booking->book_id}") }}'" reload-on-complete="1">{{ Form::button(trans('form.checkout'), ['class' => 'btn btn-primary btn-sm', 'style'=>'background: #FF0000; border: #FF0000']) }}</post-ajax>
   @endif
   </div>
   <br/>
