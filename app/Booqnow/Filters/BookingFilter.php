@@ -148,10 +148,17 @@ class BookingFilter extends QueryFilter
     }
   }
 
-  public function ofStatus($value = '')
+  public function ofStatus($value = [])
   {
     if (!empty($value)) {
       return $this->builder->whereIn('book_status', $value);
+    }
+  }
+
+  public function notInStatus($value = [])
+  {
+    if (!empty($value)) {
+      return $this->builder->whereNotIn('book_status', $value);
     }
   }
 

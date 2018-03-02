@@ -49,6 +49,8 @@ class BookingRepository extends BaseRepository
   {
     $this->filter->add(['onStart' => Carbon::parse($date)->format('Ymd')]);
 
+    $this->notInStatus(['hold', 'cancelled']);
+
     return $this;
   }
 
@@ -60,6 +62,8 @@ class BookingRepository extends BaseRepository
   public function ofDepartureDate($date)
   {
     $this->filter->add(['onEnd' => Carbon::parse($date)->format('Ymd')]);
+
+    $this->notInStatus(['hold', 'cancelled']);
 
     return $this;
   }
