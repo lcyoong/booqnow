@@ -44,9 +44,9 @@ class DashboardController extends MainController
 
     // $cdate = Carbon::parse($date)->format('Ymd');
 
-    $arrivals['today'] = (new BookingRepository)->ofArrivalDate($cdate)->get(null, 5);
+    $arrivals['today'] = (new BookingRepository)->ofArrivalDate($cdate)->get();
 
-    $departures['today'] = (new BookingRepository)->ofDepartureDate($cdate)->get(null, 5);
+    $departures['today'] = (new BookingRepository)->ofDepartureDate($cdate)->get();
 
     $tours = (new AddonRepository)->ofDate($cdate)->ofType(2)->get();
 
