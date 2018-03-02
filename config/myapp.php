@@ -2,9 +2,9 @@
 
 return [
   'client_name' => 'Our Jungle House',
-  'admin_email' => 'admin@example.com',
+  'admin_email' => 'stay@khaosokaccommodation.com',
   'web_url' => 'www.khaosokaccommodation.com',
-  'contact1' => '+1234567890',
+  'contact1' => '+6681-417-0546',
   'base_country' => 'MY',
   'base_currency' => 'Baht',
   'tax_percent' => 7,
