@@ -9,7 +9,7 @@
   @if($booking->book_status == 'confirmed')
   <post-ajax :post-to="'{{ urlTenant("bookings/checkin/{$booking->book_id}") }}'" reload-on-complete="1">{{ Form::button(trans('form.checkin'), ['class' => 'btn btn-primary btn-sm']) }}</post-ajax>
   @elseif($booking->book_status == 'checkedin')
-  <post-ajax :post-to="'{{ urlTenant("bookings/checkout/{$booking->book_id}") }}'" reload-on-complete="1">{{ Form::button(trans('form.checkin'), ['class' => 'btn btn-primary btn-sm']) }}</post-ajax>
+  <post-ajax :post-to="'{{ urlTenant("bookings/checkout/{$booking->book_id}") }}'" reload-on-complete="1">{{ Form::button(trans('form.checkout'), ['class' => 'btn btn-primary btn-sm']) }}</post-ajax>
   @endif
   </div>
   <br/>
