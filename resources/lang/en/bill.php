@@ -2,6 +2,8 @@
 
 return [
   'list' => 'Bills',
+  'list_walkin' => 'Walk-in Bills',
+  'all' => 'All Bills',
   'items' => 'Items',
   'view' => 'View Bill #:id',
   'edit' => 'Edit Bill #:id',
@@ -34,4 +36,5 @@ return [
   'amount_due' => 'Amount due',
   'deposit_paid' => 'Deposit paid',
   'others_paid' => 'Others paid',
+  'all' => 'All bills',
 ];

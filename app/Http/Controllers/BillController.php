@@ -56,6 +56,36 @@ class BillController extends MainController
   }
 
   /**
+   * Display walkin bill list
+   * @param  Request $request
+   * @return Response
+   */
+  public function walkin(Request $request)
+  {
+    $input = $request->input();
+
+    $input['walkin'] = true;
+
+    $filters = new BillFilter($input);
+
+    $this->filter = $input;
+
+    $this->page_title = trans('bill.list_walkin');
+
+    $list = $this->repo->getPages($filters);
+
+    $this->new_path = urlTenant('bills/new');
+
+    $this->new_path_attr = "v-modal";
+
+    $filter_url = "bills/walkin";
+
+    $this->vdata(compact('list', 'filter_url'));
+
+    return view('bill.list', $this->vdata);
+  }
+
+  /**
    * Display single bill
    * @param  int $bil_id Bill id
    * @return Response

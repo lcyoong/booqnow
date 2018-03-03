@@ -115,6 +115,20 @@ class BillFilter extends QueryFilter
   }
 
   /**
+   * Walk-in filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function walkin($value = null)
+  {
+    if (!empty($value)) {
+
+      return $this->builder->whereNull("bil_booking");
+
+    }
+  }
+
+  /**
    * Join customers to query
    * @return Builder
    */

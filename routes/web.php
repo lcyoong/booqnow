@@ -147,6 +147,7 @@ function tenantRoutes()
 
   Route::group(['middleware' => ['permitted:bill'], 'prefix' => '/bills'], function () {
     Route::get('/', 'BillController@index');
+    Route::get('/walkin', 'BillController@walkin');
     Route::get('/new', 'BillController@create');
     Route::get('/{bill}', 'BillController@view');
     Route::get('/{bill}/edit', 'BillController@edit');

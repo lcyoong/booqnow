@@ -18,7 +18,13 @@
         <li><a href="{{ urlTenant('bookings') }}">@lang('nav.appointments')</a></li>
         @endpermitted
         @permitted('bill')
-        <li><a href="{{ urlTenant('bills') }}">@lang('nav.billing')</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.billing') <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ urlTenant('bills') }}">@lang('bill.all')</a></li>
+            <li><a href="{{ urlTenant('bills/walkin') }}">@lang('bill.walkin')</a></li>
+          </ul>
+        </li>
         @endpermitted
         @permitted('report')
         <li class="dropdown">
