@@ -43,7 +43,7 @@ function showDateTime($date)
  */
 function showHumanDiff($date)
 {
-  return Carbon::now()->diffForHumans(Carbon::parse($date));
+  return Carbon::parse($date)->diffForHumans();
 }
 
 /**
