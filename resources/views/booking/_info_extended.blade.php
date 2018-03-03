@@ -24,7 +24,7 @@
       <div class="row">
         {{ Form::showField(array_get($booking_sources, $booking->book_source), trans('booking.book_source')) }}
         {{ Form::showField( isset($booking->agent) ? $booking->agent->ag_name : '', trans('booking.book_agent')) }}
-        {{ Form::showField(!is_null($booking->book_expiry) ? showHumanDiff($booking->book_expiry) : null, trans('booking.book_expiry')) }}
+        {{ Form::showField(!is_null($booking->book_expiry) ? $booking->book_expiry . ' <span class="label label-info">' . showHumanDiff($booking->book_expiry) .'</span>' : null, trans('booking.book_expiry')) }}
         {{ Form::showField( @$book_leads[$booking->book_lead_from], trans('booking.book_lead_from')) }}
       </div>
 

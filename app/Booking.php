@@ -135,7 +135,11 @@ class Booking extends TenantModel
    */
   public function setBookExpiryAttribute($value)
   {
-    $this->attributes['book_expiry'] = Carbon::parse($value)->format('Y-m-d H:i:s');
+    if (!empty($value)) {
+
+      $this->attributes['book_expiry'] = Carbon::parse($value)->format('Y-m-d H:i:s');
+      
+    }
   }
 
   /**
