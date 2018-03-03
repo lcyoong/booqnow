@@ -17,12 +17,21 @@ class BillItem extends TenantModel
   protected $fillable = ['bili_bill', 'bili_description', 'bili_resource', 'bili_unit_price', 'bili_unit', 'bili_gross', 'bili_tax', 'bili_with_tax', 'bili_order', 'bili_status', 'bili_active', 'created_by'];
 
   protected $appends = ['created_date', 'created_date_hour'];
+
   /**
    * Get the resource of the bill item
    */
   public function resource()
   {
-    return $this->belongsTo(Resource::class, 'rs_type');
+    return $this->belongsTo(Resource::class, 'bili_resource');
+  }
+
+  /**
+   * Get the corresponding add-on of the bill item (if any)
+   */
+  public function addon()
+  {
+    return $this->hasOne(Addon::class, 'add_bill_item');
   }
 
   /**

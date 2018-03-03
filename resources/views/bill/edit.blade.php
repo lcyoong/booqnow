@@ -41,7 +41,10 @@
     <ul class="list-group">
       <li class="list-group-item" v-for="item in items">
         <div class="row">
-          <div class="col-md-4">{{ Form::text('bili_description', '', ['class' => 'form-control', 'v-model' => 'item.bili_description', '@keyup' => 'change(item)']) }}</div>
+          <div class="col-md-4">
+            {{ Form::text('bili_description', '', ['class' => 'form-control', 'v-model' => 'item.bili_description', '@keyup' => 'change(item)']) }}
+            <div v-if="item.resource" style="font-size: 0.6em;"><i class="fa fa-link"></i> @{{ item.resource.rs_name }}</div>
+          </div>
           <div class="col-md-2">{{ Form::text('bili_unit_price', '', ['class' => 'form-control', 'v-model' => 'item.bili_unit_price']) }}</div>
           <div class="col-md-1">{{ Form::number('bili_unit', '', ['class' => 'form-control', 'v-model' => 'item.bili_unit', 'min' => 0, 'max' => 20]) }}</div>
           <div class="col-md-2">@{{ item.bili_unit_price * item.bili_unit }}</div>
