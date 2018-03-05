@@ -19,6 +19,14 @@ class BillItem extends TenantModel
   protected $appends = ['created_date', 'created_date_hour'];
 
   /**
+   * Get the bill of the bill item
+   */
+  public function bill()
+  {
+    return $this->belongsTo(Bill::class, 'bili_bill');
+  }
+
+  /**
    * Get the resource of the bill item
    */
   public function resource()
@@ -96,10 +104,14 @@ class BillItem extends TenantModel
 
       $post->bili_gross = $post->bili_unit * $post->bili_unit_price;
 
-      if ($post->bili_with_tax) {
+      if ($post->bill->bil_with_tax == 1) {
+
         $post->bili_tax = calcTax($post->bili_gross);
+
       } else {
+
         $post->bili_tax = 0;
+
       }
 
     });

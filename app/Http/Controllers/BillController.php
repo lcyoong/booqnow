@@ -204,6 +204,8 @@ class BillController extends MainController
   {
     $this->repo->update($request->input());
 
+    $this->repo->refreshGrossTax();
+
     return $this->goodReponse();
   }
 
