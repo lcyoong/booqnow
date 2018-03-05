@@ -139,6 +139,7 @@ function tenantRoutes()
   Route::get('bookings/{booking}/addons/{resource_type}/pos', 'AddonController@createPos');
   Route::get('addons/{resource_type}/new/booking/{booking}/{pos?}', 'AddonController@createForBooking');
   Route::get('addons/{resource_type}/new/bill/{bill}/{pos?}', 'AddonController@createForBill');
+  Route::get('addons/edit/bill_item/{bill_item}/{pos?}', 'AddonController@editForBill');
   Route::get('addons/pop/{booking}', 'AddonController@pop');
   Route::post('addons/new', 'AddonController@store');
   Route::post('addons/new/list', 'AddonController@storeList');

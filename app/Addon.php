@@ -84,4 +84,42 @@ class Addon extends TenantModel
     $this->attributes['add_agent'] = empty($value) ? null : $value;
   }
 
+  public static function boot()
+  {
+    parent::boot();
+
+    static::saved(function ($post) {
+
+      // $original = $post->original;
+      //
+      // $bill_item = [];
+      //
+      // if (array_get($original, 'add_pax') != $post->add_pax || array_get($original, 'add_pax_child') != $post->add_pax_child) {
+      //
+      //   $unit = $post->add_pax + $post->add_pax_child;
+      //
+      //   $bill_item['bili_unit'] = $unit;
+      //
+      // }
+      //
+      // if (array_get($original, 'add_pax') != 'cancelled' && $post->add_status == 'cancelled') {
+      //
+      //   $bill_item['bili_active'] = 0;
+      //
+      // } else if (array_get($original, 'add_pax') == 'cancelled' && $post->add_status != 'cancelled') {
+      //
+      //   $bill_item['bili_active'] = 1;
+      //
+      // }
+      //
+      // if (count($bill_item) > 0) {
+      //
+      //   $post->bill_item->update($bill_item);
+      //
+      // }
+
+    });
+
+  }
+
 }

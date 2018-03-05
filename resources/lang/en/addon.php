@@ -2,6 +2,7 @@
 
 return [
   'new' => 'New :type',
+  'edit' => 'Edit add-on: :item',
   'add_booking' => 'Booking #',
   'add_resource' => 'Item',
   'add_customer' => 'Customer',

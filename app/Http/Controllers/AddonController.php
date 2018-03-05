@@ -107,6 +107,14 @@ class AddonController extends MainController
     return $this->create($rty_id, $pos);
   }
 
+  /**
+   * New add-on for walk-in bill
+   * @param  Request $request [description]
+   * @param  [type]  $rty_id  [description]
+   * @param  [type]  $bil_id  [description]
+   * @param  boolean $pos     [description]
+   * @return [type]           [description]
+   */
   public function createForBill(Request $request, $rty_id, $bil_id, $pos = false)
   {
     $bill = (new BillRepository)->findById($bil_id);
@@ -120,6 +128,34 @@ class AddonController extends MainController
     $this->vdata(compact('bill', 'add_to_bill'));
 
     return $this->create($rty_id, $pos, 'true');
+  }
+
+  /**
+   * Edit add-on for walk-in bill
+   * @param  Request $request [description]
+   * @param  [type]  $rty_id  [description]
+   * @param  [type]  $bil_id  [description]
+   * @param  boolean $pos     [description]
+   * @return [type]           [description]
+   */
+  public function editForBill(Request $request, $bili_id, $pos = false)
+  {
+    $agents = $this->agents('suppliers');
+
+    $item = (new BillItemRepository)->findById($bili_id);
+
+    $addon = $item->addon;
+
+    $resource_type = $item->resource->resourceType;
+
+    $this->page_title = trans('addon.edit', ['item' => $item->resource->rs_name . " ($addon->add_customer_name)"]);
+
+    $this->layout = 'layouts.modal';
+
+    $this->vdata(compact('item', 'agents', 'resource_type', 'addon'));
+
+    return view('addon.edit_single_item', $this->vdata);
+
   }
 
   /**

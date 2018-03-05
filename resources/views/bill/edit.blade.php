@@ -43,7 +43,6 @@
         <div class="row">
           <div class="col-md-4">
             {{ Form::text('bili_description', '', ['class' => 'form-control', 'v-model' => 'item.bili_description', '@keyup' => 'change(item)']) }}
-            <div v-if="item.resource" style="font-size: 0.6em;"><i class="fa fa-link"></i> @{{ item.resource.rs_name }}</div>
           </div>
           <div class="col-md-2">{{ Form::text('bili_unit_price', '', ['class' => 'form-control', 'v-model' => 'item.bili_unit_price']) }}</div>
           <div class="col-md-1">{{ Form::number('bili_unit', '', ['class' => 'form-control', 'v-model' => 'item.bili_unit', 'min' => 0, 'max' => 20]) }}</div>
@@ -51,6 +50,18 @@
           <div class="col-md-1"><bootstrap-toggler name="bili_active" v-model="item.bili_active" data-size="normal"/></div>
           <div class="col-md-1"><itemized :item = "item" class="form-control btn btn-primary" action="{{ urlTenant('bills/item/update') }}" @completesuccess="getList">Save</itemized></div>
         </div>
+        <div v-if="item.addon && (item.resource.rs_type == 2 || item.resource.rs_type == 4)" style="background: #efefef; padding: 5px; margin-top: 10px;">
+          <a v-modal :href="'{{ urlTenant('addons/edit/bill_item') }}/' + item.bili_id"><span style="font-size: 0.8em;"><i class="fa fa-link"></i> @{{ item.resource.rs_name }}</span></a>
+          <div class="row" style="font-size: 0.8em;">
+            <div class="col-md-2">@lang('addon.add_date')<div class="value">@{{ item.addon.add_date }}</div></div>
+            <div class="col-md-2">@lang('addon.add_pax')<div class="value">@{{ item.addon.add_pax }}</div></div>
+            <div class="col-md-2">@lang('addon.add_pax_child')<div class="value">@{{ item.addon.add_pax_child }}</div></div>
+            <div class="col-md-2">@lang('addon.add_remarks')<div class="value">@{{ item.addon.add_remarks }}</div></div>
+            <div class="col-md-2">@lang('addon.add_agent')<div class="value">@{{ item.addon.add_agent }}</div></div>
+            <div class="col-md-2">@lang('addon.add_status')<div class="value">@{{ item.addon.add_status }}</div></div>
+          </div>
+        </div>
+
       </li>
       <li class="list-group-item list-group-item-success">
         <div class="row">
