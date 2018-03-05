@@ -18,13 +18,16 @@
         <tbody>
           @foreach($addons as $addon)
             <tr>
-              <td class="col-md-4">{{ $addon->add_customer_name }}
+              <td class="col-md-3">{{ $addon->add_customer_name }}
                 <div><span class="label label-info">{{ $addon->booking->resource->rs_name or '' }}</span></div>
               </td>
-              <td class="col-md-3">{{ $addon->resource->rs_name }} @ {{ $addon->add_date }}
-                <div><span class="label label-success">{{ $addon->agent->ag_name or 'N/A' }}</span></div>
+              <td class="col-md-5">{{ $addon->resource->rs_name }} @ {{ $addon->add_date }}
+                <span class="label label-success">{{ $addon->agent->ag_name or 'N/A' }}</span>
+                @if(!empty($addon->add_remarks))
+                <div style="font-size: 0.8em;"><i class="fa fa-comment"></i> {{ $addon->add_remarks }}</div>
+                @endif
               </td>
-              <td class="col-md-3">{{ $addon->add_pax }} @lang('addon.add_pax') + {{ $addon->add_pax_child }} @lang('addon.add_pax_child_simple')</td>
+              <td class="col-md-2">{{ $addon->add_pax }} @lang('addon.add_pax') + {{ $addon->add_pax_child }} @lang('addon.add_pax_child_simple')</td>
               <td class="col-md-2">{{ $addon->add_status }}</td>
             </tr>
           @endforeach
