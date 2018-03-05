@@ -50,8 +50,9 @@
           <div class="col-md-1"><bootstrap-toggler name="bili_active" v-model="item.bili_active" data-size="normal"/></div>
           <div class="col-md-1"><itemized :item = "item" class="form-control btn btn-primary" action="{{ urlTenant('bills/item/update') }}" @completesuccess="getList">Save</itemized></div>
         </div>
-        <div v-if="item.addon && (item.resource.rs_type == 2 || item.resource.rs_type == 4)" style="background: #efefef; padding: 5px; margin-top: 10px;">
-          <a v-modal :href="'{{ urlTenant('addons/edit/bill_item') }}/' + item.bili_id"><span style="font-size: 0.8em;"><i class="fa fa-link"></i> @{{ item.resource.rs_name }}</span></a>
+        <a v-if="item.addon && (item.resource.rs_type == 2 || item.resource.rs_type == 4)" v-modal :href="'{{ urlTenant('addons/edit/bill_item') }}/' + item.bili_id"><span style="font-size: 0.8em;"><i class="fa fa-link"></i> @{{ item.resource.rs_name }}</span></a>
+        <span v-else-if="item.addon" style="font-size: 0.8em;"><i class="fa fa-link"></i> @{{ item.resource.rs_name }}</span>
+        <div v-if="item.addon && (item.resource.rs_type == 2 || item.resource.rs_type == 4)" style="background: #efefef; padding: 5px; margin-top: 5px;">
           <div class="row" style="font-size: 0.8em;">
             <div class="col-md-2">@lang('addon.add_date')<div class="value">@{{ item.addon.add_date }}</div></div>
             <div class="col-md-2">@lang('addon.add_pax')<div class="value">@{{ item.addon.add_pax }}</div></div>
