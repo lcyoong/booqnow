@@ -27,7 +27,7 @@
       {{ Form::bsText('add_price', trans('resource.rs_price'), null, ['v-model' => 'add_price']) }}
     </div>
     <div class="row">
-      {{ Form::bsDate('add_date', trans('addon.add_date'), today('d-m-Y 8:30'), ['class' => 'datetimepicker form-control']) }}
+      {{ Form::bsDate('add_date', trans('addon.add_date'), $resource_type->rty_id == 4 ? Carbon\Carbon::parse($booking->book_from)->format('d-m-Y 8:30') : today('d-m-Y 8:30'), ['class' => 'datetimepicker form-control']) }}
       {{ Form::bsText('add_reference', trans('addon.add_reference')) }}
       {{ Form::bsSelect('add_agent', trans('addon.add_agent'), $agents, null, ['class' => 'form-control select2']) }}
       {{ Form::bsTextarea('add_remarks', trans('addon.add_remarks')) }}
