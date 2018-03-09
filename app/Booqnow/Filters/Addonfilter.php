@@ -113,4 +113,13 @@ class AddonFilter extends QueryFilter
     }
   }
 
+  public function notInStatus($value = [])
+  {
+    if (!empty($value)) {
+
+      return $this->builder->whereNotIn('add_status', $value);
+
+    }
+  }
+
 }

@@ -55,6 +55,8 @@ class AddonRepository extends BaseRepository {
   {
     $this->filter->add(['onDate' => Carbon::parse($date)->format('Y-m-d')]);
 
+    $this->notInStatus(['cancelled']);
+
     return $this;
   }
 
