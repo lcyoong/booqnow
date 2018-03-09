@@ -80,7 +80,11 @@
     </tr>
     @foreach ($item_group as $item)
     <tr>
-      <td>{{ $item['bili_description'] }}</td>
+      <td>{{ $item['bili_description'] }}
+        @if($item['rs_type'] == 2 || $item['rs_type'] == 4)
+        <br/>{{ $item['add_date'] }}
+        @endif
+      </td>
       <td class="text-center">{{ $item['bili_unit'] }}</td>
       <td class="text-right">{{ showMoney($item['bili_unit_price']) }}</td>
       <td class="text-right">{{ showMoney($item['bili_gross']) }}</td>

@@ -157,7 +157,7 @@ class Bill extends TenantModel
 
   public function getAddonItems()
   {
-    return $this->items()->active()->join('resources', 'rs_id', 'bili_resource')->where('rs_type', '!=', 1)->orderBy('bili_id', 'asc')->get(['resources.*', 'bill_items.*']);
+    return $this->items()->active()->join('addons', 'add_bill_item', 'bili_id')->join('resources', 'rs_id', 'bili_resource')->where('rs_type', '!=', 1)->orderBy('bili_id', 'asc')->get(['resources.*', 'bill_items.*', 'addons.*']);
   }
 
   /**
