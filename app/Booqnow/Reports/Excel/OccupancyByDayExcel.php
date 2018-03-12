@@ -9,6 +9,7 @@ use App\Bill;
 use Carbon\Carbon;
 use Repositories\RoomOccupancyRepository;
 use Repositories\ResourceRepository;
+use Log;
 
 class OccupancyByDayExcel extends ExcelReport
 {
@@ -155,6 +156,8 @@ class OccupancyByDayExcel extends ExcelReport
     $occupancies = (new RoomOccupancyRepository)->withoutLabel(['tent'])->byDayOfMonth($this->year);
 
     $this->total_rooms = (new ResourceRepository)->withoutLabel(['tent'])->countByType([1]);
+
+    Log::info($this->total_rooms);
 
     $this->occ_arr = [];
 
