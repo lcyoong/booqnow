@@ -154,7 +154,7 @@ class OccupancyByDayExcel extends ExcelReport
     // $occupancies = (new RoomOccupancy)->withoutLabel(['tent'])->byDayOfMonth($this->year);
     $occupancies = (new RoomOccupancyRepository)->withoutLabel(['tent'])->byDayOfMonth($this->year);
 
-    $this->total_rooms = (new ResourceRepository)->countByType([1]);
+    $this->total_rooms = (new ResourceRepository)->withoutLabel(['tent'])->countByType([1]);
 
     $this->occ_arr = [];
 

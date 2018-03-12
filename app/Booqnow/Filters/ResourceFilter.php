@@ -68,6 +68,19 @@ class ResourceFilter extends QueryFilter
     }
   }
 
+  /**
+   * Without label filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function withoutLabel($value)
+  {
+    if (!empty($value)) {
+
+      return $this->builder->whereNotIn('rs_label', $value);
+    }
+  }
+
   public function joinResourceTypes()
   {
     $this->builder->join('resource_types', 'rty_id', '=', 'rs_type');
