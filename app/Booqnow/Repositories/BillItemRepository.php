@@ -35,6 +35,7 @@ class BillItemRepository extends BaseRepository {
                 ->where('bili_status', '=', 'active')
                 ->where('bil_status', '=', 'active')
                 ->whereNotIn('book_status', ['cancelled', 'hold'])
+                ->whereYear('bil_date', $year)
                 ->groupBy(DB::raw("rty_code, month(bil_date)"))->get();
   }
 
