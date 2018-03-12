@@ -27,6 +27,8 @@ class ExpenseRepository extends BaseRepository {
   {
     return $this->repo->select(DB::raw("exp_category, month(exp_date) as mth, sum(exp_amount) as total"))
                 ->join('expense_categories', 'exc_id', '=', 'exp_category')
+                ->whereYear('exp_date', $year)
+                ->where('exp_status', 'active')
                 ->groupBy(DB::raw("exp_category, month(exp_date)"))->get();
   }
 
