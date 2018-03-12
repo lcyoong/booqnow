@@ -155,7 +155,7 @@ class OccupancyByDayExcel extends ExcelReport
     // $occupancies = (new RoomOccupancy)->withoutLabel(['tent'])->byDayOfMonth($this->year);
     $occupancies = (new RoomOccupancyRepository)->withoutLabel(['tent'])->byDayOfMonth($this->year);
 
-    $this->total_rooms = (new ResourceRepository)->whereNotIn('rs_label', ['tent'])->countByType([1]);
+    $this->total_rooms = (new ResourceRepository)->whereNotIn('rs_labelxx', ['tent'])->countByType([1]);
 
     Log::info($this->total_rooms);
 
