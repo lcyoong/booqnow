@@ -121,7 +121,7 @@ class OccupancyByDayExcel extends ExcelReport
 
         foreach ($this->occ_arr[$mth] as $day => $counter) {
 
-          $row[$day] = number_format($counter/$this->total_rooms, 2);
+          $row[$day] = number_format($counter*100/$this->total_rooms) . '%';
 
         }
 
