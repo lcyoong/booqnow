@@ -31,10 +31,10 @@ class BillItemRepository extends BaseRepository {
                 ->join('bills', 'bil_id', '=', 'bili_bill')
                 ->join('resources', 'rs_id', '=', 'bili_resource')
                 ->join('resource_types', 'rty_id', '=', 'rs_type')
-                // ->join('bookings', 'book_id', '=', 'bil_booking')
+                ->leftJoin('bookings', 'book_id', '=', 'bil_booking')
                 ->where('bili_status', '=', 'active')
                 ->where('bil_status', '=', 'active')
-                // ->whereIn('book_status', ['checkedin', 'checkedout', 'confirmed'])
+                ->whereNotIn('book_status', ['cancelled', 'hold'])
                 ->groupBy(DB::raw("rty_code, month(bil_date)"))->get();
   }
 
