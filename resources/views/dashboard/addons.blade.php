@@ -19,7 +19,11 @@
           @foreach($addons as $addon)
             <tr>
               <td class="col-md-3">{{ $addon->add_customer_name }}
-                <div><span class="label label-info">{{ $addon->booking->resource->rs_name or '' }}</span></div>
+                <div><span class="label label-info">{{ $addon->booking->resource->rs_name or '' }}</span>
+                  @if($addon->booking)
+                  <a href="{{ urlTenant(sprintf("bookings/%s", $addon->add_booking)) }}" v-modal><i class="fa fa-eye"></i></a>
+                  @endif
+                </div>
               </td>
               <td class="col-md-5">{{ $addon->resource->rs_name }} @ {{ $addon->add_date }}
                 <span class="label label-success">{{ $addon->agent->ag_name or 'N/A' }}</span>
@@ -28,7 +32,7 @@
                 @endif
               </td>
               <td class="col-md-2">{{ $addon->add_pax }} @lang('addon.add_pax') + {{ $addon->add_pax_child }} @lang('addon.add_pax_child_simple')</td>
-              <td class="col-md-2">{{ $addon->add_status }}</td>
+              <td class="col-md-2">{{ $addon->add_status }} <a href="{{ urlTenant("/addons/edit/{$addon->add_id}") }}" v-modal><i class="fa fa-edit"></i></a></td>
             </tr>
           @endforeach
         </tbody>

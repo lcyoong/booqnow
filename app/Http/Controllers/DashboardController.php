@@ -48,9 +48,9 @@ class DashboardController extends MainController
 
     $departures['today'] = (new BookingRepository)->ofDepartureDate($cdate)->get();
 
-    $tours = (new AddonRepository)->ofDate($cdate)->ofType(2)->get();
+    $tours = (new AddonRepository)->ofDate($cdate)->ofType(2)->get(null, 0, ['rs_name'=> 'asc']);
 
-    $transfers = (new AddonRepository)->ofDate($cdate)->ofType(4)->get();
+    $transfers = (new AddonRepository)->ofDate($cdate)->ofType(4)->get(null, 0, ['rs_name'=> 'asc']);
 
     $this->vdata(compact('arrivals', 'departures', 'tours', 'transfers', 'date'));
 
