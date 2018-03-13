@@ -34,7 +34,9 @@ class BillItemRepository extends BaseRepository {
                 ->leftJoin('bookings', 'book_id', '=', 'bil_booking')
                 ->where('bili_status', '=', 'active')
                 ->where('bil_status', '=', 'active')
-                ->whereNotIn('book_status', ['cancelled', 'hold'])
+                ->where(function ($query) {
+                  $query->whereNotIn('book_status', ['cancelled', 'hold'])->orWhereNull('book_status');
+                })
                 ->whereYear('bil_date', $year)
                 ->groupBy(DB::raw("rty_code, month(bil_date)"))->get();
   }
