@@ -23,7 +23,13 @@
         <tr>
           <td>{{ $item->display_id }}</td>
           <td>{{ $item->bil_customer_name }}</td>
-          <td>{{ $item->booking->display_id or 'N/A' }} : {{ $item->bil_description }}</td>
+          <td>
+            {{ $item->booking->display_id or 'N/A' }} : {{ $item->bil_description }}
+            @if($item->booking)
+            <a v-modal href="{{ url('bookings/' . $item->booking->book_id) }}" title="@lang('form.view')"><i class="fa fa-eye"></i></a>
+            <i class="fa fa-circle status-{{ $item->booking->book_status }}"></i>
+            @endif
+          </td>
           <td>{{ $item->bil_date }}</td>
           <td class="text-right">{{ $item->total_amount }}</td>
           <td class="text-right">{{ $item->outstanding }}</td>
