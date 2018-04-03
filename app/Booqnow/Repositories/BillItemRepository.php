@@ -32,9 +32,11 @@ class BillItemRepository extends BaseRepository {
                 ->join('resources', 'rs_id', '=', 'bili_resource')
                 ->join('resource_types', 'rty_id', '=', 'rs_type')
                 ->leftJoin('bookings', 'book_id', '=', 'bil_booking')
-                ->where('bili_status', '=', 'active')
+                ->where('bili_active', '=', 1)
                 ->where('bil_status', '=', 'active')
-                ->whereNotIn('book_status', ['cancelled', 'hold'])
+                ->where(function ($query) {
+                  $query->whereNotIn('book_status', ['cancelled', 'hold'])->orWhereNull('book_status');
+                })
                 ->whereYear('bil_date', $year)
                 ->groupBy(DB::raw("rty_code, month(bil_date)"))->get();
   }

@@ -159,6 +159,32 @@ class AddonController extends MainController
   }
 
   /**
+   * Edit add-on
+   * @param  Request $request [description]
+   * @param  [type]  $rty_id  [description]
+   * @param  [type]  $bil_id  [description]
+   * @param  boolean $pos     [description]
+   * @return [type]           [description]
+   */
+  public function edit(Request $request, $add_id)
+  {
+    $agents = $this->agents('suppliers');
+
+    $addon = (new AddonRepository)->findById($add_id);
+
+    $resource_type = $addon->resource->resourceType;
+
+    $this->page_title = trans('addon.edit', ['item' => $addon->resource->rs_name . " ($addon->add_customer_name)"]);
+
+    $this->layout = 'layouts.modal';
+
+    $this->vdata(compact('agents', 'resource_type', 'addon'));
+
+    return view('addon.edit_single_item', $this->vdata);
+
+  }
+
+  /**
    * Display new addon form in POS form
    * @param  Request $request
    * @param  int  $book_id  booking id
