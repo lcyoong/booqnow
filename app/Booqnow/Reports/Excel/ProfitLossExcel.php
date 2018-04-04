@@ -357,6 +357,8 @@ class ProfitLossExcel extends ExcelReport
         // Get the income for month-type
         $profit = isset($this->np_arr[$type->rty_code][$month]) ? $this->np_arr[$type->rty_code][$month] : 0;
 
+        $income = isset($this->inc_arr[$type->rty_code][$month]) ? $this->inc_arr[$type->rty_code][$month] : 0;
+
         // Deduct the expenses for month-type
         $cost = 0;
 
@@ -374,7 +376,7 @@ class ProfitLossExcel extends ExcelReport
 
         }
 
-        $col[$month] = (($profit != 0) ? round(($cost / $profit) * 100) : 0) . '%';
+        $col[$month] = (($income != 0) ? round(($cost / $income) * 100) : 0) . '%';
 
       }
 
