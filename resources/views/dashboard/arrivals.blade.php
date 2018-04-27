@@ -23,7 +23,7 @@
                 <td class="col-md-4">{{ $arrival->customer->full_name }}
                   <div><span class="label label-info">{{ $arrival->resource->rs_name }}</span></div>
                 </td>
-                <td class="col-md-3"><i class="fa fa-circle status-{{ $arrival->book_status }}"></i> {{ $book_status[$arrival->book_status] }}</td>
+                <td class="col-md-3"><i class="fa fa-circle status-{{ $arrival->book_status }}"></i> {{ array_get($book_status,$arrival->book_status) }}</td>
                 <td class="col-md-2">{{ $arrival->book_pax }} @lang('booking.book_pax') + {{ $arrival->book_pax_child }} @lang('booking.book_pax_child_simple')</td>
                 <td class="col-md-3"><a href="{{ urlTenant(sprintf("bookings/%s", $arrival->book_id)) }}" v-modal><i class="fa fa-eye"></i></a></td>
               </tr>
