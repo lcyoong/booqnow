@@ -148,7 +148,7 @@ var app2 = new Vue({
 
         }
 
-        item.json = JSON.stringify({rs_name: item.text, rs_unit: item.unit, rs_price: item.price, rs_id: item.id})
+        item.json = JSON.stringify({rs_name: item.text, rs_pax: 1, rs_unit: item.unit, rs_price: item.price, rs_id: item.id})
 
       },
 
@@ -170,7 +170,13 @@ var app2 = new Vue({
 
           temp = this.items[index]
 
+          json = JSON.parse(temp.json)
+
           temp.unit --
+
+          json.rs_unit = temp.unit
+
+          temp.json = JSON.stringify(json)
 
           Vue.set(this.items, index, temp)
 
@@ -188,7 +194,13 @@ var app2 = new Vue({
 
         temp = this.items[index]
 
+        json = JSON.parse(temp.json)
+
         temp.unit ++
+
+        json.rs_unit = temp.unit
+
+        temp.json = JSON.stringify(json)
 
         Vue.set(this.items, index, temp)
 

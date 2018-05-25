@@ -122,4 +122,13 @@ class AddonFilter extends QueryFilter
     }
   }
 
+  public function ofStatus($value)
+  {
+    if (!empty($value)) {
+
+      return $this->builder->where('add_status', '=', $value);
+
+    }
+  }
+
 }

@@ -116,7 +116,7 @@ class DailyAddonExcel extends ExcelReport
    */
   protected function getData()
   {
-    $filters = new AddonFilter($this->filter + ['resourceType' => $this->type]);
+    $filters = new AddonFilter($this->filter + ['resourceType' => $this->type, 'ofStatus' => 'active']);
 
     $this->data = (new AddonRepository)->with(['resource', 'agent'])->get($filters, 0, ['add_date' => 'asc']);
   }
