@@ -41,4 +41,25 @@ class BillItemRepository extends BaseRepository {
                 ->groupBy(DB::raw("rty_code, month(bil_date)"))->get();
   }
 
+  /**
+   * Monthly sum of bill items value of the year
+   * @param  [type] $year [description]
+   * @return [type]       [description]
+   */
+  public function sumConfirmedByMonth($year)
+  {
+    return $this->repo->select(DB::raw("month(bil_date) as mth, sum(bili_gross) as total"))
+                ->join('bills', 'bil_id', '=', 'bili_bill')
+                ->join('resources', 'rs_id', '=', 'bili_resource')
+                ->join('resource_types', 'rty_id', '=', 'rs_type')
+                ->leftJoin('bookings', 'book_id', '=', 'bil_booking')
+                ->where('bili_active', '=', 1)
+                ->where('bil_status', '=', 'active')
+                ->where(function ($query) {
+                  $query->whereNotIn('book_status', ['cancelled', 'hold'])->orWhereNull('book_status');
+                })
+                ->whereYear('bil_date', $year)
+                ->groupBy(DB::raw("month(bil_date)"))->get();
+  }
+
 }

@@ -183,6 +183,24 @@ class ReportController extends MainController
   }
 
   /**
+   * Monthly future revenue display form
+   * @param  Request $request
+   * @return Response
+   */
+  public function monthlyRevenueByFuture(Request $request)
+  {
+    $type = 'monthly_revenue_future';
+
+    $this->page_title = trans('report.monthly_revenue_by_future_title');
+
+    $list = $this->repo->ofType($type)->getPages();
+
+    $this->vdata(compact('list', 'type'));
+
+    return view('report.monthly_revenue_future', $this->vdata);
+  }
+
+  /**
    * Monthly deposit display form
    * @param  Request $request
    * @return Response

@@ -13,6 +13,8 @@ return [
   'monthly_deposit_by_future_title' => 'Monthly Deposit Report - By Future Month Booked',
   'monthly_deposit_report_heading' => 'Monthly Deposit Report :ext',
   'monthly_deposit_by_future_report_heading' => 'Monthly Deposit Report - By Future Month Booked :ext',
+  'monthly_revenue_by_future_title' => 'Monthly Revenue Report - By Future Month Booked',
+  'monthly_revenue_by_future_report_heading' => 'Monthly Revenue Report - By Future Month Booked :ext',
   'monthly_stat_title' => 'Monthly Stat Report',
   'monthly_stat_report_heading' => 'Monthly Stat Report :ext',
   'monthly_units_sold_title' => 'Monthly Units Sold',
