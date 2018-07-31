@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\AuditTrailRelationship;
 use App\Traits\CommentRelationship;
 use Carbon\Carbon;
+use App\Events\BookingCancelled;
 
 class Booking extends TenantModel
 {
@@ -138,7 +139,7 @@ class Booking extends TenantModel
     if (!empty($value)) {
 
       $this->attributes['book_expiry'] = Carbon::parse($value)->format('Y-m-d H:i:s');
-      
+
     }
   }
 
@@ -185,6 +186,13 @@ class Booking extends TenantModel
     Self::saved(function ($post) {
 
       (new RoomOccupancy)->process($post->book_id, $post['original'], $post['attributes']);
+
+      // Booking cancelled
+      if (array_get($post['original'], 'book_status') !== 'cancelled' && $post->book_status === 'cancelled') {
+
+        event(new BookingCancelled($post));
+
+      }
 
     });
   }

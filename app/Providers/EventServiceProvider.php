@@ -39,6 +39,10 @@ class EventServiceProvider extends ServiceProvider
           'App\Listeners\UpdateReportRetry',
           // 'App\Listeners\SendNotification',
         ],
+        'App\Events\BookingCancelled' => [
+          'App\Listeners\CancelBookingBills',
+          'App\Listeners\CancelBookingAddOns',
+        ],
     ];
 
     /**
