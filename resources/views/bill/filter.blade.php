@@ -7,6 +7,9 @@
   {{ Form::filterDate('start', trans('bill.from_bil_date'), array_get($filter, 'start'), ['placeholder' => trans('bill.from_bill_date')]) }}
   {{ Form::filterDate('end', trans('bill.to_bil_date'), array_get($filter, 'end'), ['placeholder' => trans('bill.to_bill_date')]) }}
 </div>
+<div class="row">
+{{ Form::filterSelect('status', trans('bill.bil_status'), $rs_status, array_get($filter, 'status'), ['class' => 'select2 form-control']) }}
+</div>
 {{ Form::submit(trans('form.filter'), ['class' => 'btn btn-primary btn-sm']) }}
 <redirect-btn label="@lang('form.clear')" redirect="{{ urlTenant(isset($filter_url) ? $filter_url : 'bills') }}" class="btn-sm"></redirect-btn>
 <redirect-btn label="@lang('form.export')" redirect="{{ urlTenant('reports/export_bills') }}" class="btn-sm"></redirect-btn>

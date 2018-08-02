@@ -8,6 +8,7 @@
   {{ Form::filterText('rep_filter[booking]', trans('bill.bil_booking'), array_get($filter, 'booking'), ['placeholder' => trans('bill.bil_booking')]) }}
   {{ Form::filterText('rep_filter[start]', trans('bill.from_bil_date'), array_get($filter, 'start'), ['placeholder' => trans('bill.from_bill_date'), 'class' => 'datepicker form-control']) }}
   {{ Form::filterText('rep_filter[end]', trans('bill.to_bil_date'), array_get($filter, 'end'), ['placeholder' => trans('bill.to_bill_date'), 'class' => 'datepicker form-control']) }}
+  {{ Form::filterSelect('rep_filter[status]', trans('bill.bil_status'), $rs_status, array_get($filter, 'status'), ['class' => 'select2 form-control']) }}
 </div>
 {{ Form::submit(trans('form.filter'), ['class' => 'btn btn-primary']) }}
 <redirect-btn label="@lang('form.clear')" redirect="{{ urlTenant('reports/export_bills') }}"></redirect-btn>
