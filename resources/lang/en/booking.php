@@ -40,4 +40,6 @@ return [
   'no_departure' => 'No departure',
   'created_by' => 'Booked by',
   'pax' => 'Pax',
+  'from_filter_date' => 'From stay date',
+  'to_filter_date' => 'To stay date',
 ];

@@ -1,6 +1,7 @@
 <?php
 
 namespace Filters;
+use Carbon\Carbon;
 
 class BookingFilter extends QueryFilter
 {
@@ -54,7 +55,7 @@ class BookingFilter extends QueryFilter
    * @param  string $value
    * @return Builder
    */
-  public function status($value = 'active')
+  public function status($value = '')
   {
     if (!empty($value)) {
 
@@ -71,6 +72,8 @@ class BookingFilter extends QueryFilter
   {
     if (!empty($value)) {
 
+      $value = Carbon::parse($value)->format('Ymd');
+
       return $this->builder->where("book_to", '>', $value);
     }
   }
@@ -83,6 +86,8 @@ class BookingFilter extends QueryFilter
   public function end($value = '')
   {
     if (!empty($value)) {
+
+      $value = Carbon::parse($value)->format('Ymd');
 
       return $this->builder->where("book_from", '<', $value);
     }
