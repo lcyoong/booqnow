@@ -71,9 +71,9 @@ elixir(mix => {
 
     // mix.scripts(['moment/locales.min.js', 'moment/moment.min.js', 'app.js'], 'public/js/app.js');
 
-    mix.version(['css/app.css', 'js/app.js'])
+    mix.version(['css/app.css', 'js/app.js']);
         // .webpack('moment.min.js')
-       .webpack('app.js');
+       // .webpack('app.js');
 });
 
 Elixir.webpack.mergeConfig({

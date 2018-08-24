@@ -3,6 +3,7 @@
   <thead>
     <tr>
       <th>@lang('bill.bili_description')</th>
+      <th>@lang('bill.bili_date')</th>
       <th>@lang('bill.bili_unit_price')</th>
       <th>@lang('bill.bili_unit')</th>
       <th>{{ trans('bill.bili_gross') }}</th>
@@ -12,7 +13,8 @@
   <tbody>
     @foreach($items as $item)
       <tr>
-        <td class="col-md-2">{{ $item->bili_description }}</td>
+        <td class="col-md-4">{{ $item->bili_description }}</td>
+        <td class="col-md-2">{{ $item->bili_date }}</td>
         <td class="col-md-2">{{ showMoney($item->bili_unit_price) }}</td>
         <td class="col-md-2">{{ $item->bili_unit }}</td>
         <td class="col-md-2">{{ showMoney($item->bili_gross) }}</td>

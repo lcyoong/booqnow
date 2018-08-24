@@ -26,6 +26,7 @@ return [
   'bili_unit' => 'Qty',
   'bili_gross' => 'Amount',
   'bili_tax' => 'Tax',
+  'bili_date' => 'Date',
   'bili_description' => 'Item description',
   'print_title' => 'Guest Invoice :no',
   'outstanding' => 'O/S',

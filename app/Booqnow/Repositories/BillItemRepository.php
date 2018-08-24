@@ -20,6 +20,7 @@ class BillItemRepository extends BaseRepository {
       'bili_resource' => 'sometimes|exists:resources,rs_id',
       'bili_unit' => 'required|numeric|min:1',
       'bili_unit_price' => 'numeric|not_in:0',
+      'bili_date' => 'required|date',
       // 'bili_gross' => 'sometimes|numeric|min:0',
       // 'bili_tax' => 'sometimes|numeric|min:0',
     ];

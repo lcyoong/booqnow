@@ -296,6 +296,7 @@ class AddonController extends MainController
       'bili_bill' => array_get($input, 'add_to_bill'),
       'bili_unit_price' => $unit_price,
       'bili_unit' => isset($item->rs_unit) ? $item->rs_unit : $unit,
+      'bili_date' => array_get($input, 'add_date')
       // 'bili_gross' => $gross,
       // 'bili_tax' => calcTax($gross),
     ]);

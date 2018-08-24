@@ -9,10 +9,12 @@
   @include('booking._info_extended', ['booking' => $booking])
 
   {{ Form::hidden('add_booking', $booking->book_id) }}
+  {{ Form::hidden('add_date', date('d-m-Y')) }}
   {{ Form::hidden('add_customer', $booking->book_customer) }}
   {{ Form::hidden('bil_customer_name', $booking->customer->full_name) }}
   {{ Form::hidden('add_customer_name', $booking->customer->full_name) }}
   @elseif (!empty($bill))
+  {{ Form::hidden('add_date', date('d-m-Y')) }}
   {{ Form::hidden('bil_customer_name', $bill->bil_customer_name) }}
   {{ Form::hidden('add_customer_name', $bill->bil_customer_name) }}
   @endif

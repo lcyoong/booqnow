@@ -49,6 +49,9 @@
         </div>
         <div id="collapse{{ $bill->bil_id }}" class="panel-collapse collapse">
           <div class="panel-body">
+            @permitted('bill')
+            <a href="{{ url("bills/{$bill->bil_id}/edit") }}"><i class="fa fa-edit"></i> Edit bill</a>
+            @endpermitted
             @include('bill.itemized', ['items' => $bill->items])
             @include('receipt.itemized', ['rcitems' => $bill->receipts])
             <a href="{{ urlTenant('receipts/new/' . $bill->bil_id) }}" v-modal><button class="btn btn-primary btn-sm">@lang('form.pay')</button></a>

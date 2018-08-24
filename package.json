@@ -26,6 +26,7 @@
     "vuejs-paginator": "^2.0.0"
   },
   "dependencies": {
-    "vue-bootstrap-toggle": "^1.0.4"
+    "vue-bootstrap-toggle": "^1.0.4",
+    "vuejs-datepicker": "^1.5.3"
   }
 }

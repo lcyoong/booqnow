@@ -14,9 +14,18 @@ class BillItem extends TenantModel
 
   protected $primaryKey = 'bili_id';
 
-  protected $fillable = ['bili_bill', 'bili_description', 'bili_resource', 'bili_unit_price', 'bili_unit', 'bili_gross', 'bili_tax', 'bili_with_tax', 'bili_order', 'bili_status', 'bili_active', 'created_by'];
+  protected $fillable = ['bili_bill', 'bili_description', 'bili_resource', 'bili_unit_price', 'bili_unit', 'bili_gross', 'bili_tax', 'bili_with_tax', 'bili_order', 'bili_status', 'bili_active', 'created_by', 'bili_date'];
 
   protected $appends = ['created_date', 'created_date_hour'];
+
+  /**
+   * Mutator to set the formatted receipt date
+   * @param string $value
+   */
+  public function setBiliDateAttribute($value)
+  {
+      $this->attributes['bili_date'] = Carbon::parse($value)->format('Y-m-d');
+  }
 
   /**
    * Get the bill of the bill item
@@ -40,6 +49,15 @@ class BillItem extends TenantModel
   public function addon()
   {
     return $this->hasOne(Addon::class, 'add_bill_item');
+  }
+
+  /**
+   * Accessor to bill item date
+   * @return numeric
+   */
+  public function getBiliDateAttribute($value)
+  {
+    return Carbon::parse($value)->format('d-m-Y');
   }
 
   /**

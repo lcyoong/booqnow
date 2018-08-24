@@ -15,6 +15,8 @@ require('eonasdan-bootstrap-datetimepicker');
 require('bootstrap-toggle');
 require('select2'); //require('./select2');
 require('./booqnow');
+// require('vuejs-datepicker');
+import DatePicker from 'vuejs-datepicker';
 // require('vue2-autocomplete-js');
 window.util = require('./utilities');
 
@@ -44,6 +46,7 @@ Vue.component('post-ajax', require('./components/AjaxPost.vue'));
 Vue.component('vue-select', require('./components/Select2.vue'));
 Vue.component('bootstrap-toggler', require('vue-bootstrap-toggle'));
 Vue.component('itemized', require('./components/Itemized.vue'));
+Vue.component('datepicker', DatePicker);
 // Vue.component('autocomplete', require('./components/vue-autocomplete.vue'));
 //
 

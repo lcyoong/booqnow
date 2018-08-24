@@ -134,7 +134,7 @@ class BookingController extends MainController
 
       $bili_bill = $this->createBill($input, $new_booking);
 
-      $this->createBillItems($input, $bili_bill);
+      $this->createBillItems($input, $bili_bill, $new_booking);
 
       $this->createExtras($input, $new_booking, $bili_bill);
     });
@@ -294,7 +294,7 @@ class BookingController extends MainController
    * @param  int $bili_bill - Bill id
    * @return void
    */
-  private function createBillItems($input, $bili_bill)
+  private function createBillItems($input, $bili_bill, $new_booking)
   {
     foreach ($input['rate'] as $key => $value) {
 
@@ -308,6 +308,7 @@ class BookingController extends MainController
         'bili_bill' => $bili_bill,
         'bili_unit_price' => $value,
         'bili_unit' => $input['unit'][$key],
+        'bili_date' => $new_booking->book_from,
         // 'bili_gross' => $gross,
         // 'bili_tax' => calcTax($gross),
       ]);
@@ -330,6 +331,7 @@ class BookingController extends MainController
         'bili_bill' => $bil_id,
         'bili_unit_price' => $value,
         'bili_unit' => $input['extra_unit'][$key],
+        'bili_date' => $booking->book_from,
       ]);
 
       $booking->addons()->create([

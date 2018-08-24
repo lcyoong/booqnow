@@ -46,7 +46,8 @@
           </div>
           <div class="col-md-2">{{ Form::text('bili_unit_price', '', ['class' => 'form-control', 'v-model' => 'item.bili_unit_price']) }}</div>
           <div class="col-md-1">{{ Form::number('bili_unit', '', ['class' => 'form-control', 'v-model' => 'item.bili_unit', 'min' => 0, 'max' => 20]) }}</div>
-          <div class="col-md-2">@{{ item.bili_unit_price * item.bili_unit }}</div>
+          <div class="col-md-2">{{ Form::datepicker('bili_date', trans('bill.bili_date'), null, ['v-model' => 'item.bili_date']) }}</div>
+          <div class="col-md-1">@{{ item.bili_unit_price * item.bili_unit }}</div>
           <div class="col-md-1"><bootstrap-toggler name="bili_active" v-model="item.bili_active" data-size="normal"/></div>
           <div class="col-md-1"><itemized :item = "item" class="form-control btn btn-primary" action="{{ urlTenant('bills/item/update') }}" @completesuccess="getList">Save</itemized></div>
         </div>
@@ -65,15 +66,18 @@
 
       </li>
       <li class="list-group-item list-group-item-success">
-        <div class="row">
-          <input type="hidden" v-model="new_item.bili_bill">
-          <div class="col-md-4">{{ Form::text('bili_description', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_description', 'placeholder' => 'New item description']) }}</div>
-          <div class="col-md-2">{{ Form::text('bili_unit_price', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_unit_price']) }}</div>
-          <div class="col-md-1">{{ Form::number('bili_unit', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_unit', 'min' => 0, 'max' => 20]) }}</div>
-          <div class="col-md-2">@{{ new_item.bili_unit_price * new_item.bili_unit }}</div>
-          <div class="col-md-1"></div>
-          <div class="col-md-1"><itemized :item = "new_item" class="form-control btn btn-primary" action="{{ urlTenant('bills/item') }}" @completesuccess="doneAddNew"> <i class="fa fa-plus"></i> @lang('form.new')</itemized></div>
-        </div>
+        <form-ajax action = "{{ urlTenant('bills/item') }}" method="POST" @startwait="startWait" @endwait="endWait" @completesuccess="doneAddNew">
+          <div class="row">
+            <input type="hidden" name="bili_bill" v-model="new_item.bili_bill">
+            <div class="col-md-4">{{ Form::text('bili_description', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_description', 'placeholder' => 'New item description']) }}</div>
+            <div class="col-md-2">{{ Form::text('bili_unit_price', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_unit_price']) }}</div>
+            <div class="col-md-1">{{ Form::number('bili_unit', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_unit', 'min' => 0, 'max' => 20]) }}</div>
+            <div class="col-md-2">{{ Form::datepicker('bili_date', trans('bill.bili_date'), null, ['v-model' => 'new_item.bili_date']) }}</div>
+            <div class="col-md-2">@{{ new_item.bili_unit_price * new_item.bili_unit }}</div>
+            <div class="col-md-1"></div>
+            <div class="col-md-1">{{ Form::submit(trans('form.save'), ['id' => 'submit', 'class' => 'form-control btn btn-primary btn-sm', ':disabled' => 'waiting']) }}</div>
+          </div>
+        </form-ajax>
       </li>
     </ul>
   </div>
@@ -104,23 +108,25 @@ new Vue ({
   },
 
   data: {
+    hello: 0,
     bill: {},
     customer: {},
     booking: {},
     items: [],
-    new_item: {'bili_description': '', 'bili_unit_price': 0.00, 'bili_unit': 1, 'bili_bill' : {{ $id }}}
+    new_item: {'bili_description': '', 'bili_unit_price': 0.00, 'bili_unit': 1, 'bili_date': '{{ date('d-m-Y') }}', 'bili_bill' : {{ $id }}}
   },
 
   methods: {
     doneAddNew: function () {
       this.getList()
-      this.new_item = {'bili_description': '', 'bili_unit_price': 0.00, 'bili_unit': 1, 'bili_bill' : {{ $id }}}
+      this.new_item = {'bili_description': '', 'bili_unit_price': 0.00, 'bili_unit': 1, 'bili_date': '{{ date('d-m-Y') }}', 'bili_bill' : {{ $id }}}
     },
 
     getList: function () {
       this.$http.get('{{ urlTenant("api/v1/bills/$id") }}')
           .then(function (response) {
             var data = JSON.parse(response.data)
+            console.log(data)
             this.bill = data
             this.customer = data.customer
             this.booking = data.booking
