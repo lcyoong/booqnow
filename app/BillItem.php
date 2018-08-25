@@ -57,7 +57,7 @@ class BillItem extends TenantModel
    */
   public function getBiliDateAttribute($value)
   {
-    return Carbon::parse($value)->format('d-m-Y');
+    return !empty($value) ? Carbon::parse($value)->format('d-m-Y') : '';
   }
 
   /**
