@@ -42,4 +42,6 @@ return [
   'pax' => 'Pax',
   'from_filter_date' => 'From stay date',
   'to_filter_date' => 'To stay date',
+  'from_check_out' => 'From check out',
+  'to_check_out' => 'From check out',
 ];
