@@ -219,6 +219,7 @@ function tenantRoutes()
     Route::get('/monthly_deposit_future', 'ReportController@monthlyDepositByFuture');
     Route::get('/monthly_revenue_future', 'ReportController@monthlyRevenueByFuture');
     Route::get('/monthly_units_sold', 'ReportController@monthlyUnitsSold');
+    Route::get('/cash_received', 'ReportController@cashReceived');
     Route::get('/export_bills', 'ReportController@exportBills');
     Route::get('/export_receipts', 'ReportController@exportReceipts');
     Route::get('/download/{report}', 'ReportController@download');

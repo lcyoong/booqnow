@@ -25,6 +25,7 @@ return [
   'export_receipts_report_heading' => 'Export Receipts :ext',
   'daily_tour_title' => 'Daily Tours Report',
   'daily_transfer_title' => 'Daily Transfers Report',
+  'cash_received_title' => 'Cash Received Report',
   'pnl_year' => 'Year',
   'rep_status' => 'Status',
   'rep_filter' => 'Filter',

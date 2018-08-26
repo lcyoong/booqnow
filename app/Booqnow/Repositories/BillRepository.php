@@ -53,4 +53,21 @@ class BillRepository extends BaseRepository {
                 ->groupBy(DB::raw("month(bil_date)"))->get();
   }
 
+  /**
+   * Return list of bills with cash received
+   * @param  [type] $year [description]
+   * @return [type]       [description]
+   */
+  public function cashReceived()
+  {
+    $this->status('active')->ofBookStatus(['checkedin', 'checkedout', 'confirmed']);
+
+    // $this->filter->addJoins('joinCustomers');
+
+    return $this->repo->select(DB::raw("bills.*, bookings.*"))
+                ->filter($this->filter)
+                ->orderBy('book_to', 'asc')
+                ->get();
+  }
+
 }

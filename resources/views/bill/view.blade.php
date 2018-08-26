@@ -24,12 +24,12 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <a data-toggle="collapse" data-parent="#accordion" href="#collapse_receipts">
-      {{ $bill->receipts->count() }} receipts
+      {{ $bill->active_receipts->count() }} receipts
     </a>
   </div>
   <div id="collapse_receipts" class="panel-collapse collapse">
     <div class="panel-body">
-      @include('receipt.itemized', ['rcitems' => $bill->receipts])
+      @include('receipt.itemized', ['rcitems' => $bill->active_receipts])
     </div>
   </div>
 </div>

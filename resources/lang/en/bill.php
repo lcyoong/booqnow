@@ -38,4 +38,7 @@ return [
   'deposit_paid' => 'Deposit paid',
   'others_paid' => 'Others paid',
   'all' => 'All bills',
+  'less_deposit' => 'Less deposit',
+  'amount_paid' => 'Amount paid',
+  'cash_received' => 'Cash received',
 ];

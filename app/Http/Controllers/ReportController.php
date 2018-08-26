@@ -259,6 +259,26 @@ class ReportController extends MainController
   }
 
   /**
+   * Cash received display form
+   * @param  Request $request
+   * @return Response
+   */
+  public function cashReceived(Request $request)
+  {
+    $type = 'cash_received';
+
+    $this->filter = $request->input();
+
+    $this->page_title = trans('report.cash_received_title');
+
+    $list = $this->repo->ofType($type)->getPages();
+
+    $this->vdata(compact('list', 'type'));
+
+    return view('report.cash_received', $this->vdata);
+  }
+
+  /**
    * Report request submission
    * @param  Request $request
    * @return Response

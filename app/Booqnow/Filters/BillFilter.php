@@ -106,6 +106,26 @@ class BillFilter extends QueryFilter
     }
   }
 
+  public function bookCheckOutFrom($value)
+  {
+    if (!empty($value)) {
+
+      $this->joins[] = 'joinBookings';
+
+      return $this->builder->where("book_to", '>=', date('Y-m-d', strtotime($value)));
+    }
+  }
+
+  public function bookCheckOutTo($value)
+  {
+    if (!empty($value)) {
+
+      $this->joins[] = 'joinBookings';
+
+      return $this->builder->where("book_to", '<=', date('Y-m-d', strtotime($value)));
+    }
+  }
+
   public function ofYear($value)
   {
     if (!empty($value)) {

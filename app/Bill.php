@@ -88,6 +88,14 @@ class Bill extends TenantModel
     return $this->hasMany(Receipt::class, 'rc_bill');
   }
 
+  /**
+   * Get active receipts of the bill
+   */
+  public function active_receipts()
+  {
+    return $this->receipts()->where('rc_status', '=', 'active');
+  }
+
   public function deposit()
   {
     return $this->receipts()->where('rc_type', '=', 'deposit')->where('rc_status', '=', 'active')->sum('rc_amount');
