@@ -26,6 +26,7 @@ return [
   'daily_tour_title' => 'Daily Tours Report',
   'daily_transfer_title' => 'Daily Transfers Report',
   'cash_received_title' => 'Cash Received Report',
+  'cash_received_heading' => 'Cash Received Report',
   'pnl_year' => 'Year',
   'rep_status' => 'Status',
   'rep_filter' => 'Filter',

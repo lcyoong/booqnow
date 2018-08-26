@@ -61,7 +61,7 @@ class CashReceivedExcel extends ExcelReport
     // title
     $this->sheet->getStyle("A1")->getFont()->setSize(18);
 
-    $this->fillRow([$this->title]);
+    $this->fillRow([trans('report.monthly_stat_report_heading')]);
 
     $this->fillRow(['Filter : ' . implode(' , ', $this->filter)]);
 
