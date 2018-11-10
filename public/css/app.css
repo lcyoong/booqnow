@@ -5840,6 +5840,10 @@ body {
 .navbar-fixed-top-l2 {
   top: 40px; }
 
+.selected-day {
+  color: #FF0000;
+  background: #EFEFEF; }
+
 /*# sourceMappingURL=app.css.map */
 
 /*!

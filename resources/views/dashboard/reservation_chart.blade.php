@@ -24,7 +24,6 @@ $(function() {
 
 });
 
-
 $('#calendar').fullCalendar({
     defaultView: 'timelineFortnight',
     @if($def_date)
@@ -113,6 +112,9 @@ $('#calendar').fullCalendar({
       }
     },
 });
+
+$( "th[data-date='{{ $def_date }}']" ).addClass('selected-day');
+
 
 // $('#calendar').fullCalendar('today');
 // $('#calendar').fullCalendar( "gotoDate", 2016, 10, 12 );
