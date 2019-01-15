@@ -11,6 +11,7 @@
         <th>@lang('user.id')</th>
         <th>@lang('user.name')</th>
         <th>@lang('user.email')</th>
+        <th>@lang('user.status')</th>
         <th>@lang('user.role')</th>
         <th>@lang('form.actions')</th>
       </tr>
@@ -21,6 +22,7 @@
           <td>{{ $item->id }}</td>
           <td>{{ $item->name }}</td>
           <td>{{ $item->email }}</td>
+          <td>{{ $item->status_label }}</td>
           <td>@if($item->roles->first()){{ $item->roles->first()->display_name }}@endif</td>
           <td>
             <a v-modal href="{{ url(sprintf('users/%s/edit', $item->id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>
