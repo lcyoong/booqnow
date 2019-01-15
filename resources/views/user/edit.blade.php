@@ -7,7 +7,7 @@
   <div class="row">
     {{ Form::bsText('name', trans('user.name'), $user->name) }}
     {{ Form::bsText('email', trans('user.email'), $user->email) }}
-    {{ Form::bsSelect('role', trans('user.role'), $roles, $user->roles->first()->id) }}
+    {{ Form::bsSelect('role', trans('user.role'), $roles, !empty($user->roles->first()) ? $user->roles->first()->id : '') }}
   </div>
   {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
   <redirect-btn label="@lang('form.cancel')" redirect="{{ urlTenant('users') }}" class="btn-sm"></redirect-btn>

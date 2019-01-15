@@ -2,14 +2,16 @@
 
 namespace App;
 
+use App\Events\UserCreated;
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
   use Notifiable, HasApiTokens;
 
+  private $temp_password;
   /**
   * The attributes that are mass assignable.
   *
@@ -28,4 +30,22 @@ class User extends Authenticatable
     'password', 'remember_token',
   ];
 
+  public static function boot()
+  {
+    parent::boot();
+
+    Self::creating(function ($post) {
+
+      $temp_password = str_random(8);
+
+      $post->password = bcrypt($temp_password);
+
+    });
+
+    Self::created(function ($post) {
+      
+      event(new UserCreated($post));
+
+    });
+  }  
 }

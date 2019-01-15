@@ -101,7 +101,9 @@ class UserController extends MainController
 
     $merchant = session('merchant');
 
-    $input['password'] = bcrypt('111111');
+    // $temp_password = str_random(8);
+
+    // $input['password'] = bcrypt($temp_password);
 
     $input['api_token'] = str_random(60);
 

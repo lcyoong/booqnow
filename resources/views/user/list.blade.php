@@ -21,7 +21,7 @@
           <td>{{ $item->id }}</td>
           <td>{{ $item->name }}</td>
           <td>{{ $item->email }}</td>
-          <td>{{ $item->roles->first()->display_name }}</td>
+          <td>@if($item->roles->first()){{ $item->roles->first()->display_name }}@endif</td>
           <td>
             <a v-modal href="{{ url(sprintf('users/%s/edit', $item->id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>
           </td>
