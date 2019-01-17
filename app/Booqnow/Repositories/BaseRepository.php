@@ -59,7 +59,7 @@ class BaseRepository implements BaseRepositoryInterface
             $resource->with($with);
         }
 
-        $resource->orderBy($orderBy ?? $this->repo->getKeyName(), $order);
+        $resource->orderBy(!is_null($orderBy) ? $orderBy : $this->repo->getKeyName(), $order);
 
         return $resource->paginate($this->paginate);
     }
