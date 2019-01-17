@@ -124,6 +124,8 @@ function tenantRoutes()
         Route::post('/update', 'BookingController@update');
         Route::post('/checkin/{booking}', 'BookingController@checkin');
         Route::post('/checkout/{booking}', 'BookingController@checkout');
+        Route::post('/cancel/{booking}', 'BookingController@cancel');
+        Route::post('/confirm/{booking}', 'BookingController@confirm');
     });
 
     Route::get('trail/{type}/{id}', 'AuditTrailController@get');

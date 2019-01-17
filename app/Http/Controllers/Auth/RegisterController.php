@@ -72,6 +72,11 @@ class RegisterController extends Controller
 
     public function signup()
     {
-      return view('user.signup');
+        return view('user.signup');
+    }
+
+    public function showRegistrationForm()
+    {
+        return redirect('login');
     }
 }

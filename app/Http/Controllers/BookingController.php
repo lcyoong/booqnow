@@ -236,6 +236,36 @@ class BookingController extends MainController
     }
 
     /**
+     * Process cancel of booking
+     * @param  Request $request
+     * @param  int  $book_id Booking id
+     * @return Response
+     */
+    public function cancel(Request $request, $book_id)
+    {
+        $booking = $this->repo_book->findById($book_id);
+
+        $booking->cancel();
+
+        return $this->goodReponse();
+    }
+
+    /**
+     * Process confirm of booking
+     * @param  Request $request
+     * @param  int  $book_id Booking id
+     * @return Response
+     */
+    public function confirm(Request $request, $book_id)
+    {
+        $booking = $this->repo_book->findById($book_id);
+
+        $booking->confirm();
+
+        return $this->goodReponse();
+    }
+
+    /**
      * Display the booking add-ons for edit
      * @param  int $book_id Booking id
      * @return Response

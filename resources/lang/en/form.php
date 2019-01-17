@@ -46,4 +46,6 @@ return [
   'yesno' => [0 => 'No', 1 => 'Yes'],
   'checkin' => 'Check In',
   'checkout' => 'Check Out',
+  'confirm' => 'Confirm',
+  'cancel_booking' => 'Cancel booking',
 ];
