@@ -26,4 +26,6 @@ return [
   'agents' => 'Agents',
   'sub_types' => 'Sub Types',
   'countries' => 'Countries',
+  'dashboard_daily' => 'Daily',
+  'dashboard_hold' => 'Expiring booking on hold',
 ];

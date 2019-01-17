@@ -1,7 +1,8 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+        aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -10,7 +11,13 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a href="{{ urlTenant('dashboard') }}">@lang('nav.dashboard')</a></li>
+        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.dashboard')
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ urlTenant('dashboard/daily') }}">@lang('nav.dashboard_daily')</a></li>
+            <li><a href="{{ urlTenant('dashboard/onhold') }}">@lang('nav.dashboard_hold')</a></li>
+          </ul>
+        </li>
         @permitted('booking')
         <li><a href="{{ urlTenant('') }}">@lang('nav.frontdesk')</a></li>
         @endpermitted
@@ -19,7 +26,8 @@
         @endpermitted
         @permitted('bill')
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.billing') <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.billing')
+            <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="{{ urlTenant('bills') }}">@lang('bill.all')</a></li>
             <li><a href="{{ urlTenant('bills/walkin') }}">@lang('bill.walkin')</a></li>
@@ -28,7 +36,8 @@
         @endpermitted
         @permitted('report')
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.reports') <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.reports')
+            <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="{{ urlTenant('reports/profitloss') }}">@lang('report.pnl_title')</a></li>
             <li><a href="{{ urlTenant('reports/occupancy_by_room') }}">@lang('report.monthly_occupancy_title')</a></li>
@@ -57,7 +66,8 @@
         @endpermitted
         @permitted('accounting')
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.accounting') <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.accounting')
+            <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="{{ urlTenant('expenses') }}">@lang('nav.expenses')</a></li>
             <li><a href="{{ urlTenant('expenses_category') }}">@lang('nav.expenses_category')</a></li>
@@ -65,7 +75,8 @@
         </li>
         @endpermitted
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.resources') <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.resources')
+            <span class="caret"></span></a>
           <ul class="dropdown-menu">
             @permitted('resource')
             @foreach ($resource_types as $type)
@@ -82,7 +93,8 @@
         </li>
         @permitted(['manage_user', 'manage_role', 'manage_permission'])
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.access') <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('nav.access')
+            <span class="caret"></span></a>
           <ul class="dropdown-menu">
             @permitted('manage_user')
             <li><a href="{{ urlTenant('users') }}">@lang('nav.users')</a></li>
@@ -97,6 +109,7 @@
         </li>
         @endpermitted
       </ul>
-    </div><!--/.nav-collapse -->
+    </div>
+    <!--/.nav-collapse -->
   </div>
 </nav>
