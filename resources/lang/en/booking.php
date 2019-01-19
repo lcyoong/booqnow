@@ -44,4 +44,6 @@ return [
   'to_filter_date' => 'To stay date',
   'from_check_out' => 'From check out',
   'to_check_out' => 'From check out',
+  'book_checkin_time' => 'Check in time',
+  'book_checkout_time' => 'Check out time',
 ];

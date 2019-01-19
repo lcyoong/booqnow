@@ -2,18 +2,19 @@
   <div class="panel-heading">
     <a data-toggle="collapse" data-parent="#accordionx" href="#collapse-book{{ $booking->book_id }}">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-2">
         {{ $booking->display_id }}
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <i class="fa fa-bed"></i> {{ $booking->resource->rs_name }} @if($booking->book_special) <i class="fa fa-star special-color"></i> @endif
-        <div>{{ showDate($booking->book_from) }} - {{ showDate($booking->book_to) }}</div>
+        <div>{{ showDate($booking->book_from) }} <i class="fa fa-sign-in"></i> {{ $booking->book_checkin_time }}</div>
+        <div>{{ showDate($booking->book_to) }} <i class="fa fa-sign-out"></i> {{ $booking->book_checkout_time }}</div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         {{ dayDiff($booking->book_from, $booking->book_to) }} @lang('booking.nights') x {{ $booking->book_pax }} @lang('booking.book_pax') + {{ $booking->book_pax_child }} @lang('booking.book_pax_child_simple')
         @if($booking->book_extra_bed > 0) + <span class="label label-default">{{ $booking->book_extra_bed }} extra bed</span>  @endif
       </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
         <i class="fa fa-circle status-{{ $booking->book_status }}"></i> {{ array_get($book_status, $booking->book_status) }}
       </div>
     </div>
@@ -31,8 +32,11 @@
       <div class="row">
         {{ Form::showField($booking->creator->name, trans('form.created_by')) }}
         {{ Form::showField($booking->created_at, trans('form.created_at')) }}
-        {{ Form::showField($booking->book_remarks, trans('booking.book_remarks')) }}
         {{ Form::showField($booking->book_reference, trans('booking.book_reference')) }}
+      </div>
+
+      <div class="row">
+        {{ Form::showField($booking->book_remarks, trans('booking.book_remarks'), 12) }}
       </div>
 
       <div class="row">

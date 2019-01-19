@@ -9,6 +9,11 @@ $(function() {
     format: 'DD-MM-YYYY HH:mm',
   });
 
+  $('.timepicker').datetimepicker({
+    format: 'LT',
+  });
+
+
   $('.yearpicker').datepicker({
     format: "yyyy",
     viewMode: "years",

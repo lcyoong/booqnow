@@ -17,7 +17,7 @@ class Booking extends TenantModel
 
     protected $primaryKey = 'book_id';
 
-    protected $fillable = ['book_resource', 'book_agent', 'book_customer', 'book_from', 'book_to', 'book_status', 'book_checkin', 'book_checkout', 'book_reference', 'book_tracking', 'book_pax', 'book_pax_child', 'book_source', 'book_remarks', 'book_special', 'book_expiry', 'book_lead_from', 'book_extra_bed', 'created_by'];
+    protected $fillable = ['book_resource', 'book_agent', 'book_customer', 'book_from', 'book_to', 'book_status', 'book_checkin', 'book_checkout', 'book_reference', 'book_tracking', 'book_pax', 'book_pax_child', 'book_source', 'book_remarks', 'book_special', 'book_expiry', 'book_lead_from', 'book_extra_bed', 'created_by', 'book_checkin_time', 'book_checkout_time'];
 
     protected $appends = ['display_id'];
 
@@ -160,12 +160,48 @@ class Booking extends TenantModel
     }
 
     /**
+     * Mutator to set the formatted check in time
+     * @param string $value
+     */
+    public function setBookCheckinTimeAttribute($value)
+    {
+        $this->attributes['book_checkin_time'] = Carbon::parse($value)->format('H:i:s');
+    }
+
+    /**
+     * Mutator to set the formatted check out time
+     * @param string $value
+     */
+    public function setBookCheckoutTimeAttribute($value)
+    {
+        $this->attributes['book_checkout_time'] = Carbon::parse($value)->format('H:i:s');
+    }
+
+    /**
      * Accessor to book date
      * @return string
      */
     public function getBookFromAttribute($value)
     {
         return Carbon::parse($value)->format('d-m-Y');
+    }
+
+    /**
+     * Accessor to check in time
+     * @return string
+     */
+    public function getBookCheckinTimeAttribute($value)
+    {
+        return Carbon::parse($value)->format('h:i A');
+    }
+
+    /**
+     * Accessor to check out time
+     * @return string
+     */
+    public function getBookCheckoutTimeAttribute($value)
+    {
+        return Carbon::parse($value)->format('h:i A');
     }
 
     /**

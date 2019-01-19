@@ -28,7 +28,7 @@
     <td>{{ $item->display_id }}</td>
     <td>{{ $item->customer->full_name }} @if($item->book_special) <i class="fa fa-star special-color"></i>@endif</td>
     <td>{{ $item->resource->rs_name }}</td>
-    <td><span class="label label-info">{{ dayDiff($item->book_from, $item->book_to) }} @lang('booking.nights')</span> {{ showDate($item->book_from) }} - {{ showDate($item->book_to) }}</td>
+    <td>{{ showDate($item->book_from) }} <i class="fa fa-sign-in"></i> {{ $item->book_checkin_time }}<br>{{ showDate($item->book_to) }} <i class="fa fa-sign-out"></i> {{ $item->book_checkout_time }}<br><span class="label label-info">{{ dayDiff($item->book_from, $item->book_to) }} @lang('booking.nights')</span></td>
     <td class="text-center">{{ $item->book_pax }}</td>
     <td class="text-center">{{ $item->book_pax_child }}</td>
     <td class="text-center">{{ $item->book_extra_bed }}</td>

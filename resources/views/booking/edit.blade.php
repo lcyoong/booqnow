@@ -11,9 +11,13 @@
     {{ Form::hidden('book_id', $booking->book_id) }}
     <div class="row">
       {{ Form::bsSelect('book_resource', trans('booking.book_resource'), $rooms, $booking->book_resource, ['style' => 'width:100%', 'vmodel' => 'booking.book_resource', 'class'=>'select2']) }}
-      {{ Form::bsDate('book_from', trans('booking.book_from'), $booking->book_from, ['vmodel' => 'booking.book_from']) }}
-      {{ Form::bsDate('book_to', trans('booking.book_to'), $booking->book_to, ['vmodel' => 'booking.book_to']) }}
       {{ Form::bsDate('book_expiry', trans('booking.book_expiry'), $booking->book_expiry, ['class' => 'datetimepicker form-control', 'vmodel' => 'booking.book_to']) }}
+    </div>
+    <div class="row">
+      {{ Form::bsDate('book_from', trans('booking.book_from'), $booking->book_from, ['vmodel' => 'booking.book_from']) }}
+      {{ Form::bsDate('book_checkin_time', trans('booking.book_checkin_time'), $booking->book_checkin_time, ['class' => 'timepicker form-control']) }}
+      {{ Form::bsDate('book_to', trans('booking.book_to'), $booking->book_to, ['vmodel' => 'booking.book_to']) }}
+      {{ Form::bsDate('book_checkout_time', trans('booking.book_checkout_time'), $booking->book_checkout_time, ['class' => 'timepicker form-control']) }}
     </div>
     <div class="row">
       {{ Form::bsSelect('book_source', trans('booking.book_source'), $booking_sources, null, ['v-model' => 'source', '@change' => 'switchSource']) }}
@@ -63,6 +67,11 @@ new Vue ({
 
   created: function () {
     this.switchSource()
+    $(function() {
+      $('.timepicker').datetimepicker({
+        format: 'LT',
+      });
+    })
   },
 
   data: {

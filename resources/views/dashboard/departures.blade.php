@@ -22,6 +22,7 @@
               <tr>
                 <td class="col-md-4">{{ $departure->customer->full_name }}
                   <div><span class="label label-info">{{ $departure->resource->rs_name }}</span></div>
+                  <i class="fa fa-sign-out"></i> {{ $departure->book_checkout_time }}
                 </td>
                 <td class="col-md-3"><i class="fa fa-circle status-{{ $departure->book_status }}"></i> {{ array_get($book_status, $departure->book_status) }}</td>
                 <td class="col-md-4"><span class="label label-success">{{ showMoney($departure->totalBillOS()) }}</span></td>

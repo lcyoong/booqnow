@@ -63,6 +63,8 @@
     </div>
     <div class="row">
       {{ Form::bsTextarea('book_remarks', trans('booking.book_remarks'), null, ['rows' => 3]) }}
+      {{ Form::bsDate('book_checkin_time', trans('booking.book_checkin_time'), date('14:00'), ['class' => 'timepicker form-control']) }}
+      {{ Form::bsDate('book_checkout_time', trans('booking.book_checkout_time'), date('11:00'), ['class' => 'timepicker form-control']) }}
     </div>
     <table class="table">
       <thead>
@@ -215,6 +217,9 @@ new Vue({
           $('.select2').select2()
           $('.datetimepicker').datetimepicker({
             format: 'DD-MM-YYYY HH:mm',
+          });
+          $('.timepicker').datetimepicker({
+            format: 'LT',
           });
         })
       },
