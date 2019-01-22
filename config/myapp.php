@@ -31,5 +31,5 @@ return [
   'bg-source-3' => '#f8fcd9',
   'bg-source-4' => '#fbe0ff',
   'bg-source-5' => '#ffdaaa',
-  'bg-source-6' => '#85f78b',
+  'bg-source-6' => '#b9f7c2',
 ];

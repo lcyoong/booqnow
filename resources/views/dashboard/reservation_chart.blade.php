@@ -26,6 +26,7 @@ $(function() {
 
 $('#calendar').fullCalendar({
     defaultView: 'timelineFortnight',
+    // timeZone: 'Asia/Bangkok',
     @if($def_date)
     defaultDate: moment('{{ $def_date }}'),
     @endif
@@ -114,7 +115,7 @@ $('#calendar').fullCalendar({
 });
 
 $( "th[data-date='{{ $def_date }}']" ).addClass('selected-day');
-
+$( "th[data-date='{{ \Carbon\Carbon::today()->format('Y-m-d') }}']" ).addClass('today');
 
 // $('#calendar').fullCalendar('today');
 // $('#calendar').fullCalendar( "gotoDate", 2016, 10, 12 );
