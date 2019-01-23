@@ -31,6 +31,9 @@
 
       onComplete: function(response) {
         var data = JSON.parse(response.data)
+
+        console.log(data)
+        
         util.onCompleteNotify(response);
 
         this.$emit('endwait');

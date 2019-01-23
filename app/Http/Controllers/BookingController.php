@@ -128,7 +128,7 @@ class BookingController extends MainController
     {
         $input = $request->input();
 
-        DB::transaction(function () use ($input) {
+        DB::transaction(function () use ($input, &$new_booking) {
             $new_booking = $this->repo_book->store($input);
 
             $bili_bill = $this->createBill($input, $new_booking);
@@ -138,7 +138,7 @@ class BookingController extends MainController
             $this->createExtras($input, $new_booking, $bili_bill);
         });
 
-        return $this->goodReponse();
+        return $this->goodReponse('Booking entered successfully', ['redirect_to' => Carbon::parse($new_booking->book_from)->format('Y-m-d')]);
     }
 
     /**
@@ -217,7 +217,7 @@ class BookingController extends MainController
 
         $booking->checkIn();
 
-        return $this->goodReponse();
+        return $this->goodReponse('Checked in', ['redirect_to' => Carbon::parse($booking->book_from)->format('Y-m-d')]);
     }
 
     /**
@@ -232,7 +232,7 @@ class BookingController extends MainController
 
         $booking->checkOut();
 
-        return $this->goodReponse();
+        return $this->goodReponse('Checked out', ['redirect_to' => Carbon::parse($booking->book_from)->format('Y-m-d')]);
     }
 
     /**
@@ -247,7 +247,7 @@ class BookingController extends MainController
 
         $booking->cancel();
 
-        return $this->goodReponse();
+        return $this->goodReponse('Cancelled', ['redirect_to' => Carbon::parse($booking->book_from)->format('Y-m-d')]);
     }
 
     /**
@@ -262,7 +262,7 @@ class BookingController extends MainController
 
         $booking->confirm();
 
-        return $this->goodReponse();
+        return $this->goodReponse('Confirmed', ['redirect_to' => Carbon::parse($booking->book_from)->format('Y-m-d')]);
     }
 
     /**
