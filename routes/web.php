@@ -73,6 +73,14 @@ function tenantRoutes()
         Route::post('/update', 'ResourceTypeController@update');
     });
 
+    Route::group(['middleware' => ['permitted:pos'], 'prefix' => '/pos'], function () {
+        Route::get('/', 'PosController@index');
+        Route::get('/kitchen', 'PosController@kitchen');
+        Route::get('/create', 'PosController@create');
+        Route::get('/{order}', 'PosController@order');
+    });
+
+
     Route::group(['middleware' => ['permitted:resource'], 'prefix' => '/resource_sub_types'], function () {
         Route::get('/', 'ResourceSubTypeController@index');
         Route::get('/new', 'ResourceSubTypeController@create');

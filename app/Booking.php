@@ -19,7 +19,7 @@ class Booking extends TenantModel
 
     protected $fillable = ['book_resource', 'book_agent', 'book_customer', 'book_from', 'book_to', 'book_status', 'book_checkin', 'book_checkout', 'book_reference', 'book_tracking', 'book_pax', 'book_pax_child', 'book_source', 'book_remarks', 'book_special', 'book_expiry', 'book_lead_from', 'book_extra_bed', 'created_by', 'book_checkin_time', 'book_checkout_time'];
 
-    protected $appends = ['display_id'];
+    protected $appends = ['display_id', 'book_pos'];
 
     /**
      * Get the customer of the booking
@@ -184,6 +184,15 @@ class Booking extends TenantModel
     public function getBookFromAttribute($value)
     {
         return Carbon::parse($value)->format('d-m-Y');
+    }
+
+    /**
+     * Accessor to POS
+     * @return string
+     */
+    public function getBookPosAttribute()
+    {
+        return $this->resource->rs_name . " (" . $this->customer->full_name . ")";
     }
 
     /**

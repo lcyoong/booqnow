@@ -4,7 +4,7 @@
 <div id="reservation_chart">
 @include('booking.status_legend', ['book_status' => $book_status])
 @include('booking.source_legend', ['sources' => $booking_sources])
-{{ Form::filterDate('start', trans('form.jump_date'), $def_date, ['id'=>'jump-date', 'placeholder' => trans('form.jump_date')]) }}
+{{ Form::filterDate('start', trans('form.jump_date'), $def_date, ['id'=>'jump-date', 'placeholder' => trans('form.jump_date'), 'autocomplete' => 'off']) }}
 <div style="clear:both"></div>
 <div id="calendar"></div>
 </div>
