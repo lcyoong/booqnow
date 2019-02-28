@@ -4,86 +4,80 @@ namespace Filters;
 
 class ResourceFilter extends QueryFilter
 {
-  /**
-   * Resource name filter
-   * @param  string $value
-   * @return Builder
-   */
-  public function name($value = '')
-  {
-    if (!empty($value)) {
-
-      return $this->builder->where("rs_name", 'like', "%$value%");
+    /**
+     * Resource name filter
+     * @param  string $value
+     * @return Builder
+     */
+    public function name($value = '')
+    {
+        if (!empty($value)) {
+            return $this->builder->where("rs_name", 'like', "%$value%");
+        }
     }
-  }
 
-  /**
-   * Resource type filter
-   * @param  string $value
-   * @return Builder
-   */
-  public function type($value = '')
-  {
-    if (!empty($value)) {
-
-      return $this->builder->where("rs_type", '=', $value);
+    /**
+     * Resource type filter
+     * @param  string $value
+     * @return Builder
+     */
+    public function type($value = '')
+    {
+        if (!empty($value)) {
+            return $this->builder->where("rs_type", '=', $value);
+        }
     }
-  }
 
-  /**
-   * Resource type filter
-   * @param  string $value
-   * @return Builder
-   */
-  public function master($value = false)
-  {
-    $this->joins[] = 'joinResourceTypes';
+    /**
+     * Resource type filter
+     * @param  string $value
+     * @return Builder
+     */
+    public function master($value = false)
+    {
+        $this->joins[] = 'joinResourceTypes';
 
-    return $this->builder->where("rty_master", '=', $value);
-  }
-
-  /**
-   * Resource label filter
-   * @param  string $value
-   * @return Builder
-   */
-  public function label($value = '')
-  {
-    if (!empty($value)) {
-
-      return $this->builder->where("rs_label", '=', $value);
+        return $this->builder->where("rty_master", '=', $value);
     }
-  }
 
-  /**
-   * Resource status filter
-   * @param  string $value
-   * @return Builder
-   */
-  public function status($value = '')
-  {
-    if (!empty($value)) {
-
-      return $this->builder->where("rs_status", '=', "active");
+    /**
+     * Resource label filter
+     * @param  string $value
+     * @return Builder
+     */
+    public function label($value = '')
+    {
+        if (!empty($value)) {
+            return $this->builder->where("rs_label", '=', $value);
+        }
     }
-  }
 
-  /**
-   * Without label filter
-   * @param  string $value
-   * @return Builder
-   */
-  public function withoutLabel($value)
-  {
-    if (!empty($value)) {
-
-      return $this->builder->whereNotIn('rs_label', $value);
+    /**
+     * Resource status filter
+     * @param  string $value
+     * @return Builder
+     */
+    public function status($value = '')
+    {
+        if (!empty($value)) {
+            return $this->builder->where("rs_status", '=', "active");
+        }
     }
-  }
 
-  public function joinResourceTypes()
-  {
-    $this->builder->join('resource_types', 'rty_id', '=', 'rs_type');
-  }
+    /**
+     * Without label filter
+     * @param  string $value
+     * @return Builder
+     */
+    public function withoutLabel($value)
+    {
+        if (!empty($value)) {
+            return $this->builder->whereNotIn('rs_label', $value);
+        }
+    }
 
+    public function joinResourceTypes()
+    {
+        $this->builder->join('resource_types', 'rty_id', '=', 'rs_type');
+    }
 }

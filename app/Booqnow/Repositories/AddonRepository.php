@@ -8,18 +8,19 @@ use Filters\AddonFilter;
 use DB;
 use Carbon\Carbon;
 
-class AddonRepository extends BaseRepository {
+class AddonRepository extends BaseRepository
+{
 
   /**
    * Create a new repository instance.
    */
-  public function __construct()
-  {
-    parent::__construct('App\Addon');
+    public function __construct()
+    {
+        parent::__construct('App\Addon');
 
-    $this->filter = new AddonFilter();
+        $this->filter = new AddonFilter();
 
-    $this->rules = [
+        $this->rules = [
       'add_booking' => 'sometimes|exists:bookings,book_id',
       'add_resource' => 'required|exists:resources,rs_id',
       // 'add_bill' => 'required|exists:bills,bil_id',
@@ -32,41 +33,40 @@ class AddonRepository extends BaseRepository {
       'add_tracking' => 'max:255',
       'add_agent' => 'sometimes|exists:agents,ag_id'
     ];
-  }
+    }
 
-  /**
-   * Add addon resource type filter
-   * @param  int $type - Resource type id
-   * @return Repository
-   */
-  public function ofType($type)
-  {
-    $this->filter->add(['resourceType' => $type]);
+    /**
+     * Add addon resource type filter
+     * @param  int $type - Resource type id
+     * @return Repository
+     */
+    public function ofType($type)
+    {
+        $this->filter->add(['resourceType' => $type]);
 
-    return $this;
-  }
+        return $this;
+    }
 
-  /**
-   * Add addon date filter
-   * @param  string $date - Addon date
-   * @return Repository
-   */
-  public function ofDate($date)
-  {
-    $this->filter->add(['onDate' => Carbon::parse($date)->format('Y-m-d')]);
+    /**
+     * Add addon date filter
+     * @param  string $date - Addon date
+     * @return Repository
+     */
+    public function ofDate($date)
+    {
+        $this->filter->add(['onDate' => Carbon::parse($date)->format('Y-m-d')]);
 
-    $this->notInStatus(['cancelled']);
+        $this->notInStatus(['cancelled']);
 
-    return $this;
-  }
+        return $this;
+    }
 
-  public function soldByMonth($year)
-  {
-    $this->ofYear($year)->masterType();
+    public function soldByMonth($year)
+    {
+        $this->ofYear($year)->masterType();
 
-    return $this->repo->select(DB::raw("month(add_date) as mth, add_resource as resource, sum(add_pax) as counter"))
+        return $this->repo->select(DB::raw("month(add_date) as mth, add_resource as resource, sum(add_pax) as counter"))
                 ->filter($this->filter)
                 ->groupBy(DB::raw("month(add_date), add_resource"))->get();
-  }
-
+    }
 }
