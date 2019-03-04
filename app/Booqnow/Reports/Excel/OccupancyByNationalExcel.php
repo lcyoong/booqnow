@@ -168,7 +168,7 @@ class OccupancyByNationalExcel extends ExcelReport
     {
         $occupancies = (new RoomOccupancyRepository)->withoutLabel(['tent', 'free'])->byNational($this->year);
 
-        $spendings = (new BillRepository)->byMonthNational($this->year);
+        $spendings = (new BillRepository)->withoutResourceLabel(['tent', 'free'])->byMonthNational($this->year);
 
         foreach ($occupancies as $occupancy) {
             $this->occ_arr[$occupancy->country][$occupancy->mth] = $occupancy->counter;
