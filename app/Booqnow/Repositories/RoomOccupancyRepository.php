@@ -30,7 +30,7 @@ class RoomOccupancyRepository extends BaseRepository
 
     public function byNational($year)
     {
-        $this->ofBookStatus(['checkedin', 'checkedout'])->ofYear($year);
+        $this->ofBookStatus(['checkedin', 'checkedout', 'confirmed'])->ofYear($year);
 
         $this->filter->addJoins('joinBookings');
         $this->filter->addJoins('joinCustomers');

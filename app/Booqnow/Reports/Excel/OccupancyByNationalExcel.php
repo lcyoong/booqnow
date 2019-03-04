@@ -13,71 +13,67 @@ use Repositories\CountryRepository;
 
 class OccupancyByNationalExcel extends ExcelReport
 {
-  protected $year;
+    protected $year;
 
-  protected $occ_arr = [];
+    protected $occ_arr = [];
 
-  protected $spend_arr = [];
+    protected $spend_arr = [];
 
-  protected $countries;
+    protected $countries;
 
-  public function __construct($report)
-  {
-    $this->countries = (new CountryRepository)->getDropDown();
+    public function __construct($report)
+    {
+        $this->countries = (new CountryRepository)->getDropDown();
 
-    parent::__construct($report->rep_function);
+        parent::__construct($report->rep_function);
 
-    extract(unserialize($report->rep_filter));
+        extract(unserialize($report->rep_filter));
 
-    $this->year = trim($year);
-  }
+        $this->year = trim($year);
+    }
 
-  /**
-   * Handle report generation
-   * @return void
-   */
-  public function handle()
-  {
-    Excel::create($this->reportname, function($excel) {
+    /**
+     * Handle report generation
+     * @return void
+     */
+    public function handle()
+    {
+        Excel::create($this->reportname, function ($excel) {
+            $excel->sheet('Sheet1', function ($sheet) {
+                $this->sheet = $sheet;
 
-      $excel->sheet('Sheet1', function($sheet) {
+                $this->setting();
 
-        $this->sheet = $sheet;
+                $this->header();
 
-        $this->setting();
+                $this->getData();
 
-        $this->header();
+                $this->occupancy();
 
-        $this->getData();
+                $this->footer();
+            });
+        })->store($this->ext);
+    }
 
-        $this->occupancy();
+    /**
+     * Report header
+     * @return void
+     */
+    protected function header()
+    {
+        // title
+        $this->sheet->getStyle("A1")->getFont()->setSize(18);
 
-        $this->footer();
+        $this->fillRow([trans('report.national_occupancy_report_heading', ['ext' => $this->year])]);
 
-  		});
-		})->store($this->ext);
-  }
+        // Header
+        $row = ['National\Month'];
 
-  /**
-   * Report header
-   * @return void
-   */
-  protected function header()
-  {
-    // title
-    $this->sheet->getStyle("A1")->getFont()->setSize(18);
+        for ($month = 1; $month <= 12; $month++) {
+            $row[] = Carbon::createFromDate(null, $month, 1)->format('M');
 
-    $this->fillRow([trans('report.national_occupancy_report_heading', ['ext' => $this->year])]);
-
-    // Header
-    $row = ['National\Month'];
-
-    for ($month = 1; $month <= 12; $month++) {
-
-      $row[] = Carbon::createFromDate(null, $month, 1)->format('M');
-
-      $row[] = "";
-      //
+            $row[] = "";
+            //
       // $col = PHPExcel_Cell::stringFromColumnIndex($month * 2);
       //
       // $colnext = PHPExcel_Cell::stringFromColumnIndex($month * 2 + 1);
@@ -85,126 +81,101 @@ class OccupancyByNationalExcel extends ExcelReport
       // dd("$col{$this->row}:$colnext{$this->row}");
       //
       // $this->sheet->mergeCells("$col{$this->row}:$colnext{$this->row}");
+        }
 
+        $row[] = 'Annual';
+
+        $this->fillRow($row, 1);
     }
 
-    $row[] = 'Annual';
+    /**
+     * Occupancy data section
+     * @return void
+     */
+    protected function occupancy()
+    {
+        $total_nights = 0;
 
-    $this->fillRow($row, 1);
-  }
+        $total_spend = 0;
 
-  /**
-   * Occupancy data section
-   * @return void
-   */
-  protected function occupancy()
-  {
-    $total_nights = 0;
+        foreach ($this->occ_arr as $country => $month_counter) {
+            $row = [array_get($this->countries, $country, '')];
 
-    $total_spend = 0;
+            for ($month = 1; $month <= 12; $month++) {
+                $row[$month * 2 - 1] = 0;
 
-    foreach ($this->occ_arr as $country => $month_counter) {
+                $row[$month * 2] = 0;
+            }
 
-      $row = [array_get($this->countries, $country, '')];
-
-      for ($month = 1; $month <= 12; $month++) {
-
-        $row[$month * 2 - 1] = 0;
-
-        $row[$month * 2] = 0;
-
-      }
-
-      foreach ($month_counter as $month => $counter) {
-
-        if (!empty($month)) {
+            foreach ($month_counter as $month => $counter) {
+                if (!empty($month)) {
 
           // $row[$month] = $counter;
-          $row[$month * 2 - 1] = $counter;
+                    $row[$month * 2 - 1] = $counter;
+                }
+            }
 
+            foreach ($this->spend_arr[$country] as $month => $sum) {
+                if (!empty($month)) {
+                    $row[$month * 2] = $sum;
+                }
+            }
+
+            // $row[] = array_sum($row);
+            $total_nights += array_sum($month_counter);
+
+            $total_spend += array_sum($this->spend_arr[$country]);
+
+            $row[] = array_sum($month_counter);
+
+            $row[] = array_sum($this->spend_arr[$country]);
+
+            $this->fillRow($row);
         }
 
-      }
+        // Summary row
+        $row = ['TOTAL NIGHTS'];
 
-      foreach ($this->spend_arr[$country] as $month => $sum) {
-
-        if (!empty($month)) {
-
-          $row[$month * 2] = $sum;
-
-        }
-
-      }
-
-      // $row[] = array_sum($row);
-      $total_nights += array_sum($month_counter);
-
-      $total_spend += array_sum($this->spend_arr[$country]);
-
-      $row[] = array_sum($month_counter);
-
-      $row[] = array_sum($this->spend_arr[$country]);
-
-      $this->fillRow($row);
-    }
-
-    // Summary row
-    $row = ['TOTAL NIGHTS'];
-
-    for ($month = 1; $month <= 12; $month++) {
+        for ($month = 1; $month <= 12; $month++) {
 
       // $row[$month] = 0;
-      $row[$month * 2 - 1] = 0;
-      $row[$month * 2] = 0;
-
-    }
-
-    foreach ($this->occ_arr as $country => $month_counter) {
-
-      foreach ($month_counter as $month => $counter) {
-
-        $row[$month * 2 - 1] += $counter;
-
-        if (isset($this->spend_arr[$country][$month])) {
-
-          $row[$month * 2] += $this->spend_arr[$country][$month];
-
+            $row[$month * 2 - 1] = 0;
+            $row[$month * 2] = 0;
         }
 
-      }
+        foreach ($this->occ_arr as $country => $month_counter) {
+            foreach ($month_counter as $month => $counter) {
+                $row[$month * 2 - 1] += $counter;
 
+                if (isset($this->spend_arr[$country][$month])) {
+                    $row[$month * 2] += $this->spend_arr[$country][$month];
+                }
+            }
+        }
+
+        $row[] = $total_nights;
+
+        $row[] = $total_spend;
+
+        $this->fillRow($row, 0);
     }
 
-    $row[] = $total_nights;
+    /**
+     * Get data for report
+     * @return void
+     */
+    protected function getData()
+    {
+        $occupancies = (new RoomOccupancyRepository)->withoutLabel(['tent', 'free'])->byNational($this->year);
 
-    $row[] = $total_spend;
+        $spendings = (new BillRepository)->byMonthNational($this->year);
 
-    $this->fillRow($row, 0);
+        foreach ($occupancies as $occupancy) {
+            $this->occ_arr[$occupancy->country][$occupancy->mth] = $occupancy->counter;
+        }
 
-  }
-
-  /**
-   * Get data for report
-   * @return void
-   */
-  protected function getData()
-  {
-    $occupancies = (new RoomOccupancyRepository)->byNational($this->year);
-
-    $spendings = (new BillRepository)->byMonthNational($this->year);
-
-    foreach ($occupancies as $occupancy) {
-
-      $this->occ_arr[$occupancy->country][$occupancy->mth] = $occupancy->counter;
-
+        foreach ($spendings as $spending) {
+            $this->spend_arr[$spending->country][$spending->mth] = $spending->sum;
+        }
     }
-
-    foreach ($spendings as $spending) {
-
-      $this->spend_arr[$spending->country][$spending->mth] = $spending->sum;
-
-    }
-
-  }
-
 }
