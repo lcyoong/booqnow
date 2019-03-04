@@ -71,7 +71,7 @@ class ResourceRepository extends BaseRepository
                 ->join('bookings', 'book_id', '=', 'ro_booking')
                 // ->join('resource_types', 'rty_id', '=', 'rs_type')
                 ->where('rs_type', '=', 1)->whereRaw("year(ro_date) = $year")
-                ->whereIn('book_statusx', ['checkedin', 'checkedout','confirmed'])
+                ->whereIn('book_status', ['checkedin', 'checkedout','confirmed'])
                 ->groupBy(DB::raw("rs_name, month(ro_date)"))->get();
     }
 
