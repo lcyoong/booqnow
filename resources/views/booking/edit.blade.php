@@ -1,11 +1,11 @@
 @extends($layout)
 
 @prepend('content')
+@include('customer.profile', ['customer' => $booking->customer])
 <div id="booking-edit" v-cloak>
   <!-- <a v-modal href="{{ urlTenant(sprintf('trail/bookings/%s', $booking->book_id)) }}"><i class="fa fa-history"></i></a>
   <a class="icon-button-margin" v-modal href="{{ urlTenant(sprintf('comments/bookings/%s', $booking->book_id)) }}" title="@lang('form.comments')"><i class="fa fa-comment-o"></i></a> -->
   <!-- Customer info -->
-  @include('customer.profile', ['customer' => $booking->customer])
 
   <form-ajax action = "{{ urlTenant('bookings/update') }}" method="POST" @startwait="startWait" @endwait="endWait">
     {{ Form::hidden('book_id', $booking->book_id) }}
