@@ -137,7 +137,7 @@ class BaseRepository implements BaseRepositoryInterface
      * @param  array $input - input data
      * @return Model
      */
-    public function update($input)
+    public function update($input, &$resource = null)
     {
         $resource = $this->repo->findOrFail(array_get($input, $this->repo->getKeyName()));
 

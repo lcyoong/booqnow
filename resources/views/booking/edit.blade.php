@@ -7,7 +7,7 @@
   <a class="icon-button-margin" v-modal href="{{ urlTenant(sprintf('comments/bookings/%s', $booking->book_id)) }}" title="@lang('form.comments')"><i class="fa fa-comment-o"></i></a> -->
   <!-- Customer info -->
 
-  <form-ajax action = "{{ urlTenant('bookings/update') }}" method="POST" @startwait="startWait" @endwait="endWait">
+  <form-ajax action = "{{ urlTenant('bookings/update') }}" method="POST" @startwait="startWait" @endwait="endWait" @completesuccess="redirectToDate">
     {{ Form::hidden('book_id', $booking->book_id) }}
     <div class="row">
       {{ Form::bsSelect('book_resource', trans('booking.book_resource'), $rooms, $booking->book_resource, ['style' => 'width:100%', 'vmodel' => 'booking.book_resource', 'class'=>'select2']) }}
@@ -67,6 +67,7 @@ new Vue ({
 
   created: function () {
     this.switchSource()
+    console.log(this.redirect_to_date)
     $(function() {
       $('.timepicker').datetimepicker({
         format: 'LT',
@@ -77,6 +78,7 @@ new Vue ({
   data: {
     book_special: Boolean({{ $booking->book_special }}),
     agents: [],
+    redirect_to_date: {!! json_encode($redirect_to_date) !!},
     agent: '{{ $booking->book_agent }}',
     source: '{{ $booking->book_source }}',
   },
@@ -110,7 +112,14 @@ new Vue ({
             this.agents = data
 
           });
-    }
+    },
+
+    redirectToDate: function(value) {
+        if(value.data && value.data.redirect_to && !!this.redirect_to_date) {
+          window.location.replace("{{ url('?date=') }}" + value.data.redirect_to);
+        }
+      }
+
   }
 })
 </script>

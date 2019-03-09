@@ -102,8 +102,10 @@ class BookingController extends MainController
      * @param  int $id - Booking id
      * @return Response
      */
-    public function edit($book_id)
+    public function edit(Request $request, $book_id)
     {
+        $redirect_to_date = $request->redirect_to_date;
+        
         $booking = $this->repo_book->findById($book_id);
 
         $rooms = (new ResourceRepository)->ofType(1)->getDropDown('rs_id', 'rs_name');
@@ -114,7 +116,7 @@ class BookingController extends MainController
 
         $this->page_title = trans('booking.edit', ['id' => $booking->display_id]);
 
-        $this->vdata(compact('book_id', 'booking', 'rooms', 'agents', 'sales'));
+        $this->vdata(compact('book_id', 'booking', 'rooms', 'agents', 'sales', 'redirect_to_date'));
 
         return view('booking.edit', $this->vdata);
     }
@@ -148,9 +150,9 @@ class BookingController extends MainController
      */
     public function update(Request $request)
     {
-        $this->repo_book->update($request->input());
+        $this->repo_book->update($request->input(), $booking);
 
-        return $this->goodReponse();
+        return $this->goodReponse('Booking updated!', ['redirect_to' => Carbon::parse($booking->book_from)->format('Y-m-d')]);
     }
 
     /**

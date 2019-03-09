@@ -7,7 +7,7 @@
   @include('booking._info_extended', ['booking' => $booking])
 
   <div>
-    <a href="{{ urlTenant("/bookings/{$booking->book_id}/edit") }}">{{ Form::button('Edit booking', ['class' => 'btn
+    <a href="{{ urlTenant("/bookings/{$booking->book_id}/edit?redirect_to_date=1") }}">{{ Form::button('Edit booking', ['class' => 'btn
       btn-primary btn-sm']) }}</a>
     @if($booking->book_status == 'confirmed')
     <post-ajax :post-to="'{{ urlTenant("bookings/checkin/{$booking->book_id}") }}'" reload-on-completex="1"
