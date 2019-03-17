@@ -36,7 +36,7 @@
     </div>
     <div class="row">
       {{ Form::bsText('book_reference', trans('booking.book_reference'), $booking->book_reference) }}
-      {{ Form::bsSelect('book_lead_from', trans('booking.book_status'), $book_leads, $booking->book_lead_from, ['style' => 'width:100%', 'vmodel' => 'booking.book_lead_from']) }}
+      {{ Form::bsSelect('book_lead_from', trans('booking.book_lead_from'), $book_leads, $booking->book_lead_from, ['style' => 'width:100%', 'vmodel' => 'booking.book_lead_from']) }}
       {{ Form::bsSelect('book_status', trans('booking.book_status'), $book_status, $booking->book_status, ['style' => 'width:100%', 'vmodel' => 'booking.book_status']) }}
       <div class="col-md-3">
         <div class="form-group">
