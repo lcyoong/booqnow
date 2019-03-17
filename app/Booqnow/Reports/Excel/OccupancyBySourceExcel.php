@@ -8,6 +8,7 @@ use Excel;
 use App\Bill;
 use Carbon\Carbon;
 use Repositories\ResourceRepository;
+use App\RoomOccupancy;
 
 class OccupancyBySourceExcel extends ExcelReport
 {
@@ -64,7 +65,7 @@ class OccupancyBySourceExcel extends ExcelReport
 
         for ($month = 1; $month <= 12; $month++) {
             $row[] = Carbon::createFromDate(null, $month, 1)->format('M');
-            $row[] = '%';
+            // $row[] = '%';
         }
 
         $row[] = 'Annual';
@@ -78,13 +79,13 @@ class OccupancyBySourceExcel extends ExcelReport
      */
     protected function occupancy()
     {
-        foreach ($this->occ_arr as $room => $month_counter) {
-            $row = [$room];
+        foreach ($this->occ_arr as $source => $month_counter) {
+            $row = [$source];
             $total_days = 0;
 
             for ($month = 1; $month <= 12; $month++) {
                 $row[$month*2 - 1] = 0;
-                $row[$month*2] = '0%';
+                // $row[$month*2] = '0%';
             }
 
             foreach ($month_counter as $month => $counter) {
@@ -92,7 +93,7 @@ class OccupancyBySourceExcel extends ExcelReport
                     $total_days += $row[$month*2 - 1] = $counter;
                     $dt = Carbon::createFromDate($this->year, $month, 1);
                     $percent = number_format($counter / $dt->daysInMonth * 100, 1);
-                    $row[$month*2] = "$percent%";
+                    // $row[$month*2] = "$percent%";
                 }
             }
 
@@ -107,12 +108,12 @@ class OccupancyBySourceExcel extends ExcelReport
 
         for ($month = 1; $month <= 12; $month++) {
             $row[$month*2 - 1] = 0;
-            $row[$month*2] = '0%';
+            // $row[$month*2] = '0%';
         }
 
         $total_days = 0;
 
-        foreach ($this->occ_arr as $room => $month_counter) {
+        foreach ($this->occ_arr as $source => $month_counter) {
             foreach ($month_counter as $month => $counter) {
                 $row[$month*2 - 1] += $counter;
                 $total_days += $counter;
@@ -122,7 +123,7 @@ class OccupancyBySourceExcel extends ExcelReport
         for ($month = 1; $month <= 12; $month++) {
             $dt = Carbon::createFromDate($this->year, $month, 1);
             $percent = number_format($row[$month*2 - 1] / $dt->daysInMonth / count($this->occ_arr) * 100, 1);
-            $row[$month*2] = "$percent%";
+            // $row[$month*2] = "$percent%";
         }
 
         $row[] = $total_days;
@@ -138,12 +139,20 @@ class OccupancyBySourceExcel extends ExcelReport
      */
     protected function getData()
     {
-        $occupancies = (new ResourceRepository)->occupancyByRoom($this->year);
+        // $occupancies = (new ResourceRepository)->occupancyByRoom($this->year);
+        $occupancies = RoomOccupancy::select(DB::raw("bs_description, month(ro_date) as mth, count(*) as counter"))
+                        ->join('resources', 'ro_room', '=', 'rs_id')
+                        ->join('bookings', 'book_id', '=', 'ro_booking')
+                        ->join('booking_sources', 'bs_id', '=', 'book_source')
+                        ->whereNotIn('rs_label', ['tent', 'bed', 'free'])
+                        ->where('rs_type', '=', 1)->whereRaw("year(ro_date) = {$this->year}")
+                        ->whereIn('book_status', ['checkedin', 'checkedout','confirmed'])
+                        ->groupBy(DB::raw("bs_description, month(ro_date)"))->get();
 
         $this->occ_arr = [];
 
         foreach ($occupancies as $occupancy) {
-            $this->occ_arr[$occupancy->rs_name][$occupancy->mth] = $occupancy->counter;
+            $this->occ_arr[$occupancy->bs_description][$occupancy->mth] = $occupancy->counter;
         }
     }
 }
