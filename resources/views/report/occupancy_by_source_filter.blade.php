@@ -1,6 +1,6 @@
 <form-ajax action = "{{ urlTenant('reports/request') }}" method="POST" @startwait="startWait" @endwait="endWait" :reload-on-complete=true>
-{{ Form::hidden('rep_function', 'occupancy_by_room') }}
-{{ Form::hidden('rep_class', 'Reports\OccupancyByRoomExcel') }}
+{{ Form::hidden('rep_function', 'occupancy_by_source') }}
+{{ Form::hidden('rep_class', 'Reports\OccupancyBySourceExcel') }}
 <div class="row">
   {{ Form::bsYear("rep_filter[year]", trans('report.pnl_year'), null, ['placeholder' => trans('report.pnl_year')]) }}
 </div>

@@ -221,6 +221,7 @@ function tenantRoutes()
         Route::get('/occupancy_by_room', 'ReportController@occupancyByRoom');
         Route::get('/occupancy_by_day', 'ReportController@occupancyByDay');
         Route::get('/occupancy_by_national', 'ReportController@occupancyByNational');
+        Route::get('/occupancy_by_source', 'ReportController@occupancyBySource');
         Route::get('/monthly_stat', 'ReportController@monthlyStat');
         Route::get('/daily_tour', 'ReportController@dailyTour');
         Route::get('/daily_transfer', 'ReportController@dailyTransfer');
