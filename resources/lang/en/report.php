@@ -9,6 +9,8 @@ return [
   'daily_occupancy_report_heading' => 'Monthly Occupancy Report - By Day :ext',
   'national_occupancy_title' => 'Monthly Occupancy Report - By National',
   'national_occupancy_report_heading' => 'Monthly Occupancy Report - By National :ext',
+  'source_occupancy_title' => 'Monthly Occupancy Report - By Source',
+  'source_occupancy_report_heading' => 'Monthly Occupancy Report - By Source :ext',
   'monthly_deposit_title' => 'Monthly Deposit Report',
   'monthly_deposit_by_future_title' => 'Monthly Deposit Report - By Future Month Booked',
   'monthly_deposit_report_heading' => 'Monthly Deposit Report :ext',
