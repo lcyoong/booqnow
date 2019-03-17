@@ -69,7 +69,7 @@
           <div id="collapse{{ $bill->bil_id }}" class="panel-collapse collapse">
             <div class="panel-body">
               @permitted('bill')
-              <a href="{{ url("bills/{$bill->bil_id}/edit") }}"><i class="fa fa-edit"></i> Edit bill</a>
+              <a href="{{ url("bills/{$bill->bil_id}/edit?redirect_to_date=1") }}"><i class="fa fa-edit"></i> Edit bill</a>
               @endpermitted
               @include('bill.itemized', ['items' => $bill->items])
               @include('receipt.itemized', ['rcitems' => $bill->receipts])

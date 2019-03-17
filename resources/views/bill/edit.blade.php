@@ -14,7 +14,7 @@
     </li>
   </ul>
   <span v-else class="label label-info"><i class="fa fa-blind"></i> @lang('bill.walkin')</span>
-  <form-ajax action = "{{ urlTenant('bills/update') }}" method="POST" @startwait="startWait" @endwait="endWait">
+  <form-ajax action = "{{ urlTenant('bills/update') }}" method="POST" @startwait="startWait" @endwait="endWait" @completesuccess="redirectToDate">
   {{ Form::hidden('bil_id', '', ['v-model' => 'bill.bil_id']) }}
   <div class="row">
     <div class="col-md-3">@lang('bill.total') <div class="stat-value" style="font-weight: bold; font-size: 2em;">@{{ bill.total_amount }}</div></div>
@@ -113,7 +113,8 @@ new Vue ({
     customer: {},
     booking: {},
     items: [],
-    new_item: {'bili_description': '', 'bili_unit_price': 0.00, 'bili_unit': 1, 'bili_date': '{{ date('d-m-Y') }}', 'bili_bill' : {{ $id }}}
+    new_item: {'bili_description': '', 'bili_unit_price': 0.00, 'bili_unit': 1, 'bili_date': '{{ date('d-m-Y') }}', 'bili_bill' : {{ $id }}},
+    redirect_to_date: {!! json_encode($redirect_to_date) !!},
   },
 
   methods: {
@@ -144,7 +145,14 @@ new Vue ({
     //
     change: function (item) {
       item.display = "none"
-    }
+    },
+
+    redirectToDate: function(value) {
+        if(value.data && value.data.redirect_to && !!this.redirect_to_date) {
+          window.location.replace("{{ url('?date=') }}" + value.data.redirect_to);
+        }
+      }
+
 
   }
 })
