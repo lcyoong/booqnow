@@ -162,7 +162,7 @@ function tenantRoutes()
         Route::get('/new', 'BillController@create');
         Route::get('/{bill}', 'BillController@view');
         Route::get('/{bill}/edit', 'BillController@edit');
-        Route::get('/{bill}/print', 'BillController@download');
+        Route::get('/{bill}/print/{split?}', 'BillController@download');
         Route::get('/{bill}/addons/{resource_type}/new', 'AddonController@addToBill');
         Route::post('/{bill}/untax', 'BillController@untax');
         Route::post('/{bill}/tax', 'BillController@tax');

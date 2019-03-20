@@ -63,7 +63,7 @@
 				$x = 36;
 				$pdf->page_text($x, $y, $text, $font, 9);
 			</script>
-    	@stack('content')
+    		@stack('content')
 			<div class="footer">
 				<div class="small">Tel : {{ config('myapp.contact1') }} | {{ config('myapp.web_url')}} | email : {{ config('myapp.admin_email') }} | Printed : {{ date('d M Y, H:i:s') }} | {{ $ref or '' }}</div>
 			</div>
