@@ -1,5 +1,4 @@
-<html lang="en">
-	<header>
+<html lang="en"><head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>{{ $title or '' }}</title>
 		<style>
@@ -45,8 +44,7 @@
 				}
 
 		</style>
-	</header>
-    <body>
+	</head><body>
 			<div class="header">
 				<div style="width: 40%" class="float-left">
 					<img src="{{ asset('img/logo-ojh.png') }}">
@@ -69,5 +67,4 @@
 			<div class="footer">
 				<div class="small">Tel : {{ config('myapp.contact1') }} | {{ config('myapp.web_url')}} | email : {{ config('myapp.admin_email') }} | Printed : {{ date('d M Y, H:i:s') }} | {{ $ref or '' }}</div>
 			</div>
-    </body>
-</html>
+    </body></html>
