@@ -75,7 +75,7 @@
               @include('receipt.itemized', ['rcitems' => $bill->receipts])
               <a href="{{ urlTenant('receipts/new/' . $bill->bil_id) }}" v-modal><button class="btn btn-primary btn-sm">@lang('form.pay')</button></a>
               <a href="{{ urlTenant(sprintf("bills/%s/print?" . str_random(40), $bill->bil_id)) }}" target=_blank><button class="btn btn-primary btn-sm">@lang('form.print')</button></a>
-              @if($bill->bil_accounting == 1 && array_search($bill->booking->book_source, explode(",", env('BILL_TYPE_GUEST_HIDDEN', '3,6'))) !== FALSE)
+              @if($bill->bil_accounting == 1 && array_search($bill->booking->book_source, explode(",", env('BILL_TYPE_GUEST_HIDDEN', '6'))) !== FALSE)
               <a href="{{ urlTenant(sprintf("bills/%s/print/1?" . str_random(40), $bill->bil_id)) }}" target=_blank><button class="btn btn-primary btn-sm">Print Split</button></a>
               @endif
             </div>

@@ -39,7 +39,7 @@
             <a href="{{ url(sprintf('bills/%s/edit', $item->bil_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>
             <a v-modal href="{{ urlTenant('receipts/new/' . $item->bil_id) }}" title="@lang('form.pay')"><i class="fa fa-money"></i></a>
             <a href="{{ urlTenant(sprintf("bills/%s/print?" . str_random(40), $item->bil_id)) }}" target=_blank title="@lang('form.print')"><i class="fa fa-print"></i></a>
-            @if($item->bil_accounting == 1 && $item->booking && array_search($item->booking->book_source, explode(",", env('BILL_TYPE_GUEST_HIDDEN', '3,6'))) !== FALSE)
+            @if($item->bil_accounting == 1 && $item->booking && array_search($item->booking->book_source, explode(",", env('BILL_TYPE_GUEST_HIDDEN', '6'))) !== FALSE)
             <a href="{{ urlTenant(sprintf("bills/%s/print/1?" . str_random(40), $item->bil_id)) }}" target=_blank title="@lang('form.print')"><i class="fa fa-print" style="color: #ff6600;"></i></a>
             @endif
             <a v-modal href="{{ url(sprintf('trail/bills/%s', $item->bil_id)) }}" title="@lang('form.trail')"><i class="fa fa-history"></i></a>
