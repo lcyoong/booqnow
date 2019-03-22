@@ -17,205 +17,201 @@ use Carbon\Carbon;
 
 class AddonController extends MainController
 {
-  protected $repo;
+    protected $repo;
 
-  /**
-   * Create a new controller instance.
-   * @param AddonRepository $repo
-   */
-  public function __construct(AddonRepository $repo)
-  {
-    parent::__construct();
+    /**
+     * Create a new controller instance.
+     * @param AddonRepository $repo
+     */
+    public function __construct(AddonRepository $repo)
+    {
+        parent::__construct();
 
-    $this->repo = $repo;
+        $this->repo = $repo;
 
-    $this->tenant = true;
+        $this->tenant = true;
 
-    $this->layout = 'layouts.tenant';
-  }
-
-  /**
-   * Display new addon form.
-   * @param  Request $request
-   * @param  int  $book_id  booking id
-   * @param  int  $rty_id   resource type id
-   * @param  boolean $pos   POS mode on/off
-   * @return Response
-   */
-  // public function create(Request $request, $book_id, $rty_id, $pos = false)
-  // {
-  //   $booking = (new BookingRepository)->findById($book_id);
-  //
-  //   $resource_type = (new ResourceTypeRepository)->findById($rty_id);
-  //
-  //   $input = $request->input();
-  //
-  //   $this->layout = 'layouts.modal';
-  //
-  //   $this->page_title = trans('addon.new', ['type' => $resource_type->rty_name]);
-  //
-  //   $account_bill = array_column($booking->bills->toArray(), 'bil_id', 'bil_accounting');
-  //
-  //   if ($pos) {
-  //     $resources = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->get();
-  //   } else {
-  //     $resources = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->getDropDown('rs_id', 'rs_name');
-  //   }
-  //
-  //   $this->vdata(compact('bill', 'booking', 'resource_type', 'resources', 'account_bill'));
-  //
-  //   return view($pos ? 'addon.new_pos' : 'addon.new_basic', $this->vdata);
-  // }
-  public function create($rty_id, $pos, $reload_on_complete = 'false')
-  {
-    $agents = $this->agents('suppliers');
-
-    $this->vdata(compact('agents', 'reload_on_complete'));
-
-    return view($pos ? 'addon.new_pos' : 'addon.new_basic', $this->vdata);
-  }
-
-  private function prepareResource($rty_id, $pos)
-  {
-    $resource_type = (new ResourceTypeRepository)->findById($rty_id);
-
-    $this->page_title = trans('addon.new', ['type' => $resource_type->rty_name]);
-
-    if ($pos) {
-      $resources = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->get();
-    } else {
-      $resources = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->getDropDown('rs_id', 'rs_name');
+        $this->layout = 'layouts.tenant';
     }
 
-    $this->vdata(compact('resource_type', 'resources'));
-  }
+    /**
+     * Display new addon form.
+     * @param  Request $request
+     * @param  int  $book_id  booking id
+     * @param  int  $rty_id   resource type id
+     * @param  boolean $pos   POS mode on/off
+     * @return Response
+     */
+    // public function create(Request $request, $book_id, $rty_id, $pos = false)
+    // {
+    //   $booking = (new BookingRepository)->findById($book_id);
+    //
+    //   $resource_type = (new ResourceTypeRepository)->findById($rty_id);
+    //
+    //   $input = $request->input();
+    //
+    //   $this->layout = 'layouts.modal';
+    //
+    //   $this->page_title = trans('addon.new', ['type' => $resource_type->rty_name]);
+    //
+    //   $account_bill = array_column($booking->bills->toArray(), 'bil_id', 'bil_accounting');
+    //
+    //   if ($pos) {
+    //     $resources = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->get();
+    //   } else {
+    //     $resources = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->getDropDown('rs_id', 'rs_name');
+    //   }
+    //
+    //   $this->vdata(compact('bill', 'booking', 'resource_type', 'resources', 'account_bill'));
+    //
+    //   return view($pos ? 'addon.new_pos' : 'addon.new_basic', $this->vdata);
+    // }
+    public function create($rty_id, $pos, $reload_on_complete = 'false')
+    {
+        $agents = $this->agents('suppliers');
 
-  public function createForBooking(Request $request, $rty_id, $book_id, $pos = false)
-  {
-    $booking = (new BookingRepository)->findById($book_id);
+        $this->vdata(compact('agents', 'reload_on_complete'));
 
-    $this->prepareResource($rty_id, $pos);
+        return view($pos ? 'addon.new_pos' : 'addon.new_basic', $this->vdata);
+    }
 
-    $this->layout = 'layouts.modal';
+    private function prepareResource($rty_id, $pos)
+    {
+        $resource_type = (new ResourceTypeRepository)->findById($rty_id);
 
-    $resource_type = array_get($this->vdata, 'resource_type');
+        $this->page_title = trans('addon.new', ['type' => $resource_type->rty_name]);
 
-    $add_to_bill = array_get(array_column($booking->bills->toArray(), 'bil_id', 'bil_accounting'), $resource_type->rty_accounting);
+        if ($pos) {
+            $resources = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->get();
+        } else {
+            $resources = (new ResourceRepository)->ofStatus('active')->ofType($resource_type->rty_id)->getDropDown('rs_id', 'rs_name');
+        }
 
-    $this->vdata(compact('booking', 'account_bill', 'add_to_bill'));
+        $this->vdata(compact('resource_type', 'resources'));
+    }
 
-    return $this->create($rty_id, $pos);
-  }
+    public function createForBooking(Request $request, $rty_id, $book_id, $pos = false)
+    {
+        $booking = (new BookingRepository)->findById($book_id);
 
-  /**
-   * New add-on for walk-in bill
-   * @param  Request $request [description]
-   * @param  [type]  $rty_id  [description]
-   * @param  [type]  $bil_id  [description]
-   * @param  boolean $pos     [description]
-   * @return [type]           [description]
-   */
-  public function createForBill(Request $request, $rty_id, $bil_id, $pos = false)
-  {
-    $bill = (new BillRepository)->findById($bil_id);
+        $this->prepareResource($rty_id, $pos);
 
-    $this->prepareResource($rty_id, $pos);
+        $this->layout = 'layouts.modal';
 
-    $this->layout = 'layouts.modal';
+        $resource_type = array_get($this->vdata, 'resource_type');
 
-    $add_to_bill = $bill->bil_id;
+        $add_to_bill = array_get(array_column($booking->bills->toArray(), 'bil_id', 'bil_accounting'), $resource_type->rty_accounting);
 
-    $this->vdata(compact('bill', 'add_to_bill'));
+        $this->vdata(compact('booking', 'account_bill', 'add_to_bill'));
 
-    return $this->create($rty_id, $pos, 'true');
-  }
+        return $this->create($rty_id, $pos);
+    }
 
-  /**
-   * Edit add-on for walk-in bill
-   * @param  Request $request [description]
-   * @param  [type]  $rty_id  [description]
-   * @param  [type]  $bil_id  [description]
-   * @param  boolean $pos     [description]
-   * @return [type]           [description]
-   */
-  public function editForBill(Request $request, $bili_id, $pos = false)
-  {
-    $agents = $this->agents('suppliers');
+    /**
+     * New add-on for walk-in bill
+     * @param  Request $request [description]
+     * @param  [type]  $rty_id  [description]
+     * @param  [type]  $bil_id  [description]
+     * @param  boolean $pos     [description]
+     * @return [type]           [description]
+     */
+    public function createForBill(Request $request, $rty_id, $bil_id, $pos = false)
+    {
+        $bill = (new BillRepository)->findById($bil_id);
 
-    $item = (new BillItemRepository)->findById($bili_id);
+        $this->prepareResource($rty_id, $pos);
 
-    $addon = $item->addon;
+        $this->layout = 'layouts.modal';
 
-    $resource_type = $item->resource->resourceType;
+        $add_to_bill = $bill->bil_id;
 
-    $this->page_title = trans('addon.edit', ['item' => $item->resource->rs_name . " ($addon->add_customer_name)"]);
+        $this->vdata(compact('bill', 'add_to_bill'));
 
-    $this->layout = 'layouts.modal';
+        return $this->create($rty_id, $pos, 'true');
+    }
 
-    $this->vdata(compact('item', 'agents', 'resource_type', 'addon'));
+    /**
+     * Edit add-on for walk-in bill
+     * @param  Request $request [description]
+     * @param  [type]  $rty_id  [description]
+     * @param  [type]  $bil_id  [description]
+     * @param  boolean $pos     [description]
+     * @return [type]           [description]
+     */
+    public function editForBill(Request $request, $bili_id, $pos = false)
+    {
+        $agents = $this->agents('suppliers');
 
-    return view('addon.edit_single_item', $this->vdata);
+        $item = (new BillItemRepository)->findById($bili_id);
 
-  }
+        $addon = $item->addon;
 
-  /**
-   * Edit add-on
-   * @param  Request $request [description]
-   * @param  [type]  $rty_id  [description]
-   * @param  [type]  $bil_id  [description]
-   * @param  boolean $pos     [description]
-   * @return [type]           [description]
-   */
-  public function edit(Request $request, $add_id)
-  {
-    $agents = $this->agents('suppliers');
+        $resource_type = $item->resource->resourceType;
 
-    $addon = (new AddonRepository)->findById($add_id);
+        $this->page_title = trans('addon.edit', ['item' => $item->resource->rs_name . " ($addon->add_customer_name)"]);
 
-    $resource_type = $addon->resource->resourceType;
+        $this->layout = 'layouts.modal';
 
-    $this->page_title = trans('addon.edit', ['item' => $addon->resource->rs_name . " ($addon->add_customer_name)"]);
+        $this->vdata(compact('item', 'agents', 'resource_type', 'addon'));
 
-    $this->layout = 'layouts.modal';
+        return view('addon.edit_single_item', $this->vdata);
+    }
 
-    $this->vdata(compact('agents', 'resource_type', 'addon'));
+    /**
+     * Edit add-on
+     * @param  Request $request [description]
+     * @param  [type]  $rty_id  [description]
+     * @param  [type]  $bil_id  [description]
+     * @param  boolean $pos     [description]
+     * @return [type]           [description]
+     */
+    public function edit(Request $request, $add_id)
+    {
+        $agents = $this->agents('suppliers');
 
-    return view('addon.edit_single_item', $this->vdata);
+        $addon = (new AddonRepository)->findById($add_id);
 
-  }
+        $resource_type = $addon->resource->resourceType;
 
-  /**
-   * Display new addon form in POS form
-   * @param  Request $request
-   * @param  int  $book_id  booking id
-   * @param  int  $rty_id   resource type id
-   * @return Response
-   */
-  // public function createPos(Request $request, $book_id, $rty_id)
-  // {
-  //   return $this->create($request, $book_id, $rty_id, true);
-  // }
+        $this->page_title = trans('addon.edit', ['item' => $addon->resource->rs_name . " ($addon->add_customer_name)"]);
 
-  /**
-   * Process storing of new addon
-   * @param  Request $request
-   * @return Response
-   */
-  public function store(Request $request)
-  {
-    $input = $request->input();
+        $this->layout = 'layouts.modal';
 
-    DB::transaction(function() use($input) {
+        $this->vdata(compact('agents', 'resource_type', 'addon'));
 
-      $resource = (new ResourceRepository)->findById(array_get($input, 'add_resource'));
+        return view('addon.edit_single_item', $this->vdata);
+    }
 
-      $accounting = $resource->resourceType->accounting;
+    /**
+     * Display new addon form in POS form
+     * @param  Request $request
+     * @param  int  $book_id  booking id
+     * @param  int  $rty_id   resource type id
+     * @return Response
+     */
+    // public function createPos(Request $request, $book_id, $rty_id)
+    // {
+    //   return $this->create($request, $book_id, $rty_id, true);
+    // }
 
-      if (empty($input['add_to_bill'])) {
+    /**
+     * Process storing of new addon
+     * @param  Request $request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+        $input = $request->input();
 
-        $booking = (new BookingRepository)->findById(array_get($input, 'add_booking'));
+        DB::transaction(function () use ($input) {
+            $resource = (new ResourceRepository)->findById(array_get($input, 'add_resource'));
 
-        $new_bill = (new BillRepository)->store([
+            $accounting = $resource->resourceType->accounting;
+
+            if (empty($input['add_to_bill'])) {
+                $booking = (new BookingRepository)->findById(array_get($input, 'add_booking'));
+
+                $new_bill = (new BillRepository)->store([
           'bil_customer' => array_get($input, 'add_customer'),
           'bil_customer_name' => array_get($input, 'bil_customer_name'),
           'bil_accounting' => $accounting->acc_id,
@@ -229,68 +225,65 @@ class AddonController extends MainController
           'bil_due_date' => Carbon::parse($booking->book_from)->format('Y-m-d'),
         ]);
 
-        $input['add_to_bill'] = $new_bill->bil_id;
-      }
+                $input['add_to_bill'] = $new_bill->bil_id;
+            }
 
-      $new_bill_item = $this->createBillItem($resource, $input);
+            $new_bill_item = $this->createBillItem($resource, $input);
 
-      $input['add_bill_item'] = $new_bill_item->bili_id;
+            $input['add_bill_item'] = $new_bill_item->bili_id;
 
-      $this->repo->store($input);
-    });
+            $this->repo->store($input);
+        });
 
-    return $this->goodReponse();
-  }
+        return $this->goodReponse();
+    }
 
-  /**
-   * Process storing of new addon list
-   * @param  Request $request
-   * @return Response
-   */
-  public function storeList(Request $request)
-  {
-    $input = $request->input();
+    /**
+     * Process storing of new addon list
+     * @param  Request $request
+     * @return Response
+     */
+    public function storeList(Request $request)
+    {
+        $input = $request->input();
 
-    DB::transaction(function() use($input) {
+        DB::transaction(function () use ($input) {
+            foreach ($input['addon_id'] as $content) {
+                $item = json_decode($content);
 
-      foreach( $input['addon_id'] as $content) {
+                $new_bill_item = $this->createBillItem($item, $input);
 
-        $item = json_decode($content);
+                $input['add_bill_item'] = $new_bill_item->bili_id;
+                $input['add_resource'] = $item->rs_id;
+                $input['add_date'] = date('YmdHis');
+                $input['add_pax'] = $item->rs_pax;
+                $input['add_unit'] = $item->rs_unit;
 
-        $new_bill_item = $this->createBillItem($item, $input);
+                $this->repo->store($input);
+            }
+        });
 
-        $input['add_bill_item'] = $new_bill_item->bili_id;
-        $input['add_resource'] = $item->rs_id;
-        $input['add_date'] = date('YmdHis');
-        $input['add_pax'] = $item->rs_pax;
-        $input['add_unit'] = $item->rs_unit;
+        return $this->goodReponse();
+    }
 
-        $this->repo->store($input);
+    /**
+     * Create bill item
+     * @param  int $id    Bill id
+     * @param  App\Resources $item
+     * @param  array $input Input from user form
+     * @return Response
+     */
+    private function createBillItem($item, $input)
+    {
+        // $unit = array_get($input, 'add_unit', 1);
 
-      }
-    });
+        $unit = array_get($input, 'add_pax', 1) + array_get($input, 'add_pax_child', 0);
 
-    return $this->goodReponse();
-  }
+        $unit_price = array_get($input, 'add_price', $item->rs_price);
 
-  /**
-   * Create bill item
-   * @param  int $id    Bill id
-   * @param  App\Resources $item
-   * @param  array $input Input from user form
-   * @return Response
-   */
-  private function createBillItem($item, $input)
-  {
-    // $unit = array_get($input, 'add_unit', 1);
+        // $gross = $unit_price * $unit;
 
-    $unit = array_get($input, 'add_pax', 1) + array_get($input, 'add_pax_child', 0);
-
-    $unit_price = array_get($input, 'add_price', $item->rs_price);
-
-    // $gross = $unit_price * $unit;
-
-    return (new BillItemRepository)->store([
+        return (new BillItemRepository)->store([
       'bili_resource' => $item->rs_id,
       'bili_description' => $item->rs_name,
       'bili_bill' => array_get($input, 'add_to_bill'),
@@ -300,56 +293,59 @@ class AddonController extends MainController
       // 'bili_gross' => $gross,
       // 'bili_tax' => calcTax($gross),
     ]);
-  }
+    }
 
-  /**
-   * Push addon into queue
-   * @param  Request $request
-   * @param  int  $book_id Booking id
-   * @param  int  $rs_id   Resource id
-   * @return Response
-   */
-  public function push(Request $request, $book_id, $rs_id)
-  {
-    $resource = (new ResourceRepository)->findById($rs_id);
+    /**
+     * Push addon into queue
+     * @param  Request $request
+     * @param  int  $book_id Booking id
+     * @param  int  $rs_id   Resource id
+     * @return Response
+     */
+    public function push(Request $request, $book_id, $rs_id)
+    {
+        $resource = (new ResourceRepository)->findById($rs_id);
 
-    session()->push($book_id . '.pos', $resource);
+        session()->push($book_id . '.pos', $resource);
 
-    return $this->goodReponse(trans('form.item_added', ['item' => $resource->rs_name]));
-  }
+        return $this->goodReponse(trans('form.item_added', ['item' => $resource->rs_name]));
+    }
 
-  /**
-   * Remove addon from queue
-   * @param  Request $request
-   * @param  int  $book_id Booking id
-   * @return Response
-   */
-  public function pop(Request $request, $book_id)
-  {
-    return session()->get($book_id . '.pos');
+    /**
+     * Remove addon from queue
+     * @param  Request $request
+     * @param  int  $book_id Booking id
+     * @return Response
+     */
+    public function pop(Request $request, $book_id)
+    {
+        return session()->get($book_id . '.pos');
 
-    return $this->goodReponse(trans('form.item_removed', ['item' => $resource->rs_name]));
-  }
+        return $this->goodReponse(trans('form.item_removed', ['item' => $resource->rs_name]));
+    }
 
-  /**
-   * Process updating of addon
-   * @param  Request $request
-   * @return Response
-   */
-  public function update(Request $request)
-  {
-    $this->repo->update($request->input());
+    /**
+     * Process updating of addon
+     * @param  Request $request
+     * @return Response
+     */
+    public function update(Request $request)
+    {
+        $this->repo->update($request->input(), $addon);
 
-    return $this->goodReponse('Update successful. Please reconcile your bill if needed.');
-  }
+        if ($addon->bill_item) {
+            $addon->bill_item->update(['bili_active' => ($addon->add_status == 'cancelled') ? 0 : 1]);
+        }
 
-  /**
-   * Return agents list
-   * @return array
-   */
-  private function agents($type)
-  {
-    return (new AgentRepository)->ofType($type)->getDropDown('ag_id', 'ag_name');
-  }
+        return $this->goodReponse();
+    }
 
+    /**
+     * Return agents list
+     * @return array
+     */
+    private function agents($type)
+    {
+        return (new AgentRepository)->ofType($type)->getDropDown('ag_id', 'ag_name');
+    }
 }

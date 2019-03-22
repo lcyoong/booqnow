@@ -266,7 +266,11 @@ class BillController extends MainController
      */
     public function updateItem(Request $request)
     {
-        (new BillItemRepository)->update($request->input());
+        (new BillItemRepository)->update($request->input(), $bill_item);
+
+        if ($bill_item->addon) {
+            $bill_item->addon->update(['add_status' => ($bill_item->bili_active == 1) ? 'active' : 'cancelled']);
+        }
 
         return $this->goodReponse();
     }
