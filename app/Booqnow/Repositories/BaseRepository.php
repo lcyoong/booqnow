@@ -197,12 +197,18 @@ class BaseRepository implements BaseRepositoryInterface
      * @param  string $cache_name - Cache name (optional)
      * @return array
      */
-    public function getDropDown($key, $label, $cache_name = null)
+    public function getDropDown($key, $label, $cache_name = null, $order_by = [])
     {
         $resource = $this->repo->select('*');
 
         if (!is_null($this->filter)) {
             $resource->filter($this->filter);
+        }
+
+        if (count($order_by) > 0) {
+            foreach ($order_by as $field => $order) {
+                $resource->orderBy($field, $order);
+            }
         }
 
         // Cache::flush();
