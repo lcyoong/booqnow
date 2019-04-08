@@ -175,9 +175,9 @@ class OccupancyBySourceExcel extends ExcelReport
      */
     protected function getData()
     {
-        // $occupancies = (new ResourceRepository)->occupancyByRoom($this->year);
         $this->sources = (new BookingSourceRepository)->getDropDown('bs_id', 'bs_description');
 
+        // Room occupancy by sources
         $occupancies = RoomOccupancy::select(DB::raw("book_source, month(ro_date) as mth, count(*) as counter"))
                         ->join('resources', 'ro_room', '=', 'rs_id')
                         ->join('bookings', 'book_id', '=', 'ro_booking')
@@ -197,6 +197,7 @@ class OccupancyBySourceExcel extends ExcelReport
 
     private function getSpending($source)
     {
+        // Spending by sources from room bills
         $spendings = BillItem::select(DB::raw("rty_code, month(bil_date) as mth, sum(bili_gross) as total"))
                         ->join('bills', 'bil_id', '=', 'bili_bill')
                         ->join('resources', 'rs_id', '=', 'bili_resource')
@@ -215,6 +216,27 @@ class OccupancyBySourceExcel extends ExcelReport
 
         foreach ($spendings as $spending) {
             $spend_arr[$spending->rty_code][$spending->mth] = $spending->total;
+        }
+
+        if ($source == 2) {
+            // Spending by sources from walk-in bills
+            $spendings_wi = BillItem::select(DB::raw("rty_code, month(bil_date) as mth, sum(bili_gross) as total"))
+                        ->join('bills', 'bil_id', '=', 'bili_bill')
+                        ->join('resources', 'rs_id', '=', 'bili_resource')
+                        ->join('resource_types', 'rty_id', '=', 'rs_type')
+                        ->where('bili_active', '=', 1)
+                        ->where('bil_status', '=', 'active')
+                        ->whereNull('bil_booking')
+                        ->whereYear('bil_date', $this->year)
+                        ->groupBy(DB::raw("rty_code, month(bil_date)"))->get();
+        
+            foreach ($spendings_wi as $spending) {
+                if (isset($spend_arr[$spending->rty_code][$spending->mth])) {
+                    $spend_arr[$spending->rty_code][$spending->mth] += $spending->total;
+                } else {
+                    $spend_arr[$spending->rty_code][$spending->mth] = $spending->total;
+                }
+            }
         }
 
         return $spend_arr;
