@@ -173,6 +173,34 @@ class BillController extends MainController
     }
 
     /**
+     * Display printed bill
+     * @param  int $bil_id Bill id
+     * @return Response
+     */
+    public function downloadPrintable($bil_id)
+    {
+        $bill = $this->repo->findById($bil_id);
+
+        $ref = "#" . $bill->display_id;
+
+        $this->layout = 'layouts.print';
+
+        $title = trans('bill.print_title', ['no' => '']);
+
+        $room_items = $bill->getRoomItems(1);
+
+        $addon_items = $bill->getAddonItems(1)->groupBy('created_date_hour')->toArray();
+
+        $indie_items = $bill->indieItems(1);
+
+        $resource_name = array_column(array_get($this->vdata, 'resource_types')->toArray(), 'rty_name', 'rty_id');
+
+        $this->vdata(compact('bill', 'title', 'room_items', 'addon_items', 'indie_items', 'resource_name', 'ref'));
+
+        return @PDF::loadView('bill.print', $this->vdata)->stream(sprintf("bill-%s.pdf", $bill->bil_id));
+    }
+
+    /**
      * Export data
      * @param  Request $request
      * @return Response

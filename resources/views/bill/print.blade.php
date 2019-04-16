@@ -111,53 +111,6 @@
   </tbody>
 </table>
 
-
-  <!-- @foreach ($items->groupBy('rs_type') as $key => $item_group)
-  <table width="100%" class="striped">
-    <thead>
-      <tr>
-        <th width="50%">{{ array_get($resource_name, $key) }}</th>
-        <th width="10%" class="text-center">@lang('bill.bili_unit')</th>
-        <th width="20%" class="text-right">@lang('bill.bili_unit_price')</th>
-        <th width="20%" class="text-right">{{ appendCurrency(trans('bill.bili_gross')) }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach ($item_group as $item)
-      <tr>
-        <td>{{ $item->bili_description }}</td>
-        <td class="text-center">{{ $item->bili_unit }}</td>
-        <td class="text-right">{{ showMoney($item->bili_unit_price) }}</td>
-        <td class="text-right">{{ showMoney($item->bili_gross) }}</td>
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
-  @endforeach -->
-
-  <!-- @if($indie_items->count() > 0)
-  <table width="100%" class="striped">
-    <thead>
-      <tr>
-        <th width="50%">@lang('bill.bili_description')</th>
-        <th width="10%" class="text-center">@lang('bill.bili_unit')</th>
-        <th width="20%" class="text-right">@lang('bill.bili_unit_price')</th>
-        <th width="20%" class="text-right">{{ appendCurrency(trans('bill.bili_gross')) }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach ($indie_items as $key => $item)
-        <tr>
-          <td>{{ $item->bili_description }}</td>
-          <td class="text-center">{{ $item->bili_unit }}</td>
-          <td class="text-right">{{ showMoney($item->bili_unit_price) }}</td>
-          <td class="text-right">{{ showMoney($item->bili_gross) }}</td>
-        </tr>
-      @endforeach
-    </tbody>
-  </table>
-  @endif -->
-
 <table width="100%" style="font-size: 1.1em;">
   <tr>
     <td width="80%" class="text-right bold">{{ trans('bill.bil_gross') }}:</td>

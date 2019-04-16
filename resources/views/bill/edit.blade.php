@@ -39,15 +39,29 @@
   <span class="label label-default">@{{ items.length }} @lang('bill.items')</span>
   <div>
     <ul class="list-group">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-4">@lang('bill.bil_description')</div>
+          <div class="col-md-1">@lang('bill.bili_unit_price')</div>
+          <div class="col-md-1">@lang('bill.bili_unit')</div>
+          <div class="col-md-1">@lang('bill.bili_unit_price') * @lang('bill.bili_unit')</div>
+          <div class="col-md-2">@lang('bill.bili_date')</div>
+          <div class="col-md-1">@lang('form.print')</div>
+          <div class="col-md-1">@lang('bill.bili_active')</div>
+          <div class="col-md-1"></div>
+        </div>
+
+      </li>
       <li class="list-group-item" v-for="item in items">
         <div class="row">
           <div class="col-md-4">
             {{ Form::text('bili_description', '', ['class' => 'form-control', 'v-model' => 'item.bili_description', '@keyup' => 'change(item)']) }}
           </div>
-          <div class="col-md-2">{{ Form::text('bili_unit_price', '', ['class' => 'form-control', 'v-model' => 'item.bili_unit_price']) }}</div>
+          <div class="col-md-1">{{ Form::text('bili_unit_price', '', ['class' => 'form-control', 'v-model' => 'item.bili_unit_price']) }}</div>
           <div class="col-md-1">{{ Form::number('bili_unit', '', ['class' => 'form-control', 'v-model' => 'item.bili_unit', 'min' => 0, 'max' => 20]) }}</div>
-          <div class="col-md-2">{{ Form::datepicker('bili_date', trans('bill.bili_date'), null, ['v-model' => 'item.bili_date']) }}</div>
           <div class="col-md-1">@{{ item.bili_unit_price * item.bili_unit }}</div>
+          <div class="col-md-2">{{ Form::datepicker('bili_date', trans('bill.bili_date'), null, ['v-model' => 'item.bili_date']) }}</div>
+          <div class="col-md-1"><bootstrap-toggler name="bili_print" v-model="item.bili_print" data-size="normal"/></div>
           <div class="col-md-1"><bootstrap-toggler name="bili_active" v-model="item.bili_active" data-size="normal"/></div>
           <div class="col-md-1"><itemized :item = "item" class="form-control btn btn-primary" action="{{ urlTenant('bills/item/update') }}" @completesuccess="getList">Save</itemized></div>
         </div>
@@ -70,10 +84,11 @@
           <div class="row">
             <input type="hidden" name="bili_bill" v-model="new_item.bili_bill">
             <div class="col-md-4">{{ Form::text('bili_description', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_description', 'placeholder' => 'New item description']) }}</div>
-            <div class="col-md-2">{{ Form::text('bili_unit_price', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_unit_price']) }}</div>
+            <div class="col-md-1">{{ Form::text('bili_unit_price', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_unit_price']) }}</div>
             <div class="col-md-1">{{ Form::number('bili_unit', '', ['class' => 'form-control', 'v-model' => 'new_item.bili_unit', 'min' => 0, 'max' => 20]) }}</div>
+            <div class="col-md-1">@{{ new_item.bili_unit_price * new_item.bili_unit }}</div>
             <div class="col-md-2">{{ Form::datepicker('bili_date', trans('bill.bili_date'), null, ['v-model' => 'new_item.bili_date']) }}</div>
-            <div class="col-md-2">@{{ new_item.bili_unit_price * new_item.bili_unit }}</div>
+            <div class="col-md-1"></div>
             <div class="col-md-1"></div>
             <div class="col-md-1">{{ Form::submit(trans('form.save'), ['id' => 'submit', 'class' => 'form-control btn btn-primary btn-sm', ':disabled' => 'waiting']) }}</div>
           </div>
