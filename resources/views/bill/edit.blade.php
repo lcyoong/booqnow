@@ -34,6 +34,7 @@
   {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
   <a href="{{ url('bills') }}">{{ Form::button(trans('form.cancel'), ['class' => 'btn btn-primary btn-sm']) }}</a>
   <a :href="'{{ urlTenant("bills") }}/' + bill.bil_id + '/print?{{ str_random(40) }}'" target=_blank title="@lang('form.print')">{{ Form::button(trans('form.print'), ['class' => 'btn btn-primary btn-sm']) }}</a>
+  <a :href="'{{ urlTenant("bills") }}/' + bill.bil_id + '/printable?{{ str_random(40) }}'" target=_blank title="@lang('form.print')">{{ Form::button('Print Selective', ['class' => 'btn btn-primary btn-sm']) }}</a>
   </form-ajax>
   <hr/>
   <span class="label label-default">@{{ items.length }} @lang('bill.items')</span>
