@@ -152,7 +152,7 @@
   </tr>
   <tr>
     <td width="80%" class="text-right bold">{{ trans('bill.amount_due') }}:</td>
-    <td width="20%" class="text-right">{{ showMoney($gross + $tax - $bill->bil_paid - $bill->deposit(), false, 2) }}</td>
+    <td width="20%" class="text-right">{{ showMoney($gross + $tax - $bill->bil_paid, false, 2) }}</td>
   </tr>
 </table>
 @endpush
