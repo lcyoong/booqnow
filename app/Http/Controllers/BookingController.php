@@ -325,21 +325,17 @@ class BookingController extends MainController
     private function createBillItems($input, $bili_bill, $new_booking)
     {
         foreach ($input['rate'] as $key => $value) {
-
-      // $gross = $value * $input['unit'][$key];
-
-            // $resource = (new ResourceRepository)->findById($input['resource'][$key]);
-
             (new BillItemRepository)->store([
-        'bili_resource' => $input['resource'][$key],
-        'bili_description' => $input['name'][$key],
-        'bili_bill' => $bili_bill,
-        'bili_unit_price' => $value,
-        'bili_unit' => $input['unit'][$key],
-        'bili_date' => $new_booking->book_from,
-        // 'bili_gross' => $gross,
-        // 'bili_tax' => calcTax($gross),
-      ]);
+                'bili_resource' => $input['resource'][$key],
+                'bili_description' => $input['name'][$key],
+                'bili_bill' => $bili_bill,
+                'bili_unit_price' => $value,
+                'bili_unit' => $input['unit'][$key],
+                'bili_date' => $new_booking->book_from,
+                'bili_with_tax' => in_array($new_booking->book_source, explode(',', env('SOURCES_WITHOUT_VAT'))) ? 0 : 1,
+                // 'bili_gross' => $gross,
+                // 'bili_tax' => calcTax($gross),
+            ]);
         }
     }
 
@@ -353,22 +349,23 @@ class BookingController extends MainController
     {
         foreach (array_get($input, 'extra_rate', []) as $key => $value) {
             $bili_item = (new BillItemRepository)->store([
-        'bili_resource' => $input['extra'][$key],
-        'bili_description' => $input['extra_name'][$key],
-        'bili_bill' => $bil_id,
-        'bili_unit_price' => $value,
-        'bili_unit' => $input['extra_unit'][$key],
-        'bili_date' => $booking->book_from,
-      ]);
+                'bili_resource' => $input['extra'][$key],
+                'bili_description' => $input['extra_name'][$key],
+                'bili_bill' => $bil_id,
+                'bili_unit_price' => $value,
+                'bili_unit' => $input['extra_unit'][$key],
+                'bili_date' => $booking->book_from,
+                'bili_with_tax' => in_array($booking->book_source, explode(',', env('SOURCES_WITHOUT_VAT'))) ? 0 : 1,
+            ]);
 
             $booking->addons()->create([
-        'add_resource' => $input['extra'][$key],
-        'add_bill_item' => $bili_item->bili_id,
-        'add_customer' => $booking->book_customer,
-        'add_customer_name' => $booking->customer->full_name,
-        'add_date' => date('Ymd'),
-        'add_pax' => $input['extra_unit'][$key],
-      ]);
+                'add_resource' => $input['extra'][$key],
+                'add_bill_item' => $bili_item->bili_id,
+                'add_customer' => $booking->book_customer,
+                'add_customer_name' => $booking->customer->full_name,
+                'add_date' => date('Ymd'),
+                'add_pax' => $input['extra_unit'][$key],
+            ]);
         }
     }
 

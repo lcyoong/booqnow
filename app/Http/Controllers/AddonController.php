@@ -208,27 +208,27 @@ class AddonController extends MainController
 
             $accounting = $resource->resourceType->accounting;
 
-            if (empty($input['add_to_bill'])) {
-                $booking = (new BookingRepository)->findById(array_get($input, 'add_booking'));
+            $booking = (new BookingRepository)->findById(array_get($input, 'add_booking'));
 
+            if (empty($input['add_to_bill'])) {
                 $new_bill = (new BillRepository)->store([
-          'bil_customer' => array_get($input, 'add_customer'),
-          'bil_customer_name' => array_get($input, 'bil_customer_name'),
-          'bil_accounting' => $accounting->acc_id,
-          'bil_booking' => array_get($input, 'add_booking'),
-          'bil_description' => $accounting->acc_bill_description,
-          'bil_date' => today('Y-m-d'),
-          'bil_due_date' => today('Y-m-d'),
-          // 'bil_date' => today('Y-m-d'),
-          // 'bil_due_date' => today('Y-m-d'),
-          'bil_date' => Carbon::parse($booking->book_from)->format('Y-m-d'),
-          'bil_due_date' => Carbon::parse($booking->book_from)->format('Y-m-d'),
-        ]);
+                    'bil_customer' => array_get($input, 'add_customer'),
+                    'bil_customer_name' => array_get($input, 'bil_customer_name'),
+                    'bil_accounting' => $accounting->acc_id,
+                    'bil_booking' => array_get($input, 'add_booking'),
+                    'bil_description' => $accounting->acc_bill_description,
+                    'bil_date' => today('Y-m-d'),
+                    'bil_due_date' => today('Y-m-d'),
+                    // 'bil_date' => today('Y-m-d'),
+                    // 'bil_due_date' => today('Y-m-d'),
+                    'bil_date' => Carbon::parse($booking->book_from)->format('Y-m-d'),
+                    'bil_due_date' => Carbon::parse($booking->book_from)->format('Y-m-d'),
+                    ]);
 
                 $input['add_to_bill'] = $new_bill->bil_id;
             }
 
-            $new_bill_item = $this->createBillItem($resource, $input);
+            $new_bill_item = $this->createBillItem($resource, $input, $booking);
 
             $input['add_bill_item'] = $new_bill_item->bili_id;
 
@@ -248,10 +248,12 @@ class AddonController extends MainController
         $input = $request->input();
 
         DB::transaction(function () use ($input) {
+            $bill = (new BillRepository)->findById(array_get($input, 'add_to_bill'));
+
             foreach ($input['addon_id'] as $content) {
                 $item = json_decode($content);
 
-                $new_bill_item = $this->createBillItem($item, $input);
+                $new_bill_item = $this->createBillItem($item, $input, $bill->booking);
 
                 $input['add_bill_item'] = $new_bill_item->bili_id;
                 $input['add_resource'] = $item->rs_id;
@@ -273,7 +275,7 @@ class AddonController extends MainController
      * @param  array $input Input from user form
      * @return Response
      */
-    private function createBillItem($item, $input)
+    private function createBillItem($item, $input, $booking)
     {
         // $unit = array_get($input, 'add_unit', 1);
 
@@ -281,18 +283,17 @@ class AddonController extends MainController
 
         $unit_price = array_get($input, 'add_price', $item->rs_price);
 
-        // $gross = $unit_price * $unit;
-
         return (new BillItemRepository)->store([
-      'bili_resource' => $item->rs_id,
-      'bili_description' => $item->rs_name,
-      'bili_bill' => array_get($input, 'add_to_bill'),
-      'bili_unit_price' => $unit_price,
-      'bili_unit' => isset($item->rs_unit) ? $item->rs_unit : $unit,
-      'bili_date' => array_get($input, 'add_date')
-      // 'bili_gross' => $gross,
-      // 'bili_tax' => calcTax($gross),
-    ]);
+            'bili_resource' => $item->rs_id,
+            'bili_description' => $item->rs_name,
+            'bili_bill' => array_get($input, 'add_to_bill'),
+            'bili_unit_price' => $unit_price,
+            'bili_unit' => isset($item->rs_unit) ? $item->rs_unit : $unit,
+            'bili_date' => array_get($input, 'add_date'),
+            'bili_with_tax' => array_get($input, 'add_with_tax', in_array($booking->book_source, explode(',', env('SOURCES_WITHOUT_VAT'))) ? 0 : 1),
+            // 'bili_gross' => $gross,
+            // 'bili_tax' => calcTax($gross),
+            ]);
     }
 
     /**

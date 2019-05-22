@@ -67,11 +67,11 @@ class Bill extends TenantModel
     /**
      * Get the items of the bill
      */
-    public function items($printable = null)
+    public function items($vat = null)
     {
         $return = $this->hasMany(BillItem::class, 'bili_bill')->active();
 
-        return $printable ? $return->printable() : $return;
+        return !is_null($vat) ? $return->withTax($vat) : $return;
     }
 
     /**
@@ -160,23 +160,23 @@ class Bill extends TenantModel
         return $this->items()->join('resources', 'rs_id', 'bili_resource')->orderBy('rs_type')->get();
     }
 
-    public function getRoomItems($printable = null)
+    public function getRoomItems($vat = null)
     {
-        return $this->items($printable)->join('resources', 'rs_id', 'bili_resource')->where('rs_type', '=', 1)->orderBy('rs_type')->get();
+        return $this->items($vat)->join('resources', 'rs_id', 'bili_resource')->where('rs_type', '=', 1)->orderBy('rs_type')->get();
     }
 
-    public function getAddonItems($printable = null)
+    public function getAddonItems($vat = null)
     {
-        return $this->items($printable)->join('addons', 'add_bill_item', 'bili_id')->join('resources', 'rs_id', 'bili_resource')->where('rs_type', '!=', 1)->orderBy('bili_id', 'asc')->get(['resources.*', 'bill_items.*', 'addons.*']);
+        return $this->items($vat)->join('addons', 'add_bill_item', 'bili_id')->join('resources', 'rs_id', 'bili_resource')->where('rs_type', '!=', 1)->orderBy('bili_id', 'asc')->get(['resources.*', 'bill_items.*', 'addons.*']);
     }
 
     /**
      * Get the independent items of the bill
      * @return Collection
      */
-    public function indieItems($printable = null)
+    public function indieItems($vat = null)
     {
-        return $this->items($printable)->whereNull('bili_resource')->get();
+        return $this->items($vat)->whereNull('bili_resource')->get();
     }
 
     public function joinWithResources()

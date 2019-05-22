@@ -201,6 +201,36 @@ class BillController extends MainController
     }
 
     /**
+     * Print bill - with or without VAT
+     * @param  int $bil_id Bill id
+     * @return Response
+     */
+    public function downloadPrintVAT($bil_id, $vat = null)
+    {
+        $bill = $this->repo->findById($bil_id);
+
+        $ref = "#" . $bill->display_id;
+
+        $this->layout = 'layouts.print';
+
+        $title = trans('bill.print_title', ['no' => '']);
+
+        $items = $bill->getItems();
+
+        $room_items = $bill->getRoomItems($vat);
+
+        $addon_items = $bill->getAddonItems($vat)->groupBy('created_date_hour')->toArray();
+
+        $indie_items = $bill->indieItems($vat);
+
+        $resource_name = array_column(array_get($this->vdata, 'resource_types')->toArray(), 'rty_name', 'rty_id');
+
+        $this->vdata(compact('bill', 'title', 'items', 'room_items', 'addon_items', 'indie_items', 'resource_name', 'ref'));
+
+        return @PDF::loadView('bill.print_vat', $this->vdata)->stream(sprintf("bill-%s.pdf", $bill->bil_id));
+    }
+
+    /**
      * Export data
      * @param  Request $request
      * @return Response

@@ -39,20 +39,31 @@
         </div>
       </div>
       <div class="col-md-6">
-        <ul class="list-group">
-        <li class="list-group-item" v-for="item in items">
-          <div class="row">
-            <div class="col-md-5">@{{ item.text }}</div>
-            <div class="col-md-4">@{{ item.price }} x @{{ item.unit }}</div>
-            <div class="col-md-3">
-              <a href="#"><span @click="incrementItem(item)"><i class="fa fa-plus"></i></span></a>
-              <a href="#"><span @click="decrementItem(item)"><i class="fa fa-minus"></i></span></a>
-              <a href="#"><span @click="removeItem(item)"><i class="fa fa-trash"></i></span></a>
-            </div>
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="list-group">
+              <li class="list-group-item" v-for="item in items">
+                <div class="row">
+                  <div class="col-md-5">@{{ item.text }}</div>
+                  <div class="col-md-4">@{{ item.price }} x @{{ item.unit }}</div>
+                  <div class="col-md-3">
+                    <a href="#"><span @click="incrementItem(item)"><i class="fa fa-plus"></i></span></a>
+                    <a href="#"><span @click="decrementItem(item)"><i class="fa fa-minus"></i></span></a>
+                    <a href="#"><span @click="removeItem(item)"><i class="fa fa-trash"></i></span></a>
+                  </div>
+                </div>
+                <input type="hidden" name="addon_id[]" :value="item.json">
+              </li>
+            </ul>
           </div>
-          <input type="hidden" name="addon_id[]" :value="item.json">
-        </li>
-        </ul>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="add_tax" class="control-label">Tax?</label>
+            <bootstrap-toggler name="add_with_tax" v-model="add_with_tax" data-size="normal"/>
+          </div>
+        </div>
+
         <h4><span class="label label-success">Total: @{{ sum_amount }}</span></h4>
         {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
       </div>
@@ -75,7 +86,8 @@ var app2 = new Vue({
       sub_types: [],
       groupResources: [],
       gotonext: '{{ !empty($booking) ? urlTenant(sprintf("bookings/%s", $booking->book_id)) : '' }}',
-      reloadoncomplete: @if(empty($booking)) true @else false @endif
+      reloadoncomplete: @if(empty($booking)) true @else false @endif,
+      add_with_tax: true,
     },
 
     computed: {

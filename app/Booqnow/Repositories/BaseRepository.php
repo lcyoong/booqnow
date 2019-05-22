@@ -125,7 +125,9 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function store($input)
     {
-        $input = array_filter($input);
+        $input = array_filter($input, function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
 
         $this->validate($input);
 

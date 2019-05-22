@@ -34,7 +34,7 @@
   {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
   <a href="{{ url('bills') }}">{{ Form::button(trans('form.cancel'), ['class' => 'btn btn-primary btn-sm']) }}</a>
   <a :href="'{{ urlTenant("bills") }}/' + bill.bil_id + '/print?{{ str_random(40) }}'" target=_blank title="@lang('form.print')">{{ Form::button(trans('form.print'), ['class' => 'btn btn-primary btn-sm']) }}</a>
-  <a :href="'{{ urlTenant("bills") }}/' + bill.bil_id + '/printable?{{ str_random(40) }}'" target=_blank title="@lang('form.print')">{{ Form::button('Print Selective', ['class' => 'btn btn-primary btn-sm']) }}</a>
+  <!-- <a :href="'{{ urlTenant("bills") }}/' + bill.bil_id + '/printable?{{ str_random(40) }}'" target=_blank title="@lang('form.print')">{{ Form::button('Print Selective', ['class' => 'btn btn-primary btn-sm']) }}</a> -->
   </form-ajax>
   <hr/>
   <span class="label label-default">@{{ items.length }} @lang('bill.items')</span>
@@ -47,8 +47,9 @@
           <div class="col-md-1">@lang('bill.bili_unit')</div>
           <div class="col-md-1">@lang('bill.bili_unit_price') * @lang('bill.bili_unit')</div>
           <div class="col-md-2">@lang('bill.bili_date')</div>
-          <div class="col-md-1">@lang('form.print')</div>
+          <!-- <div class="col-md-1">@lang('form.print')</div> -->
           <div class="col-md-1">@lang('bill.bili_active')</div>
+          <div class="col-md-1">@lang('bill.bili_with_tax')</div>
           <div class="col-md-1"></div>
         </div>
 
@@ -62,8 +63,9 @@
           <div class="col-md-1">{{ Form::number('bili_unit', '', ['class' => 'form-control', 'v-model' => 'item.bili_unit', 'min' => 0, 'max' => 20]) }}</div>
           <div class="col-md-1">@{{ item.bili_unit_price * item.bili_unit }}</div>
           <div class="col-md-2">{{ Form::datepicker('bili_date', trans('bill.bili_date'), null, ['v-model' => 'item.bili_date']) }}</div>
-          <div class="col-md-1"><bootstrap-toggler name="bili_print" v-model="item.bili_print" data-size="normal"/></div>
+          <!-- <div class="col-md-1"><bootstrap-toggler name="bili_print" v-model="item.bili_print" data-size="normal"/></div> -->
           <div class="col-md-1"><bootstrap-toggler name="bili_active" v-model="item.bili_active" data-size="normal"/></div>
+          <div class="col-md-1"><bootstrap-toggler name="bili_with_tax" v-model="item.bili_with_tax" data-size="normal"/></div>
           <div class="col-md-1"><itemized :item = "item" class="form-control btn btn-primary" action="{{ urlTenant('bills/item/update') }}" @completesuccess="getList">Save</itemized></div>
         </div>
         <a v-if="item.addon && (item.resource.rs_type == 2 || item.resource.rs_type == 4)" v-modal :href="'{{ urlTenant('addons/edit/bill_item') }}/' + item.bili_id"><span style="font-size: 0.8em;"><i class="fa fa-link"></i> @{{ item.resource.rs_name }}</span></a>
