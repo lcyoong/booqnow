@@ -78,7 +78,10 @@
               @if($bill->bil_accounting == 1 && array_search($bill->booking->book_source, explode(",", env('BILL_TYPE_GUEST_HIDDEN', '6'))) !== FALSE)
               <a href="{{ urlTenant(sprintf("bills/%s/print/1?" . str_random(40), $bill->bil_id)) }}" target=_blank><button class="btn btn-primary btn-sm">Print Split</button></a>
               @endif
-              <a href="{{ urlTenant(sprintf("bills/%s/printable?" . str_random(40), $bill->bil_id)) }}" target=_blank><button class="btn btn-primary btn-sm">Print Selective</button></a>
+              @if(in_array($booking->book_source, explode(',', env('SOURCES_WITHOUT_VAT'))))
+              <a href="{{ urlTenant(sprintf("bills/%s/print_vat/1?" . str_random(40), $bill->bil_id)) }}" target=_blank><button class="btn btn-primary btn-sm">Print with VAT</button></a>
+              <a href="{{ urlTenant(sprintf("bills/%s/print_vat/0?" . str_random(40), $bill->bil_id)) }}" target=_blank><button class="btn btn-primary btn-sm">Print without VAT</button></a>
+              @endif
             </div>
           </div>
         </div>

@@ -26,6 +26,7 @@ return [
   'bili_unit' => 'Qty',
   'bili_gross' => 'Amount',
   'bili_tax' => 'Tax',
+  'bili_with_tax' => 'Tax?',
   'bili_active' => 'Active?',
   'bili_print' => 'Print?',
   'bili_date' => 'Date',

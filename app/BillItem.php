@@ -28,6 +28,15 @@ class BillItem extends TenantModel
     }
 
     /**
+     * Mutator to set the formatted receipt date
+     * @param string $value
+     */
+    public function setBiliWithTaxAttribute($value)
+    {
+        $this->attributes['bili_with_tax'] = ($value === 'on' || $value === 1 || $value === true) ? 1 : 0;
+    }
+
+    /**
      * Get the bill of the bill item
      */
     public function bill()
@@ -73,6 +82,15 @@ class BillItem extends TenantModel
      * Accessor to get the on/off status
      * @return numeric
      */
+    // public function getBiliWithTaxAttribute($value)
+    // {
+    //     return $value == 1 ? true : false;
+    // }
+
+    /**
+     * Accessor to get the on/off status
+     * @return numeric
+     */
     public function getCreatedDateAttribute($value)
     {
         return Carbon::parse($this->attributes['created_at'])->format('d-m-Y');
@@ -96,6 +114,12 @@ class BillItem extends TenantModel
     {
         return $query->where('bili_print', '=', 1);
     }
+
+    public function scopeWithTax($query, $tax)
+    {
+        return $query->where('bili_with_tax', '=', $tax);
+    }
+
     // /**
     //  * Accessor to set the gross amount
     //  * @return numeric
@@ -121,7 +145,7 @@ class BillItem extends TenantModel
         static::saving(function ($post) {
             $post->bili_gross = $post->bili_unit * $post->bili_unit_price;
 
-            if ($post->bill->bil_with_tax == 1) {
+            if ($post->bili_with_tax == 1) {
                 $post->bili_tax = calcTax($post->bili_gross);
             } else {
                 $post->bili_tax = 0;

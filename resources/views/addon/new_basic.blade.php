@@ -21,9 +21,13 @@
     {{ Form::hidden('add_unit', 1) }}
     <div class="row">
       {{ Form::bsSelect2('add_resource', trans('addon.add_resource'), [':options' => 'resources', 'style' => 'width: 100%', 'v-model' => 'add_resource', '@input' => 'updatePrice']) }}
-      {{ Form::bsNumber('add_pax', trans('addon.add_pax'), 1, ['min' => 1, 'max'=>20]) }}
-      {{ Form::bsNumber('add_pax_child', trans('addon.add_pax_child'), 0, ['min' => 0, 'max'=>20]) }}
-      {{ Form::bsText('add_price', trans('resource.rs_price'), null, ['v-model' => 'add_price']) }}
+      {{ Form::bsNumber('add_pax', trans('addon.add_pax'), 1, ['min' => 1, 'max'=>20], 2) }}
+      {{ Form::bsNumber('add_pax_child', trans('addon.add_pax_child'), 0, ['min' => 0, 'max'=>20], 2) }}
+      {{ Form::bsText('add_price', trans('resource.rs_price'), null, ['v-model' => 'add_price'], 2) }}
+      <div class="col-md-1">
+        <label for="add_tax" class="control-label">Tax</label>
+        <bootstrap-toggler name="add_with_tax" v-model="add_with_tax" data-size="normal"/>
+      </div>
     </div>
     <div class="row">
       {{ Form::bsDate('add_date', trans('addon.add_date'), $resource_type->rty_id == 4 && !empty($booking) ? Carbon\Carbon::parse($booking->book_from)->format('d-m-Y') : today('d-m-Y'), ['class' => 'datetimepicker form-control']) }}
@@ -45,6 +49,7 @@
 
     data: {
       add_price: 0,
+      add_with_tax: true,
       resources: [],
       add_resource: '',
       gotonext: '{{ !empty($booking) ? urlTenant(sprintf("bookings/%s", $booking->book_id)) : '' }}',
