@@ -225,7 +225,7 @@ class BillController extends MainController
 
         $resource_name = array_column(array_get($this->vdata, 'resource_types')->toArray(), 'rty_name', 'rty_id');
 
-        $this->vdata(compact('bill', 'title', 'items', 'room_items', 'addon_items', 'indie_items', 'resource_name', 'ref'));
+        $this->vdata(compact('bill', 'title', 'items', 'room_items', 'addon_items', 'indie_items', 'resource_name', 'ref', 'vat'));
 
         return @PDF::loadView('bill.print_vat', $this->vdata)->stream(sprintf("bill-%s.pdf", $bill->bil_id));
     }
