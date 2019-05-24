@@ -208,9 +208,9 @@ class AddonController extends MainController
 
             $accounting = $resource->resourceType->accounting;
 
-            $booking = (new BookingRepository)->findById(array_get($input, 'add_booking'));
-
             if (empty($input['add_to_bill'])) {
+                $booking = (new BookingRepository)->findById(array_get($input, 'add_booking'));
+                
                 $new_bill = (new BillRepository)->store([
                     'bil_customer' => array_get($input, 'add_customer'),
                     'bil_customer_name' => array_get($input, 'bil_customer_name'),
@@ -228,7 +228,7 @@ class AddonController extends MainController
                 $input['add_to_bill'] = $new_bill->bil_id;
             }
 
-            $new_bill_item = $this->createBillItem($resource, $input, $booking);
+            $new_bill_item = $this->createBillItem($resource, $input);
 
             $input['add_bill_item'] = $new_bill_item->bili_id;
 
@@ -248,12 +248,12 @@ class AddonController extends MainController
         $input = $request->input();
 
         DB::transaction(function () use ($input) {
-            $bill = (new BillRepository)->findById(array_get($input, 'add_to_bill'));
+            // $bill = (new BillRepository)->findById(array_get($input, 'add_to_bill'));
 
             foreach ($input['addon_id'] as $content) {
                 $item = json_decode($content);
 
-                $new_bill_item = $this->createBillItem($item, $input, $bill->booking);
+                $new_bill_item = $this->createBillItem($item, $input);
 
                 $input['add_bill_item'] = $new_bill_item->bili_id;
                 $input['add_resource'] = $item->rs_id;
@@ -275,7 +275,7 @@ class AddonController extends MainController
      * @param  array $input Input from user form
      * @return Response
      */
-    private function createBillItem($item, $input, $booking)
+    private function createBillItem($item, $input)
     {
         // $unit = array_get($input, 'add_unit', 1);
 
@@ -290,7 +290,7 @@ class AddonController extends MainController
             'bili_unit_price' => $unit_price,
             'bili_unit' => isset($item->rs_unit) ? $item->rs_unit : $unit,
             'bili_date' => array_get($input, 'add_date'),
-            'bili_with_tax' => array_get($input, 'add_with_tax', in_array($booking->book_source, explode(',', env('SOURCES_WITHOUT_VAT'))) ? 0 : 1),
+            'bili_with_tax' => array_get($input, 'add_with_tax', 0),
             // 'bili_gross' => $gross,
             // 'bili_tax' => calcTax($gross),
             ]);
