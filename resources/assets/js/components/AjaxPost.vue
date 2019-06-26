@@ -19,12 +19,12 @@
       ajaxPost: function(e) {
         var el = e.target;
 
-        var formData = new FormData(el);
+        //var formData = new FormData(el);
 
         console.log(el);
 
         this
-          .$http.post(this.postTo, formData)
+          .$http.post(this.postTo)
           .then(this.onComplete.bind(this))
           .catch(this.onError.bind(this));
       },
