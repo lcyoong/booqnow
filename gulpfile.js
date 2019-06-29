@@ -57,6 +57,8 @@ elixir(mix => {
 
     mix.sass('app.scss');
 
+    mix.webpack('app.js');
+
     mix.styles([
       'public/css/app.css',
       'resources/assets/css/fullcalendar.css',
