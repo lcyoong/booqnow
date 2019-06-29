@@ -21,7 +21,7 @@
 
         //var formData = new FormData(el);
 
-        console.log(el);
+        //console.log(el);
 
         this
           .$http.post(this.postTo)
