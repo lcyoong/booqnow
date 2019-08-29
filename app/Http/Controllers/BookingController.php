@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use DB;
+use Filters\BookingFilter;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Repositories\AgentRepository;
+use Repositories\BillItemRepository;
+use Repositories\BillRepository;
 use Repositories\BookingRepository;
 use Repositories\ResourceRepository;
-use Repositories\BillRepository;
-use Repositories\AddonRepository;
-use Repositories\CustomerRepository;
-use Repositories\BillItemRepository;
-use Repositories\AgentRepository;
-use Filters\BookingFilter;
-use GuzzleHttp\Client;
-use DB;
-use Carbon\Carbon;
 
 class BookingController extends MainController
 {
@@ -96,7 +91,6 @@ class BookingController extends MainController
         return view('booking.new_basic', $this->vdata);
     }
 
-
     /**
      * Display edit booking form
      * @param  int $id - Booking id
@@ -105,10 +99,10 @@ class BookingController extends MainController
     public function edit(Request $request, $book_id)
     {
         $redirect_to_date = $request->redirect_to_date;
-        
+
         $booking = $this->repo_book->findById($book_id);
 
-        $rooms = (new ResourceRepository)->ofType(1)->getDropDown('rs_id', 'rs_name');
+        $rooms = (new ResourceRepository)->ofType(1)->ofStatus('active')->getDropDown('rs_id', 'rs_name');
 
         $agents = $this->agents('agents');
 
@@ -200,9 +194,9 @@ class BookingController extends MainController
         }
 
         // $slot['resource'] =  session('booking.resource');
-        $slot['start'] =  session('booking.start');
-        $slot['end'] =  session('booking.end');
-        $slot['resource_id'] =  session('booking.resource');
+        $slot['start'] = session('booking.start');
+        $slot['end'] = session('booking.end');
+        $slot['resource_id'] = session('booking.resource');
 
         return $slot;
     }
@@ -297,16 +291,16 @@ class BookingController extends MainController
             $accounting = $new_booking->resource->resourceType->accounting;
 
             $new_bill = (new BillRepository)->store([
-        'bil_customer' => array_get($input, 'book_customer'),
-        'bil_customer_name' => array_get($input, 'bil_customer_name'),
-        'bil_booking' => $new_booking->book_id,
-        'bil_accounting' => $accounting->acc_id,
-        'bil_description' => $accounting->acc_bill_description,
-        // 'bil_date' => date('Y-m-d'),
-        // 'bil_due_date' => date('Y-m-d'),
-        'bil_date' => Carbon::parse($new_booking->book_from)->format('Y-m-d'),
-        'bil_due_date' => Carbon::parse($new_booking->book_from)->format('Y-m-d'),
-      ]);
+                'bil_customer' => array_get($input, 'book_customer'),
+                'bil_customer_name' => array_get($input, 'bil_customer_name'),
+                'bil_booking' => $new_booking->book_id,
+                'bil_accounting' => $accounting->acc_id,
+                'bil_description' => $accounting->acc_bill_description,
+                // 'bil_date' => date('Y-m-d'),
+                // 'bil_due_date' => date('Y-m-d'),
+                'bil_date' => Carbon::parse($new_booking->book_from)->format('Y-m-d'),
+                'bil_due_date' => Carbon::parse($new_booking->book_from)->format('Y-m-d'),
+            ]);
 
             $bili_bill = $new_bill->bil_id;
         } else {
