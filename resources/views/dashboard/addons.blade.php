@@ -31,7 +31,8 @@
                 <div style="font-size: 0.8em;"><i class="fa fa-comment"></i> {{ $addon->add_remarks }}</div>
                 @endif
               </td>
-              <td class="col-md-2">{{ $addon->add_pax }} @lang('addon.add_pax') + {{ $addon->add_pax_child }} @lang('addon.add_pax_child_simple')</td>
+              <!-- <td class="col-md-2">{{ $addon->add_pax }} @lang('addon.add_pax') + {{ $addon->add_pax_child }} @lang('addon.add_pax_child_simple')</td> -->
+              <td class="col-md-2">{{ $addon->add_pax }}</td>
               <td class="col-md-2">{{ $addon->add_status }} <a href="{{ urlTenant("/addons/edit/{$addon->add_id}") }}" v-modal><i class="fa fa-edit"></i></a></td>
             </tr>
           @endforeach

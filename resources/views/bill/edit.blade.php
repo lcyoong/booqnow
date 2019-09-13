@@ -74,7 +74,7 @@
           <div class="row" style="font-size: 0.8em;">
             <div class="col-md-2">@lang('addon.add_date')<div class="value">@{{ item.addon.add_date }}</div></div>
             <div class="col-md-2">@lang('addon.add_pax')<div class="value">@{{ item.addon.add_pax }}</div></div>
-            <div class="col-md-2">@lang('addon.add_pax_child')<div class="value">@{{ item.addon.add_pax_child }}</div></div>
+            <!-- <div class="col-md-2">@lang('addon.add_pax_child')<div class="value">@{{ item.addon.add_pax_child }}</div></div> -->
             <div class="col-md-2">@lang('addon.add_remarks')<div class="value">@{{ item.addon.add_remarks }}</div></div>
             <div class="col-md-2">@lang('addon.add_agent')<div class="value">@{{ item.addon.add_agent }}</div></div>
             <div class="col-md-2">@lang('addon.add_status')<div class="value">@{{ item.addon.add_status }}</div></div>

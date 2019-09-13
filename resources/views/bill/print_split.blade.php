@@ -76,7 +76,8 @@
       <tr>
         <td>{{ $item['bili_description'] }}
           @if($item['rs_type'] == 2 || $item['rs_type'] == 4)
-          <br/>{{ Carbon\Carbon::parse($item['add_date'])->format('d M Y H:i') }} ({{ $item['add_pax'] }} adults, {{ $item['add_pax_child'] }} children)
+          <!-- <br/>{{ Carbon\Carbon::parse($item['add_date'])->format('d M Y H:i') }} ({{ $item['add_pax'] }} adults, {{ $item['add_pax_child'] }} children) -->
+          <br/>{{ Carbon\Carbon::parse($item['add_date'])->format('d M Y H:i') }}
           @endif
         </td>
         <td class="text-center">{{ $item['bili_unit'] }}</td>
