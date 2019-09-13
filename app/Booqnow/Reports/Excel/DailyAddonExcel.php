@@ -2,139 +2,136 @@
 
 namespace Reports;
 
-use App\Events\ReportCreated;
-use DB;
-use Excel;
-use Repositories\AddonRepository;
-use Filters\AddonFilter;
 use Carbon\Carbon;
+use Excel;
+use Filters\AddonFilter;
+use Repositories\AddonRepository;
 
 class DailyAddonExcel extends ExcelReport
 {
-  protected $filter;
+    protected $filter;
 
-  protected $data;
+    protected $data;
 
-  protected $type;
+    protected $type;
 
-  protected $title;
+    protected $title;
 
-  public function __construct($report, $type, $title)
-  {
-    parent::__construct($report->rep_function);
-
-    $this->type = $type;
-
-    $this->title = $title;
-
-    $this->filter = array_filter(unserialize($report->rep_filter));
-  }
-
-  /**
-   * Handle report generation
-   * @return void
-   */
-  public function handle()
-  {
-    Excel::create($this->reportname, function($excel) {
-
-      $excel->sheet('Sheet1', function($sheet) {
-
-        $this->sheet = $sheet;
-
-        $this->setting();
-
-        $this->header();
-
-        $this->getData();
-
-        $this->content();
-
-        $this->footer();
-
-  		});
-		})->store($this->ext);
-  }
-
-  /**
-   * Report header
-   * @return void
-   */
-  protected function header()
-  {
-    // title
-    $this->sheet->getStyle("A1")->getFont()->setSize(18);
-
-    $this->fillRow([$this->title]);
-
-    $this->fillRow(['Filter : ' . implode(' , ', $this->filter)]);
-
-    $this->fillRow(
-      [
-        trans('addon.add_date'),
-        trans('addon.add_resource'),
-        trans('addon.add_customer_name'),
-        trans('addon.add_booking'),
-        trans('addon.add_pax'),
-        trans('addon.add_pax_child_simple'),
-        trans('addon.add_agent'),
-        trans('addon.add_remarks'),
-        trans('resource.rs_price'),
-      ], 1
-    );
-  }
-
-  /**
-   * Report income section
-   * @return void
-   */
-  protected function content()
-  {
-    $break_date = null;
-
-    foreach ($this->data as $record)
+    public function __construct($report, $type, $title)
     {
-      $this->breakDate($break_date, $record->add_date);
-      $row = [];
-      $row[] = $record->add_date;
-      $row[] = $record->resource->rs_name;
-      $row[] = $record->add_customer_name;
-      $row[] = !empty($record->add_booking) ? showBookingNo($record->add_booking) : 'Walk-in';
-      $row[] = $record->add_pax;
-      $row[] = $record->add_pax_child;
-      $row[] = isset($record->agent) ? $record->agent->ag_name : '';
-      $row[] = $record->add_remarks;
-      $row[] = $record->bill_item->bili_gross;
-      $this->fillRow($row);
+        parent::__construct($report->rep_function);
 
+        $this->type = $type;
+
+        $this->title = $title;
+
+        $this->filter = array_filter(unserialize($report->rep_filter));
     }
-  }
 
-  /**
-   * Get the data for report
-   * @return void
-   */
-  protected function getData()
-  {
-    $filters = new AddonFilter($this->filter + ['resourceType' => $this->type, 'ofStatus' => 'active']);
+    /**
+     * Handle report generation
+     * @return void
+     */
+    public function handle()
+    {
+        Excel::create($this->reportname, function ($excel) {
 
-    $this->data = (new AddonRepository)->with(['resource', 'agent'])->get($filters, 0, ['add_date' => 'asc']);
-  }
+            $excel->sheet('Sheet1', function ($sheet) {
 
-  /**
-   * Insert new row on break date
-   * @param  string $date1  First date
-   * @param  string $date2  Second date
-   * @return void
-   */
-  protected function breakDate(&$date1, $date2)
-  {
-    if ($date1 != Carbon::parse($date2)->format('Y-m-d')) {
+                $this->sheet = $sheet;
 
-      $date1 = Carbon::parse($date2)->format('Y-m-d');
+                $this->setting();
 
-      $this->fillRow([]);
+                $this->header();
 
+                $this->getData();
+
+                $this->content();
+
+                $this->footer();
+
+            });
+        })->store($this->ext);
     }
-  }
+
+    /**
+     * Report header
+     * @return void
+     */
+    protected function header()
+    {
+        // title
+        $this->sheet->getStyle("A1")->getFont()->setSize(18);
+
+        $this->fillRow([$this->title]);
+
+        $this->fillRow(['Filter : ' . implode(' , ', $this->filter)]);
+
+        $this->fillRow(
+            [
+                trans('addon.add_date'),
+                trans('addon.add_resource'),
+                trans('addon.add_customer_name'),
+                trans('addon.add_booking'),
+                trans('addon.add_pax'),
+                // trans('addon.add_pax_child_simple'),
+                trans('addon.add_agent'),
+                trans('addon.add_remarks'),
+                trans('resource.rs_price'),
+            ], 1
+        );
+    }
+
+    /**
+     * Report income section
+     * @return void
+     */
+    protected function content()
+    {
+        $break_date = null;
+
+        foreach ($this->data as $record) {
+            $this->breakDate($break_date, $record->add_date);
+            $row = [];
+            $row[] = $record->add_date;
+            $row[] = $record->resource->rs_name;
+            $row[] = $record->add_customer_name;
+            $row[] = !empty($record->add_booking) ? showBookingNo($record->add_booking) : 'Walk-in';
+            $row[] = $record->add_pax;
+            // $row[] = $record->add_pax_child;
+            $row[] = isset($record->agent) ? $record->agent->ag_name : '';
+            $row[] = $record->add_remarks;
+            $row[] = $record->bill_item->bili_gross;
+            $this->fillRow($row);
+
+        }
+    }
+
+    /**
+     * Get the data for report
+     * @return void
+     */
+    protected function getData()
+    {
+        $filters = new AddonFilter($this->filter + ['resourceType' => $this->type, 'ofStatus' => 'active']);
+
+        $this->data = (new AddonRepository)->with(['resource', 'agent'])->get($filters, 0, ['add_date' => 'asc']);
+    }
+
+    /**
+     * Insert new row on break date
+     * @param  string $date1  First date
+     * @param  string $date2  Second date
+     * @return void
+     */
+    protected function breakDate(&$date1, $date2)
+    {
+        if ($date1 != Carbon::parse($date2)->format('Y-m-d')) {
+
+            $date1 = Carbon::parse($date2)->format('Y-m-d');
+
+            $this->fillRow([]);
+
+        }
+    }
 }

@@ -5,7 +5,7 @@
       <th>@lang('addon.add_date')</th>
       <!-- <th>@lang('addon.add_pax')</th> -->
       <th>@lang('addon.add_pax')</th>
-      <th>@lang('addon.add_pax_child')</th>
+      <!-- <th>@lang('addon.add_pax_child')</th> -->
       <th>@lang('addon.add_remarks')</th>
       <th>@lang('addon.add_agent')</th>
       <th>@lang('addon.add_status')</th>
@@ -19,7 +19,7 @@
         <td>{{ showDateTime($item->add_date) }}</td>
         <!-- <td>{{ $item->add_pax }}</td> -->
         <td>{{ $item->add_pax }}</td>
-        <td>{{ $item->add_pax_child }}</td>
+        <!-- <td>{{ $item->add_pax_child }}</td> -->
         <td>{{ $item->add_remarks }}</td>
         <td>{{ isset($item->agent) ? $item->agent->ag_name : trans('form.na') }}</td>
         <td>{{ $add_status[$item->add_status] }}</td>

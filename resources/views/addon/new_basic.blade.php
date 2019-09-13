@@ -22,7 +22,7 @@
     <div class="row">
       {{ Form::bsSelect2('add_resource', trans('addon.add_resource'), [':options' => 'resources', 'style' => 'width: 100%', 'v-model' => 'add_resource', '@input' => 'updatePrice']) }}
       {{ Form::bsNumber('add_pax', trans('addon.add_pax'), 1, ['min' => 1, 'max'=>20], 2) }}
-      {{ Form::bsNumber('add_pax_child', trans('addon.add_pax_child'), 0, ['min' => 0, 'max'=>20], 2) }}
+      {{-- Form::bsNumber('add_pax_child', trans('addon.add_pax_child'), 0, ['min' => 0, 'max'=>20], 2) --}}
       {{ Form::bsText('add_price', trans('resource.rs_price'), null, ['v-model' => 'add_price'], 2) }}
       <div class="col-md-1">
         <label for="add_tax" class="control-label">Tax</label>

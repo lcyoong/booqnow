@@ -6,7 +6,7 @@
     {{ Form::hidden('add_id', $addon->add_id) }}
     <div class="row">
       {{ Form::bsNumber('add_pax', trans('addon.add_pax'), null, ['min' => 1, 'max'=>20, 'v-model' => 'addon.add_pax']) }}
-      {{ Form::bsNumber('add_pax_child', trans('addon.add_pax_child'), null, ['min' => 0, 'max'=>20, 'v-model' => 'addon.add_pax_child']) }}
+      {{-- Form::bsNumber('add_pax_child', trans('addon.add_pax_child'), null, ['min' => 0, 'max'=>20, 'v-model' => 'addon.add_pax_child']) --}}
       {{ Form::bsSelect('add_status', trans('addon.add_status'), $add_status, $addon->add_status, ['class' => 'form-control']) }}
     </div>
     <div class="row">
