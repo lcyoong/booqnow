@@ -2,11 +2,12 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Events\BookingCancelled;
 use App\Traits\AuditTrailRelationship;
 use App\Traits\CommentRelationship;
 use Carbon\Carbon;
-use App\Events\BookingCancelled;
+use Illuminate\Database\Eloquent\Builder;
+use App\Events\BookingNightChanged;
 
 class Booking extends TenantModel
 {
@@ -64,6 +65,16 @@ class Booking extends TenantModel
     public function addons()
     {
         return $this->hasMany(Addon::class, 'add_booking');
+    }
+
+    /**
+     * Get the room bill item
+     */
+    public function room_bill_item()
+    {
+        return $this->hasManyThrough(BillItem::class, 'App\Bill', 'bil_booking', 'bili_bill', 'book_id', 'bil_id')->whereHas('resource', function($query) {
+            $query->where('rs_type', '=', 1);
+        });
     }
 
     /**
@@ -251,6 +262,15 @@ class Booking extends TenantModel
             if (array_get($post['original'], 'book_status') !== 'cancelled' && $post->book_status === 'cancelled') {
                 event(new BookingCancelled($post));
             }
+        });
+
+        Self::updated(function ($model) {
+            $original = $model->getOriginal();
+
+            if ($original['book_from'] != $model->book_from || $original['book_to'] != $model->book_to) {
+                event(new BookingNightChanged($model));
+            }
+
         });
     }
 }

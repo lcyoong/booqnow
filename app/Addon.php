@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\AuditTrailRelationship;
 use Carbon\Carbon;
+use App\Events\AddonPaxChanged;
 
 class Addon extends TenantModel
 {
@@ -118,5 +119,15 @@ class Addon extends TenantModel
       //
       // }
         });
+
+        Self::updated(function ($model) {
+            $original = $model->getOriginal();
+
+            if ($original['add_pax'] != $model->add_pax) {
+                event(new AddonPaxChanged($model));
+            }
+
+        });
+
     }
 }
