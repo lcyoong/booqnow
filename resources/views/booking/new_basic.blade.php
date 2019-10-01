@@ -48,7 +48,7 @@
       <!-- {{ Form::bsText('book_tracking', trans('booking.book_tracking')) }} -->
     </div>
     <div class="row">
-      {{ Form::bsDate('book_expiry', trans('booking.book_expiry'), date('d-m-Y 11:59'), ['class' => 'datetimepicker form-control']) }}
+      {{ Form::bsDate('book_expiry', trans('booking.book_expiry'), \Carbon\Carbon::today()->addDays(5)->format('d-m-Y'), ['class' => 'datetimepicker form-control']) }}
       {{ Form::bsText('book_reference', trans('booking.book_reference')) }}
       {{ Form::bsSelect('book_lead_from', trans('booking.book_lead_from'), $book_leads) }}
       <div class="col-md-3">
