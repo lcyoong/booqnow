@@ -28,7 +28,7 @@ class ReceiptRepository extends BaseRepository {
 
   public function depositByMonth($year)
   {
-    $this->status('active')->ofType(['deposit'])->ofYear($year);
+    $this->status('active')->ofType('deposit')->ofYear($year);
 
     return $this->repo->select(DB::raw("month(rc_date) as mth, sum(rc_amount) as total"))
                 ->filter($this->filter)
@@ -37,7 +37,7 @@ class ReceiptRepository extends BaseRepository {
 
   public function depositByBookedMonth($year)
   {
-    $this->status('active')->ofType(['deposit'])->ofYear($year);
+    $this->status('active')->ofType('deposit')->ofYear($year);
 
     return $this->repo->select(DB::raw("month(book_from) as mth, sum(rc_amount) as total"))
                 ->filter($this->filter)

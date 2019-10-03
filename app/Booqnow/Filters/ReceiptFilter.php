@@ -20,6 +20,22 @@ class ReceiptFilter extends QueryFilter
   }
 
   /**
+   * Booking status filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function book_status($value = '')
+  {
+    if (!empty($value)) {
+
+      $this->joins[] = 'joinBills';
+      $this->joins[] = 'joinBookings';
+
+      return $this->builder->where("book_status", "=", $value);
+    }
+  }
+
+  /**
    * Bill no filter
    * @param  string $value
    * @return Builder
@@ -95,7 +111,7 @@ class ReceiptFilter extends QueryFilter
   public function ofType($value)
   {
     if (!empty($value)) {
-      return $this->builder->whereIn('rc_type', $value);
+      return $this->builder->where('rc_type', '=', $value);
     }
   }
 
@@ -117,4 +133,12 @@ class ReceiptFilter extends QueryFilter
     $this->builder->join('bills', 'bil_id', 'rc_bill');
   }
 
+  /**
+   * Join bookings to query
+   * @return Builder
+   */
+  public function joinBookings()
+  {
+    $this->builder->join('bookings', 'book_id', 'bil_booking');
+  }  
 }
