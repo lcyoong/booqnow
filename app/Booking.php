@@ -77,6 +77,11 @@ class Booking extends TenantModel
         });
     }
 
+    public function room()
+    {
+        return $this->hasOne(Resource::class, 'rs_id', 'book_resource');
+    }
+
     /**
      * Get the booking total bill outstanding amount
      * @return numeric
