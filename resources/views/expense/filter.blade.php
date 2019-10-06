@@ -7,6 +7,10 @@
   {{ Form::filterSelect('category', trans('expense.exp_category'), $category, array_get($filter, 'category'), ['class' => 'select2 form-control']) }}
   {{ Form::filterSelect('status', trans('expense.exp_status'), $rs_status, array_get($filter, 'status'), ['class' => 'select2 form-control']) }}
 </div>
+<div class="row">
+  {{ Form::filterText('payable', trans('expense.exp_payable'), array_get($filter, 'payable'), ['placeholder' => trans('expense.exp_payable')]) }}
+  {{ Form::filterSelect('method', trans('expense.exp_method'), $pay_methods, array_get($filter, 'method'), ['class' => 'select2 form-control']) }}
+</div>
 {{ Form::submit(trans('form.filter'), ['class' => 'btn btn-primary btn-sm']) }}
 <a href="{{ url('expenses') }}">{{ Form::button(trans('form.clear'), ['class' => 'btn btn-primary btn-sm']) }}</a>
 {{ Form::close() }}

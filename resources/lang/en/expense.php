@@ -14,4 +14,6 @@ return [
   'exp_date_start' => 'From date',
   'exp_date_end' => 'To date',
   'exp_amount' => 'Amount',
+  'exp_payable' => 'Payable To',
+  'exp_method' => 'Payment Channel',
 ];

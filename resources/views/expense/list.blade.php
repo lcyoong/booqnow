@@ -15,6 +15,8 @@
         <th>@lang('expense.exp_category')</th>
         <th>@lang('expense.exp_memo')</th>
         <th>@lang('expense.exp_account')</th>
+        <th>@lang('expense.exp_payable')</th>
+        <th>@lang('expense.exp_method')</th>
         <th>@lang('expense.exp_status')</th>
         <th>@lang('form.actions')</th>
       </tr>
@@ -29,6 +31,8 @@
           <td>{{ $item->exp_category }} - {{ $category[$item->exp_category] }}</td>
           <td>{{ $item->exp_memo }}</td>
           <td>{{ array_get($account, $item->exp_account, '') }}</td>
+          <td>{{ $item->exp_payable }}</td>
+          <td>{{ $pay_methods[$item->exp_method] ?? '' }}</td>
           <td>{{ $item->exp_status }}</td>
           <td>
             <a v-modal href="{{ url(sprintf('expenses/%s/edit', $item->exp_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>
