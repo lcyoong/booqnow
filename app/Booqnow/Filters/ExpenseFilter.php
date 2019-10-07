@@ -82,4 +82,27 @@ class ExpenseFilter extends QueryFilter
     }
   }
 
+  /**
+   * Payable filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function payable($value = '')
+  {
+    if (!empty($value)) {
+      return $this->builder->where("exp_payable", 'like', "%$value%");
+    }
+  }
+
+  /**
+   * Method filter
+   * @param  string $value
+   * @return Builder
+   */
+  public function method($value = '')
+  {
+    if (!empty($value)) {
+      return $this->builder->where("exp_method", '=', $value);
+    }
+  }  
 }
