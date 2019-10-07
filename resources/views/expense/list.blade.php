@@ -32,7 +32,7 @@
           <td>{{ $item->exp_memo }}</td>
           <td>{{ array_get($account, $item->exp_account, '') }}</td>
           <td>{{ $item->exp_payable }}</td>
-          <td>{{ $pay_methods[$item->exp_method] ?? '' }}</td>
+          <td>{{ $exp_methods[$item->exp_method] ?? '' }}</td>
           <td>{{ $item->exp_status }}</td>
           <td>
             <a v-modal href="{{ url(sprintf('expenses/%s/edit', $item->exp_id)) }}" title="@lang('form.edit')"><i class="fa fa-edit"></i></a>

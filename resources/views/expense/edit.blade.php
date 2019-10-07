@@ -16,7 +16,7 @@
     {{ Form::bsSelect('exp_status', trans('expense.exp_status'), $rs_status, $expense->exp_status) }}
   </div>
   <div class="row">
-    {{ Form::bsSelect('exp_method', trans('expense.exp_method'), $pay_methods, $expense->exp_method, ['class' => 'form-control select2']) }}
+    {{ Form::bsSelect('exp_method', trans('expense.exp_method'), $exp_methods, $expense->exp_method, ['class' => 'form-control select2']) }}
     {{ Form::bsText('exp_payable', trans('expense.exp_payable'), $expense->exp_payable) }}
   </div>
   <div class="row">

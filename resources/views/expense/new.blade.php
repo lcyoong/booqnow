@@ -12,7 +12,7 @@
   <div class="row">
     {{ Form::bsSelect('exp_account', trans('expense.exp_account'), $account) }}
     {{ Form::bsSelect('exp_category', trans('expense.exp_category'), $category, null, ['class' => 'form-control select2']) }}
-    {{ Form::bsSelect('exp_method', trans('expense.exp_method'), $pay_methods, null, ['class' => 'form-control select2']) }}
+    {{ Form::bsSelect('exp_method', trans('expense.exp_method'), $exp_methods, null, ['class' => 'form-control select2']) }}
     {{ Form::bsText('exp_payable', trans('expense.exp_payable')) }}
   </div>
   {{ Form::submit(trans('form.save'), ['class' => 'btn btn-primary btn-sm', ':disabled' => 'waiting']) }}
