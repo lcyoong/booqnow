@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 // use Contracts\ReportLogInterface;
-use App\Http\Requests;
-use Reports\ProfitLossExcel;
-use Repositories\ReportRepository;
-// use App\Events\ReportRequested;
 use App\Jobs\ProcessReport;
+use Illuminate\Http\Request;
+// use App\Events\ReportRequested;
+use Repositories\ReportRepository;
+use Repositories\ExpenseCategoryRepository;
 use Storage;
 
 class ReportController extends MainController
@@ -272,6 +271,28 @@ class ReportController extends MainController
         $this->vdata(compact('list', 'type'));
 
         return view('report.export_receipts', $this->vdata);
+    }
+
+    /**
+     * Export expenses display form
+     * @param  Request $request
+     * @return Response
+     */
+    public function exportExpenses(Request $request)
+    {
+        $type = 'export_expenses';
+
+        $category = (new ExpenseCategoryRepository)->getDropDown('exc_id', 'exc_name');
+
+        $this->filter = $request->input();
+
+        $this->page_title = trans('report.export_expenses_title');
+
+        $list = $this->repo->ofType('export_expenses')->getPages();
+
+        $this->vdata(compact('list', 'type', 'category'));
+
+        return view('report.export_expenses', $this->vdata);
     }
 
     /**

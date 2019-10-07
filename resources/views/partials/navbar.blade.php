@@ -56,6 +56,7 @@
             <li role="separator" class="divider"></li>
             <li><a href="{{ urlTenant('reports/export_bills') }}">@lang('report.export_bills_title')</a></li>
             <li><a href="{{ urlTenant('reports/export_receipts') }}">@lang('report.export_receipts_title')</a></li>
+            <li><a href="{{ urlTenant('reports/export_expenses') }}">@lang('report.export_expenses_title')</a></li>
           </ul>
         </li>
         @endpermitted

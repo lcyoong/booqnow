@@ -9,7 +9,7 @@
 | by your application. Just tell Laravel the URIs it should respond
 | to using a Closure or controller method. Build something great!
 |
-*/
+ */
 
 // Route::model('merchant', 'App\Merchant');
 // Route::model('resource_type', 'App\ResourceType');
@@ -80,7 +80,6 @@ function tenantRoutes()
         Route::get('/{order}', 'PosController@order');
     });
 
-
     Route::group(['middleware' => ['permitted:resource'], 'prefix' => '/resource_sub_types'], function () {
         Route::get('/', 'ResourceSubTypeController@index');
         Route::get('/new', 'ResourceSubTypeController@create');
@@ -108,7 +107,6 @@ function tenantRoutes()
         Route::post('/pricing/tier/{resource_pricing_tier}/delete', 'ResourcePricingTierController@delete');
     });
 
-
     Route::group(['middleware' => ['permitted:customer'], 'prefix' => '/customers'], function () {
         Route::get('/', 'CustomerController@index');
         Route::get('/new', 'CustomerController@create');
@@ -120,7 +118,6 @@ function tenantRoutes()
 
     // Route::get('customers/{customer}/comments', 'CustomerController@comments');
     // Route::post('comments/customer/{id}', 'CustomerController@storeComment');
-
 
     Route::group(['middleware' => ['permitted:booking'], 'prefix' => '/bookings'], function () {
         Route::get('/', 'BookingController@index');
@@ -234,6 +231,7 @@ function tenantRoutes()
         Route::get('/cash_received', 'ReportController@cashReceived');
         Route::get('/export_bills', 'ReportController@exportBills');
         Route::get('/export_receipts', 'ReportController@exportReceipts');
+        Route::get('/export_expenses', 'ReportController@exportExpenses');
         Route::get('/download/{report}', 'ReportController@download');
         Route::post('/request', 'ReportController@request');
         // Route::post('/profitloss', 'ReportController@profitLoss');

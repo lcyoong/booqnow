@@ -13,5 +13,5 @@
   {{ Form::filterSelect('rep_filter[book_status]', 'Booking status', $book_status, array_get($filter, 'book_status'), ['class' => 'select2', 'style' => 'width: 100%']) }}
 </div>
 {{ Form::submit(trans('form.filter'), ['class' => 'btn btn-primary']) }}
-<redirect-btn label="@lang('form.clear')" redirect="{{ urlTenant('reports/export_bills') }}"></redirect-btn>
+<redirect-btn label="@lang('form.clear')" redirect="{{ urlTenant('reports/export_receipts') }}"></redirect-btn>
 </form-ajax>
