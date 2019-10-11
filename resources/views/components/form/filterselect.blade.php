@@ -7,8 +7,8 @@
       @endforeach
     >
       <option value="">-{{ $label ?? '' }}-</option>
-      @foreach($list as $key => $value)
-      <option @if ($key == $value) selected @endif value="{{ $key }}">{{ $value }}</option>
+      @foreach($list as $key => $key_value)
+      <option @if ($key == $value) selected @endif value="{{ $key }}">{{ $key_value }}</option>
       @endforeach
     </select>
   </div>
