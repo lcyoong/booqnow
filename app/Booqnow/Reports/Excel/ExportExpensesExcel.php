@@ -59,7 +59,7 @@ class ExportExpensesExcel extends ExcelReport
     // title
     $this->sheet->getStyle("A1")->getFont()->setSize(18);
 
-    $this->fillRow([trans('report.export_receipts_title')]);
+    $this->fillRow([trans('report.export_expenses_title')]);
 
     $this->fillRow(['Filter : ' . implode(' , ', $this->filter)]);
 
