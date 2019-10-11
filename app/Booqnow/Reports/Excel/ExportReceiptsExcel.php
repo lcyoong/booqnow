@@ -18,7 +18,7 @@ class ExportReceiptsExcel extends ExcelReport
 
   public function __construct($report)
   {
-    parent::__construct($report->rep_function);
+    parent::__construct('income_report');
 
     $this->filter = array_filter(unserialize($report->rep_filter));
   }
