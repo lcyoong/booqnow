@@ -84,7 +84,9 @@ class OccupancyBySourceExcel extends ExcelReport
         $this->sheet->setColumnFormat(array(
             'B1:O100' => '#,##'
         ));
-      
+
+        $total_spend = [];
+        
         foreach ($this->occ_arr as $source => $month_counter) {
             $this->sheet->row($this->getRow(), function ($row) {
                 $row->setBackground('#dddddd');
@@ -160,15 +162,22 @@ class OccupancyBySourceExcel extends ExcelReport
 
             $subtotal_row[] = array_sum($subtotal);
 
+            for ($month = 1; $month <= 12; $month++) {                
+                if (isset($total_spend[$month])) {
+                    $total_spend[$month] += $subtotal[$month] ?? 0;
+                } else {
+                    $total_spend[$month] = $subtotal[$month] ?? 0;
+                }
+            }
+
             $this->fillRow($subtotal_row);
         }
 
-        // Summary row
+        // Summary occupancy row
         $row = ['TOTAL NIGHTS'];
 
         for ($month = 1; $month <= 12; $month++) {
             $row[$month*2 - 1] = 0;
-            // $row[$month*2] = '0%';
         }
 
         $total_days = 0;
@@ -183,14 +192,25 @@ class OccupancyBySourceExcel extends ExcelReport
         for ($month = 1; $month <= 12; $month++) {
             $dt = Carbon::createFromDate($this->year, $month, 1);
             $percent = number_format($row[$month*2 - 1] / $dt->daysInMonth / count($this->occ_arr) * 100, 1);
-            // $row[$month*2] = "$percent%";
         }
 
         $row[] = $total_days;
+        $this->fillRow($row);
 
-        // $row[] = array_sum($row);
+        // Summary spending row
+        $this->sheet->row($this->getRow(), function ($row) {
+            $row->setBackground('#eeeeee');
+        });
 
-        $this->fillRow($row, 0);
+        $row = ['TOTAL SPENDING'];
+
+        for ($month = 1; $month <= 12; $month++) {
+            $row[] = isset($total_spend[$month]) ? $total_spend[$month] : 0;
+        }
+
+        $row[] = array_sum($total_spend);
+
+        $this->fillRow($row);
     }
 
     /**
