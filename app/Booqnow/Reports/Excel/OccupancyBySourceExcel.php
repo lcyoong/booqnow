@@ -87,8 +87,6 @@ class OccupancyBySourceExcel extends ExcelReport
       
         foreach ($this->occ_arr as $source => $month_counter) {
             $this->sheet->row($this->getRow(), function ($row) {
-
-                // call cell manipulation methods
                 $row->setBackground('#dddddd');
             });
 
@@ -104,19 +102,21 @@ class OccupancyBySourceExcel extends ExcelReport
             foreach ($month_counter as $month => $counter) {
                 if (!empty($month)) {
                     $total_days += $row[$month*2 - 1] = $counter;
-                    // $dt = Carbon::createFromDate($this->year, $month, 1);
-                    // $percent = number_format($counter / $dt->daysInMonth * 100, 1);
-                    // $row[$month*2] = "$percent%";
                 }
             }
 
-            // $row[] = array_sum($row);
             $row[] = $total_days;
 
             $this->fillRow($row);
 
-            // Show spending
+            // Show spending by type-month
+            $subtotal = [];
+
             $spending = $this->getSpending($source);
+
+            for ($month = 1; $month <= 12; $month++) {
+                $sub_row[$month*2 - 1] = 0;
+            }
 
             foreach ($spending as $type => $spend_counter) {
                 $sub_row = [ucfirst($type)];
@@ -129,14 +129,38 @@ class OccupancyBySourceExcel extends ExcelReport
 
                 foreach ($spend_counter as $month => $counter) {
                     if (!empty($month)) {
+                        
                         $sum_spending += $sub_row[$month*2 - 1] = $counter;
+
+                        if (isset($subtotal[$month])) {
+                            $subtotal[$month] += $counter;
+                        } else {
+                            $subtotal[$month] = $counter;
+                        }
                     }
                 }
     
                 $sub_row[] = $sum_spending;
-    
+
                 $this->fillRow($sub_row);
             }
+
+            // Subtotal by sources
+            $this->sheet->row($this->getRow(), function ($row) {
+                $row->setBackground('#eeeeee');
+            });
+
+            $subtotal_row = [
+                array_get($this->sources, $source) . ' Total',
+            ];
+
+            for ($month = 1; $month <= 12; $month++) {
+                $subtotal_row[] = isset($subtotal[$month]) ? $subtotal[$month] : 0;
+            }
+
+            $subtotal_row[] = array_sum($subtotal);
+
+            $this->fillRow($subtotal_row);
         }
 
         // Summary row
