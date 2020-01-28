@@ -233,6 +233,12 @@ class OccupancyBySourceExcel extends ExcelReport
         foreach ($occupancies as $occupancy) {
             $this->occ_arr[$occupancy->book_source][$occupancy->mth] = $occupancy->counter;
         }
+
+        if (!isset($this->occ_arr[2])) {
+            $this->occ_arr[2][1] = 0;
+        }
+
+        ksort($this->occ_arr);
     }
 
     private function getSpending($source)
