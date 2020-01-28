@@ -47,4 +47,11 @@ class ResourceMaintenanceRepository extends BaseRepository{
 
     return $this;
   }
+
+  public function getInYear($year) 
+  {
+      return $this->repo
+                ->whereYear('rm_from', '>=', $year)
+                ->whereYear('rm_to', '<=', $year)->get();
+  }
 }

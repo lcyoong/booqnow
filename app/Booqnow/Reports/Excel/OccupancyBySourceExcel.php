@@ -2,15 +2,12 @@
 
 namespace Reports;
 
-use App\Events\ReportCreated;
+use App\BillItem;
+use App\RoomOccupancy;
+use Carbon\Carbon;
 use DB;
 use Excel;
-use App\Bill;
-use App\BillItem;
-use Carbon\Carbon;
-use Repositories\ResourceRepository;
 use Repositories\BookingSourceRepository;
-use App\RoomOccupancy;
 
 class OccupancyBySourceExcel extends ExcelReport
 {
@@ -82,11 +79,11 @@ class OccupancyBySourceExcel extends ExcelReport
     protected function occupancy()
     {
         $this->sheet->setColumnFormat(array(
-            'B1:O100' => '#,##'
+            'B1:O100' => '#,##',
         ));
 
         $total_spend = [];
-        
+
         foreach ($this->occ_arr as $source => $month_counter) {
             $this->sheet->row($this->getRow(), function ($row) {
                 $row->setBackground('#dddddd');
@@ -97,13 +94,13 @@ class OccupancyBySourceExcel extends ExcelReport
             $total_days = 0;
 
             for ($month = 1; $month <= 12; $month++) {
-                $row[$month*2 - 1] = 0;
+                $row[$month * 2 - 1] = 0;
                 // $row[$month*2] = '0%';
             }
 
             foreach ($month_counter as $month => $counter) {
                 if (!empty($month)) {
-                    $total_days += $row[$month*2 - 1] = $counter;
+                    $total_days += $row[$month * 2 - 1] = $counter;
                 }
             }
 
@@ -117,7 +114,7 @@ class OccupancyBySourceExcel extends ExcelReport
             $spending = $this->getSpending($source);
 
             for ($month = 1; $month <= 12; $month++) {
-                $sub_row[$month*2 - 1] = 0;
+                $sub_row[$month * 2 - 1] = 0;
             }
 
             foreach ($spending as $type => $spend_counter) {
@@ -126,13 +123,13 @@ class OccupancyBySourceExcel extends ExcelReport
                 $sum_spending = 0;
 
                 for ($month = 1; $month <= 12; $month++) {
-                    $sub_row[$month*2 - 1] = 0;
+                    $sub_row[$month * 2 - 1] = 0;
                 }
 
                 foreach ($spend_counter as $month => $counter) {
                     if (!empty($month)) {
-                        
-                        $sum_spending += $sub_row[$month*2 - 1] = $counter;
+
+                        $sum_spending += $sub_row[$month * 2 - 1] = $counter;
 
                         if (isset($subtotal[$month])) {
                             $subtotal[$month] += $counter;
@@ -141,7 +138,7 @@ class OccupancyBySourceExcel extends ExcelReport
                         }
                     }
                 }
-    
+
                 $sub_row[] = $sum_spending;
 
                 $this->fillRow($sub_row);
@@ -162,7 +159,7 @@ class OccupancyBySourceExcel extends ExcelReport
 
             $subtotal_row[] = array_sum($subtotal);
 
-            for ($month = 1; $month <= 12; $month++) {                
+            for ($month = 1; $month <= 12; $month++) {
                 if (isset($total_spend[$month])) {
                     $total_spend[$month] += $subtotal[$month] ?? 0;
                 } else {
@@ -177,21 +174,21 @@ class OccupancyBySourceExcel extends ExcelReport
         $row = ['TOTAL NIGHTS'];
 
         for ($month = 1; $month <= 12; $month++) {
-            $row[$month*2 - 1] = 0;
+            $row[$month * 2 - 1] = 0;
         }
 
         $total_days = 0;
 
         foreach ($this->occ_arr as $source => $month_counter) {
             foreach ($month_counter as $month => $counter) {
-                $row[$month*2 - 1] += $counter;
+                $row[$month * 2 - 1] += $counter;
                 $total_days += $counter;
             }
         }
 
         for ($month = 1; $month <= 12; $month++) {
             $dt = Carbon::createFromDate($this->year, $month, 1);
-            $percent = number_format($row[$month*2 - 1] / $dt->daysInMonth / count($this->occ_arr) * 100, 1);
+            $percent = number_format($row[$month * 2 - 1] / $dt->daysInMonth / count($this->occ_arr) * 100, 1);
         }
 
         $row[] = $total_days;
@@ -223,14 +220,13 @@ class OccupancyBySourceExcel extends ExcelReport
 
         // Room occupancy by sources
         $occupancies = RoomOccupancy::select(DB::raw("book_source, month(ro_date) as mth, count(*) as counter"))
-                        ->join('resources', 'ro_room', '=', 'rs_id')
-                        ->join('bookings', 'book_id', '=', 'ro_booking')
-                        // ->join('booking_sources', 'bs_id', '=', 'book_source')
-                        ->whereNotIn('rs_label', ['tent', 'bed', 'free'])
-                        ->where('rs_type', '=', 1)->whereRaw("year(ro_date) = {$this->year}")
-                        ->whereIn('book_status', ['checkedin', 'checkedout','confirmed'])
-                        ->groupBy(DB::raw("book_source, month(ro_date)"))->get();
-
+            ->join('resources', 'ro_room', '=', 'rs_id')
+            ->join('bookings', 'book_id', '=', 'ro_booking')
+        // ->join('booking_sources', 'bs_id', '=', 'book_source')
+            ->whereNotIn('rs_label', ['tent', 'bed', 'free'])
+            ->where('rs_type', '=', 1)->whereRaw("year(ro_date) = {$this->year}")
+            ->whereIn('book_status', ['checkedin', 'checkedout', 'confirmed'])
+            ->groupBy(DB::raw("book_source, month(ro_date)"))->get();
 
         $this->occ_arr = [];
 
@@ -243,19 +239,19 @@ class OccupancyBySourceExcel extends ExcelReport
     {
         // Spending by sources from room bills
         $spendings = BillItem::select(DB::raw("rty_code, month(bil_date) as mth, sum(bili_gross) as total"))
-                        ->join('bills', 'bil_id', '=', 'bili_bill')
-                        ->join('resources', 'rs_id', '=', 'bili_resource')
-                        ->join('resource_types', 'rty_id', '=', 'rs_type')
-                        ->join('bookings', 'book_id', '=', 'bil_booking')
-                        ->where('bili_active', '=', 1)
-                        ->where('book_source', '=', $source)
-                        ->where('bil_status', '=', 'active')
-                        ->where(function ($query) {
-                            $query->whereNotIn('book_status', ['cancelled', 'hold'])->orWhereNull('book_status');
-                        })
-                        ->whereYear('bil_date', $this->year)
-                        ->groupBy(DB::raw("rty_code, month(bil_date)"))->get();
-        
+            ->join('bills', 'bil_id', '=', 'bili_bill')
+            ->join('resources', 'rs_id', '=', 'bili_resource')
+            ->join('resource_types', 'rty_id', '=', 'rs_type')
+            ->join('bookings', 'book_id', '=', 'bil_booking')
+            ->where('bili_active', '=', 1)
+            ->where('book_source', '=', $source)
+            ->where('bil_status', '=', 'active')
+            ->where(function ($query) {
+                $query->whereNotIn('book_status', ['cancelled', 'hold'])->orWhereNull('book_status');
+            })
+            ->whereYear('bil_date', $this->year)
+            ->groupBy(DB::raw("rty_code, month(bil_date)"))->get();
+
         $spend_arr = [];
 
         foreach ($spendings as $spending) {
@@ -265,15 +261,15 @@ class OccupancyBySourceExcel extends ExcelReport
         if ($source == 2) {
             // Spending by sources from walk-in bills
             $spendings_wi = BillItem::select(DB::raw("rty_code, month(bil_date) as mth, sum(bili_gross) as total"))
-                        ->join('bills', 'bil_id', '=', 'bili_bill')
-                        ->join('resources', 'rs_id', '=', 'bili_resource')
-                        ->join('resource_types', 'rty_id', '=', 'rs_type')
-                        ->where('bili_active', '=', 1)
-                        ->where('bil_status', '=', 'active')
-                        ->whereNull('bil_booking')
-                        ->whereYear('bil_date', $this->year)
-                        ->groupBy(DB::raw("rty_code, month(bil_date)"))->get();
-        
+                ->join('bills', 'bil_id', '=', 'bili_bill')
+                ->join('resources', 'rs_id', '=', 'bili_resource')
+                ->join('resource_types', 'rty_id', '=', 'rs_type')
+                ->where('bili_active', '=', 1)
+                ->where('bil_status', '=', 'active')
+                ->whereNull('bil_booking')
+                ->whereYear('bil_date', $this->year)
+                ->groupBy(DB::raw("rty_code, month(bil_date)"))->get();
+
             foreach ($spendings_wi as $spending) {
                 if (isset($spend_arr[$spending->rty_code][$spending->mth])) {
                     $spend_arr[$spending->rty_code][$spending->mth] += $spending->total;

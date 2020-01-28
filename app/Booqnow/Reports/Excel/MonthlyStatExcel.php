@@ -10,12 +10,19 @@ use Carbon\Carbon;
 use Repositories\RoomOccupancyRepository;
 use Repositories\BookingRepository;
 use Repositories\BillRepository;
+use Repositories\BillItemRepository;
+use Repositories\ExpenseRepository;
+use Repositories\ResourceMaintenanceRepository;
 
 class MonthlyStatExcel extends ExcelReport
 {
   protected $year;
 
   protected $occ_arr = [];
+
+  protected $income_arr = [];
+
+  protected $expense_arr = [];
 
   protected $tent_arr = [];
 
@@ -90,6 +97,36 @@ class MonthlyStatExcel extends ExcelReport
    */
   protected function occupancy()
   {
+    $this->sheet->setColumnFormat(array(
+      'B1:O100' => '#,##'
+    ));
+
+    // Available rooms
+    $row = ['Available rooms'];
+
+    $no_rooms = env('TOTAL_ROOMS');
+
+    $this->resetRow($row);
+
+    for ($mth = 1; $mth <= 12; $mth++) {
+      $dt = Carbon::parse("{$this->year}-{$mth}-1");
+      $row[$mth] = $dt->daysInMonth*$no_rooms;
+    }
+
+    $this->fillRow($row, 0);    
+
+    // Net profit
+    $row = ['Nett profit'];
+
+    $this->resetRow($row);
+
+    foreach ($this->income_arr as $month => $total) {
+      $row[$month] = $total - ($this->expense_arr[$month] ?? 0);
+    }
+
+    $this->fillRow($row, 0);
+
+    // Overall occupancy
     $row = ['Overall occupancy'];
 
     $this->resetRow($row);
@@ -100,6 +137,18 @@ class MonthlyStatExcel extends ExcelReport
 
     $this->fillRow($row, 0);
 
+    // Average room rate
+    $row = ['Average room rate'];
+
+    $this->resetRow($row);
+
+    foreach ($this->income_arr as $month => $total) {
+      $row[$month] = (isset($this->occ_arr[$month]) && $this->occ_arr[$month] > 0) ? ($total/$this->occ_arr[$month]) : 'N/A';
+    }
+
+    $this->fillRow($row, 0);
+
+    // Tents sold
     $row = ['No of nights tents sold'];
 
     $this->resetRow($row);
@@ -110,6 +159,7 @@ class MonthlyStatExcel extends ExcelReport
 
     $this->fillRow($row, 0);
 
+    // Average length of stay
     $row = ['Average length of stay (nights)'];
 
     $this->resetRow($row);
@@ -122,6 +172,7 @@ class MonthlyStatExcel extends ExcelReport
 
     $this->fillRow($row, 0);
 
+    // Average pax per room
     $row = ['Average pax per room'];
 
     $this->resetRow($row);
@@ -134,7 +185,8 @@ class MonthlyStatExcel extends ExcelReport
 
     $this->fillRow($row, 0);
 
-    $row = ['Average spend per night per room'];
+    // Average spend per night per room
+    $row = ['Average spend per room/night'];
 
     $this->resetRow($row);
 
@@ -144,6 +196,18 @@ class MonthlyStatExcel extends ExcelReport
 
       $row[$spending->mth] = $spending->avg_gross;
 
+    }
+
+    $this->fillRow($row, 0);
+
+    // Average profit per room/night
+    $row = ['Average profit per room/night'];
+
+    $this->resetRow($row);
+
+    foreach ($this->income_arr as $month => $total) {
+      $profit = $total - ($this->expense_arr[$month] ?? 0);
+      $row[$month] = (isset($this->occ_arr[$month]) && $this->occ_arr[$month] > 0) ? ($profit/$this->occ_arr[$month]) : 'N/A';
     }
 
     $this->fillRow($row, 0);
@@ -158,11 +222,41 @@ class MonthlyStatExcel extends ExcelReport
   {
     $occupancies = (new RoomOccupancyRepository)->byMonth($this->year);
 
+    $incomes = (new BillItemRepository)->sumByMonthType($this->year);
+
+    $expenses = (new ExpenseRepository)->sumByMonthCategory($this->year);
+
     $nights = (new BookingRepository)->byAverageNights($this->year);
 
     $paxs = (new BookingRepository)->byAveragePax($this->year);
 
     $tents = (new BookingRepository)->averageTentsByMonth($this->year);
+
+    // $maintenances = (new ResourceMaintenanceRepository)->getInYear($this->year);
+
+    // foreach($maintenances as $maintenance) {
+      
+    // }
+
+    foreach ($incomes as $income) {
+
+      if (isset($this->income_arr[$income->mth])) {
+        $this->income_arr[$income->mth] = $this->income_arr[$income->mth] + $income->total;
+      } else {
+        $this->income_arr[$income->mth] = $income->total;
+      }
+
+    }
+
+    foreach ($expenses as $expense) {
+
+      if (isset($this->expense_arr[$expense->mth])) {
+        $this->expense_arr[$expense->mth] = $this->expense_arr[$expense->mth] + $expense->total;
+      } else {
+        $this->expense_arr[$expense->mth] = $expense->total;
+      }
+
+    }    
 
     foreach ($occupancies as $occupancy) {
 
