@@ -115,20 +115,26 @@ class OccupancyByNationalExcel extends ExcelReport
                 }
             }
 
-            foreach ($this->spend_arr[$country] as $month => $sum) {
-                if (!empty($month)) {
-                    $row[$month * 2] = $sum;
-                }
+            if(isset($this->spend_arr[$country])) {
+                foreach ($this->spend_arr[$country] as $month => $sum) {
+                    if (!empty($month)) {
+                        $row[$month * 2] = $sum;
+                    }
+                }    
             }
 
             // $row[] = array_sum($row);
             $total_nights += array_sum($month_counter);
 
-            $total_spend += array_sum($this->spend_arr[$country]);
+            if(isset($this->spend_arr[$country])){
+                $total_spend += array_sum($this->spend_arr[$country]);
+            }
 
             $row[] = array_sum($month_counter);
 
-            $row[] = array_sum($this->spend_arr[$country]);
+            if(isset($this->spend_arr[$country])){
+                $row[] = array_sum($this->spend_arr[$country]);
+            }
 
             $this->fillRow($row);
         }
