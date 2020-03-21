@@ -2,133 +2,136 @@
 
 namespace Filters;
 
+use Carbon\Carbon;
+
 class AddonFilter extends QueryFilter
 {
-  /**
-   * Resource type filter
-   * @param  string $value
-   * @return Builder
-   */
-  public function resourceType($value)
-  {
-    if (!empty($value)) {
+    /**
+     * Resource type filter
+     * @param  string $value
+     * @return Builder
+     */
+    public function resourceType($value)
+    {
+        if (!empty($value)) {
 
-      $this->joins[] = 'joinResources';
+            $this->joins[] = 'joinResources';
 
-      return $this->builder->where("rs_type", '=', $value);
+            return $this->builder->where("rs_type", '=', $value);
+        }
     }
-  }
 
-  public function masterType($value = 0)
-  {
-    $this->joins[] = 'joinResources';
-    $this->joins[] = 'joinResourceTypes';
+    public function masterType($value = 0)
+    {
+        $this->joins[] = 'joinResources';
+        $this->joins[] = 'joinResourceTypes';
 
-    return $this->builder->where("rty_master", '=', $value);
-  }
-
-  /**
-   * Date filter
-   * @param  string $value
-   * @return Builder
-   */
-  public function onDate($value)
-  {
-    if (!empty($value)) {
-
-      return $this->builder->where("add_date", 'like', "%$value%");
+        return $this->builder->where("rty_master", '=', $value);
     }
-  }
 
-  /**
-   * Date filter
-   * @param  string $value
-   * @return Builder
-   */
-  public function fromDate($value)
-  {
-    if (!empty($value)) {
+    /**
+     * Date filter
+     * @param  string $value
+     * @return Builder
+     */
+    public function onDate($value)
+    {
+        if (!empty($value)) {
 
-      return $this->builder->where("add_date", '>=', date('YmdHis', strtotime($value)));
+            return $this->builder->where("add_date", 'like', "%$value%");
+        }
     }
-  }
 
-  /**
-   * Date filter
-   * @param  string $value
-   * @return Builder
-   */
-  public function toDate($value)
-  {
-    if (!empty($value)) {
+    /**
+     * Date filter
+     * @param  string $value
+     * @return Builder
+     */
+    public function fromDate($value)
+    {
+        if (!empty($value)) {
 
-      return $this->builder->where("add_date", '<=', date('YmdHis', strtotime($value)));
+            return $this->builder->where("add_date", '>=', date('YmdHis', strtotime($value)));
+        }
     }
-  }
 
-  /**
-   * Trancking no filter
-   * @param  string $value
-   * @return Builder
-   */
-  public function tracking($value = '')
-  {
-    if (!empty($value)) {
+    /**
+     * Date filter
+     * @param  string $value
+     * @return Builder
+     */
+    public function toDate($value)
+    {
+        if (!empty($value)) {
 
-      return $this->builder->where("add_tracking", '=', $value);
+            return $this->builder->where("add_date", '<', Carbon::parse($value)->addDays(1));
+            // return $this->builder->where(DB::raw('DATE_ADD(add_date, 1)'), '<', $date)
+        }
     }
-  }
 
-  /**
-   * Reference no filter
-   * @param  string $value
-   * @return Builder
-   */
-  public function reference($value = '')
-  {
-    if (!empty($value)) {
+    /**
+     * Trancking no filter
+     * @param  string $value
+     * @return Builder
+     */
+    public function tracking($value = '')
+    {
+        if (!empty($value)) {
 
-      return $this->builder->where("add_reference", '=', $value);
+            return $this->builder->where("add_tracking", '=', $value);
+        }
     }
-  }
 
-  /**
-   * Join resources to query
-   * @return Builder
-   */
-  public function joinResources()
-  {
-    $this->builder->join('resources', 'rs_id', '=', 'add_resource');
-  }
+    /**
+     * Reference no filter
+     * @param  string $value
+     * @return Builder
+     */
+    public function reference($value = '')
+    {
+        if (!empty($value)) {
 
-  public function joinResourceTypes()
-  {
-    $this->builder->join('resource_types', 'rty_id', '=', 'rs_type');
-  }
-
-  public function ofYear($value)
-  {
-    if (!empty($value)) {
-      return $this->builder->whereYear('add_date', $value);
+            return $this->builder->where("add_reference", '=', $value);
+        }
     }
-  }
 
-  public function notInStatus($value = [])
-  {
-    if (!empty($value)) {
-
-      return $this->builder->whereNotIn('add_status', $value);
-
+    /**
+     * Join resources to query
+     * @return Builder
+     */
+    public function joinResources()
+    {
+        $this->builder->join('resources', 'rs_id', '=', 'add_resource');
     }
-  }
 
-  public function ofStatus($value)
-  {
-    if (!empty($value)) {
-
-      return $this->builder->where('add_status', '=', $value);
-
+    public function joinResourceTypes()
+    {
+        $this->builder->join('resource_types', 'rty_id', '=', 'rs_type');
     }
-  }
+
+    public function ofYear($value)
+    {
+        if (!empty($value)) {
+            return $this->builder->whereYear('add_date', $value);
+        }
+    }
+
+    public function notInStatus($value = [])
+    {
+        if (!empty($value)) {
+
+            return $this->builder->whereNotIn('add_status', $value);
+
+        }
+    }
+
+    public function ofStatus($value)
+    {
+        if (!empty($value)) {
+
+            return $this->builder->where('add_status', '=', $value);
+
+        }
+    }
 
 }
