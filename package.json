@@ -16,7 +16,7 @@
     "laravel-elixir-vue": "^0.1.4",
     "laravel-elixir-vue-2": "^0.3.0",
     "laravel-elixir-webpack-official": "^1.0.2",
-    "lodash": "^4.14.0",
+    "lodash": "^4.17.21",
     "moment": "^2.17.1",
     "node-sass": "^4.5.3",
     "notifyjs": "^2.0.3",
